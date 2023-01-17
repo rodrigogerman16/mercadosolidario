@@ -1,4 +1,5 @@
 import Link from "next/link";
+import logo from "../Assets/mercado-solidario-logo.jpg"
 
 const links = [{
     label: 'Home',
@@ -20,6 +21,7 @@ const links = [{
 export default function Navbar(){
     return(
         <nav>
+            <img src={logo} alt='logo'/>
             <ul>
                 {links.map(({label, route}) =>(
                     <li key={route}>
