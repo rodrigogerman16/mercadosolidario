@@ -61,7 +61,7 @@ export default function Login() {
     }
   };
 
-  //console.log(input)
+  console.log(input)
 
   return (
     <div>
