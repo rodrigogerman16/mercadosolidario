@@ -25,7 +25,7 @@ export default function Paginate({ publicationsPerPage, allPublications, paginad
   );
 }
 
-/* Posible Logica para el home
+/* Posible Logica para el home assdasad
   const [currentPage, setCurrentPage] = useState(1);
   const publicationsPerPage = 6;
   const indexLastPublications = currentPage * PublicationsPerPage;
