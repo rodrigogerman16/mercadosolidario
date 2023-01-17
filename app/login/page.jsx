@@ -1,6 +1,7 @@
 'use client'
 import { useState } from "react";
 import Link from "next/link";
+import Navbar from "app/Components/Navbar";
 
 function Validate(input) {
     let errors = {};
@@ -65,14 +66,12 @@ export default function Login() {
 
   return (
     <div>
-      <Link href={"/"}>
-        <button>Volver</button>
-      </Link>
+      <Navbar />
       <br></br>
       <br></br>
       <div>
         <h1>Ingresar</h1>
-        <h3>Nuevo en Mercado Solidario?{<Link href={'/register'}><label>Registrese Gratis!</label></Link>}</h3>
+        <h3>Nuevo en Mercado Solidario?{<Link href={'/CreateUser'}><label>Registrese Gratis!</label></Link>}</h3>
         <br></br>
         <form onSubmit={(el) => handleSubmit(el)}>
           <div>
@@ -93,7 +92,7 @@ export default function Login() {
               value={input.password}
               name={"password"}
               onChange={(el) => handleChange(el)}
-              placeholder='Password'
+              placeholder='Contraseña'
             />
             <br />
             {errors.password ? <label>{errors.password}</label> : null}
