@@ -6,7 +6,13 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'montserrat': ['Montserrat', 'sans-serif'],
+        'lora': ['Lora', 'serif'],
+        'hind': ['Hind Madurai', 'sans-serif'],
+      },
+    },
   },
   plugins: [],
 } 
