@@ -1,29 +1,28 @@
 'use client'
 import { useState } from "react";
 import Link from "next/link";
-import Navbar from "app/Components/Navbar";
 
 function Validate(input) {
-    let errors = {};
-  
-    if (!input.email.includes("@") && !input.email.includes(".")) {
-      errors.email = "Email debe ser un Email";
-    } else if (input.email.length < 6) {
-      errors.email =
-        "Al menos 6 caracteres";
-    }
-  
-    if (
-      /^(?=.*[A-Z].*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{8}$/.test(
-        input.password
-      )
-    ) {
-      errors.password = "Contraseña Invalida";
-    } else if (input.password.length < 6) {
-      errors.password = "Al menos 6 caracteres";
-    }
-    return errors;
+  let errors = {};
+
+  if (!input.email.includes("@") && !input.email.includes(".")) {
+    errors.email = "Email debe ser un Email";
+  } else if (input.email.length < 6) {
+    errors.email =
+      "Al menos 6 caracteres";
   }
+
+  if (
+    /^(?=.*[A-Z].*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{8}$/.test(
+      input.password
+    )
+  ) {
+    errors.password = "Contraseña Invalida";
+  } else if (input.password.length < 6) {
+    errors.password = "Al menos 6 caracteres";
+  }
+  return errors;
+}
 
 export default function Login() {
   const [input, setInput] = useState({
@@ -39,11 +38,11 @@ export default function Login() {
       [el.target.name]: el.target.value,
     });
     setErrors(
-        Validate({
-          ...input,
-          [el.target.name]: el.target.value,
-        })
-      );
+      Validate({
+        ...input,
+        [el.target.name]: el.target.value,
+      })
+    );
   }
 
   const handleSubmit = (el) => {
@@ -55,59 +54,55 @@ export default function Login() {
       })
     );
     if (Object.values(errors).length === 0) {
-        setInput({
-          email: "",
-          password: "",
-        });
+      setInput({
+        email: "",
+        password: "",
+      });
     }
   };
 
   console.log(input)
 
   return (
-    <div>
-      <Navbar />
-      <br></br>
-      <br></br>
-      <div>
-        <h1>Ingresar</h1>
-        <h3>Nuevo en Mercado Solidario?{<Link href={'/CreateUser'}><label>Registrese Gratis!</label></Link>}</h3>
-        <br></br>
+    <div class="bg-white">
+      <div class="flex flex-col justify-center items-center m-auto min-h-screen w-2/5  bg-white">
+        <div class="flex flex-col justify-start items-start bg-white pt-4 pr-4 pl-3 text-black font-serif">
+        <h1 class="text-4xl">Ingresar</h1>
+        <h3 class="pt-2 text-base text-gray-400">Nuevo en Mercado Solidario?{<Link href={'/register'}><label class="flex flex-column pt-1 text-blue-600 ">Registrese Gratis</label></Link>}</h3>
         <form onSubmit={(el) => handleSubmit(el)}>
-          <div>
+          <div class="flex pt-5">
             <input
+            class="w-56"
               type="text"
               value={input.email}
               name={"email"}
               onChange={(el) => handleChange(el)}
               placeholder='Email'
             />
-            <br />
             {errors.email ? <label>{errors.email}</label> : null}
           </div>
-          <br></br>
-          <div>
+          <div class="pt-5">
             <input
+            class="w-56"
               type="password"
               value={input.password}
               name={"password"}
               onChange={(el) => handleChange(el)}
-              placeholder='Contraseña'
+              placeholder='Password'
             />
-            <br />
             {errors.password ? <label>{errors.password}</label> : null}
           </div>
-          <br></br>
-          <div>
+          <div class="pt-5 text-sm text-blue-600">
             <Link href={'/passwordMissing'}>
               <label>Olvido su contraseña?</label>
             </Link>
           </div>
-          <br></br>
-          <input type="submit" value={"Ingresar"} />
+          <input class="mt-4 w-64 h-9 bg-blue-600 rounded-md text-white" type="submit" value={"Ingresar"} />
         </form>
-        <br></br>
-        <button>Ingresar con Google</button>
+        <button class="mt-3 w-64 h-9 rounded-md text-black"> Ingresar con Google</button>
+        <div class="pt-10">
+        </div>
+        </div>
       </div>
     </div>
   );
