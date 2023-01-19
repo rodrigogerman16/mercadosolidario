@@ -21,11 +21,13 @@ const links = [{
 
 export default function Navbar(){
     return(
-        <nav className="bg-gray-900">
-            <Image src={logo} alt='logo'/>
-            <ul>
+        <nav className="flex justify-between m-auto w-11/12 h-24">
+            <div className="flex items-center">                
+                <Image src={logo} alt='logo' className="w-32"/>
+            </div>
+            <ul className="flex gap-8 items-center font-hind font-semibold text-lg">
                 {links.map(({label, route}) =>(
-                    <li key={route}>
+                    <li key={route} className='hover:text-pink-500'>
                     <Link href={route}>
                         {label}
                     </Link>
