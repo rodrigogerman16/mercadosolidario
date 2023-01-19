@@ -137,7 +137,7 @@ function Validate(input) {
                 value={"Registrarse"}
               />
             <div>
-              <Link href={'/login'}>
+              <Link href={'/ingresar'}>
                 <label>Ya esta registrado? Click Aca!</label>
               </Link>
             </div>
