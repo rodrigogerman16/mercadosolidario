@@ -1,27 +1,28 @@
 import Link from "next/link";
+import Image from "next/image";
 import logo from "../Assets/mercado-solidario-logo.jpg"
 
 const links = [{
-    label: 'Home',
+    label: 'Inicio',
     route: '/'
 },
 {
-    label: 'Find initiatives',
-    route: '/find'
+    label: 'Iniciativas',
+    route: '/iniciativas'
 },
 {
     label: 'FAQ',
     route: '/faq'
 },
 {
-    label: 'Login',
-    route: '/login'
+    label: 'Ingresar',
+    route: '/ingresar'
 }]
 
 export default function Navbar(){
     return(
-        <nav>
-            <img src={logo} alt='logo'/>
+        <nav className="bg-gray-900">
+            <Image src={logo} alt='logo'/>
             <ul>
                 {links.map(({label, route}) =>(
                     <li key={route}>
