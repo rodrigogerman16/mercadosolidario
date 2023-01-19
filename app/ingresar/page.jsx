@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Navbar from "app/Components/Navbar";
-
+import Autenticacion from "app/Components/Autenticacion";
 function Validate(input) {
     let errors = {};
   
@@ -107,7 +107,7 @@ export default function Login() {
           <input type="submit" value={"Ingresar"} />
         </form>
         <br></br>
-        <button>Ingresar con Google</button>
+        <Autenticacion />
       </div>
     </div>
   );
