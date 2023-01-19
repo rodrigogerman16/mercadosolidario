@@ -7,6 +7,11 @@ module.exports = {
   ],
   theme: {
     extend: {
+      zIndex: {
+        '100': '100',
+        '1': '1',
+        '0': '0',
+      },
       fontFamily: {
         'montserrat': ['Montserrat', 'sans-serif'],
         'lora': ['Lora', 'serif'],
