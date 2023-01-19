@@ -3,20 +3,20 @@ import Image from "next/image";
 import logo from "../Assets/mercado-solidario-logo.jpg"
 
 const links = [{
-    label: 'Home',
+    label: 'Inicio',
     route: '/'
 },
 {
-    label: 'Find initiatives',
-    route: '/find'
+    label: 'Iniciativas',
+    route: '/iniciativas'
 },
 {
     label: 'FAQ',
     route: '/faq'
 },
 {
-    label: 'Login',
-    route: '/login'
+    label: 'Ingresar',
+    route: '/ingresar'
 }]
 
 export default function Navbar(){
