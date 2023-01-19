@@ -5,7 +5,7 @@ import { FiFacebook, FiInstagram } from "react-icons/fi"
 
 export default function Footer(){
     return(
-        <div className="bg-black text-white absolute bottom-0 w-screen font-hind">
+        <div className="bg-black text-white relative bottom-0 w-screen font-hind">
             <div className="flex justify-between m-auto py-12 w-11/12 content-center">
                 <div className="flex flex-col self-center gap-4">
                     <Image src={logo} alt="logo" className="w-32"/>

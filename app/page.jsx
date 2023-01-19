@@ -5,7 +5,9 @@ export default function Home() {
   return (
     <div>
       <Navbar/>
-      Hola
+      <div className='min-h-screen'>
+        <span>Hols</span>
+      </div>
       <Footer/>
     </div>
   )
