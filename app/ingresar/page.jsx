@@ -71,7 +71,7 @@ export default function Login() {
       <br></br>
       <div>
         <h1>Ingresar</h1>
-        <h3>Nuevo en Mercado Solidario?{<Link href={'/CreateUser'}><label>Registrese Gratis!</label></Link>}</h3>
+        <h3>Nuevo en Mercado Solidario?{<Link href={'/registrarse'}><label>Registrese Gratis!</label></Link>}</h3>
         <br></br>
         <form onSubmit={(el) => handleSubmit(el)}>
           <div>
@@ -99,7 +99,7 @@ export default function Login() {
           </div>
           <br></br>
           <div>
-            <Link href={'/passwordMissing'}>
+            <Link href={'/contraseña'}>
               <label>Olvido su contraseña?</label>
             </Link>
           </div>
