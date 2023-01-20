@@ -1,29 +1,29 @@
-'use client'
+"use client";
 import { useState } from "react";
 import Link from "next/link";
 import Navbar from "app/Components/Navbar";
+import Google from "app/Components/Google";
 
 function Validate(input) {
-    let errors = {};
-  
-    if (!input.email.includes("@") && !input.email.includes(".")) {
-      errors.email = "Email debe ser un Email";
-    } else if (input.email.length < 6) {
-      errors.email =
-        "Al menos 6 caracteres";
-    }
-  
-    if (
-      /^(?=.*[A-Z].*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{8}$/.test(
-        input.password
-      )
-    ) {
-      errors.password = "Contraseña Invalida";
-    } else if (input.password.length < 6) {
-      errors.password = "Al menos 6 caracteres";
-    }
-    return errors;
+  let errors = {};
+
+  if (!input.email.includes("@") && !input.email.includes(".")) {
+    errors.email = "Email debe ser un Email";
+  } else if (input.email.length < 6) {
+    errors.email = "Al menos 6 caracteres";
   }
+
+  if (
+    /^(?=.*[A-Z].*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{8}$/.test(
+      input.password
+    )
+  ) {
+    errors.password = "Contraseña Invalida";
+  } else if (input.password.length < 6) {
+    errors.password = "Al menos 6 caracteres";
+  }
+  return errors;
+}
 
 export default function Login() {
   const [input, setInput] = useState({
@@ -39,11 +39,11 @@ export default function Login() {
       [el.target.name]: el.target.value,
     });
     setErrors(
-        Validate({
-          ...input,
-          [el.target.name]: el.target.value,
-        })
-      );
+      Validate({
+        ...input,
+        [el.target.name]: el.target.value,
+      })
+    );
   }
 
   const handleSubmit = (el) => {
@@ -55,14 +55,12 @@ export default function Login() {
       })
     );
     if (Object.values(errors).length === 0) {
-        setInput({
-          email: "",
-          password: "",
-        });
+      setInput({
+        email: "",
+        password: "",
+      });
     }
   };
-
-  console.log(input)
 
   return (
     <div>
@@ -71,7 +69,14 @@ export default function Login() {
       <br></br>
       <div>
         <h1>Ingresar</h1>
-        <h3>Nuevo en Mercado Solidario?{<Link href={'/registrarse'}><label>Registrese Gratis!</label></Link>}</h3>
+        <h3>
+          Nuevo en Mercado Solidario?
+          {
+            <Link href={"/registrarse"}>
+              <label>Registrese Gratis!</label>
+            </Link>
+          }
+        </h3>
         <br></br>
         <form onSubmit={(el) => handleSubmit(el)}>
           <div>
@@ -80,7 +85,7 @@ export default function Login() {
               value={input.email}
               name={"email"}
               onChange={(el) => handleChange(el)}
-              placeholder='Email'
+              placeholder="Email"
             />
             <br />
             {errors.email ? <label>{errors.email}</label> : null}
@@ -92,14 +97,14 @@ export default function Login() {
               value={input.password}
               name={"password"}
               onChange={(el) => handleChange(el)}
-              placeholder='Contraseña'
+              placeholder="Contraseña"
             />
             <br />
             {errors.password ? <label>{errors.password}</label> : null}
           </div>
           <br></br>
           <div>
-            <Link href={'/contraseña'}>
+            <Link href={"/contraseña"}>
               <label>Olvido su contraseña?</label>
             </Link>
           </div>
@@ -108,6 +113,8 @@ export default function Login() {
         </form>
         <br></br>
         <button>Ingresar con Google</button>
+        <br></br>
+        <Google></Google>
       </div>
     </div>
   );
