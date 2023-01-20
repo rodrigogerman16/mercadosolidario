@@ -95,7 +95,6 @@ function Validate(input) {
 
     return (
         <div>
-            <Navbar />
           <div>
             <h1>Registrarse</h1>
             <form onSubmit={(el) => handleSubmit(el)}>

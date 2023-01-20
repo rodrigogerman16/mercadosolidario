@@ -66,7 +66,6 @@ export default function Login() {
 
   return (
     <div>
-      <Navbar />
       <br></br>
       <br></br>
       <div>
