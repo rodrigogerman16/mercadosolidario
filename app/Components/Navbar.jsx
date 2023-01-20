@@ -1,12 +1,13 @@
 import Link from "next/link";
+import Image from "next/image";
 import logo from "../Assets/mercado-solidario-logo.jpg"
 
 const links = [{
-    label: 'Home',
+    label: 'Inicio',
     route: '/'
 },
 {
-    label: 'Find initiatives',
+    label: 'Iniciativas',
     route: '/iniciativas'
 },
 {
@@ -14,20 +15,22 @@ const links = [{
     route: '/faq'
 },
 {
-    label: 'Login',
-    route: '/login'
+    label: 'Ingresar',
+    route: '/ingresar'
 }]
 
-export default function Navbar() {
-    return (
-        <nav>
-            <img src={logo} alt='logo' />
-            <ul>
-                {links.map(({ label, route }) => (
-                    <li key={route}>
-                        <Link href={route}>
-                            {label}
-                        </Link>
+export default function Navbar(){
+    return(
+        <nav className="flex justify-between m-auto w-11/12 h-24">
+            <div className="flex items-center">                
+                <Image src={logo} alt='logo' className="w-32"/>
+            </div>
+            <ul className="flex gap-8 items-center font-hind font-semibold text-lg">
+                {links.map(({label, route}) =>(
+                    <li key={route} className='hover:text-pink-500'>
+                    <Link href={route}>
+                        {label}
+                    </Link>
                     </li>
                 ))}
             </ul>
