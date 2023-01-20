@@ -15,9 +15,12 @@ const Detail = async ({ params }) => {
       <h1>Detail {id}</h1>
       <Paypal></Paypal>
       <div>
-        <h4>{post.title}</h4>
-        <p>{post.description}</p>
-        <span>{post.location}</span>
+        {post && <div>
+          <h4>{post.title && post.title}</h4>
+          <p>{post.description && post.description}</p>
+          <span>{post.location && post.location}</span>
+        </div>
+        }
       </div>
     </div>
   )
