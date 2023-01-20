@@ -66,7 +66,6 @@ export default function Login() {
 
   return (
     <div>
-      <Navbar />
       <div class="flex flex-col justify-center items-center m-auto min-h-screen w-2/5  bg-white">
         <div class="flex flex-col justify-start items-start bg-white pr-4 pl-3 text-black font-serif">
           <h1 class="text-3xl font-montserrat">Ingresar</h1>

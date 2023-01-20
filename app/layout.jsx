@@ -1,3 +1,5 @@
+import Footer from './Components/Footer'
+import Navbar from './Components/Navbar'
 import './globals.css'
 
 export default function RootLayout({ children }) {
@@ -11,7 +13,9 @@ export default function RootLayout({ children }) {
       <link href="https://fonts.googleapis.com/css2?family=Hind+Madurai:wght@300&family=Lora:ital@1&family=Montserrat:wght@700&display=swap" rel="stylesheet"/>
       </head>
       <body>
+        <Navbar/>
         {children}
+        <Footer/>
       </body>
     </html>
   )

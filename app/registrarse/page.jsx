@@ -94,12 +94,10 @@ export default function CreateUser() {
     } catch (error) {
       //console.log(error)
     }
-
   }
 
   return (
     <div className="m-0 p-0">
-      <Navbar />
       <div class="flex flex-col justify-center items-start m-auto min-h-full mt-12 bg-white w-3/5">
         <div className="text-2xl font-montserrat justify-items-start w-full">
           <h1 class="text-start">Registrarse</h1>
