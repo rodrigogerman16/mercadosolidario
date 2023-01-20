@@ -7,7 +7,7 @@ const links = [{
 },
 {
     label: 'Find initiatives',
-    route: '/find'
+    route: '/iniciativas'
 },
 {
     label: 'FAQ',
@@ -18,16 +18,16 @@ const links = [{
     route: '/login'
 }]
 
-export default function Navbar(){
-    return(
+export default function Navbar() {
+    return (
         <nav>
-            <img src={logo} alt='logo'/>
+            <img src={logo} alt='logo' />
             <ul>
-                {links.map(({label, route}) =>(
+                {links.map(({ label, route }) => (
                     <li key={route}>
-                    <Link href={route}>
-                        {label}
-                    </Link>
+                        <Link href={route}>
+                            {label}
+                        </Link>
                     </li>
                 ))}
             </ul>
