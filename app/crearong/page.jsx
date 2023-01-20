@@ -31,7 +31,7 @@ function Validate(input) {
   return errors;
 }
 
-export default function crearong() {
+export default function Crearong() {
   const [input, setInput] = useState({
     name: "",
     lastName: "",
@@ -93,76 +93,90 @@ export default function crearong() {
   return (
     <div>
       <Navbar />
-      <div>
-        <h1>Registrar ONG</h1>
-        <form onSubmit={(el) => handleSubmit(el)}>
-          <div>
-            <input
-              type="text"
-              value={input.name}
-              name={"name"}
-              onChange={(el) => handleChange(el)}
-              placeholder="Nombre del Titular"
-            />
-            <br />
-            {errors.name ? <label>{errors.name}</label> : null}
+      <div class="flex flex-col justify-center items-start m-auto min-h-full mt-16 bg-white w-3/5">
+        <div className="text-2xl font-montserrat justify-items-start w-full">
+          <h1 class="text-start">Registrar ONG</h1>
+        </div>
+        <form class="pt-7" onSubmit={(el) => handleSubmit(el)}>
+          <div class="flex">
+            <div class="flex flex-col font-medium">
+              <div class="flex flex-col">
+                <label class="font-hind text-lg">Nombre del titular</label>
+                <input
+                  class="border border-slate-400 mr-9 mt-1 h-10 w-72 rounded"
+                  type="text"
+                  value={input.name}
+                  name={"name"}
+                  onChange={(el) => handleChange(el)}
+                  placeholder=""
+                />
+                {errors.name ? <label>{errors.name}</label> : null}
+              </div>
+              <div class="flex flex-col">
+                <label class="pt-3 font-hind text-lg">Apellido del titular</label>
+                <input
+                  class="border border-slate-400 mr-9 mt-1 h-10 w-72 rounded"
+                  type="text"
+                  value={input.lastName}
+                  name="lastName"
+                  onChange={(el) => handleChange(el)}
+                  placeholder=""
+                />
+                {errors.lastName ? <label>{errors.lastName}</label> : null}
+              </div>
+              <div class="flex flex-col">
+                <label class="pt-3 font-hind text-lg">Cuit del titular</label>
+                <input
+                  class="border border-slate-400 mr-9 mt-1 h-10 w-72 rounded"
+                  type="text"
+                  value={input.cuit}
+                  name="cuit"
+                  onChange={(el) => handleChange(el)}
+                  placeholder=""
+                />
+                {errors.cuit ? <label>{errors.cuit}</label> : null}
+              </div>
+            </div>
+            <div>
+              <div class="flex flex-col">
+                <label class="font-hind text-lg">Nombre de la ONG</label>
+                <input
+                  class="border border-slate-400 mr-9 mt-1 h-10 w-72 rounded"
+                  type="text"
+                  value={input.ongName}
+                  name="ongName"
+                  onChange={(el) => handleChange(el)}
+                  placeholder=""
+                />
+                {errors.ongName ? <label>{errors.ongName}</label> : null}
+              </div>
+              <div class="flex flex-col font-medium">
+                <label class="pt-3 font-hind text-lg">Pais</label>
+                <input
+                  class="border border-slate-400 mr-9 mt-1 h-10 w-72 rounded"
+                  type="text"
+                  value={input.country}
+                  name="country"
+                  onChange={(el) => handleChange(el)}
+                  placeholder=""
+                />
+                {errors.country ? <label>{errors.country}</label> : null}
+              </div>
+              <div class="flex flex-col font-medium">
+                <label class="pt-3 font-hind text-lg">Provincia</label>
+                <input
+                  class="border border-slate-400 mr-9 mt-1 h-10 w-72 rounded"
+                  type="text"
+                  value={input.province}
+                  name="province"
+                  onChange={(el) => handleChange(el)}
+                  placeholder=""
+                />
+                {errors.province ? <label>{errors.province}</label> : null}
+              </div>
+            </div>
           </div>
-          <div>
-            <input
-              type="text"
-              value={input.lastName}
-              name="lastName"
-              onChange={(el) => handleChange(el)}
-              placeholder="Apellido del Titular"
-            />
-            <br />
-            {errors.lastName ? <label>{errors.lastName}</label> : null}
-          </div>
-          <div>
-            <input
-              type="text"
-              value={input.cuit}
-              name="cuit"
-              onChange={(el) => handleChange(el)}
-              placeholder="CUIT del Titular"
-            />
-            <br />
-            {errors.cuit ? <label>{errors.cuit}</label> : null}
-          </div>
-          <div>
-            <input
-              type="text"
-              value={input.ongName}
-              name="ongName"
-              onChange={(el) => handleChange(el)}
-              placeholder="Nombre de la ONG"
-            />
-            <br />
-            {errors.ongName ? <label>{errors.ongName}</label> : null}
-          </div>
-          <div>
-            <input
-              type="text"
-              value={input.country}
-              name="country"
-              onChange={(el) => handleChange(el)}
-              placeholder="Pais"
-            />
-            <br />
-            {errors.country ? <label>{errors.country}</label> : null}
-          </div>
-          <div>
-            <input
-              type="text"
-              value={input.province}
-              name="province"
-              onChange={(el) => handleChange(el)}
-              placeholder="Provincia"
-            />
-            <br />
-            {errors.province ? <label>{errors.province}</label> : null}
-          </div>
-          <input type="submit" value={"Registrarse"} />
+          <input type="submit" value={"Registrarse"} class="mt-8 w-52 h-10 bg-blue-600 rounded-md text-white font-hind" />
         </form>
       </div>
     </div>
