@@ -2,7 +2,7 @@
 import Navbar from "app/Components/Navbar";
 import Link from "next/link";
 import { useState } from "react";
-
+import emailPost from "./emailPost";
 function Validate(input) {
   let errors = {};
   if (/[`!@#$%^&*()_+\-=[\]{};':"\\|,.<>\d/?~]/.test(input.name)) {
@@ -58,9 +58,10 @@ export default function CreateUser() {
 
   console.log(input)
 
-  function handleSubmit(el) {
+  async function handleSubmit(el) {
     try {
       el.preventDefault();
+      
       setErrors(
         Validate({
           ...input,
@@ -77,8 +78,8 @@ export default function CreateUser() {
         //   'email', JSON.stringify(input.email)
         // )
 
+        await emailPost(input.email)
         alert("Usuario Creado!");
-
         setInput({
           name: "",
           lastname: "",
