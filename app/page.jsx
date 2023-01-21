@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import homeWelcome from './Assets/home1.png'
+import homeWelcome from './Assets/home1.jpg'
 import moneda from './Assets/moneda.png'
 import caja from './Assets/caja.png'
 import musculo from './Assets/musculo.png'
@@ -15,15 +15,15 @@ export default function Home() {
       <div className='min-h-screen'>
 
         {/*Seccion Dienvenida*/}
-        <div className='flex items-center justify-evenly py-20'>
-          <div className='flex flex-col w-min gap-8 mt-auto mb-8'>
+        <div className='flex items-center justify-around py-20 pl-20'>
+          <div className='flex flex-col gap-8'>
             <h1 className='font-montserrat text-3xl'>Algun texto de prueba para probar heigh</h1>
             <h4 className='font-lora text-xl w-96 text-gray-500'>Se parte de la asociacion mas grande de Argentina en ayudar a los que mas necesitan.</h4>
-            <Link href='#' className='self-end'><button type="button" className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-pink-200 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-pink-600 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-pink-200 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Descubrir</button></Link>
+            <Link href='#' className='self-end'><button type="button" className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-white focus:outline-none bg-gray-600 rounded-lg border border-gray-200 hover:bg-gray-800 focus:z-10 focus:ring-4 focus:ring-gray-200">Descubrir</button></Link>
             
           </div>
-          <div className='w-2/4'>
-            <Image src={homeWelcome} className='float-right' alt='Foto bienvenida'/>
+          <div>
+            <Image src={homeWelcome} className='w-full float-right relative left-12' alt='Foto bienvenida'/>
           </div>
         </div>
 
