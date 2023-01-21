@@ -5,7 +5,7 @@ import { FiFacebook, FiInstagram } from "react-icons/fi"
 
 export default function Footer(){
     return(
-        <div className="bg-pink-100 text-black relative bottom-0 w-screen font-hind">
+        <div className="bg-pink-50 text-black relative bottom-0 w-screen font-hind">
             <div className="flex justify-between m-auto py-12 w-11/12 content-center">
                 <div className="flex flex-col self-center gap-4">
                     <Image src={logo} alt="logo" className="w-32"/>
@@ -37,7 +37,7 @@ export default function Footer(){
                 </div>
             </div>
 
-            <hr className="w-11/12 m-auto bg-pink-200 h-2"/>
+            <hr className="w-11/12 m-auto bg-pink-600 h-2"/>
 
             <div className="flex justify-between m-auto w-11/12 py-6">
                 <div className="flex gap-4 text-gray-600">
