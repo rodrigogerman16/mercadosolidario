@@ -12,7 +12,6 @@ import {BsArrowRight, BsArrowLeft} from "react-icons/bs"
 export default function Home() {
   return (
     <div>
-      <Navbar/>
       <div className='min-h-screen'>
 
         {/*Seccion Dienvenida*/}
@@ -43,7 +42,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <Footer/>
     </div>
   )
 }
