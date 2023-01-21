@@ -23,7 +23,9 @@ export default function Navbar(){
     return(
         <nav className="flex justify-between m-auto w-11/12 h-24">
             <div className="flex items-center">                
-                <Image src={logo} alt='logo' className="w-32"/>
+                <Link href={'/'}>
+                    <Image src={logo} alt='logo' className="w-32" />
+                </Link>
             </div>
             <ul className="flex gap-8 items-center font-hind font-semibold text-lg">
                 {links.map(({label, route}) =>(
