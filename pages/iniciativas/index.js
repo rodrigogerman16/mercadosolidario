@@ -2,29 +2,29 @@
 import Card from '../../Components/Card'
 import React, {useState} from 'react'
 const Initiative =  ({data}) => {
-
     const [info, setInfo] = useState(data)
-    console.log(info);
 
     const filterHandler = (e) => {
-      console.log(e.target.value);
-      const filtros = e.target.value === "efectivo" ? info.filter((e) => e.type_of_donor === "EFECTIVO") : info.filter((e) => !e.type_of_donor === "EFECTIVO")
-      e.target.value === "all" ? info : filtros
+      const value = e.target.name
+      console.log(value);
+      const filtros = value === "efectivo" ? data.filter((e) => e.type_of_donor === "EFECTIVO") : data.filter((e) => !e.type_of_donor === "EFECTIVO")
+      setInfo(value === "all" ? info : filtros)
+      console.log(data);
     }
   return (
     <div>
       <nav>
         <div>
             <ul  >
-              <li onClick={filterHandler} value='all' >All</li>
-              <li onClick={filterHandler} value='efectivo' >Efectivo</li>
-              <li  onClick={filterHandler}  value='especie' > En Especie </li>
+              <li   ><a onClick={(e) => filterHandler(e)}  name='all'  >All</a></li>
+              <li   ><a onClick={(e) => filterHandler(e)}  name='efectivo' >Efectivo</a></li>
+              <li     > <a onClick={(e) => filterHandler(e)}  name='especie'  >En Especie</a> </li>
             </ul>
         </div>
       </nav>
     
       {
-        info.map((e) => <Card  title={e.title}  description={e.description} location={e.location}  />)
+        info.map((e) => <Card key={e.id} title={e.title}  description={e.description} location={e.location}  />)
       }
     </div>
   )
