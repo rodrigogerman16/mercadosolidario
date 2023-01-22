@@ -1,17 +1,19 @@
 'use client'
-
+import Navbar from '@/Components/Navbar'
+import Footer from '@/Components/Footer'
 import Image from 'next/image'
-import homeWelcome from './Assets/home1.jpg'
-import moneda from './Assets/moneda.png'
-import caja from './Assets/caja.png'
-import musculo from './Assets/musculo.png'
-import recomendacion from './Assets/recomendacion.jpeg'
+import homeWelcome from '../Assets/home1.jpg'
+import moneda from '../Assets/moneda.png'
+import caja from '../Assets/caja.png'
+import musculo from '../Assets/musculo.png'
+import recomendacion from '../Assets/recomendacion.jpeg'
 import Link from 'next/link'
 import 'flowbite'
 
 export default function Home() {
   return (
     <div>
+      <Navbar/>
       <div className='min-h-screen'>
 
         {/*Seccion Dienvenida*/}
@@ -196,6 +198,7 @@ export default function Home() {
         </div>
 
       </div>
+      <Footer/>
     </div>
   )
 }
