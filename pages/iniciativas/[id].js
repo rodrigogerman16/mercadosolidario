@@ -1,6 +1,5 @@
 import React from 'react'
-import Paypal from '../../Components/Paypal'
-
+import Paypal from '@/Components/Paypal'
 
 
 const Detail = async ({ params }) => {
