@@ -1,10 +1,6 @@
 import React from 'react'
 import Paypal from '@/Components/Paypal'
 
-const fetchPosts = () => {
-  return fetch('https://pf-backend-mercadosolidario-production.up.railway.app/posts/posts')
-    .then(res => res.json())
-}
 
 const Detail = async ({ params }) => {
   const { id } = params
@@ -13,7 +9,7 @@ const Detail = async ({ params }) => {
   return (
     <div>
       <h1>Detail {id}</h1>
-      <Paypal></Paypal>
+      <Paypal />
       <div>
         {post && <div>
           <h4>{post.title && post.title}</h4>
@@ -24,6 +20,28 @@ const Detail = async ({ params }) => {
       </div>
     </div>
   )
+}
+
+export async function getStaticPaths() {
+  const res = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/posts")
+  const data = await res.json()
+  const paths = data.map(({id}) => ({params : {id: `${id}`}}))
+  return {
+    paths,
+    fallback: false
+  }
+}
+
+export function getStaticProps() {
+  return fetch(`https://pf-backend-mercadosolidario-production.up.railway.app/posts/${params.id}`)
+  .then(res => res.json())
+  .then(data => {
+    return {
+      props : {
+        data
+      }
+    }
+  }) 
 }
 
 export default Detail
