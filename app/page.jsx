@@ -19,7 +19,7 @@ export default function Home() {
           <div className='flex flex-col gap-8'>
             <h1 className='font-montserrat text-3xl'>Algun texto de prueba para probar heigh</h1>
             <h4 className='font-lora text-xl w-96 text-gray-500'>Se parte de la asociacion mas grande de Argentina en ayudar a los que mas necesitan.</h4>
-            <Link href='#' className='self-end'><button type="button" className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-white focus:outline-none bg-gray-600 rounded-lg border border-gray-200 hover:bg-gray-800 focus:z-10 focus:ring-4 focus:ring-gray-200">Descubrir</button></Link>
+            <Link href='/ingresar' className='self-end'><button type="button" className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-white focus:outline-none bg-gray-600 rounded-lg border border-gray-200 hover:bg-gray-800 focus:z-10 focus:ring-4 focus:ring-gray-200">Descubrir</button></Link>
             
           </div>
           <div>
@@ -37,7 +37,7 @@ export default function Home() {
               <div className="flex flex-col justify-between p-4 leading-normal bg-pink-50 w-full h-full">
                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">Ayudar con dinero</h5>
                 <p className="mb-3 font-normal text-gray-700">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                <Link href='#' className='self-end'><button type="button" className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-white focus:outline-none bg-pink-600 rounded-lg border border-pink-200 hover:bg-pink-800 focus:z-10 focus:ring-4 focus:ring-pink-200">Donar</button></Link>
+                <Link href='/iniciativas' className='self-end'><button type="button" className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-white focus:outline-none bg-pink-600 rounded-lg border border-pink-200 hover:bg-pink-800 focus:z-10 focus:ring-4 focus:ring-pink-200">Donar</button></Link>
               </div>
             </div>
 
@@ -46,7 +46,7 @@ export default function Home() {
               <div className="flex flex-col justify-between p-4 leading-normal bg-pink-50 w-full">
                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">Ayudar con mercaderia</h5>
                 <p className="mb-3 font-normal text-gray-700">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                <Link href='#' className='self-end'><button type="button" className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-white focus:outline-none bg-pink-600 rounded-lg border border-pink-200 hover:bg-pink-800 focus:z-10 focus:ring-4 focus:ring-pink-200">Donar</button></Link>
+                <Link href='/iniciativas' className='self-end'><button type="button" className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-white focus:outline-none bg-pink-600 rounded-lg border border-pink-200 hover:bg-pink-800 focus:z-10 focus:ring-4 focus:ring-pink-200">Donar</button></Link>
               </div>
             </div>
 
@@ -55,7 +55,7 @@ export default function Home() {
               <div className="flex flex-col justify-between p-4 leading-normal bg-pink-50 w-full">
                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">Participa en voluntariados</h5>
                 <p className="mb-3 font-normal text-gray-700">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                <Link href='#' className='self-end'><button type="button" className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-white focus:outline-none bg-pink-600 rounded-lg border border-pink-200 hover:bg-pink-800 focus:z-10 focus:ring-4 focus:ring-pink-200">Participar</button></Link>
+                <Link href='/iniciativas' className='self-end'><button type="button" className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-white focus:outline-none bg-pink-600 rounded-lg border border-pink-200 hover:bg-pink-800 focus:z-10 focus:ring-4 focus:ring-pink-200">Participar</button></Link>
               </div>
             </div>
           </div>  
@@ -86,7 +86,7 @@ export default function Home() {
             <span className='font-lora text-xl text-gray-500 w-3/5'>Colaboramos con organizaciones sin ánimo de lucro que centran su actividad en el ámbito social, medioambiental y cultural. A continuación, puedes ver un listado con todas ellas e información sobre cómo realizar tu donación directa o ser voluntariado.</span>
           </div>
           <div>
-            <Link href='#' className='text-hide font-semibold flex gap-4 items-center text-xl hover:text-pink-700'><button type="button" className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-white focus:outline-none bg-gray-600 rounded-lg border border-gray-200 hover:bg-gray-800 focus:z-10 focus:ring-4 focus:ring-gray-200">Descubrir</button></Link>
+            <Link href='/iniciativas' className='text-hide font-semibold flex gap-4 items-center text-xl hover:text-pink-700'><button type="button" className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-white focus:outline-none bg-gray-600 rounded-lg border border-gray-200 hover:bg-gray-800 focus:z-10 focus:ring-4 focus:ring-gray-200">Descubrir</button></Link>
           </div>
         </div>
 
