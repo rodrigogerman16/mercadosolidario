@@ -26,7 +26,7 @@ export default function Navbar(){
                         <a href="#" className="className=block py-2 pl-3 pr-4 rounded md:p-0 hover:text-pink-500">FAQ</a>
                     </li>
                     <li>
-                        <a href="#" className="block py-2 pl-3 pr-4 rounded md:p-0 hover:text-pink-500">Contact</a>
+                        <a href="#" className="block py-2 pl-3 pr-4 rounded md:p-0 hover:text-pink-500">Contacto</a>
                     </li>
                     </ul>
                 </div>
