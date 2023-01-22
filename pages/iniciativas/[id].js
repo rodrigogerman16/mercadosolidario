@@ -1,5 +1,5 @@
 import React from 'react'
-import Paypal from 'app/Components/Paypal'
+import Paypal from '@/Components/Paypal'
 
 const fetchPosts = () => {
   return fetch('https://pf-backend-mercadosolidario-production.up.railway.app/posts/posts')

@@ -1,5 +1,5 @@
 "use client";
-import Navbar from "app/Components/Navbar";
+import Navbar from "@/Components/Navbar";
 import { useState } from "react";
 
 function Validate(input) {
