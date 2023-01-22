@@ -28,34 +28,38 @@ export default function Home() {
         </div>
 
         {/*Seccion Tipo de donaciones*/}
-        <div className='flex flex-col gap-8 m-auto med:flex-row'>   
-          <h2 className='m-auto font-semibold text-2xl font-montserrat'>¿Qué puedes hacer?</h2>     
-          <div className="flex flex-col m-auto items-center border border-gray-200 shadow md:flex-row w-4/5">
-            <Image className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src={homeWelcome} alt=""/>
-            <div className="flex flex-col justify-between p-4 leading-normal bg-pink-50 w-full">
-              <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">Ayudar con dinero</h5>
-              <p className="mb-3 font-normal text-gray-700">Lore ipsum.</p>
-              <Link href='#' className='self-end'><button type="button" className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-white focus:outline-none bg-pink-600 rounded-lg border border-pink-200 hover:bg-pink-800 focus:z-10 focus:ring-4 focus:ring-pink-200">Donar</button></Link>
-            </div>
-          </div>
+        <div className='flex flex-col gap-8 m-auto mx-12'>   
+          <h2 className='m-auto font-semibold text-2xl font-montserrat'>¿Qué puedes hacer?</h2>   
+          <div className='flex flex-col gap-8 md:flex-row'>
 
-          <div className="flex flex-col w-4/5 m-auto items-center border border-gray-200 shadow md:flex-row">
-            <Image className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src={homeWelcome} alt=""/>
-            <div className="flex flex-col justify-between p-4 leading-normal bg-pink-50 w-full">
-              <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">Ayudar con mercaderia</h5>
-              <p className="mb-3 font-normal text-gray-700">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
-              <Link href='#' className='self-end'><button type="button" className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-white focus:outline-none bg-pink-600 rounded-lg border border-pink-200 hover:bg-pink-800 focus:z-10 focus:ring-4 focus:ring-pink-200">Donar</button></Link>
+            <div className="flex flex-col w-96 m-auto items-center border border-gray-200 shadow my-0">
+              <Image className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src={homeWelcome} alt=""/>
+              <div className="flex flex-col justify-between p-4 leading-normal bg-pink-50 w-full h-full">
+                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">Ayudar con dinero</h5>
+                <p className="mb-3 font-normal text-gray-700">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                <Link href='#' className='self-end'><button type="button" className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-white focus:outline-none bg-pink-600 rounded-lg border border-pink-200 hover:bg-pink-800 focus:z-10 focus:ring-4 focus:ring-pink-200">Donar</button></Link>
+              </div>
             </div>
-          </div>
 
-          <div className="flex flex-col w-4/5 m-auto items-center border border-gray-200 shadow md:flex-row">
-            <Image className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src={homeWelcome} alt=""/>
-            <div className="flex flex-col justify-between p-4 leading-normal bg-pink-50 w-full">
-              <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">Participa en voluntariados</h5>
-              <p className="mb-3 font-normal text-gray-700">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
-              <Link href='#' className='self-end'><button type="button" className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-white focus:outline-none bg-pink-600 rounded-lg border border-pink-200 hover:bg-pink-800 focus:z-10 focus:ring-4 focus:ring-pink-200">Participar</button></Link>
+            <div className="flex flex-col w-96 m-auto items-center border border-gray-200 shadow">
+              <Image className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src={homeWelcome} alt=""/>
+              <div className="flex flex-col justify-between p-4 leading-normal bg-pink-50 w-full">
+                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">Ayudar con mercaderia</h5>
+                <p className="mb-3 font-normal text-gray-700">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                <Link href='#' className='self-end'><button type="button" className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-white focus:outline-none bg-pink-600 rounded-lg border border-pink-200 hover:bg-pink-800 focus:z-10 focus:ring-4 focus:ring-pink-200">Donar</button></Link>
+              </div>
             </div>
-          </div>
+
+            <div className="flex flex-col w-96 m-auto items-center border border-gray-200 shadow">
+              <Image className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src={homeWelcome} alt=""/>
+              <div className="flex flex-col justify-between p-4 leading-normal bg-pink-50 w-full">
+                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">Participa en voluntariados</h5>
+                <p className="mb-3 font-normal text-gray-700">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                <Link href='#' className='self-end'><button type="button" className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-white focus:outline-none bg-pink-600 rounded-lg border border-pink-200 hover:bg-pink-800 focus:z-10 focus:ring-4 focus:ring-pink-200">Participar</button></Link>
+              </div>
+            </div>
+          </div>  
+          
         </div>
 
 
@@ -79,10 +83,10 @@ export default function Home() {
         <div className='flex flex-col mb-8 py-8 items-center gap-8 bg-pink-50'>
           <div className='flex flex-col gap-4 text-center items-center'>
             <h4 className='font-montserrat text-3xl'>ONG colaboradoras</h4>
-            <span className='font-lora text-xl text-gray-500 w-3/5'>Colaboramos con organizaciones sin ánimo de lucro que centran su actividad en el ámbito social, medioambiental y cultural. A continuación, puedes ver un listado con todas ellas e información sobre cómo realizar tu donación directa.</span>
+            <span className='font-lora text-xl text-gray-500 w-3/5'>Colaboramos con organizaciones sin ánimo de lucro que centran su actividad en el ámbito social, medioambiental y cultural. A continuación, puedes ver un listado con todas ellas e información sobre cómo realizar tu donación directa o ser voluntariado.</span>
           </div>
           <div>
-            <Link href='#' className='text-hide font-semibold flex gap-4 items-center text-xl hover:text-pink-700'><button type="button" className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-white focus:outline-none bg-gray-600 rounded-lg border border-gray-200 hover:bg-gray-800 focus:z-10 focus:ring-4 focus:ring-gray-200">Mas info</button></Link>
+            <Link href='#' className='text-hide font-semibold flex gap-4 items-center text-xl hover:text-pink-700'><button type="button" className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-white focus:outline-none bg-gray-600 rounded-lg border border-gray-200 hover:bg-gray-800 focus:z-10 focus:ring-4 focus:ring-gray-200">Descubrir</button></Link>
           </div>
         </div>
 
