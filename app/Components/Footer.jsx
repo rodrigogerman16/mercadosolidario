@@ -29,11 +29,12 @@ export default function Footer(){
                     <Link href="#" className="hover:text-pink-700">INICIO</Link>
                     <Link href="#" className="hover:text-pink-700">INICIATIVAS</Link>
                     <Link href="#" className="hover:text-pink-700">FAQ</Link>
-                    <Link href="#" className="hover:text-pink-700">ENTRAR</Link>
+                    <Link href="#" className="hover:text-pink-700">INGRESAR</Link>
                     <br/>
                     <Link href="#" className="hover:text-pink-700">QUIENES SOMOS</Link>
-                    <Link href="#" className="hover:text-pink-700">QUE HACEMOS</Link>
-                    <Link href="#" className="hover:text-pink-700">ULTIMAS NOTICIAS</Link>
+                    <Link href="#" className="hover:text-pink-700">COMO AYUDAR</Link>
+                    <Link href="#" className="hover:text-pink-700">INSIGNIAS</Link>
+                    <Link href="#" className="hover:text-pink-700">RESEÑAS</Link>
                 </div>
             </div>
 
