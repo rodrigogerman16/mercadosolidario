@@ -1,5 +1,6 @@
 'use client'
-import Navbar from "app/Components/Navbar";
+import Navbar from "@/Components/Navbar";
+import Footer from "@/Components/Footer";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -98,6 +99,7 @@ export default function CreateUser() {
 
   return (
     <div className="m-0 p-0">
+      <Navbar/>
       <div class="flex flex-col justify-center items-start m-auto min-h-full mt-12 bg-white w-3/5">
         <div className="text-2xl font-montserrat justify-items-start w-full">
           <h1 class="text-start">Registrarse</h1>
@@ -213,6 +215,7 @@ export default function CreateUser() {
           </div>
         </form>
       </div>
+      <Footer/>
     </div>
   );
 }
