@@ -40,10 +40,12 @@ const Initiative = ({ data }) => {
   }
 
   const filterProvinces = (e) => {
+    
     const value = e.target.value;
     console.log(value);
     const filtros = data.filter((posts) => posts.location === value);
     setInfo(value === "all" ? data : filtros);
+    setCurrentPage(1)
   };
 
   const filtroInput = async (e) => {
@@ -55,6 +57,7 @@ const Initiative = ({ data }) => {
         );
     setInfo(filterSearch);
     console.log(e.target.value);
+    setCurrentPage(1)
   };
 
   const orderHandler = async (e) => {
@@ -70,6 +73,7 @@ const Initiative = ({ data }) => {
       const order = await info;
       setInfo(order);
     }
+    setCurrentPage(1)
   };
 
   const Provincias = [
