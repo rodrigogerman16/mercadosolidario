@@ -1,7 +1,7 @@
 "use client";
 import Navbar from "../../Components/Navbar";
 import axios from "axios";
-import { useState } from "react";
+import React, { useState } from "react";
 
 function Validate(input) {
   let errors = {};
@@ -21,7 +21,7 @@ function Validate(input) {
 }
 
 export default function creariniciativa() {
-  const [input, setInput] = useState({
+  const [input, setInput] = React.useState({
     ongId: "",
     title: "",
     description: "",
@@ -31,7 +31,7 @@ export default function creariniciativa() {
     voluntarios: 'off',
   });
 
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = React.useState({});
 
   const postIniciatives = async(props) => {
     let info = await axios.post(`http://localhost:3001/posts/newpost`, props);
