@@ -45,13 +45,13 @@ export default function Navbar() {
                             </div>
                             <div className="hidden gap-4 md:flex">
                                 <Link
-                                    href="#"
+                                    href="/ingresar"
                                     className="font-semibold text-black bg-zinc-100 px-6 py-2 hover:bg-zinc-200 transition-colors"
                                 >
                                     Log In
                                 </Link>
                                 <Link
-                                    href="#"
+                                    href="/registrarse"
                                     className="font-semibold text-white bg-black px-6 py-2 hover:bg-zinc-800 transition-colors"
                                 >
                                     Register
