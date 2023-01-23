@@ -1,7 +1,7 @@
 'use client'
 import { useState } from "react";
 import Link from "next/link";
-import Auth from "@/Components/Auth";
+import Auth from "../../Components/Auth";
 function Validate(input) {
   let errors = {};
 
