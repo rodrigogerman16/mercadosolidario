@@ -26,15 +26,15 @@ const Initiative =  ({data}) => {
       <nav>
         <div>
             <ul  >
-              <li   ><a onClick={(e) => filterHandler(e)}  name='all'  >All</a></li>
-              <li   ><a onClick={(e) => filterHandler(e)}  name='efectivo' >Efectivo</a></li>
-              <li   > <a onClick={(e) => filterHandler(e)}  name='especie'  >En Especie</a> </li>
+              <li key='Lista1'  ><a onClick={(e) => filterHandler(e)}  name='all'  >All</a></li>
+              <li key='Lista2'  ><a onClick={(e) => filterHandler(e)}  name='efectivo' >Efectivo</a></li>
+              <li key='Lista3'  > <a onClick={(e) => filterHandler(e)}  name='especie'  >En Especie</a> </li>
             </ul>
         </div>
         <div>
             <h2>Provincia</h2>
             <select onChange={(e) => filterProvinces(e)}>
-            <option value='all'>Todos</option>
+            <option key='all' value='all'>Todos</option>
             {
                     Provincias.map((e) => <option  key={e} value={e} >{e}</option>)
                 }
@@ -43,7 +43,7 @@ const Initiative =  ({data}) => {
       </nav>
     
       {
-        info.map((e) => <Link href={`/iniciativas/${e.id}`} > <Card key={e.id} title={e.title}  description={e.description} location={e.location}  /> </Link>)
+        info.map((e) => <Link key={e.id}  href={`/iniciativas/${e.id}`} > <Card key={e.id} title={e.title}  description={e.description} location={e.location}  /> </Link>)
       }
     </div>
   )
