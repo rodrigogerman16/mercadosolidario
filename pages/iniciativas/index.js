@@ -5,7 +5,6 @@ import Link from 'next/link'
 import Provincias from './Provincias'
 const Initiative =  ({data}) => {
     const [info, setInfo] = useState(data)
-  console.log(Provincias);
     const filterHandler = (e) => {
       const value = e.target.name
       console.log(value);
@@ -15,11 +14,10 @@ const Initiative =  ({data}) => {
     }
 
     const filterProvinces = (e) => {
-      const value = e.target.id
+      const value = e.target.value
       console.log(value);
       const filtros = data.filter(posts => posts.location === value)
       setInfo(value === "all" ? data : filtros)
-      console.log(data);
   }
 
 
@@ -30,13 +28,16 @@ const Initiative =  ({data}) => {
             <ul  >
               <li   ><a onClick={(e) => filterHandler(e)}  name='all'  >All</a></li>
               <li   ><a onClick={(e) => filterHandler(e)}  name='efectivo' >Efectivo</a></li>
-              <li     > <a onClick={(e) => filterHandler(e)}  name='especie'  >En Especie</a> </li>
+              <li   > <a onClick={(e) => filterHandler(e)}  name='especie'  >En Especie</a> </li>
             </ul>
         </div>
         <div>
             <h2>Provincia</h2>
             <select onChange={(e) => filterProvinces(e)}>
-            <option id='all'>Todos</option>
+            <option value='all'>Todos</option>
+            {
+                    Provincias.map((e) => <option  key={e} value={e} >{e}</option>)
+                }
             </select>
         </div>
       </nav>
