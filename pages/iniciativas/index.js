@@ -2,7 +2,6 @@
 import Card from '../../Components/Card'
 import React, { useEffect ,useState } from 'react'
 import Link from 'next/link'
-import Provincias from '@/Components/Provincias'
 const Initiative = ({ data }) => {
   let [info, setInfo] = useState(data)
   const [input, setInput] = useState()
@@ -60,7 +59,33 @@ const Initiative = ({ data }) => {
   }
 
 
+  const Provincias = [
   
+    "Buenos Aires",
+    "Catamarca",
+    "Chaco",
+    "Chubut",
+    "Córdoba",
+    "Corrientes",
+    "Entre Ríos",
+    "Formosa",
+    "Jujuy",
+    "La Pampa",
+    "La Rioja",
+    "Mendoza",
+    "Misiones",
+    "Neuquén",
+    "Río Negro",
+    "Salta",
+    "San Juan",
+    "San Luis",
+    "Santa Cruz",
+    "Santa Fé",
+    "Santiago del Estero",
+    "Tierra del Fuego",
+    "Tucuman"
+  
+]
   
 
 
