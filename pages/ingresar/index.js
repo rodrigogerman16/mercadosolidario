@@ -1,7 +1,7 @@
 'use client'
 import { useState } from "react";
 import Link from "next/link";
-
+import Auth from "@/Components/Auth";
 function Validate(input) {
   let errors = {};
 
@@ -99,7 +99,8 @@ export default function Login() {
             </div>
             <input class="mt-4 w-64 h-9 bg-blue-600 rounded-md text-white font-hind" type="submit" value={"Ingresar"} />
           </form>
-          <button class="mt-3 w-64 h-9 rounded-md text-black font-hind font-bold">Ingresar con Google</button>
+          {/* <button class="mt-3 w-64 h-9 rounded-md text-black font-hind font-bold">Ingresar con Google</button> */}
+            <Auth />
           <div class="pt-10">
           </div>
         </div>
