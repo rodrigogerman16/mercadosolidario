@@ -2,7 +2,7 @@
 import Card from '../../Components/Card'
 import React, { useEffect ,useState } from 'react'
 import Link from 'next/link'
-import Provincias from '../../Components/Provincias'
+import Provincias from '@/Components/provincias'
 const Initiative = ({ data }) => {
   let [info, setInfo] = useState(data)
   const [input, setInput] = useState()
