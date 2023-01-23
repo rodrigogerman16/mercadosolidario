@@ -1,9 +1,7 @@
 'use client'
-import Navbar from "@/Components/Navbar";
-import Footer from "@/Components/Footer";
 import Link from "next/link";
 import { useState } from "react";
-
+import emailPost from "@/Components/emailPost";
 function Validate(input) {
   let errors = {};
   if (/[`!@#$%^&*()_+\-=[\]{};':"\\|,.<>\d/?~]/.test(input.name)) {
@@ -77,7 +75,7 @@ export default function CreateUser() {
         // window.localStorage.setItem(
         //   'email', JSON.stringify(input.email)
         // )
-
+        emailPost(input.email)
         alert("Usuario Creado!");
 
         setInput({
@@ -99,7 +97,6 @@ export default function CreateUser() {
 
   return (
     <div className="m-0 p-0">
-      <Navbar/>
       <div class="flex flex-col justify-center items-start m-auto min-h-full mt-12 bg-white w-3/5">
         <div className="text-2xl font-montserrat justify-items-start w-full">
           <h1 class="text-start">Registrarse</h1>
@@ -215,7 +212,6 @@ export default function CreateUser() {
           </div>
         </form>
       </div>
-      <Footer/>
     </div>
   );
 }
