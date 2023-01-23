@@ -20,7 +20,7 @@ function Validate(input) {
   return errors;
 }
 
-export default function creariniciativa() {
+export default function Creariniciativa() {
   const [input, setInput] = React.useState({
     ongId: "",
     title: "",
