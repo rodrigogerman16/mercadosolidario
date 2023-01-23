@@ -1,5 +1,5 @@
 
-const Provincias = [
+export const Provincias = [
   
     "Buenos Aires",
     "Catamarca",
@@ -27,4 +27,3 @@ const Provincias = [
   
 ]
 
-export default Provincias
