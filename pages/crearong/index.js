@@ -1,5 +1,4 @@
 "use client";
-import Navbar from "@/Components/Navbar";
 import { useState } from "react";
 
 function Validate(input) {
@@ -92,7 +91,6 @@ export default function Crearong() {
 
   return (
     <div>
-      <Navbar />
       <div class="flex flex-col justify-center items-start m-auto min-h-full mt-16 bg-white w-3/5">
         <div className="text-2xl font-montserrat justify-items-start w-full">
           <h1 class="text-start">Registrar ONG</h1>
