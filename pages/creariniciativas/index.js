@@ -188,12 +188,12 @@ export default function Creariniciativa() {
 
             <div class="mt-2 font-hind text-lg">
               <input class="cursor-pointer" type="checkbox" id="efectivo" name="efectivo" onClick={(el) => handleCheck(el)}/>
-              <label class=" hover:underline">En Efectivo</label>
+              <label class="ml-2 hover:underline">En Efectivo</label>
             </div>
 
             <div class="mt-1 font-hind text-lg">
               <input class="cursor-pointer" type="checkbox" id="voluntarios" name="voluntarios" onClick={(el) => handleCheck(el)}/>
-              <label>Voluntarios</label>
+              <label class="ml-2">Voluntarios</label>
             </div>
           </div>
           {/* {errors.ayudas ? <label>{errors.ayudas}</label> : null} */}
