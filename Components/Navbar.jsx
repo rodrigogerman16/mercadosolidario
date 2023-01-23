@@ -23,6 +23,9 @@ export default function Navbar(){
                         <Link href="/iniciativas" className="block py-2 pl-3 pr-4 rounded md:p-0 hover:text-pink-500">Iniciativas</Link>
                     </li>
                     <li>
+                        <Link href="/creariniciativas" className="block py-2 pl-3 pr-4 rounded md:p-0 hover:text-pink-500">Crear iniciativas</Link>
+                    </li>
+                    <li>
                         <Link href="/faq" className="className=block py-2 pl-3 pr-4 rounded md:p-0 hover:text-pink-500">FAQ</Link>
                     </li>
                     <li>

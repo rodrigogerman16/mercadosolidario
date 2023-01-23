@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Card = ({ title, description, location }) => {
+const Card = ({ title, description, location, donacion, donacion2 }) => {
   return (
     <div className="max-w-2xl overflow-hidden bg-white rounded-lg shadow-md">
       <img className="object-cover w-full h-64" src="https://www.le7.info/media/cache/article/uploads/photos/630d9eee64fd3.jpeg" alt="Article" />
@@ -15,6 +15,8 @@ const Card = ({ title, description, location }) => {
         <div className="mt-4">
           <div className="flex items-center">
             <span className="mx-1 text-xs text-gray-600">{location}</span>
+            <p className="mx-1 text-xs text-gray-600"  >{donacion}</p>
+            <p className="mx-1 text-xs text-gray-600"  >{donacion2 ? donacion2 : "" }</p>
           </div>
         </div>
       </div>
