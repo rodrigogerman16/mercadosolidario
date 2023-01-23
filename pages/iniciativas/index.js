@@ -40,7 +40,7 @@ const Initiative = ({ data }) => {
   }
 
   const filterProvinces = (e) => {
-    
+
     const value = e.target.value;
     console.log(value);
     const filtros = data.filter((posts) => posts.location === value);
@@ -53,8 +53,8 @@ const Initiative = ({ data }) => {
     const filterSearch = !input
       ? data
       : await data.filter((dato) =>
-          dato.title.toLowerCase().includes(input.toLowerCase())
-        );
+        dato.title.toLowerCase().includes(input.toLowerCase())
+      );
     setInfo(filterSearch);
     console.log(e.target.value);
     setCurrentPage(1)
@@ -105,33 +105,39 @@ const Initiative = ({ data }) => {
   console.log(info)
 
   return (
-    <div>
-      <nav className="flex w-full align-middle justify-center text-center gap-8 bg-pink-300 py-4 items-center ">
-        <div>
-          <ul>
-            <li className="cursor-pointer">
-              <a onClick={(e) => filterHandler(e)} name="all">
-                All
-              </a>
-            </li>
-            <li className="cursor-pointer">
-              <a onClick={(e) => filterHandler(e)} name="efectivo">
-                Efectivo
-              </a>
-            </li>
-            <li className="cursor-pointer">
-              {" "}
-              <a onClick={(e) => filterHandler(e)} name="especie">
-                En Especie
-              </a>{" "}
-            </li>
-          </ul>
-        </div>
-        <div>
-          <h2>Provincia</h2>
-          <select
-            onChange={(e) => filterProvinces(e)}
-            className="
+    <div class="font-hind text-lg">
+      <div class="flex">
+        <nav className="flex flex-col gap-8 bg-pink-300 py-4 justyfy-center items-center w-64 rounded">
+          <div class="flex flex-col justyfy-center items-center font-hind mt-24">
+            <label>Buscar</label>
+          <input class="w-11/12 border border-gray-900 rounded" onChange={(e) => filtroInput(e)} />
+          </div>
+          <div>
+            <ul class="flex flex-col items-center justify-between h-32">
+              <li class="flex flex-col justyfy-center items-center cursor-pointer border border-gray-900 rounded h-8 w-36">
+                <a onClick={(e) => filterHandler(e)} name="all">
+                  All
+                </a>
+              </li>
+              <li class="flex flex-col justyfy-center items-center cursor-pointer border border-gray-900 rounded h-8 w-36">
+                <a onClick={(e) => filterHandler(e)} name="efectivo">
+                  Efectivo
+                </a>
+              </li>
+              <li class="flex flex-col justyfy-center items-center cursor-pointer border border-gray-900 rounded h-8 w-36">
+                {" "}
+                <a onClick={(e) => filterHandler(e)} name="especie">
+                  En Especie
+                </a>{" "}
+              </li>
+            </ul>
+          </div>
+          <div class="flex flex-col justyfy-center items-center gap-2">
+            <h2>Provincia</h2>
+            <select
+            class="w-11/12 h-8 border border-gray-900 rounded"
+              onChange={(e) => filterProvinces(e)}
+              className="
           form-select appearance-none
           block
           w-full
@@ -148,34 +154,28 @@ const Initiative = ({ data }) => {
           m-0
           focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
           "
-          >
-            <option value="all">Todos</option>
-            {Provincias.map((e) => (
-              <option key={e} value={e}>
-                {e}
-              </option>
-            ))}
-          </select>
-        </div>
+            >
+              <option value="all">Todos</option>
+              {Provincias.map((e) => (
+                <option key={e} value={e}>
+                  {e}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div class="flex flex-col justyfy-center items-center gap-2">
+            <select class="w-48 h-8" onChange={(e) => orderHandler(e)}>
+              <option value="all">All</option>
+              <option value="asc">A-Z</option>
+              <option value="desc">Z-A</option>
+            </select>
+          </div>
+        </nav>
         <div>
-          <select onChange={(e) => orderHandler(e)}>
-            <option value="all">All</option>
-            <option value="asc">A-Z</option>
-            <option value="desc">Z-A</option>
-          </select>
-          <input onChange={(e) => filtroInput(e)} />
         </div>
-      </nav>
-      <div>
-      <Paginate
-        publicationsPerPage={publicationsPerPage}
-        allPublications={info.length}
-        paginado={paginado}
-      />
-      </div>
-      <div className="w-full grid grid-cols-1 gap-8 p-8 sm:grid-cols-2 lg:grid-cols-4">
-        {info.length !== 0
-          ? infoo.map((e) => (
+        <div className="w-full grid grid-cols-1 gap-8 p-8 sm:grid-cols-2 lg:grid-cols-4">
+          {info.length !== 0
+            ? infoo.map((e) => (
               <Link key={e.id} href={`/iniciativas/${e.id}`}>
                 {" "}
                 <Card
@@ -186,8 +186,14 @@ const Initiative = ({ data }) => {
                 />{" "}
               </Link>
             ))
-          : "No hay cartas para mostrar"}
+            : "No hay cartas para mostrar"}
+        </div>
       </div>
+      <Paginate
+        publicationsPerPage={publicationsPerPage}
+        allPublications={info.length}
+        paginado={paginado}
+      />
     </div>
   );
 };

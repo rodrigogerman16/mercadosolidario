@@ -7,12 +7,12 @@ export default function Paginate({ publicationsPerPage, allPublications, paginad
   }
 
   return (
-    <nav>
-      <div>
+    <nav class="justify-center text-center items-center mt-10">
+      <div class="inline-flex items-center -space-x-px gap-3">
         {pageNumber &&
           pageNumber.map((number) => {
             return (
-              <div key={number}>
+              <div class="px-3 py-2 leading-tight text-black hover:text-white border bg-pink-300 hover:bg-gray-800 dark:border-gray-700 rounded" key={number}>
                 <button onClick={() => paginado(number)}>
                   {number}
                 </button>
