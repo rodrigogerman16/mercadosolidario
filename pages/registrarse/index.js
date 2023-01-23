@@ -3,7 +3,7 @@ import Navbar from "@/Components/Navbar";
 import Footer from "@/Components/Footer";
 import Link from "next/link";
 import { useState } from "react";
-
+import emailPost from "./emailPost";
 function Validate(input) {
   let errors = {};
   if (/[`!@#$%^&*()_+\-=[\]{};':"\\|,.<>\d/?~]/.test(input.name)) {
@@ -77,7 +77,7 @@ export default function CreateUser() {
         // window.localStorage.setItem(
         //   'email', JSON.stringify(input.email)
         // )
-
+        emailPost(input.email)
         alert("Usuario Creado!");
 
         setInput({
