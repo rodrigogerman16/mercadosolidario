@@ -62,15 +62,15 @@ const Initiative = ({ data }) => {
 
   const orderHandler = async (e) => {
     if (e.target.value === "asc") {
-      const order = await info.sort((a, b) => a.title.localeCompare(b.title));
+      const order = await infoo.sort((a, b) => a.title.localeCompare(b.title));
       console.log(order);
       setInfo(order);
     } else if (e.target.value === "desc") {
-      const order = await info.sort((a, b) => b.title.localeCompare(a.title));
+      const order = await infoo.sort((a, b) => b.title.localeCompare(a.title));
       console.log(order);
       setInfo(order);
     } else if (e.target.value === "all") {
-      const order = await info;
+      const order = await infoo;
       setInfo(order);
     }
     setCurrentPage(1)
