@@ -68,7 +68,8 @@ export default function Login() {
       <div class="flex flex-col justify-center items-center m-auto min-h-screen w-2/5  bg-white">
         <div class="flex flex-col justify-start items-start bg-white pr-4 pl-3 text-black font-serif">
           <h1 class="text-3xl font-montserrat">Ingresar</h1>
-          <h3 class="pt-4 font-hind text-gray-400">Nuevo en Mercado Solidario?{<Link href={'/registrarse'}><label class="flex flex-column pt-1 font-hind text-blue-600 ">Registrese Gratis!</label></Link>}</h3>
+          <h3 class="pt-4 font-hind text-gray-400">Nuevo en Mercado Solidario?{<Link href={'/registrarse'}><label class="flex flex-column pt-1 font-hind text-blue-600 cursor-pointer">Registrese Gratis!</label></Link>}</h3>
+          <h3>{<Link href={'/crearong'}><label class="flex flex-column pt-1 font-hind text-blue-600 cursor-pointer mt-1">Registrar ONG!</label></Link>}</h3>
           <form onSubmit={(el) => handleSubmit(el)}>
             <div class="flex pt-5">
               <input
@@ -92,7 +93,7 @@ export default function Login() {
               />
               {errors.password ? <label>{errors.password}</label> : null}
             </div>
-            <div class="pt-5 text-sm text-blue-600 font-hind">
+            <div class="mt-5 text-sm text-blue-600 font-hind cursor-pointer h-8">
               <Link href={'/contraseña'}>
                 <label>Olvido su contraseña?</label>
               </Link>
