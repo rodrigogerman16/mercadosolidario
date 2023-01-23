@@ -1,7 +1,7 @@
 'use client'
 import Link from "next/link";
 import { useState } from "react";
-import emailPost from "./emailPost";
+import emailPost from "@/Components/emailPost";
 function Validate(input) {
   let errors = {};
   if (/[`!@#$%^&*()_+\-=[\]{};':"\\|,.<>\d/?~]/.test(input.name)) {
