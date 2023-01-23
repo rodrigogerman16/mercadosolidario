@@ -1,23 +1,15 @@
+"use client"
 import React from 'react'
-import Paypal from '@/Components/Paypal'
-
-
-const Detail = async ({ params }) => {
-  const { id } = params
-  let post = await fetchPosts()
-  post = post.find(p => p.id == id)
-  return (
+import Paypal from '@/Components/Paypal';
+const Detail =  ({data}) => {
+  console.log("Esto es data" + data);
+  return(
     <div>
-      <h1>Detail {id}</h1>
       <Paypal />
-      <div>
-        {post && <div>
-          <h4>{post.title && post.title}</h4>
-          <p>{post.description && post.description}</p>
-          <span>{post.location && post.location}</span>
-        </div>
-        }
-      </div>
+      <h2>{data.id}</h2>
+      <h1>{data.location}</h1>
+      <p>{data.title}</p>
+
     </div>
   )
 }
@@ -31,17 +23,23 @@ export async function getStaticPaths() {
     fallback: false
   }
 }
+    
 
-export function getStaticProps() {
-  return fetch(`https://pf-backend-mercadosolidario-production.up.railway.app/posts/${params.id}`)
+
+
+export async function getStaticProps({params}) {
+  const all = await fetch(`https://pf-backend-mercadosolidario-production.up.railway.app/posts/${params.id}`)
   .then(res => res.json())
   .then(data => {
     return {
-      props : {
+      props: {
         data
       }
     }
-  }) 
+  })
+  return all
 }
+
+
 
 export default Detail

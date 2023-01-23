@@ -1,15 +1,16 @@
-import Image from 'next/image'
-import Link from 'next/link'
 import React from 'react'
 
-const Card = ({ id, title, description, location }) => {
+const Card = ({ title, description, location }) => {
   return (
-    <Link href={`/iniciativas/${id}`}>
+    <div>
       <h4>{title}</h4>
       <p>{description}</p>
       <span>{location}</span>
-    </Link>
+      </div>
   )
 }
+
+
+
 
 export default Card
