@@ -34,7 +34,7 @@ export default function Creariniciativa() {
   const [errors, setErrors] = React.useState({});
 
   const postIniciatives = async(props) => {
-    let info = await axios.post(`http://localhost:3001/posts/newpost`, props);
+    let info = await axios.post(`https://pf-backend-mercadosolidario-production.up.railway.app/posts/newpost`, props);
     return console.log(info.data)
   }
 
