@@ -1,4 +1,3 @@
-"use client"
 import { gapi } from "gapi-script";
 import GoogleLogin from "react-google-login";
 import { useEffect, useState } from "react";
