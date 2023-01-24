@@ -3,7 +3,7 @@ import GoogleLogin from "react-google-login";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
-export default Auth = () =>{
+  const Auth = () =>{
   const clientID = "83937004907-369gq7o4ocbnfb4u9v9md1dgg197uc2g.apps.googleusercontent.com"
   const [user, setUser] = useState({})
   useEffect(() => {
@@ -32,3 +32,5 @@ export default Auth = () =>{
     </div>
   )
 }
+
+module.exports = Auth
