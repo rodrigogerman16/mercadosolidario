@@ -33,4 +33,4 @@ import Image from "next/image";
   )
 }
 
-module.exports = Auth
+export default Auth
