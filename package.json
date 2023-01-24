@@ -2,6 +2,7 @@
   "name": "next-pg",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -27,7 +28,6 @@
   },
   "devDependencies": {
     "tailwindcss": "^3.2.4"
-  },
-    "type": "module"
+  }
 }
  
