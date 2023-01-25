@@ -16,7 +16,7 @@ const index = () => {
 
       <div className="space-y-4">
 
-        <details className="group border-l-4 border-pink-400 bg-gray-50 p-6 [&_summary::-webkit-details-marker]:hidden">
+        <details className="group border-l-4 border-pink-400 bg-gray-50 p-6 [&_summary::-webkit-details-marker]:hidden rounded">
           <summary className="flex items-center justify-between cursor-pointer">
             <h2 className="text-lg font-medium text-gray-900">
               Lorem ipsum dolor sit amet consectetur adipisicing?
@@ -35,7 +35,7 @@ const index = () => {
           </p>
         </details>
 
-        <details className="group border-l-4 border-pink-400 bg-gray-50 p-6 [&_summary::-webkit-details-marker]:hidden">
+        <details className="group border-l-4 border-pink-400 bg-gray-50 p-6 [&_summary::-webkit-details-marker]:hidden rounded">
           <summary className="flex items-center justify-between cursor-pointer">
             <h2 className="text-lg font-medium text-gray-900">
               Lorem ipsum dolor sit amet consectetur adipisicing?
@@ -54,7 +54,7 @@ const index = () => {
           </p>
         </details>
 
-        <details className="group border-l-4 border-pink-400 bg-gray-50 p-6 [&_summary::-webkit-details-marker]:hidden">
+        <details className="group border-l-4 border-pink-400 bg-gray-50 p-6 [&_summary::-webkit-details-marker]:hidden rounded">
           <summary className="flex items-center justify-between cursor-pointer">
             <h2 className="text-lg font-medium text-gray-900">
               Lorem ipsum dolor sit amet consectetur adipisicing?
@@ -73,7 +73,7 @@ const index = () => {
           </p>
         </details>
 
-        <details className="group border-l-4 border-pink-400 bg-gray-50 p-6 [&_summary::-webkit-details-marker]:hidden">
+        <details className="group border-l-4 border-pink-400 bg-gray-50 p-6 [&_summary::-webkit-details-marker]:hidden rounded">
           <summary className="flex items-center justify-between cursor-pointer">
             <h2 className="text-lg font-medium text-gray-900">
               Lorem ipsum dolor sit amet consectetur adipisicing?
@@ -92,7 +92,7 @@ const index = () => {
           </p>
         </details>
 
-        <details className="group border-l-4 border-pink-400 bg-gray-50 p-6 [&_summary::-webkit-details-marker]:hidden">
+        <details className="group border-l-4 border-pink-400 bg-gray-50 p-6 [&_summary::-webkit-details-marker]:hidden rounded">
           <summary className="flex items-center justify-between cursor-pointer">
             <h2 className="text-lg font-medium text-gray-900">
               Lorem ipsum dolor sit amet consectetur adipisicing?
