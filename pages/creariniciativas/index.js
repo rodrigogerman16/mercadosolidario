@@ -2,7 +2,7 @@
 import Navbar from "../../Components/Navbar";
 import axios from "axios";
 import React, { useState } from "react";
-
+import { useRouter } from "next/router";
 function Validate(input) {
   let errors = {};
   if (input.ongId.length !== 24) {
@@ -21,6 +21,7 @@ function Validate(input) {
 }
 
 export default function Creariniciativa() {
+  const router = useRouter()
   const [input, setInput] = React.useState({
     ongId: "",
     title: "",
@@ -34,11 +35,12 @@ export default function Creariniciativa() {
   const [errors, setErrors] = React.useState({});
 
   const postIniciatives = async(props) => {
-    let info = await axios.post(`http://localhost:3001/posts/newpost`, props);
+    let info = await axios.post(`https://pf-backend-mercadosolidario-production.up.railway.app/posts/newpost`, props);
     return console.log(info.data)
   }
 
   function handleChange(el) {
+    
     setInput({
       ...input,
       [el.target.name]: el.target.value,
@@ -94,6 +96,7 @@ export default function Creariniciativa() {
           type_of_volunteer: input.voluntarios === 'on' ? "VOLUNTARIO" : null
         }
         postIniciatives(post);
+        router.push('/iniciativas')
         setInput({
           ongId: "",
           title: "",
