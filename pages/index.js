@@ -1,6 +1,5 @@
 'use client'
 import Image from 'next/image'
-import { landingImage } from '../Assets/landing.jpg'
 import recomendacion from '../Assets/recomendacion.jpeg'
 
 export default function Home() {
