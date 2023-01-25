@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import CardDashBoard from "../../Components/CardDashBoard";
 import Paginate from "../../Components/Paginate";
 
-export default function dashboard({data}) {
+export default function Dashboard({data}) {
   const [info, setInfo] = useState(data)
   const [currentPage, setCurrentPage] = React.useState(1);
   const publicationsPerPage = 8;
