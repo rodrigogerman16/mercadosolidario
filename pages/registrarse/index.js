@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import emailPost from "@/Components/emailPost";
-//import { useHistory } from "react-router-dom";
+import { useRouter } from "next/router";
 
 function Validate(input) {
   let errors = {};
@@ -50,7 +50,7 @@ function Validate(input) {
 }
 
 export default function CreateUser() {
-  //const history = useHistory();
+  const router = useRouter();
   const [input, setInput] = useState({
     name: "",
     lastname: "",
@@ -117,7 +117,7 @@ export default function CreateUser() {
           email: "",
           password: "",
         });
-        //history.push("/");
+        router.push('/')
       } else {
         alert("Hay datos incorrectos o sin completar!");
       }
