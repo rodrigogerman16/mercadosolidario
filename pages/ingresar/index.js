@@ -1,6 +1,7 @@
 'use client'
 import { useState } from "react";
 import Link from "next/link";
+import {useSession, signIn, signOut} from "next-auth/react"
 
 function Validate(input) {
   let errors = {};
@@ -61,8 +62,19 @@ export default function Login() {
     }
   };
 
-  console.log(input)
+  const {data: session} = useSession()
 
+  {/*If session - dentro 3 if - if session.user.name === admin return redirect a page dashboard, if session.user.algo === ong/gptw return redirect a /o (ong), if session.user.algo === usuario redirect a /u (usuario) */}
+  if(session){
+    return (
+      <div>
+        <p>welcome, {session.user.email}</p>
+        <button onClick={() => signOut()}>signOut</button>
+      </div>
+    )
+  }
+
+  else{
   return (
     <div>
       <div class="flex flex-col justify-center items-center m-auto min-h-screen w-2/5  bg-white">
@@ -98,13 +110,13 @@ export default function Login() {
                 <label>Olvido su contraseña?</label>
               </Link>
             </div>
-            <input class="mt-4 w-64 h-9 bg-blue-600 rounded-md text-white font-hind" type="submit" value={"Ingresar"} />
+            <input type="button" class="mt-4 w-64 h-9 bg-blue-600 rounded-md text-white font-hind" value={"Ingresar"} />
           </form>
-          <button class="mt-3 w-64 h-9 rounded-md text-black font-hind font-bold">Ingresar con Google</button>
+          <button class="mt-3 w-64 h-9 rounded-md text-black font-hind font-bold"onClick={() => signIn()}>Ingresar con Google</button>
           <div class="pt-10">
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>    
+  )};
 }
