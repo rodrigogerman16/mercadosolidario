@@ -34,7 +34,7 @@ const Initiative = ({ data }) => {
   useEffect(() => {
     setHydrated(true);
     setInfo(info);
-  }, [info]);
+  }, [infoo]);
   if (!hydrated) {
     return null;
   }
