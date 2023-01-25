@@ -61,49 +61,42 @@ export default function Login() {
     }
   };
 
-  console.log(input)
-
   return (
-    <div>
-      <div class="flex flex-col justify-center items-center m-auto min-h-screen w-2/5  bg-white">
-        <div class="flex flex-col justify-start items-start bg-white pr-4 pl-3 text-black font-serif">
-          <h1 class="text-3xl font-montserrat">Ingresar</h1>
-          <h3 class="pt-4 font-hind text-gray-400">Nuevo en Mercado Solidario?{<Link href={'/registrarse'}><label class="flex flex-column pt-1 font-hind text-blue-600 cursor-pointer">Registrese Gratis!</label></Link>}</h3>
-          <h3>{<Link href={'/crearong'}><label class="flex flex-column pt-1 font-hind text-blue-600 cursor-pointer mt-1">Registrar ONG!</label></Link>}</h3>
-          <form onSubmit={(el) => handleSubmit(el)}>
-            <div class="flex pt-5">
-              <input
-                class="w-56"
-                type="text"
-                value={input.email}
-                name={"email"}
-                onChange={(el) => handleChange(el)}
-                placeholder='Email'
-              />
-              {errors.email ? <label>{errors.email}</label> : null}
+    <div className="w-full max-w-md p-4 rounded-md sm:p-8 m-auto min-h-[calc(100vh-100px)] flex flex-col justify-center items-center">
+      <h2 className="mb-3 text-3xl font-semibold text-center">Ingresa a tu cuenta</h2>
+      <p className="text-sm text-center dark:text-gray-400">No tienes cuenta?&nbsp;
+        <Link href="/registrarse" rel="noopener noreferrer" className="focus:underline hover:underline">Registrate aquí</Link>
+      </p>
+      <form novalidate="" action="" className="space-y-8 ng-untouched ng-pristine ng-valid my-8 w-full">
+        <div className="space-y-4 w-full">
+          <div className="space-y-2">
+            <label for="email" className="block text-sm">Email</label>
+            <input type="email" name="email" id="email" placeholder="ejemplo@mail.com" value={input.email} onChange={(el) => handleChange(el)} className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200" />
+            {errors.email && <label className="w-full text-red-600">{errors.email}</label>}
+          </div>
+          <div className="space-y-2">
+            <div className="flex justify-between">
+              <label for="password" value={input.password} name={"password"} onChange={(el) => handleChange(el)} className="text-sm">Contraseña</label>
             </div>
-            <div class="pt-5">
-              <input
-                class="w-56"
-                type="password"
-                value={input.password}
-                name={"password"}
-                onChange={(el) => handleChange(el)}
-                placeholder='Contraseña'
-              />
-              {errors.password ? <label>{errors.password}</label> : null}
-            </div>
-            <div class="mt-5 text-sm text-blue-600 font-hind cursor-pointer h-8">
-              <Link href={'/contraseña'}>
-                <label>Olvido su contraseña?</label>
-              </Link>
-            </div>
-            <input class="mt-4 w-64 h-9 bg-blue-600 rounded-md text-white font-hind" type="submit" value={"Ingresar"} />
-          </form>
-          <button class="mt-3 w-64 h-9 rounded-md text-black font-hind font-bold">Ingresar con Google</button>
-          <div class="pt-10">
+            <input type="password" name="password" id="password" placeholder="********" className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200" />
+            {errors.password && <label className="w-full text-red-600">{errors.password}</label>}
           </div>
         </div>
+        <button type="button" className="w-full px-8 py-3 font-semibold bg-black text-white hover:bg-zinc-800 transition-colors rounded">Ingresar</button>
+        <a rel="noopener noreferrer" href="#" className="text-xs hover:underline text-gray-400 text-center w-full m-auto block">Olvidaste tu contraseña?</a>
+        <div className="flex items-center w-full my-4">
+          <hr className="w-full dark:text-gray-400" />
+          <p className="px-3 dark:text-gray-400">OR</p>
+          <hr className="w-full dark:text-gray-400" />
+        </div>
+      </form>
+      <div className="my-6 space-y-4 w-full">
+        <button aria-label="Login with Google" type="button" className="flex items-center justify-center w-full p-4 space-x-4 border shadow focus:ring-0 w-full rounded">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" className="w-5 h-5 fill-pink-400">
+            <path d="M16.318 13.714v5.484h9.078c-0.37 2.354-2.745 6.901-9.078 6.901-5.458 0-9.917-4.521-9.917-10.099s4.458-10.099 9.917-10.099c3.109 0 5.193 1.318 6.38 2.464l4.339-4.182c-2.786-2.599-6.396-4.182-10.719-4.182-8.844 0-16 7.151-16 16s7.156 16 16 16c9.234 0 15.365-6.49 15.365-15.635 0-1.052-0.115-1.854-0.255-2.651z"></path>
+          </svg>
+          <p>Ingresar con Google</p>
+        </button>
       </div>
     </div>
   );
