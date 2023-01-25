@@ -7,6 +7,7 @@ export default function Footer() {
     return (
         <footer aria-label="Site Footer" className="bg-white">
             <div className="mx-auto max-w-screen-xl px-4 pt-16 pb-8 sm:px-6 lg:px-8">
+                <div className="mt-16 border-t border-gray-100 pt-8 grid grid-cols-1 gap-4"></div>
                 <div className="mt-16 grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-32">
                     <div className="mx-auto max-w-sm lg:max-w-none">
                         <div className="mx-auto max-w-md">
@@ -16,8 +17,8 @@ export default function Footer() {
                             <form className="mt-6">
                                 <div className="relative max-w-lg">
                                     <label className="sr-only" htmlFor="email"> Email </label>
-                                    <input className="w-full  border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200" id="email" type="email" placeholder="ejemplo@mail.com" />
-                                    <button className="absolute top-1/2 right-1 -translate-y-1/2  bg-black px-5 py-3 text-sm font-medium text-white transition hover:bg-zinc-800" type="button">
+                                    <input className="w-full rounded  border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200" id="email" type="email" placeholder="ejemplo@mail.com" />
+                                    <button className="absolute top-1/2 right-1 -translate-y-1/2  bg-pink-400 px-5 py-3 text-sm font-medium text-white transition hover:bg-pink-300 rounded" type="button">
                                         Suscribirse
                                     </button>
                                 </div>
