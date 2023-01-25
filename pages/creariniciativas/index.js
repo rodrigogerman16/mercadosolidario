@@ -1,7 +1,7 @@
 "use client";
 import axios from "axios";
 import React, { useState } from "react";
-
+import { useRouter } from "next/router";
 function Validate(input) {
   let errors = {};
   if (input.ongId.length !== 24) {
@@ -20,6 +20,7 @@ function Validate(input) {
 }
 
 export default function Creariniciativa() {
+  const router = useRouter()
   const [input, setInput] = React.useState({
     ongId: "",
     title: "",
@@ -38,6 +39,7 @@ export default function Creariniciativa() {
   }
 
   function handleChange(el) {
+    
     setInput({
       ...input,
       [el.target.name]: el.target.value,
@@ -93,6 +95,7 @@ export default function Creariniciativa() {
           type_of_volunteer: input.voluntarios === 'on' ? "VOLUNTARIO" : null
         }
         postIniciatives(post);
+        router.push('/iniciativas')
         setInput({
           ongId: "",
           title: "",
