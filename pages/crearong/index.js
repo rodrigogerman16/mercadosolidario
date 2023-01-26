@@ -137,7 +137,7 @@ export default function Crearong() {
                 {errors.lastName ? <label>{errors.lastName}</label> : null}
               </div>
               <div class="flex flex-col">
-                <label class="pt-3 font-hind text-lg">Cuit del titular</label>
+                <label class="pt-3 font-hind text-lg">Cuit de la ONG</label>
                 <input
                   class="border border-slate-400 mr-9 mt-1 h-10 w-72 rounded"
                   type="text"
