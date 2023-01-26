@@ -142,6 +142,7 @@ export default function Creariniciativa() {
         //   type_of_volunteer: input.voluntarios === "on" ? "VOLUNTARIO" : null,
         // };
         //router.push("/iniciativas");
+        //asd
         console.log(data.secure_url)
         
         setInput({
