@@ -37,7 +37,7 @@ const Detail = ({ data }) => {
 export async function getStaticPaths() {
   const res = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/posts")
   const data = await res.json()
-  const paths = data.map(({ id }) => ({ params: { id: `${id}` } }))
+  const paths = data?.map(({ id }) => ({ params: { id: `${id}` } }))
   return {
     paths,
     fallback: false
