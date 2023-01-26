@@ -410,17 +410,19 @@ export default function Products({ data }) {
               </form>
 
               {/* Product grid */}
-              <div className="grid">
+              <div className="grid w-full col-span-3 sm:grid-cols-2 xl:grid-cols-3 gap-4">
                 {data.length !== 0
                   ? data.map((e) => (
-                    <Link key={e.id} href={`/iniciativas/${e.id}`}>
-                      {" "}
+                    <Link className='w-full' key={e.id} href={`/iniciativas/${e.id}`}>
                       <Card
                         key={e.id}
                         title={e.title}
+                        image={e.image}
                         description={e.description}
                         location={e.location}
-                      />{" "}
+                        isVolunteer={e.type_of_volunteer}
+                        expirationDate={e.expirationDate}
+                      />
                     </Link>
                   ))
                   : "No hay cartas para mostrar"}
