@@ -119,15 +119,16 @@ export default function Creariniciativa() {
 
         const formData2 = new FormData();
 
-        formData2.append("image", imageSrc)
+        formData2.append("authorId", "63d2c545b36efb16726fe4b5")
+        formData2.append("expirationDate", input.expirationDate)
         formData2.append("title", input.title)
         formData2.append("description", input.description)
         formData2.append("location", input.location)
-        formData2.append("authorId", "63d2c545b36efb16726fe4b5")
+        formData2.append("image", imageSrc)
+        formData2.append("resultsAchieved", "Buenos Resultados")
         formData2.append("type_of_help", input.type_of_help)
-        formData2.append("expirationDate", input.expirationDate)
-
-
+        
+        postIniciatives(formData2);
 
         // let post = {
         //   authorId: input.ongId,
@@ -140,10 +141,9 @@ export default function Creariniciativa() {
         //   type_of_donor: input.efectivo === "on" ? "EFECTIVO" : null,
         //   type_of_volunteer: input.voluntarios === "on" ? "VOLUNTARIO" : null,
         // };
-        // postIniciatives(post);
         //router.push("/iniciativas");
         console.log(data.secure_url)
-
+        
         setInput({
           expirationDate: "",
           title: "",
@@ -283,7 +283,7 @@ export default function Creariniciativa() {
               value={input.expirationDate}
               name="expirationDate"
               onChange={(el) => handleChange(el)}
-              placeholder="AAAA/MM/DD"
+              placeholder="AAAA-MM-DD"
             />
             {errors.expirationDate ? <label>{errors.expirationDate}</label> : null}
           </div>
