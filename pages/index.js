@@ -84,7 +84,7 @@ export default function Home() {
             </div>
             <div className="flex flex-col justify-center align-middle text-center">
               <p className="text-3xl font-semibold leading-none">+200</p>
-              <p className="capitalize">ONG'S</p>
+              <p className="capitalize">ONG&apos;S</p>
             </div>
           </div>
           <div className="flex p-4 space-x-4 rounded-lg md:space-x-6 justify-center">
