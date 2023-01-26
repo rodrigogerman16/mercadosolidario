@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import Link from "next/link";
 import React, { useState } from "react";
 import { BiDonateHeart, BiUser, BiBuildings } from 'react-icons/bi'
