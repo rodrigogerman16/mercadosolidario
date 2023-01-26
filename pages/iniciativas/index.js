@@ -64,8 +64,110 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Products() {
+export default function Products({ data }) {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+
+  /* 
+  ANTERIOR
+
+    let [info, setInfo] = useState(data);
+  const [input, setInput] = useState();
+  const [order, setOrder] = useState();
+
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const publicationsPerPage = 8;
+  const indexLastPublications = currentPage * publicationsPerPage;
+  const indexFirstPublications = indexLastPublications - publicationsPerPage;
+  const infoo = info.slice(indexFirstPublications, indexLastPublications)
+
+  const paginado = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const filterHandler = (e) => {
+    const value = e.target.name;
+    console.log(value);
+    const info =
+      value === "efectivo"
+        ? data.filter((e) => e.type_of_donor === "EFECTIVO")
+        : data.filter((e) => e.type_of_donor === "EN_ESPECIE");
+    console.log(data);
+    setInfo(value === "all" ? data : info);
+    console.log(data);
+  };
+
+  const [hydrated, setHydrated] = React.useState(false);
+  useEffect(() => {
+    setHydrated(true);
+    setInfo(info);
+  }, [info]);
+  if (!hydrated) {
+    return null;
+  }
+
+  const filterProvinces = (e) => {
+
+    const value = e.target.value;
+    console.log(value);
+    const filtros = data.filter((posts) => posts.location === value);
+    setInfo(value === "all" ? data : filtros);
+    setCurrentPage(1)
+  };
+
+  const filtroInput = async (e) => {
+    setInput(e.target.value);
+    const filterSearch = !input
+      ? data
+      : await data.filter((dato) =>
+        dato.title.toLowerCase().includes(input.toLowerCase())
+      );
+    setInfo(filterSearch);
+    console.log(e.target.value);
+    setCurrentPage(1)
+  };
+
+  const orderHandler = async (e) => {
+    if (e.target.value === "asc") {
+      const order = await infoo.sort((a, b) => a.title.localeCompare(b.title));
+      console.log(order);
+      setInfo(order);
+    } else if (e.target.value === "desc") {
+      const order = await infoo.sort((a, b) => b.title.localeCompare(a.title));
+      console.log(order);
+      setInfo(order);
+    } else if (e.target.value === "all") {
+      const order = await infoo;
+      setInfo(order);
+    }
+    setCurrentPage(1)
+  };
+
+  const Provincias = [
+    "Buenos Aires",
+    "Catamarca",
+    "Chaco",
+    "Chubut",
+    "Córdoba",
+    "Corrientes",
+    "Entre Ríos",
+    "Formosa",
+    "Jujuy",
+    "La Pampa",
+    "La Rioja",
+    "Mendoza",
+    "Misiones",
+    "Neuquén",
+    "Río Negro",
+    "Salta",
+    "San Juan",
+    "San Luis",
+    "Santa Cruz",
+    "Santa Fé",
+    "Santiago del Estero",
+    "Tierra del Fuego",
+    "Tucuman",
+  ];
+  */
 
   return (
     <div className="bg-white">
@@ -306,4 +408,18 @@ export default function Products() {
       </div>
     </div>
   )
+}
+
+export function getStaticProps() {
+  return fetch(
+    "https://pf-backend-mercadosolidario-production.up.railway.app/posts"
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      return {
+        props: {
+          data,
+        },
+      };
+    });
 }
