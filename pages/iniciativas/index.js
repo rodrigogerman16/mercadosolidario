@@ -1,6 +1,8 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
 import { BsChevronDown, BsFunnelFill, BsDash, BsPlus, BsGridFill, BsX } from 'react-icons/bs'
+import Link from 'next/link'
+import Card from '../../Components/Card'
 
 const sortOptions = [
 
@@ -66,6 +68,15 @@ function classNames(...classes) {
 
 export default function Products({ data }) {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+
+  const [hydrated, setHydrated] = React.useState(false);
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+  if (!hydrated) {
+    return null;
+  }
+
 
   /* 
   ANTERIOR
@@ -274,7 +285,9 @@ export default function Products({ data }) {
 
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-baseline justify-between border-b border-gray-200 pt-24 pb-6">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900">New Arrivals</h1>
+            <h1 className="text-4xl font-bold tracking-tight text-gray-900">Iniciativas</h1>
+
+            <input type={'search'} className='rounded shadow' placeholder='Buscar...'></input>
 
             <div className="flex items-center">
               <Menu as="div" className="relative inline-block text-left">
@@ -397,10 +410,20 @@ export default function Products({ data }) {
               </form>
 
               {/* Product grid */}
-              <div className="lg:col-span-3">
-                {/* Replace with your content */}
-                <div className="h-96 rounded-lg border-4 border-dashed border-gray-200 lg:h-full" />
-                {/* /End replace */}
+              <div className="grid">
+                {data.length !== 0
+                  ? data.map((e) => (
+                    <Link key={e.id} href={`/iniciativas/${e.id}`}>
+                      {" "}
+                      <Card
+                        key={e.id}
+                        title={e.title}
+                        description={e.description}
+                        location={e.location}
+                      />{" "}
+                    </Link>
+                  ))
+                  : "No hay cartas para mostrar"}
               </div>
             </div>
           </section>
