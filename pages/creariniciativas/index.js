@@ -254,7 +254,7 @@ export default function Creariniciativa() {
               />
               <label class="ml-2 hover:underline">En Efectivo</label>
             </div>
-            <div class="mt-2 font-hind text-lg">asd
+            <div class="mt-2 font-hind text-lg">
               <input
                 class="cursor-pointer"
                 type="checkbox"
