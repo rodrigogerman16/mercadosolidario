@@ -2,64 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 
-function Validate(input) {
-  let errors = {};
-
-  if (!input.email.includes("@") && !input.email.includes(".")) {
-    errors.email = "Email debe ser un Email";
-  } else if (input.email.length < 6) {
-    errors.email =
-      "Al menos 6 caracteres";
-  }
-
-  if (
-    /^(?=.*[A-Z].*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{8}$/.test(
-      input.password
-    )
-  ) {
-    errors.password = "Contraseña Invalida";
-  } else if (input.password.length < 6) {
-    errors.password = "Al menos 6 caracteres";
-  }
-  return errors;
-}
-
 export default function Login() {
-  const [input, setInput] = useState({
-    email: "",
-    password: "",
-  });
-
-  const [errors, setErrors] = useState({});
-
-  function handleChange(el) {
-    setInput({
-      ...input,
-      [el.target.name]: el.target.value,
-    });
-    setErrors(
-      Validate({
-        ...input,
-        [el.target.name]: el.target.value,
-      })
-    );
-  }
-
-  const handleSubmit = (el) => {
-    el.preventDefault();
-    setErrors(
-      Validate({
-        ...input,
-        [el.target.name]: el.target.value,
-      })
-    );
-    if (Object.values(errors).length === 0) {
-      setInput({
-        email: "",
-        password: "",
-      });
-    }
-  };
 
   return (
     <div className="w-full max-w-md p-4 rounded-md sm:p-8 m-auto min-h-[calc(100vh-100px)] flex flex-col justify-center items-center">
@@ -71,15 +14,13 @@ export default function Login() {
         <div className="space-y-4 w-full">
           <div className="space-y-2">
             <label for="email" className="block text-sm">Email</label>
-            <input type="email" name="email" id="email" placeholder="ejemplo@mail.com" value={input.email} onChange={(el) => handleChange(el)} className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200" />
-            {errors.email && <label className="w-full text-red-600">{errors.email}</label>}
+            <input type="email" name="email" id="email" placeholder="ejemplo@mail.com" className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200" />
           </div>
           <div className="space-y-2">
             <div className="flex justify-between">
-              <label for="password" value={input.password} name={"password"} onChange={(el) => handleChange(el)} className="text-sm">Contraseña</label>
+              <label for="password" name={"password"} className="text-sm">Contraseña</label>
             </div>
             <input type="password" name="password" id="password" placeholder="********" className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200" />
-            {errors.password && <label className="w-full text-red-600">{errors.password}</label>}
           </div>
         </div>
         <button type="button" className="w-full px-8 py-3 font-semibold bg-black text-white hover:bg-zinc-800 transition-colors rounded">Ingresar</button>
