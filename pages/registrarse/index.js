@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import { BiDonateHeart, BiUser, BiBuildings } from 'react-icons/bi'
 import emailPost from "@/Components/emailPost";
 import CreateONG from '../../Components/createONG'
+import Formusers from "@/Components/Formusers";
+import Formempresas from "@/Components/Formempresas";
 
 export default function Register() {
 
@@ -159,6 +161,7 @@ export default function Register() {
                 <p className="mb-3 font-normal text-gray-500">Podrás contactar con personas espirituales para una propuesta laboral.</p>
               </div>
 
+              {errors.password && <span className="w-full text-red-600">{errors.password}</span>}
               {errors.type && <span className="w-full text-red-600">{errors.type}</span>}
 
               <button type="button" className="w-full px-8 py-3 font-semibold  bg-black text-white hover:bg-zinc-800 transition-colors rounded" onClick={() => secondHandler()}>Siguiente</button>
@@ -169,11 +172,27 @@ export default function Register() {
 
       <div className="w-full">
         {
-          step == 3 &&
+          step == 3 && accountType == 1 && <div>
+            <h2 className="mb-3 text-3xl font-semibold text-center">Completa el formulario</h2>
+            <Formusers></Formusers>
+          </div>
+        }
+      </div>
 
-          accountType == 2 && <div>
-            <h2 className="mb-3 text-3xl font-semibold text-center">Selecciona tu tipo de cuenta</h2>
+      <div className="w-full">
+        {
+          step == 3 && accountType == 2 && <div>
+            <h2 className="mb-3 text-3xl font-semibold text-center">Completa el formulario</h2>
             <CreateONG></CreateONG>
+          </div>
+        }
+      </div>
+
+      <div className="w-full">
+        {
+          step == 3 && accountType == 3 && <div>
+            <h2 className="mb-3 text-3xl font-semibold text-center">Completa el formulario</h2>
+            <Formempresas></Formempresas>
           </div>
         }
       </div>
