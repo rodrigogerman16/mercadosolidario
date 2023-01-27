@@ -12,7 +12,7 @@ import Link from "next/link";
 import Card from "../../Components/Card";
 
 const sortOptions = [
-  { name: "Titulo Asc", href: "#", current: true },
+  { name: "Titulo Asc", href: "#", current: false },
   { name: "Titulo Desc", href: "#", current: false },
   { name: "Fecha Asc", href: "#", current: false },
   { name: "Fecha Desc", href: "#", current: false },
@@ -20,24 +20,24 @@ const sortOptions = [
 
 const filters = [
   {
-    id: "color",
-    name: "Color",
+    id: "Provincias",
+    name: "Provincias",
     options: [
       { value: "Buenos Aires", label: "Buenos Aires", checked: false },
       { value: "Catamarca", label: "Catamarca", checked: false },
-      { value: "Chaco", label: "Chaco", checked: true },
+      { value: "Chaco", label: "Chaco", checked: false },
       { value: "Chubut", label: "Chubut", checked: false },
       { value: "Córdoba", label: "Córdoba", checked: false },
       { value: "Corrientes", label: "Corrientes", checked: false },
       { value: "Entre Ríos", label: "Entre Ríos", checked: false },
       { value: "Formosa", label: "Formosa", checked: false },
-      { value: "Jujuy", label: "Jujuy", checked: true },
+      { value: "Jujuy", label: "Jujuy", checked: false },
       { value: "La Pampa", label: "La Pampa", checked: false },
       { value: "La Rioja", label: "La Rioja", checked: false },
       { value: "Mendoza", label: "Mendoza", checked: false },
       { value: "Misiones", label: "Misiones", checked: false },
       { value: "Neuquén", label: "Neuquén", checked: false },
-      { value: "Río Negro", label: "Río Negro", checked: true },
+      { value: "Río Negro", label: "Río Negro", checked: false },
       { value: "Salta", label: "Salta", checked: false },
       { value: "San Juan", label: "San Juan", checked: false },
       { value: "San Luis", label: "San Luis", checked: false },
@@ -46,33 +46,28 @@ const filters = [
       {
         value: "Santiago del Estero",
         label: "Santiago del Estero",
-        checked: true,
+        checked: false,
       },
       { value: "Tierra del Fuego", label: "Tierra del Fuego", checked: false },
       { value: "Tucuman", label: "Tucuman", checked: false },
     ],
   },
   {
-    id: "category",
-    name: "Category",
+    id: "Categorias",
+    name: "Categorias",
     options: [
-      { value: "new-arrivals", label: "New Arrivals", checked: false },
-      { value: "sale", label: "Sale", checked: false },
-      { value: "travel", label: "Travel", checked: true },
-      { value: "organization", label: "Organization", checked: false },
-      { value: "accessories", label: "Accessories", checked: false },
+      { value: "Salud", label: "Salud", checked: false },
+      { value: "Medicina", label: "Medicina", checked: false },
+      { value: "Alimentos", label: "Alimentos", checked: false },
     ],
   },
   {
-    id: "size",
-    name: "Size",
+    id: "Donaciones",
+    name: "Donaciones",
     options: [
-      { value: "2l", label: "2L", checked: false },
-      { value: "6l", label: "6L", checked: false },
+      { value: "efectivo", label: "Efectivo", checked: false },
+      { value: "especie", label: "Especie", checked: false },
       { value: "12l", label: "12L", checked: false },
-      { value: "18l", label: "18L", checked: false },
-      { value: "20l", label: "20L", checked: false },
-      { value: "40l", label: "40L", checked: true },
     ],
   },
 ];
@@ -83,8 +78,55 @@ function classNames(...classes) {
 
 export default function Products({ data }) {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
-
+  const [info, setInfo] = useState(data);
+  const [input, setInput] = useState();
   const [hydrated, setHydrated] = React.useState(false);
+  const [lenguajeSeleccionado, setlenguajeSeleccionado] = useState({
+    BuenosAires: false,
+    Catamarca: false,
+    Chaco: false,
+    Chubut: false,
+    Córdoba: false,
+    Corrientes: false,
+    EntreRíos: false,
+    Formosa: false,
+    Jujuy: false,
+    LaPampa: false,
+    LaRioja: false,
+    Mendoza: false,
+    Misiones: false,
+    Neuquén: false,
+    RíoNegro: false,
+    Salta: false,
+    SanJuan: false,
+    SanLuis: false,
+    SantaCruz: false,
+    SantaFé: false,
+    SantiagodelEstero: false,
+    TierradelFuego: false,
+    Tucuman: false,
+  });
+  const [datosFiltrados, setDatosFiltrados] = useState([]);
+  const [actualizar, setActualizar] = useState();
+  const filterPaises = (e) => {
+    setlenguajeSeleccionado({
+      ...lenguajeSeleccionado,
+      [e.target.value]: e.target.checked,
+    });
+
+    if (e.target.checked) {
+      if (!e.target.value) return setInfo(data);
+      const value = e.target.value;
+      const filtros = data.filter((e) => e.location === value);
+      setDatosFiltrados([...datosFiltrados, ...filtros]);
+      setInfo(value === "all" ? data : datosFiltrados);
+    } else {
+      const value = e.target.value;
+      const filtros = datosFiltrados.filter((e) => e.location !== value);
+      setDatosFiltrados([...filtros]);
+      setInfo(datosFiltrados);
+    }
+  };
   useEffect(() => {
     setHydrated(true);
   }, []);
@@ -92,107 +134,59 @@ export default function Products({ data }) {
     return null;
   }
 
-  /* 
-  ANTERIOR
-
-    let [info, setInfo] = useState(data);
-  const [input, setInput] = useState();
-  const [order, setOrder] = useState();
-
-  const [currentPage, setCurrentPage] = React.useState(1);
-  const publicationsPerPage = 8;
-  const indexLastPublications = currentPage * publicationsPerPage;
-  const indexFirstPublications = indexLastPublications - publicationsPerPage;
-  const infoo = info.slice(indexFirstPublications, indexLastPublications)
-
-  const paginado = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-
-  const filterHandler = (e) => {
+  const filterDonacion = (e) => {
     const value = e.target.name;
     console.log(value);
     const info =
       value === "efectivo"
-        ? data.filter((e) => e.type_of_donor === "EFECTIVO")
-        : data.filter((e) => e.type_of_donor === "EN_ESPECIE");
+        ? data.filter((e) => e.type_of_help === "efectivo")
+        : data.filter((e) => e.type_of_help === "especie");
     console.log(data);
     setInfo(value === "all" ? data : info);
-    console.log(data);
   };
 
-  const [hydrated, setHydrated] = React.useState(false);
-  useEffect(() => {
-    setHydrated(true);
-    setInfo(info);
-  }, [info]);
-  if (!hydrated) {
-    return null;
-  }
-
-  const filterProvinces = (e) => {
-
+  const filterInput = async (e) => {
     const value = e.target.value;
-    console.log(value);
-    const filtros = data.filter((posts) => posts.location === value);
-    setInfo(value === "all" ? data : filtros);
-    setCurrentPage(1)
-  };
-
-  const filtroInput = async (e) => {
-    setInput(e.target.value);
+    setInput(value);
     const filterSearch = !input
       ? data
       : await data.filter((dato) =>
-        dato.title.toLowerCase().includes(input.toLowerCase())
-      );
+          dato.title.toLowerCase().includes(input.toLowerCase())
+        );
     setInfo(filterSearch);
     console.log(e.target.value);
-    setCurrentPage(1)
   };
 
-  const orderHandler = async (e) => {
-    if (e.target.value === "asc") {
-      const order = await infoo.sort((a, b) => a.title.localeCompare(b.title));
+  const filterOrder = async (e) => {
+    const value = e.target.outerText;
+    if (value === "Titulo Asc") {
+      const order = await info.sort((a, b) => a.title.localeCompare(b.title));
       console.log(order);
-      setInfo(order);
-    } else if (e.target.value === "desc") {
-      const order = await infoo.sort((a, b) => b.title.localeCompare(a.title));
+      await setInfo(order);
+      setActualizar();
+    } else if (value === "Titulo Desc") {
+      const order = await info.sort((a, b) => b.title.localeCompare(a.title));
       console.log(order);
-      setInfo(order);
-    } else if (e.target.value === "all") {
-      const order = await infoo;
-      setInfo(order);
+      await setInfo(order);
+      setActualizar();
+    } else if (value === "Fecha Asc") {
+      const order = await info.sort((a, b) =>
+        a.expirationDate.localeCompare(b.expirationDate)
+      );
+      awaitsetInfo(order);
+      setActualizar();
+    } else if (value === "Fecha Desc") {
+      const order = await info.sort((a, b) =>
+        b.expirationDate.localeCompare(a.expirationDate)
+      );
+      await setInfo(order);
+      setActualizar();
+    } else if (value === "all") {
+      const order = await info;
+      await setInfo(order);
+      setActualizar();
     }
-    setCurrentPage(1)
   };
-
-  const Provincias = [
-    "Buenos Aires",
-    "Catamarca",
-    "Chaco",
-    "Chubut",
-    "Córdoba",
-    "Corrientes",
-    "Entre Ríos",
-    "Formosa",
-    "Jujuy",
-    "La Pampa",
-    "La Rioja",
-    "Mendoza",
-    "Misiones",
-    "Neuquén",
-    "Río Negro",
-    "Salta",
-    "San Juan",
-    "San Luis",
-    "Santa Cruz",
-    "Santa Fé",
-    "Santiago del Estero",
-    "Tierra del Fuego",
-    "Tucuman",
-  ];
-  */
 
   return (
     <div className="bg-white">
@@ -247,15 +241,7 @@ export default function Products({ data }) {
                     <ul
                       role="list"
                       className="px-2 py-3 font-medium text-gray-900"
-                    >
-                      {subCategories.map((category) => (
-                        <li key={category.name}>
-                          <a href={category.href} className="block px-2 py-3">
-                            {category.name}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
+                    ></ul>
 
                     {filters.map((section) => (
                       <Disclosure
@@ -331,13 +317,14 @@ export default function Products({ data }) {
               type={"search"}
               className="rounded shadow"
               placeholder="Buscar..."
+              onChange={(e) => filterInput(e)}
             ></input>
 
             <div className="flex items-center">
               <Menu as="div" className="relative inline-block text-left">
                 <div>
                   <Menu.Button className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
-                    Sort
+                    Ordenamiento
                     <BsChevronDown
                       className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                       aria-hidden="true"
@@ -360,6 +347,7 @@ export default function Products({ data }) {
                         <Menu.Item key={option.name}>
                           {({ active }) => (
                             <a
+                              onClick={(e) => filterOrder(e)}
                               href={option.href}
                               className={classNames(
                                 option.current
@@ -409,18 +397,13 @@ export default function Products({ data }) {
                 <ul
                   role="list"
                   className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900"
-                >
-                  {subCategories.map((category) => (
-                    <li key={category.name}>
-                      <a href={category.href}>{category.name}</a>
-                    </li>
-                  ))}
-                </ul>
+                ></ul>
 
                 {filters.map((section) => (
                   <Disclosure
                     as="div"
                     key={section.id}
+                    onChange={(e) => filterPaises(e)}
                     className="border-b border-gray-200 py-6"
                   >
                     {({ open }) => (
@@ -475,8 +458,8 @@ export default function Products({ data }) {
 
               {/* Product grid */}
               <div className="grid w-full col-span-3 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-                {data.length !== 0
-                  ? data.map((e) => (
+                {info.length !== 0
+                  ? info.map((e) => (
                       <Link
                         className="w-full"
                         key={e.id}
