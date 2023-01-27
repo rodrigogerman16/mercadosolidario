@@ -13,7 +13,7 @@ const Card = ({ title, image, description, location, isVolunteer, expirationDate
 
       <div className="flex justify-center relative rounded overflow-hidden h-52">
         <div className="transition-transform duration-500 transform ease-in-out group-hover:scale-110 w-full h-full">
-          <img src={'https://www.derryjournal.com/webimg/TUFZMTMwNjQyMjQ2.jpg?width=1200&enable=upscale'} className="absolute inset-0 rounded object-cover h-full w-full"></img>
+          <img src={image} className="absolute inset-0 rounded object-cover h-full w-full"></img>
         </div>
         <span className="absolute top-0 left-0 inline-flex mt-3 ml-3 px-3 py-2 rounded-lg z-1 bg-pink-400 text-sm font-medium text-white select-none">
           {isVolunteer == "servicio" ? "Voluntario" : "Donación"}
