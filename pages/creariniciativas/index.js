@@ -43,7 +43,10 @@ export default function Creariniciativa() {
   const postIniciatives = async (props) => {
     let info = await axios.post(
       `https://pf-backend-mercadosolidario-production.up.railway.app/posts/newpost`,
-      props
+      props,
+      {headers: {
+        'Content-Type': 'application/json; charset=utf-8'
+      }}   
     );
     return console.log(info.data);
   };
@@ -119,31 +122,18 @@ export default function Creariniciativa() {
 
         const formData2 = new FormData();
 
-        formData2.append("authorId", "63d2c545b36efb16726fe4b5")
+        formData2.append("authorId", "63d31dbace5c61728e7e5bd0")
         formData2.append("expirationDate", input.expirationDate)
         formData2.append("title", input.title)
         formData2.append("description", input.description)
         formData2.append("location", input.location)
-        formData2.append("image", imageSrc)
+        formData2.append("image", data.secure_url)
         formData2.append("resultsAchieved", "Buenos Resultados")
         formData2.append("type_of_help", input.type_of_help)
         
         postIniciatives(formData2);
 
-        // let post = {
-        //   authorId: input.ongId,
-        //   expirationDate: "2023-01-20T00:00:28.747Z",
-        //   title: input.title,
-        //   description: input.description,
-        //   location: input.location,
-        //   image: "https://messi.png",
-        //   resultsAchieved: "Good results",
-        //   type_of_donor: input.efectivo === "on" ? "EFECTIVO" : null,
-        //   type_of_volunteer: input.voluntarios === "on" ? "VOLUNTARIO" : null,
-        // };
-        //router.push("/iniciativas");
-        //asd
-        console.log(data.secure_url)
+        router.push("/iniciativas");
         
         setInput({
           expirationDate: "",
@@ -157,7 +147,7 @@ export default function Creariniciativa() {
         alert("Hay datos incorrectos o sin completar!");
       }
     } catch (error) {
-      //console.log(error)
+      console.log(error)
     }
   }
 
@@ -236,9 +226,9 @@ export default function Creariniciativa() {
               onChange={(el) => handleChange(el)}
             >
               <option value="">Elige una Opcion</option>
-              <option value="EFECTIVO">En Efectivo</option>
-              <option value="EN_ESPECIE">En Especie</option>
-              <option value="VOLUNTARIO">Voluntariados</option>
+              <option value="efectivo">En Efectivo</option>
+              <option value="especie">En Especie</option>
+              <option value="servicio">Voluntariados</option>
             </select>
             {errors.type_of_help ? <label>{errors.type_of_help}</label> : null}
           </div>
