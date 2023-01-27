@@ -1,34 +1,21 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BiDonateHeart, BiUser, BiBuildings } from 'react-icons/bi'
 import emailPost from "@/Components/emailPost";
+import CreateONG from '../../Components/createONG'
 
 export default function Register() {
 
-  const [step, setStep] = useState(1)
-
-  const [first, setFirst] = useState(false)
-  const [second, setSecond] = useState(false)
-  const [third, setThird] = useState(false)
-
   const [errors, setErrors] = useState({
-    email: false,
-    password: false,
-    type: false,
+    email: null,
+    password: null,
+    type: null,
   })
 
+  const [step, setStep] = useState(1)
   const backHandler = (num) => {
     setStep(num)
-    if (num == 2) {
-      setSecond(false)
-      setThird(false)
-    }
-    if (num == 1) {
-      setFirst(false)
-      setSecond(false)
-      setThird(false)
-    }
   }
 
   /* First Handler */
@@ -46,16 +33,18 @@ export default function Register() {
     const emailValue = document.querySelector('#email').value
     const passwordValue = document.querySelector('#password').value
     const validate = validateEmail(emailValue)
+    let aux = errors
 
-    if (!validate) { setErrors((prev) => { return { ...prev, email: 'Ingrese un mail valido' } }) }
-    else { setErrors((prev) => { return { ...prev, email: false } }) }
+    if (!validate) aux.email = "Ingrese un mail valido"
+    else aux.email = false
 
-    if (passwordValue.length < 6 || passwordValue.length > 15) { setErrors((prev) => { return { ...prev, password: 'La contraseña debe contener entre 6 y 15 caracteres' } }) }
-    else { setErrors((prev) => { return { ...prev, password: false } }) }
+    if (passwordValue.length < 6 || passwordValue.length > 15) aux.password = "La contraseña debe contener entre 6 y 15 caracteres"
+    else aux.password = false
 
-    if (errors.password && errors.email) {
-      setStep(2)
-      setFirst(true)
+    setErrors(aux)
+    console.log(errors)
+    if (aux.password == false && aux.email == false) {
+      setStep(2);
     }
   }
 
@@ -70,16 +59,15 @@ export default function Register() {
 
   const secondHandler = () => {
     if (accountType) {
-      setErrors({ ...errors, type: null })
       setStep(3)
-      setSecond(true)
     } else {
       setErrors({ ...errors, type: "Selecciona un tipo de cuenta" })
     }
   }
 
+  /* Third Handler */
+
   const thirdHandler = () => {
-    setThird(true)
   }
 
   return (
@@ -96,12 +84,12 @@ export default function Register() {
               </span>
             </li>
             <li className="flex items-center bg-white p-2">
-              <span onClick={() => first && backHandler(2)} className={`h-6 w-6 rounded-full text-center text-[10px] font-bold leading-6 ${step == 2 ? "bg-pink-400 text-white" : "bg-gray-100"} ${first ? "cursor-pointer" : "cursor-not-allowed"}`}>
+              <span onClick={() => step == 3 && backHandler(2)} className={`h-6 w-6 rounded-full text-center text-[10px] font-bold leading-6 ${step == 2 ? "bg-pink-400 text-white" : "bg-gray-100"} ${step > 1 ? "cursor-pointer" : "cursor-not-allowed"}`}>
                 2
               </span>
             </li>
             <li className="flex items-center bg-white p-2">
-              <span onClick={() => second && backHandler(3)} className={`h-6 w-6 rounded-full text-center text-[10px] font-bold leading-6 ${step == 3 ? "bg-pink-400 text-white" : "bg-gray-100"} ${second ? "cursor-pointer" : "cursor-not-allowed"}`}>
+              <span onClick={() => step == 3 && backHandler(3)} className={`h-6 w-6 rounded-full text-center text-[10px] font-bold leading-6 ${step == 3 ? "bg-pink-400 text-white" : "bg-gray-100"} ${step == 3 ? "cursor-pointer" : "cursor-not-allowed"}`}>
                 3
               </span>
             </li>
@@ -179,6 +167,17 @@ export default function Register() {
         }
       </div>
 
+      <div className="w-full">
+        {
+          step == 3 &&
+
+          accountType == 2 && <div>
+            <h2 className="mb-3 text-3xl font-semibold text-center">Selecciona tu tipo de cuenta</h2>
+            <CreateONG></CreateONG>
+          </div>
+        }
+      </div>
+
     </div >
-  );
+  )
 }
