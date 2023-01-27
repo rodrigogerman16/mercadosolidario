@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/router";
 import axios from "axios";
 
 function Validate(input) {
@@ -14,31 +13,20 @@ function Validate(input) {
   if (input.cuit.length !== 13) {
     errors.cuit = "Ingrese su CUIT";
   }
-  if (input.phone.length < 8) {
-    errors.phone = "Ingrese su Telefono";
-  }
   return errors;
 }
 
-export default function Crearong() {
-
-  const router = useRouter();
+export default function Formempresas() {
 
   const [input, setInput] = useState({
     name: "",
     lastName: "",
     cuit: "",
-    phone: "",
   });
 
   const [errors, setErrors] = useState({});
 
   const [image, setImage] = useState(null);
-
-  const postONG = async(props) => {
-    let info = await axios.post(`https://pf-backend-mercadosolidario-production.up.railway.app/ongs/newong`, props);
-    return console.log(info.data)
-  }
 
   const handleImage = (el) => {
     setImage(el.target.files[0]);
@@ -71,7 +59,6 @@ export default function Crearong() {
         input.name !== "" &&
         input.lastName !== "" &&
         input.cuit !== "" &&
-        input.phone !== "" &&
         image
       ) {
         const formData = new FormData();
@@ -79,17 +66,13 @@ export default function Crearong() {
         formData.append("lastName", input.lastName);
         formData.append("cuit", input.cuit);
         formData.append("rut", image);
-        formData.append("phone", input.phone);
-        //postONG(formData)
-        alert("ONG Registrada con Exito!");
+        alert("Empresa Registrada con Exito!");
         setInput({
           name: "",
           lastName: "",
           cuit: "",
-          phone: "",
         });
         setImage(null);
-        router.push('/')
       } else {
         alert("Hay datos incorrectos o sin completar!");
       }
@@ -103,17 +86,17 @@ export default function Crearong() {
 
   return (
     <div>
-      <div class="flex flex-col justify-center items-start m-auto min-h-full mt-16 bg-white w-3/5">
-        <div className="text-2xl font-montserrat justify-items-start w-full">
-          <h1 class="text-start">Formulario para Registro de ONG</h1>
+      <div class="">
+        <div className="">
+          <h1 class="">Formulario para Registro de Empresas Great Place to Work</h1>
         </div>
-        <form class="pt-7" onSubmit={(el) => handleSubmit(el, image, input)}>
-          <div class="flex">
-            <div class="flex flex-col font-medium">
-              <div class="flex flex-col">
-                <label class="font-hind text-lg">Nombre del titular</label>
+        <form class="" onSubmit={(el) => handleSubmit(el, image, input)}>
+          <div class="">
+            <div class="">
+              <div class="">
+                <label class="">Nombre</label>
                 <input
-                  class="border border-slate-400 mr-9 mt-1 h-10 w-72 rounded"
+                  class=""
                   type="text"
                   value={input.name}
                   name={"name"}
@@ -122,12 +105,12 @@ export default function Crearong() {
                 />
                 {errors.name ? <label>{errors.name}</label> : null}
               </div>
-              <div class="flex flex-col">
-                <label class="pt-3 font-hind text-lg">
-                  Apellido del titular
+              <div class="">
+                <label class="">
+                  Apellido
                 </label>
                 <input
-                  class="border border-slate-400 mr-9 mt-1 h-10 w-72 rounded"
+                  class=""
                   type="text"
                   value={input.lastName}
                   name="lastName"
@@ -136,10 +119,10 @@ export default function Crearong() {
                 />
                 {errors.lastName ? <label>{errors.lastName}</label> : null}
               </div>
-              <div class="flex flex-col">
-                <label class="pt-3 font-hind text-lg">Cuit de la ONG</label>
+              <div class="">
+                <label class="">Cuit</label>
                 <input
-                  class="border border-slate-400 mr-9 mt-1 h-10 w-72 rounded"
+                  class=""
                   type="text"
                   value={input.cuit}
                   name="cuit"
@@ -150,36 +133,24 @@ export default function Crearong() {
               </div>
             </div>
             <div>
-              <div class="flex flex-col">
-                <label class="font-hind text-lg">
+              <div class="">
+                <label class="">
                   Registro Unico Tributario
                 </label>
                 <input
-                  class="border border-slate-400 mr-9 mt-1 h-10 w-72 rounded"
+                  class=""
                   type="file"
                   name="image"               
                   onChange={(el) => handleImage(el)}
                 />
                 {image === null ? <label>{'Ingrese el Archivo'}</label> : null}
               </div>
-              <div class="flex flex-col font-medium">
-                <label class="pt-3 font-hind text-lg">Telefono</label>
-                <input
-                  class="border border-slate-400 mr-9 mt-1 h-10 w-72 rounded"
-                  type="text"
-                  value={input.phone}
-                  name="phone"
-                  onChange={(el) => handleChange(el)}
-                  placeholder=""
-                />
-                {errors.phone ? <label>{errors.phone}</label> : null}
-              </div>
             </div>
           </div>
           <input
             type="submit"
-            value={"Registrar ONG"}
-            class="mt-8 w-52 h-10 bg-blue-600 rounded-md text-white font-hind"
+            value={"Registrar Empresa"}
+            class=""
           />
         </form>
       </div>
