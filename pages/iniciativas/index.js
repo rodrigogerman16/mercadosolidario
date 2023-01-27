@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
+import { useRouter } from "next/router";
 import {
   BsChevronDown,
   BsFunnelFill,
@@ -11,180 +12,164 @@ import {
 import Link from "next/link";
 import Card from "../../Components/Card";
 
-const sortOptions = [
-  { name: "Titulo Asc", href: "#", current: false },
-  { name: "Titulo Desc", href: "#", current: false },
-  { name: "Fecha Asc", href: "#", current: false },
-  { name: "Fecha Desc", href: "#", current: false },
-];
-
-const filters = [
-  {
-    id: "Provincias",
-    name: "Provincias",
-    options: [
-      { value: "Buenos Aires", label: "Buenos Aires", checked: false },
-      { value: "Catamarca", label: "Catamarca", checked: false },
-      { value: "Chaco", label: "Chaco", checked: false },
-      { value: "Chubut", label: "Chubut", checked: false },
-      { value: "Córdoba", label: "Córdoba", checked: false },
-      { value: "Corrientes", label: "Corrientes", checked: false },
-      { value: "Entre Ríos", label: "Entre Ríos", checked: false },
-      { value: "Formosa", label: "Formosa", checked: false },
-      { value: "Jujuy", label: "Jujuy", checked: false },
-      { value: "La Pampa", label: "La Pampa", checked: false },
-      { value: "La Rioja", label: "La Rioja", checked: false },
-      { value: "Mendoza", label: "Mendoza", checked: false },
-      { value: "Misiones", label: "Misiones", checked: false },
-      { value: "Neuquén", label: "Neuquén", checked: false },
-      { value: "Río Negro", label: "Río Negro", checked: false },
-      { value: "Salta", label: "Salta", checked: false },
-      { value: "San Juan", label: "San Juan", checked: false },
-      { value: "San Luis", label: "San Luis", checked: false },
-      { value: "Santa Cruz", label: "Santa Cruz", checked: false },
-      { value: "Santa Fé", label: "Santa Fé", checked: false },
-      {
-        value: "Santiago del Estero",
-        label: "Santiago del Estero",
-        checked: false,
-      },
-      { value: "Tierra del Fuego", label: "Tierra del Fuego", checked: false },
-      { value: "Tucuman", label: "Tucuman", checked: false },
-    ],
-  },
-  {
-    id: "Categorias",
-    name: "Categorias",
-    options: [
-      { value: "Salud", label: "Salud", checked: false },
-      { value: "Medicina", label: "Medicina", checked: false },
-      { value: "Alimentos", label: "Alimentos", checked: false },
-    ],
-  },
-  {
-    id: "Donaciones",
-    name: "Donaciones",
-    options: [
-      { value: "efectivo", label: "Efectivo", checked: false },
-      { value: "especie", label: "Especie", checked: false },
-      { value: "12l", label: "12L", checked: false },
-    ],
-  },
-];
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
-
 export default function Products({ data }) {
-  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
-  const [info, setInfo] = useState(data);
+  const [info, setInfo] = useState();
+  const [edit, setEdit] = useState();
+  const [orden, setOrden] = useState();
   const [input, setInput] = useState();
-  const [hydrated, setHydrated] = React.useState(false);
-  const [lenguajeSeleccionado, setlenguajeSeleccionado] = useState({
-    BuenosAires: false,
-    Catamarca: false,
-    Chaco: false,
-    Chubut: false,
-    Córdoba: false,
-    Corrientes: false,
-    EntreRíos: false,
-    Formosa: false,
-    Jujuy: false,
-    LaPampa: false,
-    LaRioja: false,
-    Mendoza: false,
-    Misiones: false,
-    Neuquén: false,
-    RíoNegro: false,
-    Salta: false,
-    SanJuan: false,
-    SanLuis: false,
-    SantaCruz: false,
-    SantaFé: false,
-    SantiagodelEstero: false,
-    TierradelFuego: false,
-    Tucuman: false,
-  });
-  const [datosFiltrados, setDatosFiltrados] = useState([]);
-  const [actualizar, setActualizar] = useState();
-  const filterPaises = (e) => {
-    setlenguajeSeleccionado({
-      ...lenguajeSeleccionado,
-      [e.target.value]: e.target.checked,
-    });
-
-    if (e.target.checked) {
-      if (!e.target.value) return setInfo(data);
-      const value = e.target.value;
-      const filtros = data.filter((e) => e.location === value);
-      setDatosFiltrados([...datosFiltrados, ...filtros]);
-      setInfo(value === "all" ? data : datosFiltrados);
-    } else {
-      const value = e.target.value;
-      const filtros = datosFiltrados.filter((e) => e.location !== value);
-      setDatosFiltrados([...filtros]);
-      setInfo(datosFiltrados);
-    }
+  const filterDonacionn = (e) => {
+    const value = e.target.name;
+    console.log("Soy filterDonacion" + value);
+    const informacion =
+      value === "efectivo"
+        ? data.filter((e) => e.type_of_help === "efectivo")
+        : data.filter((e) => e.type_of_help === "especie");
+    console.log(data);
+    setInfo(value === "all" ? data : informacion);
   };
+  let results = [];
+  const filterInput = async (e) => {
+    const value = e.target.value;
+    setInput(value);
+  };
+
+  !input
+    ? (results = info)
+    : (results = edit.filter((e) =>
+        e.title.toLowerCase().includes(input.toLowerCase())
+      ));
+
+  const filterOrder = async (e) => {
+    setOrden(e.target.outerText);
+  };
+
+  if (orden === "Titulo Asc") {
+    results = edit.sort((a, b) => a.title.localeCompare(b.title));
+    console.log(results);
+  } else if (orden === "Titulo Desc") {
+    results = edit.sort((a, b) => b.title.localeCompare(a.title));
+    console.log(results);
+  } else if (orden === "Fecha Asc") {
+    results = edit.sort((a, b) =>
+      a.expirationDate.localeCompare(b.expirationDate)
+    );
+  } else if (orden === "Fecha Desc") {
+    results = edit.sort((a, b) =>
+      b.expirationDate.localeCompare(a.expirationDate)
+    );
+  }
+
+  const sortOptions = [
+    { name: "Titulo Asc", href: "#", current: false, onClick: filterOrder },
+    { name: "Titulo Desc", href: "#", current: false, onClick: filterOrder },
+    { name: "Fecha Asc", href: "#", current: false, onClick: filterOrder },
+    { name: "Fecha Desc", href: "#", current: false, onClick: filterOrder },
+  ];
+
+  const filters = [
+    {
+      id: "Provincias",
+      name: "Provincias",
+      options: [
+        { value: "Buenos Aires", label: "Buenos Aires", checked: false },
+        { value: "Catamarca", label: "Catamarca", checked: false },
+        { value: "Chaco", label: "Chaco", checked: false },
+        { value: "Chubut", label: "Chubut", checked: false },
+        { value: "Córdoba", label: "Córdoba", checked: false },
+        { value: "Corrientes", label: "Corrientes", checked: false },
+        { value: "Entre Ríos", label: "Entre Ríos", checked: false },
+        { value: "Formosa", label: "Formosa", checked: false },
+        { value: "Jujuy", label: "Jujuy", checked: false },
+        { value: "La Pampa", label: "La Pampa", checked: false },
+        { value: "La Rioja", label: "La Rioja", checked: false },
+        { value: "Mendoza", label: "Mendoza", checked: false },
+        { value: "Misiones", label: "Misiones", checked: false },
+        { value: "Neuquén", label: "Neuquén", checked: false },
+        { value: "Río Negro", label: "Río Negro", checked: false },
+        { value: "Salta", label: "Salta", checked: false },
+        { value: "San Juan", label: "San Juan", checked: false },
+        { value: "San Luis", label: "San Luis", checked: false },
+        { value: "Santa Cruz", label: "Santa Cruz", checked: false },
+        { value: "Santa Fé", label: "Santa Fé", checked: false },
+        {
+          value: "Santiago del Estero",
+          label: "Santiago del Estero",
+          checked: false,
+        },
+        {
+          value: "Tierra del Fuego",
+          label: "Tierra del Fuego",
+          checked: false,
+        },
+        { value: "Tucuman", label: "Tucuman", checked: false },
+      ],
+    },
+    {
+      id: "Categorias",
+      name: "Categorias",
+      options: [
+        { value: "Salud", label: "Salud", checked: false },
+        { value: "Medicina", label: "Medicina", checked: false },
+        { value: "Alimentos", label: "Alimentos", checked: false },
+      ],
+    },
+    {
+      id: "Donaciones",
+      name: "Donaciones",
+      options: [
+        {
+          value: "efectivo",
+          label: "Efectivo",
+          checked: false,
+          onChange: filterDonacionn,
+        },
+        {
+          value: "especie",
+          label: "Especie",
+          checked: false,
+          onChange: filterDonacionn,
+        },
+        {
+          value: "12l",
+          label: "12L",
+          checked: false,
+          onChange: filterDonacionn,
+        },
+      ],
+    },
+  ];
+
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(" ");
+  }
+
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const [hydrated, setHydrated] = React.useState(false);
   useEffect(() => {
+    setEdit(data);
+    setInfo(data);
     setHydrated(true);
   }, []);
   if (!hydrated) {
     return null;
   }
 
-  const filterDonacion = (e) => {
-    const value = e.target.name;
-    console.log(value);
-    const info =
-      value === "efectivo"
-        ? data.filter((e) => e.type_of_help === "efectivo")
-        : data.filter((e) => e.type_of_help === "especie");
-    console.log(data);
-    setInfo(value === "all" ? data : info);
-  };
-
-  const filterInput = async (e) => {
-    const value = e.target.value;
-    setInput(value);
-    const filterSearch = !input
-      ? data
-      : await data.filter((dato) =>
-          dato.title.toLowerCase().includes(input.toLowerCase())
-        );
-    setInfo(filterSearch);
-    console.log(e.target.value);
-  };
-
-  const filterOrder = async (e) => {
-    const value = e.target.outerText;
-    if (value === "Titulo Asc") {
-      const order = await info.sort((a, b) => a.title.localeCompare(b.title));
-      console.log(order);
-      await setInfo(order);
-      setActualizar();
-    } else if (value === "Titulo Desc") {
-      const order = await info.sort((a, b) => b.title.localeCompare(a.title));
-      console.log(order);
-      await setInfo(order);
-      setActualizar();
-    } else if (value === "Fecha Asc") {
-      const order = await info.sort((a, b) =>
-        a.expirationDate.localeCompare(b.expirationDate)
-      );
-      awaitsetInfo(order);
-      setActualizar();
-    } else if (value === "Fecha Desc") {
-      const order = await info.sort((a, b) =>
-        b.expirationDate.localeCompare(a.expirationDate)
-      );
-      await setInfo(order);
-      setActualizar();
-    } else if (value === "all") {
-      const order = await info;
-      await setInfo(order);
-      setActualizar();
+  const filterPaises = (e) => {
+    if (e.target.checked) {
+      if (!e.target.value) return setInfo(data);
+      const value = e.target.value;
+      const filtros = data.filter((e) => e.location === value);
+      setInfo(value === "all" ? data : filtros);
+      // console.log((e.target.checked = !e.target.checked));
+      console.log(info);
+    }
+    if (!e.target.checked) {
+      const value = e.target.value;
+      const filtros = info.filter((e) => e.location !== value);
+      setInfo(filtros);
+      // e.target.checked = !e.target.checked;
+      // console.log((e.target.checked = !e.target.checked));
+      console.log(info);
     }
   };
 
@@ -344,10 +329,12 @@ export default function Products({ data }) {
                   <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1">
                       {sortOptions.map((option) => (
-                        <Menu.Item key={option.name}>
+                        <Menu.Item
+                          key={option.name}
+                          onClick={(e) => option.onClick(e)}
+                        >
                           {({ active }) => (
                             <a
-                              onClick={(e) => filterOrder(e)}
                               href={option.href}
                               className={classNames(
                                 option.current
@@ -458,8 +445,8 @@ export default function Products({ data }) {
 
               {/* Product grid */}
               <div className="grid w-full col-span-3 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-                {info.length !== 0
-                  ? info.map((e) => (
+                {results.length !== 0
+                  ? results.map((e) => (
                       <Link
                         className="w-full"
                         key={e.id}
