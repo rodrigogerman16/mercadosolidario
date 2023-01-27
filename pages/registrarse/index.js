@@ -3,6 +3,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { BiDonateHeart, BiUser, BiBuildings } from 'react-icons/bi'
 import emailPost from "@/Components/emailPost";
+import CreateONG from '../../Components/createONG'
 
 export default function Register() {
 
@@ -83,7 +84,7 @@ export default function Register() {
               </span>
             </li>
             <li className="flex items-center bg-white p-2">
-              <span onClick={() => step == 3 && backHandler(2)} className={`h-6 w-6 rounded-full text-center text-[10px] font-bold leading-6 ${step == 2 ? "bg-pink-400 text-white" : "bg-gray-100"} ${step == 2 ? "cursor-pointer" : "cursor-not-allowed"}`}>
+              <span onClick={() => step == 3 && backHandler(2)} className={`h-6 w-6 rounded-full text-center text-[10px] font-bold leading-6 ${step == 2 ? "bg-pink-400 text-white" : "bg-gray-100"} ${step > 1 ? "cursor-pointer" : "cursor-not-allowed"}`}>
                 2
               </span>
             </li>
@@ -162,6 +163,17 @@ export default function Register() {
 
               <button type="button" className="w-full px-8 py-3 font-semibold  bg-black text-white hover:bg-zinc-800 transition-colors rounded" onClick={() => secondHandler()}>Siguiente</button>
             </form>
+          </div>
+        }
+      </div>
+
+      <div className="w-full">
+        {
+          step == 3 &&
+
+          accountType == 2 && <div>
+            <h2 className="mb-3 text-3xl font-semibold text-center">Selecciona tu tipo de cuenta</h2>
+            <CreateONG></CreateONG>
           </div>
         }
       </div>
