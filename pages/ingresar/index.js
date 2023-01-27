@@ -1,12 +1,16 @@
 'use client'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import axios from "axios";
 import {useSession, signIn, signOut, getSession} from "next-auth/react"
-import Image from "next/image";
 
 export default function Login() {
   const {data: session} = useSession()
+
+    useEffect(() => {
+      {/*Solo se genera el token en el loggin, luego de registrarse redirigir a loggin*/}
+      localStorage.setItem('token', "Eltoken");
+    }, []);
 
   if(!session){   
     return (
@@ -37,7 +41,7 @@ export default function Login() {
         </div>
       </form>
       <div className="my-6 space-y-4 w-full">
-        <button onClick={() => signIn("api/auth/signin/google")} aria-label="Login with Google" type="button" className="flex items-center justify-center w-full p-4 space-x-4 border shadow focus:ring-0 w-full rounded">
+        <button onClick={() => signIn()} aria-label="Login with Google" type="button" className="flex items-center justify-center w-full p-4 space-x-4 border shadow focus:ring-0 w-full rounded">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" className="w-5 h-5 fill-pink-400">
             <path d="M16.318 13.714v5.484h9.078c-0.37 2.354-2.745 6.901-9.078 6.901-5.458 0-9.917-4.521-9.917-10.099s4.458-10.099 9.917-10.099c3.109 0 5.193 1.318 6.38 2.464l4.339-4.182c-2.786-2.599-6.396-4.182-10.719-4.182-8.844 0-16 7.151-16 16s7.156 16 16 16c9.234 0 15.365-6.49 15.365-15.635 0-1.052-0.115-1.854-0.255-2.651z"></path>
           </svg>
@@ -48,13 +52,42 @@ export default function Login() {
   )
   }
 
-  else{
+ if(session.role === 'admin'){
     return(
       <div>
-        <p>{session.user.name}</p>
-        <Image src={session.user.image} width={50} height={50} className={"rounded-3xl"} alt=""/>
-        <button onClick= {(e) => signOut(e)}>Sign Out</button>
+        {console.log(session)}
+        <p>redireccione al dashboard</p>
+        <button onClick={e => signOut()}>Cerrar</button>
+      </div>
+    )
+  }
+  if(session.user.type_of_user === 'users'){
+    return(
+      <div>
+        redireccione a la vista usuario
+      </div>
+    )
+  }
+  if(session.user.type_of_user === 'ong' || session.user.type_of_user === 'companies' ){
+    return(
+      <div>
+        redireccione a la vista ong/empresa
       </div>
     )
   }
 };  
+{/*
+export const getServerSideProps = async(context) => {
+  const session = await getSession(context)
+  if(!session){
+      return {
+          redirect: {
+              destination: '/ingresar',
+          },
+      };
+  }
+  return{
+      props:{session},
+  }
+}
+ */}
