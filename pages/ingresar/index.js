@@ -1,12 +1,11 @@
 'use client'
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Link from "next/link";
-import axios from "axios";
-import {useSession, signIn, signOut, getSession} from "next-auth/react"
+import {useSession, signIn, signOut} from "next-auth/react"
+import Router from "next/router";
 
 export default function Login() {
   const {data: session} = useSession()
-
     useEffect(() => {
       {/*Solo se genera el token en el loggin, luego de registrarse redirigir a loggin*/}
       localStorage.setItem('token', "Eltoken");
@@ -55,25 +54,13 @@ export default function Login() {
  if(session.role === 'admin'){
     return(
       <div>
-        {console.log(session)}
         <p>redireccione al dashboard</p>
         <button onClick={e => signOut()}>Cerrar</button>
       </div>
     )
   }
-  if(session.user.type_of_user === 'users'){
-    return(
-      <div>
-        redireccione a la vista usuario
-      </div>
-    )
-  }
-  if(session.user.type_of_user === 'ong' || session.user.type_of_user === 'companies' ){
-    return(
-      <div>
-        redireccione a la vista ong/empresa
-      </div>
-    )
+  else{
+    Router.push("/")
   }
 };  
 {/*
