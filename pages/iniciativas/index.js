@@ -237,8 +237,6 @@ export default function Products({ data }) {
     }
   }
 
-  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
-
   const [pagination, setPagination] = useState(1)
   
   const [hydrated, setHydrated] = React.useState(false);
