@@ -4,14 +4,15 @@ const index = () => {
   return (
     <div className='grid grid-cols-1 items-start max-w-7xl p-8 m-auto gap-8'>
       <div class="mx-auto max-w-xs text-center">
-        <span class="mb-2 block text-lg font-semibold text-pink-400">
-          FAQ
-        </span>
-        <h2
-          class="mb-4 text-3xl font-bold text-dark sm:text-4xl md:text-[40px]"
-        >
-          ¿Tienes dudas? Mira aquí
-        </h2>
+        <span className="block mb-2 text-xs font-semibold tracking-widest text-center uppercase dark:text-pink-400">Reseñas</span>
+        <h2 className="text-5xl font-bold text-center">¿Que opinan los usuarios?</h2>
+        <div className="text-center mb-10">
+          <span className="inline-block w-1 h-1 rounded-full bg-pink-500 ml-1"></span>
+          <span className="inline-block w-3 h-1 rounded-full bg-pink-500 ml-1"></span>
+          <span className="inline-block w-40 h-1 rounded-full bg-pink-500"></span>
+          <span className="inline-block w-3 h-1 rounded-full bg-pink-500 ml-1"></span>
+          <span className="inline-block w-1 h-1 rounded-full bg-pink-500 ml-1"></span>
+        </div>
       </div>
 
       <div className="space-y-4">
