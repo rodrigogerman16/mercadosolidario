@@ -319,6 +319,7 @@ export default function Products({ data }) {
       [e.target.value]: e.target.checked,
     });
 
+    console.log(results);
     if (e.target.checked) {
       const value = e.target.value;
       const resultadoLenguaje = edit.filter((e) => e.location === value);
@@ -331,7 +332,9 @@ export default function Products({ data }) {
       setDatosFiltrados([...resultadoLenguaje]);
     }
   };
-  results = datosFiltrados;
+
+  datosFiltrados.length === 0 ? (results = edit) : (results = datosFiltrados);
+  // results = datosFiltrados;
 
   return (
     <div className="bg-white">
