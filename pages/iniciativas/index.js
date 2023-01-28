@@ -318,21 +318,21 @@ export default function Products({ data }) {
       ...lenguajeSeleccionado,
       [e.target.value]: e.target.checked,
     });
+
     if (e.target.checked) {
       const value = e.target.value;
       const resultadoLenguaje = edit.filter((e) => e.location === value);
       setDatosFiltrados([...datosFiltrados, ...resultadoLenguaje]);
-      results = datosFiltrados;
     } else {
       const value = e.target.value;
       const resultadoLenguaje = datosFiltrados.filter(
         (e) => e.location !== value
       );
       setDatosFiltrados([...resultadoLenguaje]);
-      results = datosFiltrados;
     }
   };
-  console.log(datosFiltrados);
+  results = datosFiltrados;
+
   return (
     <div className="bg-white">
       <div>
