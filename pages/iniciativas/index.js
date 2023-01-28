@@ -4,70 +4,195 @@ import { BsChevronDown, BsFunnelFill, BsDash, BsPlus, BsSearch, BsX } from 'reac
 import Link from 'next/link'
 import Card from '../../Components/Card'
 import InfiniteScroll from 'react-infinite-scroll-component';
-
-const sortOptions = [
-
-
-  { name: 'Most Popular', href: '#', current: true },
-  { name: 'Best Rating', href: '#', current: false },
-  { name: 'Newest', href: '#', current: false },
-  { name: 'Price: Low to High', href: '#', current: false },
-  { name: 'Price: High to Low', href: '#', current: false },
-]
-const subCategories = [
-
-
-  { name: 'Totes', href: '#' },
-  { name: 'Backpacks', href: '#' },
-  { name: 'Travel Bags', href: '#' },
-  { name: 'Hip Bags', href: '#' },
-  { name: 'Laptop Sleeves', href: '#' },
-]
-const filters = [
-
-
-  {
-    id: 'color',
-    name: 'Color',
-    options: [
-      { value: 'white', label: 'White', checked: false },
-      { value: 'beige', label: 'Beige', checked: false },
-      { value: 'blue', label: 'Blue', checked: true },
-      { value: 'brown', label: 'Brown', checked: false },
-      { value: 'green', label: 'Green', checked: false },
-      { value: 'purple', label: 'Purple', checked: false },
-    ],
-  },
-  {
-    id: 'category',
-    name: 'Category',
-    options: [
-      { value: 'new-arrivals', label: 'New Arrivals', checked: false },
-      { value: 'sale', label: 'Sale', checked: false },
-      { value: 'travel', label: 'Travel', checked: true },
-      { value: 'organization', label: 'Organization', checked: false },
-      { value: 'accessories', label: 'Accessories', checked: false },
-    ],
-  },
-  {
-    id: 'size',
-    name: 'Size',
-    options: [
-      { value: '2l', label: '2L', checked: false },
-      { value: '6l', label: '6L', checked: false },
-      { value: '12l', label: '12L', checked: false },
-      { value: '18l', label: '18L', checked: false },
-      { value: '20l', label: '20L', checked: false },
-      { value: '40l', label: '40L', checked: true },
-    ],
-  },
-]
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
+import { useRouter } from "next/router";
 
 export default function Products({ data }) {
+  const [info, setInfo] = useState();
+  const [edit, setEdit] = useState();
+  const [orden, setOrden] = useState();
+  const [input, setInput] = useState();
+  const filterDonacionn = (e) => {
+    const value = e.target.name;
+    console.log("Soy filterDonacion" + value);
+    const informacion =
+      value === "efectivo"
+        ? data.filter((e) => e.type_of_help === "efectivo")
+        : data.filter((e) => e.type_of_help === "especie");
+    console.log(data);
+    setInfo(value === "all" ? data : informacion);
+  };
+  let results = [];
+  const filterInput = async (e) => {
+    const value = e.target.value;
+    setInput(value);
+  };
+
+  !input
+    ? (results = info)
+    : (results = edit.filter((e) =>
+        e.title.toLowerCase().includes(input.toLowerCase())
+      ));
+
+  const filterOrder = async (e) => {
+    setOrden(e.target.outerText);
+  };
+
+  if (orden === "Titulo Asc") {
+    results = edit.sort((a, b) => a.title.localeCompare(b.title));
+    console.log(results);
+  } else if (orden === "Titulo Desc") {
+    results = edit.sort((a, b) => b.title.localeCompare(a.title));
+    console.log(results);
+  } else if (orden === "Fecha Asc") {
+    results = edit.sort((a, b) =>
+      a.expirationDate.localeCompare(b.expirationDate)
+    );
+  } else if (orden === "Fecha Desc") {
+    results = edit.sort((a, b) =>
+      b.expirationDate.localeCompare(a.expirationDate)
+    );
+  }
+
+  const sortOptions = [
+    { name: "Titulo Asc", href: "#", current: false, onClick: filterOrder },
+    { name: "Titulo Desc", href: "#", current: false, onClick: filterOrder },
+    { name: "Fecha Asc", href: "#", current: false, onClick: filterOrder },
+    { name: "Fecha Desc", href: "#", current: false, onClick: filterOrder },
+  ];
+
+  const filters = [
+    {
+      id: "Provincias",
+      name: "Provincias",
+      options: [
+        { value: "Buenos Aires", label: "Buenos Aires", checked: false },
+        { value: "Catamarca", label: "Catamarca", checked: false },
+        { value: "Chaco", label: "Chaco", checked: false },
+        { value: "Chubut", label: "Chubut", checked: false },
+        { value: "Córdoba", label: "Córdoba", checked: false },
+        { value: "Corrientes", label: "Corrientes", checked: false },
+        { value: "Entre Ríos", label: "Entre Ríos", checked: false },
+        { value: "Formosa", label: "Formosa", checked: false },
+        { value: "Jujuy", label: "Jujuy", checked: false },
+        { value: "La Pampa", label: "La Pampa", checked: false },
+        { value: "La Rioja", label: "La Rioja", checked: false },
+        { value: "Mendoza", label: "Mendoza", checked: false },
+        { value: "Misiones", label: "Misiones", checked: false },
+        { value: "Neuquén", label: "Neuquén", checked: false },
+        { value: "Río Negro", label: "Río Negro", checked: false },
+        { value: "Salta", label: "Salta", checked: false },
+        { value: "San Juan", label: "San Juan", checked: false },
+        { value: "San Luis", label: "San Luis", checked: false },
+        { value: "Santa Cruz", label: "Santa Cruz", checked: false },
+        { value: "Santa Fé", label: "Santa Fé", checked: false },
+        {
+          value: "Santiago del Estero",
+          label: "Santiago del Estero",
+          checked: false,
+        },
+        {
+          value: "Tierra del Fuego",
+          label: "Tierra del Fuego",
+          checked: false,
+        },
+        { value: "Tucuman", label: "Tucuman", checked: false },
+      ],
+    },
+    {
+      id: "Categorias",
+      name: "Categorias",
+      options: [
+        { value: "Alimentacion", label: "Alimentacion", checked: false },
+        { value: "Asesoria Legal", label: "Asesoria Legal", checked: false },
+        {
+          value: "Ayuda_a_refugiados",
+          label: "Ayuda_a_refugiados",
+          checked: false,
+        },
+        {
+          value: "Ayuda_a_animales",
+          label: "Ayuda_a_animales",
+          checked: false,
+        },
+        {
+          value: "Apoyo_a_comunidades_indigenas",
+          label: "Apoyo_a_comunidades_indigenas",
+          checked: false,
+        },
+        { value: "Apoyo_a_lgbt", label: "Apoyo_a_lgbt", checked: false },
+        {
+          value: "Apoyo_a_la_mujer",
+          label: "Apoyo_a_la_mujer",
+          checked: false,
+        },
+        {
+          value: "Construccion_obras",
+          label: "Construccion_obras",
+          checked: false,
+        },
+        { value: "Cultura", label: "Cultura", checked: false },
+        { value: "Deportes", label: "Deportes", checked: false },
+        {
+          value: "Derechos_humanos",
+          label: "Derechos_humanos",
+          checked: false,
+        },
+        { value: "Discapacitados", label: "Discapacitados", checked: false },
+        { value: "Educacion", label: "Educacion", checked: false },
+        { value: "Medio_ambiente", label: "Medio_ambiente", checked: false },
+        { value: "Entretenimiento", label: "Entretenimiento", checked: false },
+        {
+          value: "Gobierno_no_lucro",
+          label: "Gobierno_no_lucro",
+          checked: false,
+        },
+        { value: "Materia_prima", label: "Materia_prima", checked: false },
+        {
+          value: "Medios_de_comunicacion",
+          label: "Medios_de_comunicacion",
+          checked: false,
+        },
+        { value: "Salud_medicina", label: "Salud_medicina", checked: false },
+        {
+          value: "Servicio_comunitario",
+          label: "Servicio_comunitario",
+          checked: false,
+        },
+        { value: "Transporte", label: "Transporte", checked: false },
+      ],
+    },
+    {
+      id: "Donaciones",
+      name: "Donaciones",
+      options: [
+        {
+          value: "efectivo",
+          label: "Efectivo",
+          checked: false,
+          onChange: filterDonacionn,
+        },
+        {
+          value: "especie",
+          label: "Especie",
+          checked: false,
+          onChange: filterDonacionn,
+        },
+        {
+          value: "12l",
+          label: "12L",
+          checked: false,
+          onChange: filterDonacionn,
+        },
+      ],
+    },
+  ];
+
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(" ");
+  }
+
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+
   const [newData, setNewData] = useState(data)
 
   const [search, setSearch] = useState(false)
@@ -112,127 +237,47 @@ export default function Products({ data }) {
     }
   }
 
-  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
-
   const [pagination, setPagination] = useState(1)
-
-
+  
   const [hydrated, setHydrated] = React.useState(false);
   useEffect(() => {
+    setEdit(data);
+    setInfo(data);
     setHydrated(true);
   }, []);
   if (!hydrated) {
     return null;
   }
 
-  /* 
-  ANTERIOR
-  
-    let [info, setInfo] = useState(data);
-  const [input, setInput] = useState();
-  const [order, setOrder] = useState();
-  
-  const [currentPage, setCurrentPage] = React.useState(1);
-  const publicationsPerPage = 8;
-  const indexLastPublications = currentPage * publicationsPerPage;
-  const indexFirstPublications = indexLastPublications - publicationsPerPage;
-  const infoo = info.slice(indexFirstPublications, indexLastPublications)
-  
-  const paginado = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-  
-  const filterHandler = (e) => {
-    const value = e.target.name;
-    console.log(value);
-    const info =
-      value === "efectivo"
-        ? data.filter((e) => e.type_of_donor === "EFECTIVO")
-        : data.filter((e) => e.type_of_donor === "EN_ESPECIE");
-    console.log(data);
-    setInfo(value === "all" ? data : info);
-    console.log(data);
-  };
-  
-  const [hydrated, setHydrated] = React.useState(false);
-  useEffect(() => {
-    setHydrated(true);
-    setInfo(info);
-  }, [info]);
-  if (!hydrated) {
-    return null;
-  }
-  
-  const filterProvinces = (e) => {
-  
-    const value = e.target.value;
-    console.log(value);
-    const filtros = data.filter((posts) => posts.location === value);
-    setInfo(value === "all" ? data : filtros);
-    setCurrentPage(1)
-  };
-  
-  const filtroInput = async (e) => {
-    setInput(e.target.value);
-    const filterSearch = !input
-      ? data
-      : await data.filter((dato) =>
-        dato.title.toLowerCase().includes(input.toLowerCase())
-      );
-    setInfo(filterSearch);
-    console.log(e.target.value);
-    setCurrentPage(1)
-  };
-  
-  const orderHandler = async (e) => {
-    if (e.target.value === "asc") {
-      const order = await infoo.sort((a, b) => a.title.localeCompare(b.title));
-      console.log(order);
-      setInfo(order);
-    } else if (e.target.value === "desc") {
-      const order = await infoo.sort((a, b) => b.title.localeCompare(a.title));
-      console.log(order);
-      setInfo(order);
-    } else if (e.target.value === "all") {
-      const order = await infoo;
-      setInfo(order);
+  const filterPaises = (e) => {
+    if (e.target.checked) {
+      if (!e.target.value) return setInfo(data);
+      const value = e.target.value;
+      const filtros = data.filter((e) => e.location === value);
+      setInfo(value === "all" ? data : filtros);
+      // console.log((e.target.checked = !e.target.checked));
+      console.log(info);
     }
-    setCurrentPage(1)
+    if (!e.target.checked) {
+      const value = e.target.value;
+      const filtros = info.filter((e) => e.location !== value);
+      setInfo(filtros);
+      // e.target.checked = !e.target.checked;
+      // console.log((e.target.checked = !e.target.checked));
+      console.log(info);
+    }
   };
-  
-  const Provincias = [
-    "Buenos Aires",
-    "Catamarca",
-    "Chaco",
-    "Chubut",
-    "Córdoba",
-    "Corrientes",
-    "Entre Ríos",
-    "Formosa",
-    "Jujuy",
-    "La Pampa",
-    "La Rioja",
-    "Mendoza",
-    "Misiones",
-    "Neuquén",
-    "Río Negro",
-    "Salta",
-    "San Juan",
-    "San Luis",
-    "Santa Cruz",
-    "Santa Fé",
-    "Santiago del Estero",
-    "Tierra del Fuego",
-    "Tucuman",
-  ];
-  */
 
   return (
     <div className="bg-white">
       <div>
         {/* Mobile filter dialog */}
         <Transition.Root show={mobileFiltersOpen} as={Fragment}>
-          <Dialog as="div" className="relative z-40 lg:hidden" onClose={setMobileFiltersOpen}>
+          <Dialog
+            as="div"
+            className="relative z-40 lg:hidden"
+            onClose={setMobileFiltersOpen}
+          >
             <Transition.Child
               as={Fragment}
               enter="transition-opacity ease-linear duration-300"
@@ -257,7 +302,9 @@ export default function Products({ data }) {
               >
                 <Dialog.Panel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl">
                   <div className="flex items-center justify-between px-4">
-                    <h2 className="text-lg font-medium text-gray-900">Filters</h2>
+                    <h2 className="text-lg font-medium text-gray-900">
+                      Filters
+                    </h2>
                     <button
                       type="button"
                       className="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400"
@@ -271,28 +318,35 @@ export default function Products({ data }) {
                   {/* Filters */}
                   <form className="mt-4 border-t border-gray-200">
                     <h3 className="sr-only">Categories</h3>
-                    <ul role="list" className="px-2 py-3 font-medium text-gray-900">
-                      {subCategories.map((category) => (
-                        <li key={category.name}>
-                          <a href={category.href} className="block px-2 py-3">
-                            {category.name}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
+                    <ul
+                      role="list"
+                      className="px-2 py-3 font-medium text-gray-900"
+                    ></ul>
 
                     {filters.map((section) => (
-                      <Disclosure as="div" key={section.id} className="border-t border-gray-200 px-4 py-6">
+                      <Disclosure
+                        as="div"
+                        key={section.id}
+                        className="border-t border-gray-200 px-4 py-6"
+                      >
                         {({ open }) => (
                           <>
                             <h3 className="-mx-2 -my-3 flow-root">
                               <Disclosure.Button className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
-                                <span className="font-medium text-gray-900">{section.name}</span>
+                                <span className="font-medium text-gray-900">
+                                  {section.name}
+                                </span>
                                 <span className="ml-6 flex items-center">
                                   {open ? (
-                                    <BsDash className="h-5 w-5" aria-hidden="true" />
+                                    <BsDash
+                                      className="h-5 w-5"
+                                      aria-hidden="true"
+                                    />
                                   ) : (
-                                    <BsX className="h-5 w-5" aria-hidden="true" />
+                                    <BsX
+                                      className="h-5 w-5"
+                                      aria-hidden="true"
+                                    />
                                   )}
                                 </span>
                               </Disclosure.Button>
@@ -300,7 +354,10 @@ export default function Products({ data }) {
                             <Disclosure.Panel className="pt-6">
                               <div className="space-y-6">
                                 {section.options.map((option, optionIdx) => (
-                                  <div key={option.value} className="flex items-center">
+                                  <div
+                                    key={option.value}
+                                    className="flex items-center"
+                                  >
                                     <input
                                       id={`filter-mobile-${section.id}-${optionIdx}`}
                                       name={`${section.id}[]`}
@@ -337,7 +394,7 @@ export default function Products({ data }) {
               <Menu as="div" className="relative inline-block text-left">
                 <div>
                   <Menu.Button className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
-                    Sort
+                    Ordenamiento
                     <BsChevronDown
                       className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                       aria-hidden="true"
@@ -357,14 +414,19 @@ export default function Products({ data }) {
                   <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1">
                       {sortOptions.map((option) => (
-                        <Menu.Item key={option.name}>
+                        <Menu.Item
+                          key={option.name}
+                          onClick={(e) => option.onClick(e)}
+                        >
                           {({ active }) => (
                             <a
                               href={option.href}
                               className={classNames(
-                                option.current ? 'font-medium text-gray-900' : 'text-gray-500',
-                                active ? 'bg-gray-100' : '',
-                                'block px-4 py-2 text-sm'
+                                option.current
+                                  ? "font-medium text-gray-900"
+                                  : "text-gray-500",
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-sm"
                               )}
                             >
                               {option.name}
@@ -408,24 +470,31 @@ export default function Products({ data }) {
               {/* Filters */}
               <form className="hidden lg:block">
                 <h3 className="sr-only">Categories</h3>
-                <ul role="list" className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900">
-                  {subCategories.map((category) => (
-                    <li key={category.name}>
-                      <a href={category.href}>{category.name}</a>
-                    </li>
-                  ))}
-                </ul>
+                <ul
+                  role="list"
+                  className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900"
+                ></ul>
 
                 {filters.map((section) => (
-                  <Disclosure as="div" key={section.id} className="border-b border-gray-200 py-6">
+                  <Disclosure
+                    as="div"
+                    key={section.id}
+                    onChange={(e) => filterPaises(e)}
+                    className="border-b border-gray-200 py-6"
+                  >
                     {({ open }) => (
                       <>
                         <h3 className="-my-3 flow-root">
                           <Disclosure.Button className="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
-                            <span className="font-medium text-gray-900">{section.name}</span>
+                            <span className="font-medium text-gray-900">
+                              {section.name}
+                            </span>
                             <span className="ml-6 flex items-center">
                               {open ? (
-                                <BsDash className="h-5 w-5" aria-hidden="true" />
+                                <BsDash
+                                  className="h-5 w-5"
+                                  aria-hidden="true"
+                                />
                               ) : (
                                 <BsX className="h-5 w-5" aria-hidden="true" />
                               )}
@@ -435,7 +504,10 @@ export default function Products({ data }) {
                         <Disclosure.Panel className="pt-6">
                           <div className="space-y-4">
                             {section.options.map((option, optionIdx) => (
-                              <div key={option.value} className="flex items-center">
+                              <div
+                                key={option.value}
+                                className="flex items-center"
+                              >
                                 <input
                                   id={`filter-${section.id}-${optionIdx}`}
                                   name={`${section.id}[]`}
@@ -463,16 +535,16 @@ export default function Products({ data }) {
               {/* Product grid */}
               <div className="grid w-full col-span-3" id='infiniteScroll'>
                 {
-                  newData.length && <InfiniteScroll
-                    dataLength={newData.length}
+                  results.length && <InfiniteScroll
+                    dataLength={results.length}
                     next={() => setPagination(pagination + 1)}
                     hasMore={true}
                     loader={<h4>Loading..</h4>}
                     scrollableTarget="infiniteScroll"
                     className='grid w-full sm:grid-cols-2 xl:grid-cols-3 gap-4 overflow-auto'
                   >
-                    {newData.length !== 0
-                      ? newData.map((e) => (
+                    {results.length !== 0
+                      ? results.map((e) => (
                         <Link className='w-full' key={e.id} href={`/iniciativas/${e.id}`}>
                           <Card
                             key={e.id}
