@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/router";
 import axios from "axios";
 
 function Validate(input) {
@@ -16,7 +17,9 @@ function Validate(input) {
   return errors;
 }
 
-export default function Formempresas() {
+export default function Formempresas(props) {
+
+  const router = useRouter();
 
   const [input, setInput] = useState({
     name: "",
@@ -73,6 +76,7 @@ export default function Formempresas() {
           cuit: "",
         });
         setImage(null);
+        router.push('/')
       } else {
         alert("Hay datos incorrectos o sin completar!");
       }

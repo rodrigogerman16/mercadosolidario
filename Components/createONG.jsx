@@ -11,7 +11,7 @@ function Validate(input) {
   if (input.lastName.length < 3 || input.lastName.length > 15) {
     errors.lastName = "Al menos 3 Caracteres";
   }
-  if (input.cuit.length !== 13) {
+  if (input.cuit.length !== 11) {
     errors.cuit = "Ingrese su CUIT";
   }
   if (input.phone.length < 8) {
@@ -20,7 +20,8 @@ function Validate(input) {
   return errors;
 }
 
-export default function Crearong() {
+export default function Crearong(props) {
+  const [imageSrc, setImageSrc] = useState(null);
 
   const router = useRouter();
 
@@ -36,12 +37,32 @@ export default function Crearong() {
   const [image, setImage] = useState(null);
 
   const postONG = async (props) => {
-    let info = await axios.post(`https://pf-backend-mercadosolidario-production.up.railway.app/ongs/newong`, props);
-    return console.log(info.data)
-  }
+    let info = await axios.post(
+      `https://pf-backend-mercadosolidario-production.up.railway.app/ong/newong`,
+      props,
+      {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+      }
+    );
 
-  const handleImage = (el) => {
-    setImage(el.target.files[0]);
+    const aux = {
+      name: info.data.name,
+      lastName: info.data.lastName,
+      email: info.data.email,
+      type_of_user: info.data.type_of_user,
+      id: info.data.id,
+      cuit: info.data.cuit,
+      province: info.data.province,
+      rut: info.data.rut,
+      address: info.data.address,
+      phone: info.data.phone,
+    }
+
+    window.localStorage.setItem("user", JSON.stringify(aux));
+
+    return console.log(info.data, aux);
   };
 
   function handleChange(el) {
@@ -57,7 +78,7 @@ export default function Crearong() {
     );
   }
 
-  function handleSubmit(el, image) {
+  async function handleSubmit(el) {
     try {
       el.preventDefault();
       setErrors(
@@ -71,16 +92,45 @@ export default function Crearong() {
         input.name !== "" &&
         input.lastName !== "" &&
         input.cuit !== "" &&
-        input.phone !== "" &&
-        image
+        input.phone !== ""
       ) {
+        const form = el.currentTarget;
+        const fileInput = Array.from(form.elements).find(
+          ({ name }) => name === "file"
+        );
+
+        const formData2 = new FormData();
+
+        for (const file of fileInput.files) {
+          formData2.append("file", file);
+        }
+
+        formData2.append("upload_preset", "my-uploads");
+        //formData.append()
+
+        const data = await fetch(
+          "https://api.cloudinary.com/v1_1/dc9pehmoz/image/upload",
+          {
+            method: "POST",
+            body: formData2,
+          }
+        ).then((r) => r.json());
+
+        // console.log(data.secure_url)
+        // console.log(props)
+
         const formData = new FormData();
         formData.append("name", input.name);
         formData.append("lastName", input.lastName);
-        formData.append("cuit", input.cuit);
-        formData.append("rut", image);
         formData.append("phone", input.phone);
-        //postONG(formData)
+        formData.append("email", props.email);
+        formData.append("password", props.password);
+        formData.append("rut", data.secure_url);
+        formData.append("cuit", input.cuit);
+        formData.append("type_of_user", props.type_of_user);
+
+        postONG(formData);
+
         alert("ONG Registrada con Exito!");
         setInput({
           name: "",
@@ -88,8 +138,7 @@ export default function Crearong() {
           cuit: "",
           phone: "",
         });
-        setImage(null);
-        router.push('/')
+        router.push("/");
       } else {
         alert("Hay datos incorrectos o sin completar!");
       }

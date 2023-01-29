@@ -9,6 +9,8 @@ import Formempresas from "@/Components/Formempresas";
 
 export default function Register() {
 
+  let [user, setUser] = useState(null)
+
   const [errors, setErrors] = useState({
     email: null,
     password: null,
@@ -51,6 +53,8 @@ export default function Register() {
     if (!password && !email) {
       setStep(2);
     }
+
+    
   }
 
   /* Second Handler */
@@ -64,6 +68,33 @@ export default function Register() {
 
   const secondHandler = () => {
     if (accountType) {
+      if (accountType === 1) {
+        user = {
+          ...user,
+          type_of_user: "user"
+        }
+
+        setUser(user)
+      }
+      if (accountType === 2) {
+        user = {
+          ...user,
+          type_of_user: "ong"
+        }
+
+        setUser(user)
+      }
+      if (accountType === 3) {
+        user = {
+          ...user,
+          type_of_user: "company"
+        }
+
+        setUser(user)
+      }
+      console.log(user.email)
+      console.log(user.password)
+      console.log(user.type_of_user)
       setStep(3)
     } else {
       setErrors({ ...errors, type: "Selecciona un tipo de cuenta" })
@@ -73,6 +104,7 @@ export default function Register() {
   /* Third Handler */
 
   const thirdHandler = () => {
+
   }
 
   return (
@@ -201,7 +233,7 @@ export default function Register() {
               <span className="inline-block w-3 h-1 rounded-full bg-pink-500 ml-1"></span>
               <span className="inline-block w-1 h-1 rounded-full bg-pink-500 ml-1"></span>
             </div>
-            <Formusers></Formusers>
+            <Formusers email={user.email} password={user.password} type_of_user={user.type_of_user}/>
           </div>
         }
       </div>
@@ -218,7 +250,7 @@ export default function Register() {
               <span className="inline-block w-3 h-1 rounded-full bg-pink-500 ml-1"></span>
               <span className="inline-block w-1 h-1 rounded-full bg-pink-500 ml-1"></span>
             </div>
-            <CreateONG></CreateONG>
+            <CreateONG email={user.email} password={user.password} type_of_user={user.type_of_user}/>
           </div>
         }
       </div>
@@ -235,7 +267,7 @@ export default function Register() {
               <span className="inline-block w-3 h-1 rounded-full bg-pink-500 ml-1"></span>
               <span className="inline-block w-1 h-1 rounded-full bg-pink-500 ml-1"></span>
             </div>
-            <Formempresas></Formempresas>
+            <Formempresas email={user.email} password={user.password} type_of_user={user.type_of_user}/>
           </div>
         }
       </div>
