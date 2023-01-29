@@ -118,7 +118,8 @@ export default function Products({ data }) {
     }
   };
 
-  const filterPaises = (e) => {
+  const filterProvincias = (e) => {
+    console.log(e.target.value);
     setCheckedPaises({
       ...checkedPaises,
       [e.target.value]: e.target.checked,
@@ -150,15 +151,21 @@ export default function Products({ data }) {
     : (results = edit.filter((e) =>
         e.title.toLowerCase().includes(input.toLowerCase())
       ));
-
+  console.log(results);
   const filterOrder = async (e) => {
     setOrden(e.target.outerText);
   };
   if (orden === "Titulo Asc") {
     results = edit.sort((a, b) => a.title.localeCompare(b.title));
+    results = datosFiltradosPaises.sort((a, b) =>
+      a.title.localeCompare(b.title)
+    );
     console.log(results);
   } else if (orden === "Titulo Desc") {
     results = edit.sort((a, b) => b.title.localeCompare(a.title));
+    results = datosFiltradosPaises.sort((a, b) =>
+      b.title.localeCompare(a.title)
+    );
     console.log(results);
   } else if (orden === "Fecha Asc") {
     results = edit.sort((a, b) =>
@@ -365,35 +372,6 @@ export default function Products({ data }) {
   //   }
   // };
 
-  // const filterPaises = (e) => {
-  //   let provinciasChecked = [];
-  //   if (e.target.checked) {
-  //     provinciasChecked.push(e.target.value);
-  //     // results = edit.filter(
-  //     //   (e) => {
-
-  //     //     e.location.toLowerCase() === value.toLowerCase()}
-  //     // )
-  //     let provinciasAcumulador = []
-  //     results = edit.filter((obj) => {
-  //       for (const prov of provinciasChecked) {
-  //         provinciasAcumulador.push(prov)
-  //         return prov.toLowerCase() === obj.location.toLowerCase();
-  //       }
-  //     });
-
-  //     console.log(results);
-  //   }
-  //   if (!e.target.checked) {
-  //     const value = e.target.value;
-  //     results = [
-  //       ...results,
-  //       edit.filter((e) => e.location.toLowerCase() !== value.toLowerCase()),
-  //     ];
-  //     console.log(results);
-  //   }
-  // };
-
   datosFiltradosPaises.length === 0
     ? (results = edit)
     : (results = [...datosFiltradosPaises]);
@@ -583,7 +561,7 @@ export default function Products({ data }) {
                       search ? "visible" : "hidden"
                     }`}
                     placeholder="Buscar..."
-                    onKeyDown={filterInput}
+                    onChange={filterInput}
                   ></input>
                   <BsSearch
                     id="icon"
@@ -631,7 +609,7 @@ export default function Products({ data }) {
                   <Disclosure
                     as="div"
                     key={section.id}
-                    onChange={filterPaises}
+                    onChange={filterProvincias}
                     className="border-b border-gray-200 py-6"
                   >
                     {({ open }) => (
