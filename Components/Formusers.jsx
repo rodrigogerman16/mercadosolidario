@@ -42,9 +42,20 @@ export default function Formusers(props) {
       // }}
     );
 
-    window.localStorage.setItem("user", JSON.stringify(info.data));
+    const aux = {
+      name: info.data.name,
+      lastName: info.data.lastName,
+      email: info.data.email,
+      type_of_user: info.data.type_of_user,
+      id: info.data.id,
+      cuil: info.data.cuil,
+      phone: info.data.phone,
+      user_linkedin: info.data.user_linkedin
+    }
 
-    return console.log(info.data);
+    window.localStorage.setItem("user", JSON.stringify(aux));
+
+    return console.log(info.data, aux);
   };
 
   const [input, setInput] = useState({

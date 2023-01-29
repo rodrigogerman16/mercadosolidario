@@ -11,7 +11,7 @@ function Validate(input) {
   if (input.lastName.length < 3 || input.lastName.length > 15) {
     errors.lastName = "Al menos 3 Caracteres";
   }
-  if (input.cuit.length !== 13) {
+  if (input.cuit.length !== 11) {
     errors.cuit = "Ingrese su CUIT";
   }
   if (input.phone.length < 8) {
@@ -47,9 +47,22 @@ export default function Crearong(props) {
       }
     );
 
-    window.localStorage.setItem("user", JSON.stringify(info.data));
+    const aux = {
+      name: info.data.name,
+      lastName: info.data.lastName,
+      email: info.data.email,
+      type_of_user: info.data.type_of_user,
+      id: info.data.id,
+      cuit: info.data.cuit,
+      province: info.data.province,
+      rut: info.data.rut,
+      address: info.data.address,
+      phone: info.data.phone,
+    }
 
-    return console.log(info.data);
+    window.localStorage.setItem("user", JSON.stringify(aux));
+
+    return console.log(info.data, aux);
   };
 
   function handleChange(el) {
