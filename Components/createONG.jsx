@@ -20,7 +20,8 @@ function Validate(input) {
   return errors;
 }
 
-export default function Crearong() {
+export default function Crearong(props) {
+  const [imageSrc, setImageSrc] = useState(null);
 
   const router = useRouter();
 
@@ -35,13 +36,20 @@ export default function Crearong() {
 
   const [image, setImage] = useState(null);
 
-  const postONG = async(props) => {
-    let info = await axios.post(`https://pf-backend-mercadosolidario-production.up.railway.app/ongs/newong`, props);
-    return console.log(info.data)
-  }
+  const postONG = async (props) => {
+    let info = await axios.post(
+      `https://pf-backend-mercadosolidario-production.up.railway.app/ongs/newong`,
+      props,
+      {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+      }
+    );
 
-  const handleImage = (el) => {
-    setImage(el.target.files[0]);
+    window.localStorage.setItem("user", JSON.stringify(info.data));
+
+    return console.log(info.data);
   };
 
   function handleChange(el) {
@@ -57,7 +65,7 @@ export default function Crearong() {
     );
   }
 
-  function handleSubmit(el, image) {
+  async function handleSubmit(el) {
     try {
       el.preventDefault();
       setErrors(
@@ -71,16 +79,45 @@ export default function Crearong() {
         input.name !== "" &&
         input.lastName !== "" &&
         input.cuit !== "" &&
-        input.phone !== "" &&
-        image
+        input.phone !== ""
       ) {
+        const form = el.currentTarget;
+        const fileInput = Array.from(form.elements).find(
+          ({ name }) => name === "file"
+        );
+
+        const formData2 = new FormData();
+
+        for (const file of fileInput.files) {
+          formData2.append("file", file);
+        }
+
+        formData2.append("upload_preset", "my-uploads");
+        //formData.append()
+
+        const data = await fetch(
+          "https://api.cloudinary.com/v1_1/dc9pehmoz/image/upload",
+          {
+            method: "POST",
+            body: formData2,
+          }
+        ).then((r) => r.json());
+
+        // console.log(data.secure_url)
+        // console.log(props)
+
         const formData = new FormData();
         formData.append("name", input.name);
         formData.append("lastName", input.lastName);
-        formData.append("cuit", input.cuit);
-        formData.append("rut", image);
         formData.append("phone", input.phone);
-        //postONG(formData)
+        formData.append("email", props.email);
+        formData.append("password", props.password);
+        formData.append("rut", data.secure_url);
+        formData.append("cuit", input.cuit);
+        formData.append("type_of_user", props.type_of_user);
+
+        postONG(formData);
+
         alert("ONG Registrada con Exito!");
         setInput({
           name: "",
@@ -88,8 +125,7 @@ export default function Crearong() {
           cuit: "",
           phone: "",
         });
-        setImage(null);
-        router.push('/')
+        router.push("/");
       } else {
         alert("Hay datos incorrectos o sin completar!");
       }
@@ -107,7 +143,7 @@ export default function Crearong() {
         <div className="text-2xl font-montserrat justify-items-start w-full">
           <h1 class="text-start">Formulario para Registro de ONG</h1>
         </div>
-        <form class="pt-7" onSubmit={(el) => handleSubmit(el, image, input)}>
+        <form class="pt-7" onSubmit={(el) => handleSubmit(el)}>
           <div class="flex">
             <div class="flex flex-col font-medium">
               <div class="flex flex-col">
@@ -157,10 +193,9 @@ export default function Crearong() {
                 <input
                   class="border border-slate-400 mr-9 mt-1 h-10 w-72 rounded"
                   type="file"
-                  name="image"               
-                  onChange={(el) => handleImage(el)}
+                  name="file"
                 />
-                {image === null ? <label>{'Ingrese el Archivo'}</label> : null}
+                {/* {image === null ? <label>{"Ingrese el Archivo"}</label> : null} */}
               </div>
               <div class="flex flex-col font-medium">
                 <label class="pt-3 font-hind text-lg">Telefono</label>

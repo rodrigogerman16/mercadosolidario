@@ -33,7 +33,7 @@ export default function Creariniciativa() {
     description: "",
     location: "",
     expirationDate: "",
-    type_of_help: ""
+    type_of_help: "",
   });
 
   const [errors, setErrors] = React.useState({});
@@ -44,9 +44,11 @@ export default function Creariniciativa() {
     let info = await axios.post(
       `https://pf-backend-mercadosolidario-production.up.railway.app/posts/newpost`,
       props,
-      {headers: {
-        'Content-Type': 'application/json; charset=utf-8'
-      }}   
+      {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+      }
     );
     return console.log(info.data);
   };
@@ -122,32 +124,32 @@ export default function Creariniciativa() {
 
         const formData2 = new FormData();
 
-        formData2.append("authorId", "63d31dbace5c61728e7e5bd0")
-        formData2.append("expirationDate", input.expirationDate)
-        formData2.append("title", input.title)
-        formData2.append("description", input.description)
-        formData2.append("location", input.location)
-        formData2.append("image", data.secure_url)
-        formData2.append("resultsAchieved", "Buenos Resultados")
-        formData2.append("type_of_help", input.type_of_help)
-        
+        formData2.append("authorId", "63d31dbace5c61728e7e5bd0");
+        formData2.append("expirationDate", input.expirationDate);
+        formData2.append("title", input.title);
+        formData2.append("description", input.description);
+        formData2.append("location", input.location);
+        formData2.append("image", data.secure_url);
+        formData2.append("resultsAchieved", "Buenos Resultados");
+        formData2.append("type_of_help", input.type_of_help);
+
         postIniciatives(formData2);
 
         router.push("/iniciativas");
-        
+
         setInput({
           expirationDate: "",
           title: "",
           description: "",
           location: "",
-          type_of_help: ""
+          type_of_help: "",
         });
-        setImageSrc(null)
+        setImageSrc(null);
       } else {
         alert("Hay datos incorrectos o sin completar!");
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
@@ -276,19 +278,19 @@ export default function Creariniciativa() {
               onChange={(el) => handleChange(el)}
               placeholder="AAAA-MM-DD"
             />
-            {errors.expirationDate ? <label>{errors.expirationDate}</label> : null}
+            {errors.expirationDate ? (
+              <label>{errors.expirationDate}</label>
+            ) : null}
           </div>
           <div class="flex flex-col">
-                <label class="font-hind text-lg">
-                  Imagen
-                </label>
-                <input
-                  class="border border-slate-400 mr-9 mt-1 h-10 w-72 rounded"
-                  type="file"
-                  name="file"               
-                />
-                {/* {imageSrc === null ? <label>{'Ingrese el Archivo'}</label> : null} */}
-              </div>
+            <label class="font-hind text-lg">Imagen</label>
+            <input
+              class="border border-slate-400 mr-9 mt-1 h-10 w-72 rounded"
+              type="file"
+              name="file"
+            />
+            {/* {imageSrc === null ? <label>{'Ingrese el Archivo'}</label> : null} */}
+          </div>
           <input
             type="submit"
             value={"Publicar"}

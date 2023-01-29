@@ -9,6 +9,8 @@ import Formempresas from "@/Components/Formempresas";
 
 export default function Register() {
 
+  let [user, setUser] = useState(null)
+
   const [errors, setErrors] = useState({
     email: null,
     password: null,
@@ -46,8 +48,18 @@ export default function Register() {
     setErrors(aux)
     console.log(errors)
     if (aux.password == false && aux.email == false) {
+
+      let aux = {
+        email: emailValue,
+        password: passwordValue,
+      }
+
+      setUser(aux)
+
       setStep(2);
     }
+
+    
   }
 
   /* Second Handler */
@@ -61,6 +73,33 @@ export default function Register() {
 
   const secondHandler = () => {
     if (accountType) {
+      if (accountType === 1) {
+        user = {
+          ...user,
+          type_of_user: "users"
+        }
+
+        setUser(user)
+      }
+      if (accountType === 2) {
+        user = {
+          ...user,
+          type_of_user: "ong"
+        }
+
+        setUser(user)
+      }
+      if (accountType === 3) {
+        user = {
+          ...user,
+          type_of_user: "companies"
+        }
+
+        setUser(user)
+      }
+      console.log(user.email)
+      console.log(user.password)
+      console.log(user.type_of_user)
       setStep(3)
     } else {
       setErrors({ ...errors, type: "Selecciona un tipo de cuenta" })
@@ -70,6 +109,7 @@ export default function Register() {
   /* Third Handler */
 
   const thirdHandler = () => {
+
   }
 
   return (
@@ -174,7 +214,7 @@ export default function Register() {
         {
           step == 3 && accountType == 1 && <div>
             <h2 className="mb-3 text-3xl font-semibold text-center">Completa el formulario</h2>
-            <Formusers></Formusers>
+            <Formusers email={user.email} password={user.password} type_of_user={user.type_of_user}/>
           </div>
         }
       </div>
@@ -183,7 +223,7 @@ export default function Register() {
         {
           step == 3 && accountType == 2 && <div>
             <h2 className="mb-3 text-3xl font-semibold text-center">Completa el formulario</h2>
-            <CreateONG></CreateONG>
+            <CreateONG email={user.email} password={user.password} type_of_user={user.type_of_user}/>
           </div>
         }
       </div>
@@ -192,7 +232,7 @@ export default function Register() {
         {
           step == 3 && accountType == 3 && <div>
             <h2 className="mb-3 text-3xl font-semibold text-center">Completa el formulario</h2>
-            <Formempresas></Formempresas>
+            <Formempresas email={user.email} password={user.password} type_of_user={user.type_of_user}/>
           </div>
         }
       </div>

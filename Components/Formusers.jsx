@@ -1,5 +1,7 @@
 "use client";
 import { useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/router";
 
 function Validate(input) {
   let errors = {};
@@ -22,12 +24,29 @@ function Validate(input) {
     errors.cuil = "Ingrese su CUIL";
   }
   if (input.user_linkedin.length === 0) {
-    errors.user_linkedin = "Ingrese su Linkedin"
+    errors.user_linkedin = "Ingrese su Linkedin";
   }
   return errors;
 }
 
-export default function Formusers() {
+export default function Formusers(props) {
+  //console.log(props)
+  const router = useRouter();
+
+  const postUser = async (props) => {
+    let info = await axios.post(
+      `https://pf-backend-mercadosolidario-production.up.railway.app/users/newuser`,
+      props
+      // {headers: {
+      //   'Content-Type': 'application/json; charset=utf-8'
+      // }}
+    );
+
+    window.localStorage.setItem("user", JSON.stringify(info.data));
+
+    return console.log(info.data);
+  };
+
   const [input, setInput] = useState({
     name: "",
     lastName: "",
@@ -68,6 +87,21 @@ export default function Formusers() {
         input.cuil !== "" &&
         input.user_linkedin !== ""
       ) {
+        const user = {
+          name: input.name,
+          lastName: input.lastName,
+          phone: input.phone,
+          email: props.email,
+          password: props.password,
+          type_of_user: props.type_of_user,
+          cuil: input.cuil,
+          user_linkedin: input.user_linkedin,
+        };
+
+        //console.log(user)
+
+        postUser(user);
+
         alert("Usuario creado!");
         setInput({
           name: "",
@@ -76,6 +110,7 @@ export default function Formusers() {
           cuil: "",
           user_linkedin: "",
         });
+        router.push("/");
       } else {
         alert("Hay datos incorrectos o sin completar!");
       }
@@ -90,9 +125,7 @@ export default function Formusers() {
     <div>
       <div class="">
         <div className="">
-          <h1 class="">
-            Formulario para Registro de Donantes/Voluntarios
-          </h1>
+          <h1 class="">Formulario para Registro de Donantes/Voluntarios</h1>
         </div>
         <form class="" onSubmit={(el) => handleSubmit(el, input)}>
           <div class="">
@@ -135,7 +168,7 @@ export default function Formusers() {
               </div>
             </div>
             <div class="">
-              <label class="">{"Cuil (Opcional)"}</label>
+              <label class="">Cuil</label>
               <input
                 class=""
                 type="text"
@@ -148,7 +181,7 @@ export default function Formusers() {
             </div>
             <div>
               <div class="">
-                <label class="">{"Linkedin (Opcional)"}</label>
+                <label class="">Usuario de Linkedin</label>
                 <input
                   class=""
                   type="text"
@@ -163,11 +196,7 @@ export default function Formusers() {
               </div>
             </div>
           </div>
-          <input
-            type="submit"
-            value={"Registrarse"}
-            class=""
-          />
+          <input type="submit" value={"Registrarse"} class="" />
         </form>
       </div>
     </div>
