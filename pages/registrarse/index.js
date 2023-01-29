@@ -9,6 +9,8 @@ import Formempresas from "@/Components/Formempresas";
 
 export default function Register() {
 
+  let [user, setUser] = useState(null)
+
   const [errors, setErrors] = useState({
     email: null,
     password: null,
@@ -22,32 +24,37 @@ export default function Register() {
 
   /* First Handler */
 
-  const validateEmail = (email) => {
-    return String(email)
+  const [credentials, setCredentials] = useState({
+    email: '',
+    password: ''
+  })
+
+  const handleChange = (event) => {
+    setCredentials({ ...credentials, [event.target.name]: event.target.value });
+  };
+
+  const isValidateEmail = (email) => {
+    const match = String(email)
       .toLowerCase()
       .match(
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       );
+    return match != null
   }
 
   const firstHandler = () => {
+    console.log(isValidateEmail(credentials.email));
+    const email = !isValidateEmail(credentials.email) && "Ingrese un mail valido"
+    const password = (credentials.password.length < 6 || credentials.password.length > 15) ? "Ingrese password valido" : false
 
-    const emailValue = document.querySelector('#email').value
-    const passwordValue = document.querySelector('#password').value
-    const validate = validateEmail(emailValue)
-    let aux = errors
+    setErrors({ ...errors, email, password })
+    console.log(errors);
 
-    if (!validate) aux.email = "Ingrese un mail valido"
-    else aux.email = false
-
-    if (passwordValue.length < 6 || passwordValue.length > 15) aux.password = "La contraseña debe contener entre 6 y 15 caracteres"
-    else aux.password = false
-
-    setErrors(aux)
-    console.log(errors)
-    if (aux.password == false && aux.email == false) {
+    if (!password && !email) {
       setStep(2);
     }
+
+    
   }
 
   /* Second Handler */
@@ -61,6 +68,33 @@ export default function Register() {
 
   const secondHandler = () => {
     if (accountType) {
+      if (accountType === 1) {
+        user = {
+          ...user,
+          type_of_user: "user"
+        }
+
+        setUser(user)
+      }
+      if (accountType === 2) {
+        user = {
+          ...user,
+          type_of_user: "ong"
+        }
+
+        setUser(user)
+      }
+      if (accountType === 3) {
+        user = {
+          ...user,
+          type_of_user: "company"
+        }
+
+        setUser(user)
+      }
+      console.log(user.email)
+      console.log(user.password)
+      console.log(user.type_of_user)
       setStep(3)
     } else {
       setErrors({ ...errors, type: "Selecciona un tipo de cuenta" })
@@ -70,6 +104,7 @@ export default function Register() {
   /* Third Handler */
 
   const thirdHandler = () => {
+
   }
 
   return (
@@ -101,7 +136,15 @@ export default function Register() {
 
       <div className="w-full">{
         step == 1 && <div>
-          <h2 className="mb-3 text-3xl font-semibold text-center">Registra tu cuenta</h2>
+          <span className="block mb-2 text-xs font-semibold tracking-widest text-center uppercase dark:text-pink-400">Register</span>
+          <h2 className="text-5xl font-bold text-center">Crea un usuario</h2>
+          <div className="text-center mb-10">
+            <span className="inline-block w-1 h-1 rounded-full bg-pink-500 ml-1"></span>
+            <span className="inline-block w-3 h-1 rounded-full bg-pink-500 ml-1"></span>
+            <span className="inline-block w-40 h-1 rounded-full bg-pink-500"></span>
+            <span className="inline-block w-3 h-1 rounded-full bg-pink-500 ml-1"></span>
+            <span className="inline-block w-1 h-1 rounded-full bg-pink-500 ml-1"></span>
+          </div>
           <p className="text-sm text-center dark:text-gray-400">Ya estas registrado?&nbsp;
             <Link href="/ingresar" rel="noopener noreferrer" className="focus:underline hover:underline">Inicia sesión</Link>
           </p>
@@ -109,12 +152,12 @@ export default function Register() {
             <div className="space-y-4 w-full">
               <div className="space-y-2">
                 <label htmlFor="email" className="block text-sm">Email address</label>
-                <input type="email" name="email" id="email" placeholder="ejemplo@mail.com" className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200" />
+                <input type="email" value={credentials.email} onChange={handleChange} name="email" id="email" placeholder="ejemplo@mail.com" className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200" />
                 {errors.email && <span className="w-full text-red-600">{errors.email}</span>}
               </div>
               <div className="space-y-2">
                 <label htmlFor="password" name={"password"} className="text-sm">Password</label>
-                <input type="password" name="password" id="password" placeholder="********" className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200" />
+                <input type="password" value={credentials.password} onChange={handleChange} name="password" id="password" placeholder="********" className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200" />
                 {errors.password && <span className="w-full text-red-600">{errors.password}</span>}
               </div>
             </div>
@@ -140,7 +183,15 @@ export default function Register() {
       <div className="w-full">
         {
           step == 2 && <div>
-            <h2 className="mb-3 text-3xl font-semibold text-center">Selecciona tu tipo de cuenta</h2>
+            <span className="block mb-2 text-xs font-semibold tracking-widest text-center uppercase dark:text-pink-400">Account type</span>
+            <h2 className="text-5xl font-bold text-center">Selecciona tu tipo de cuenta</h2>
+            <div className="text-center mb-10">
+              <span className="inline-block w-1 h-1 rounded-full bg-pink-500 ml-1"></span>
+              <span className="inline-block w-3 h-1 rounded-full bg-pink-500 ml-1"></span>
+              <span className="inline-block w-40 h-1 rounded-full bg-pink-500"></span>
+              <span className="inline-block w-3 h-1 rounded-full bg-pink-500 ml-1"></span>
+              <span className="inline-block w-1 h-1 rounded-full bg-pink-500 ml-1"></span>
+            </div>
             <form noValidate="" action="" className="space-y-8 ng-untouched ng-pristine ng-valid my-8 w-full">
 
               <div onClick={() => accountTypeHandler(1)} className={`max-w-sm p-6 bg-white border rounded shadow ${accountType == 1 ? "border-pink-400" : "border-gray-200"}`}>
@@ -173,8 +224,16 @@ export default function Register() {
       <div className="w-full">
         {
           step == 3 && accountType == 1 && <div>
-            <h2 className="mb-3 text-3xl font-semibold text-center">Completa el formulario</h2>
-            <Formusers></Formusers>
+            <span className="block mb-2 text-xs font-semibold tracking-widest text-center uppercase dark:text-pink-400">Create account</span>
+            <h2 className="text-5xl font-bold text-center">Completa el formulario</h2>
+            <div className="text-center mb-10">
+              <span className="inline-block w-1 h-1 rounded-full bg-pink-500 ml-1"></span>
+              <span className="inline-block w-3 h-1 rounded-full bg-pink-500 ml-1"></span>
+              <span className="inline-block w-40 h-1 rounded-full bg-pink-500"></span>
+              <span className="inline-block w-3 h-1 rounded-full bg-pink-500 ml-1"></span>
+              <span className="inline-block w-1 h-1 rounded-full bg-pink-500 ml-1"></span>
+            </div>
+            <Formusers email={user.email} password={user.password} type_of_user={user.type_of_user}/>
           </div>
         }
       </div>
@@ -182,8 +241,16 @@ export default function Register() {
       <div className="w-full">
         {
           step == 3 && accountType == 2 && <div>
-            <h2 className="mb-3 text-3xl font-semibold text-center">Completa el formulario</h2>
-            <CreateONG></CreateONG>
+            <span className="block mb-2 text-xs font-semibold tracking-widest text-center uppercase dark:text-pink-400">Create account</span>
+            <h2 className="text-5xl font-bold text-center">Completa el formulario</h2>
+            <div className="text-center mb-10">
+              <span className="inline-block w-1 h-1 rounded-full bg-pink-500 ml-1"></span>
+              <span className="inline-block w-3 h-1 rounded-full bg-pink-500 ml-1"></span>
+              <span className="inline-block w-40 h-1 rounded-full bg-pink-500"></span>
+              <span className="inline-block w-3 h-1 rounded-full bg-pink-500 ml-1"></span>
+              <span className="inline-block w-1 h-1 rounded-full bg-pink-500 ml-1"></span>
+            </div>
+            <CreateONG email={user.email} password={user.password} type_of_user={user.type_of_user}/>
           </div>
         }
       </div>
@@ -191,8 +258,16 @@ export default function Register() {
       <div className="w-full">
         {
           step == 3 && accountType == 3 && <div>
-            <h2 className="mb-3 text-3xl font-semibold text-center">Completa el formulario</h2>
-            <Formempresas></Formempresas>
+            <span className="block mb-2 text-xs font-semibold tracking-widest text-center uppercase dark:text-pink-400">Create account</span>
+            <h2 className="text-5xl font-bold text-center">Completa el formulario</h2>
+            <div className="text-center mb-10">
+              <span className="inline-block w-1 h-1 rounded-full bg-pink-500 ml-1"></span>
+              <span className="inline-block w-3 h-1 rounded-full bg-pink-500 ml-1"></span>
+              <span className="inline-block w-40 h-1 rounded-full bg-pink-500"></span>
+              <span className="inline-block w-3 h-1 rounded-full bg-pink-500 ml-1"></span>
+              <span className="inline-block w-1 h-1 rounded-full bg-pink-500 ml-1"></span>
+            </div>
+            <Formempresas email={user.email} password={user.password} type_of_user={user.type_of_user}/>
           </div>
         }
       </div>

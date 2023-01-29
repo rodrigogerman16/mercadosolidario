@@ -569,28 +569,12 @@ export default function Products({ data }) {
                 </Transition>
               </Menu>
 
-              <div
-                className={`h-[100%] w-full z-30 bg-black bg-opacity-60  top-0 left-0 ${
-                  search ? "fixed" : "none"
-                }`}
-                onClick={offSearch}
-              >
-                <div className="absolute shadow top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                  <input
-                    type={"search"}
-                    id="search"
-                    className={`rounded-full pr-16 w-full h-full shadow border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200  ${
-                      search ? "visible" : "hidden"
-                    }`}
-                    placeholder="Buscar..."
-                    onKeyDown={filterInput}
-                  ></input>
-                  <BsSearch
-                    id="icon"
-                    className={`text-gray-400 hover:text-gray-500 h-5 w-5 cursor-pointer absolute top top-1/2 right-6 transform -translate-y-1/2 ${
-                      search ? "visible" : "hidden"
-                    }`}
-                  ></BsSearch>
+
+              <div className={`h-[100%] w-full z-30 bg-black backdrop-blur-sm bg-opacity-60  top-0 left-0 ${search ? "fixed" : "none"}`} onClick={offSearch}>
+                <div className='absolute shadow top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
+                  <input type={'search'} id='search' className={`rounded-full pr-16 w-full h-full shadow border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200  ${search ? "visible" : "hidden"}`} placeholder='Buscar...' onKeyDown={searchHandler}></input>
+                  <BsSearch id='icon' className={`text-gray-400 hover:text-gray-500 h-5 w-5 cursor-pointer absolute top top-1/2 right-6 transform -translate-y-1/2 ${search ? "visible" : "hidden"}`} onClick={searchHandler}></BsSearch>
+
                 </div>
               </div>
 
