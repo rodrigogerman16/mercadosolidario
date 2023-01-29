@@ -6,7 +6,7 @@ import emailPost from "@/Components/emailPost";
 import CreateONG from '../../Components/createONG'
 import Formusers from "@/Components/Formusers";
 import Formempresas from "@/Components/Formempresas";
-import {useSession} from "next-auth/react"
+import {useSession, signIn} from "next-auth/react"
 
 export default function Register() {
 
@@ -74,6 +74,12 @@ export default function Register() {
   }
 
   /*Si ingreso con la cuenta de google en "ingresar" pero no completo estos steps te redirecciona al step 2*/
+  const {data: session} = useSession()
+  useEffect(()=>{
+    if(session && !session.role){
+      setStep(2)
+    }
+  },[session])
 
   return (
     <div className="w-full max-w-md p-4 rounded-md sm:p-8 m-auto min-h-[calc(100vh-100px)] flex flex-col justify-center items-center">
@@ -129,7 +135,7 @@ export default function Register() {
             </div>
           </form>
           <div className="my-6 space-y-4 w-full">
-            <button aria-label="Login with Google" type="button" className="flex items-center justify-center w-full p-4 space-x-4 border shadow focus:ring-0 w-full rounded">
+            <button onClick={() => signIn()} aria-label="Login with Google" type="button" className="flex items-center justify-center w-full p-4 space-x-4 border shadow focus:ring-0 w-full rounded">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" className="w-5 h-5 fill-pink-400">
                 <path d="M16.318 13.714v5.484h9.078c-0.37 2.354-2.745 6.901-9.078 6.901-5.458 0-9.917-4.521-9.917-10.099s4.458-10.099 9.917-10.099c3.109 0 5.193 1.318 6.38 2.464l4.339-4.182c-2.786-2.599-6.396-4.182-10.719-4.182-8.844 0-16 7.151-16 16s7.156 16 16 16c9.234 0 15.365-6.49 15.365-15.635 0-1.052-0.115-1.854-0.255-2.651z"></path>
               </svg>
