@@ -1,5 +1,7 @@
 "use client";
 import { useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/router";
 
 function Validate(input) {
   let errors = {};
@@ -18,16 +20,44 @@ function Validate(input) {
   if (input.phone.length < 8) {
     errors.phone = "Ingrese su Telefono";
   }
-  if (input.cuil.length !== 13) {
+  if (input.cuil.length !== 11) {
     errors.cuil = "Ingrese su CUIL";
   }
   if (input.user_linkedin.length === 0) {
-    errors.user_linkedin = "Ingrese su Linkedin"
+    errors.user_linkedin = "Ingrese su Linkedin";
   }
   return errors;
 }
 
-export default function Formusers() {
+export default function Formusers(props) {
+  //console.log(props)
+  const router = useRouter();
+
+  const postUser = async (props) => {
+    let info = await axios.post(
+      `https://pf-backend-mercadosolidario-production.up.railway.app/user/newuser`,
+      props
+      // {headers: {
+      //   'Content-Type': 'application/json; charset=utf-8'
+      // }}
+    );
+
+    const aux = {
+      name: info.data.name,
+      lastName: info.data.lastName,
+      email: info.data.email,
+      type_of_user: info.data.type_of_user,
+      id: info.data.id,
+      cuil: info.data.cuil,
+      phone: info.data.phone,
+      user_linkedin: info.data.user_linkedin
+    }
+
+    window.localStorage.setItem("user", JSON.stringify(aux));
+
+    return console.log(info.data, aux);
+  };
+
   const [input, setInput] = useState({
     name: "",
     lastName: "",
@@ -68,6 +98,21 @@ export default function Formusers() {
         input.cuil !== "" &&
         input.user_linkedin !== ""
       ) {
+        const user = {
+          name: input.name,
+          lastName: input.lastName,
+          phone: input.phone,
+          email: props.email,
+          password: props.password,
+          type_of_user: props.type_of_user,
+          cuil: input.cuil,
+          user_linkedin: input.user_linkedin,
+        };
+
+        //console.log(user)
+
+        postUser(user);
+
         alert("Usuario creado!");
         setInput({
           name: "",
@@ -76,6 +121,7 @@ export default function Formusers() {
           cuil: "",
           user_linkedin: "",
         });
+        router.push("/");
       } else {
         alert("Hay datos incorrectos o sin completar!");
       }
@@ -87,78 +133,83 @@ export default function Formusers() {
   //console.log(input);
 
   return (
-    <form className="grid justify-center items-center gap-4" onSubmit={(el) => handleSubmit(el, input)}>
-      <div className="">
-        <label className="text-sm">Nombre</label>
-        <input
-          className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
-          type="text"
-          value={input.name}
-          name={"name"}
-          onChange={(el) => handleChange(el)}
-          placeholder="Nombre"
-        />
-        {errors.name ? <label>{errors.name}</label> : null}
-      </div>
-      <div className="">
-        <label className="text-sm">Apellido</label>
-        <input
-          className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
-          type="text"
-          value={input.lastName}
-          name="lastName"
-          onChange={(el) => handleChange(el)}
-          placeholder="Apellido"
-        />
-        {errors.lastName ? <label>{errors.lastName}</label> : null}
-      </div>
-      <div>
+    <div>
+      <div class="">
         <div className="">
-          <label className="text-sm">Telefono</label>
-          <input
-            className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
-            type="text"
-            value={input.phone}
-            name="phone"
-            onChange={(el) => handleChange(el)}
-            placeholder="+54 011 1234567"
-          />
-          {errors.phone ? <label>{errors.phone}</label> : null}
+          <h1 class="">Formulario para Registro de Donantes/Voluntarios</h1>
         </div>
+        <form class="" onSubmit={(el) => handleSubmit(el, input)}>
+          <div class="">
+            <div class="">
+              <label class="">Nombre</label>
+              <input
+                class=""
+                type="text"
+                value={input.name}
+                name={"name"}
+                onChange={(el) => handleChange(el)}
+                placeholder=""
+              />
+              {errors.name ? <label>{errors.name}</label> : null}
+            </div>
+            <div class="">
+              <label class="">Apellido</label>
+              <input
+                class=""
+                type="text"
+                value={input.lastName}
+                name="lastName"
+                onChange={(el) => handleChange(el)}
+                placeholder=""
+              />
+              {errors.lastName ? <label>{errors.lastName}</label> : null}
+            </div>
+            <div>
+              <div class="">
+                <label class="">Telefono</label>
+                <input
+                  class=""
+                  type="text"
+                  value={input.phone}
+                  name="phone"
+                  onChange={(el) => handleChange(el)}
+                  placeholder=""
+                />
+                {errors.phone ? <label>{errors.phone}</label> : null}
+              </div>
+            </div>
+            <div class="">
+              <label class="">Cuil</label>
+              <input
+                class=""
+                type="text"
+                value={input.cuil}
+                name="cuil"
+                onChange={(el) => handleChange(el)}
+                placeholder=""
+              />
+              {errors.cuil ? <label>{errors.cuil}</label> : null}
+            </div>
+            <div>
+              <div class="">
+                <label class="">Usuario de Linkedin</label>
+                <input
+                  class=""
+                  type="text"
+                  value={input.user_linkedin}
+                  name="user_linkedin"
+                  onChange={(el) => handleChange(el)}
+                  placeholder=""
+                />
+                {errors.user_linkedin ? (
+                  <label>{errors.user_linkedin}</label>
+                ) : null}
+              </div>
+            </div>
+          </div>
+          <input type="submit" value={"Registrarse"} class="" />
+        </form>
       </div>
-      <div className="">
-        <label className="text-sm">{"Cuil (Opcional)"}</label>
-        <input
-          className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
-          type="text"
-          value={input.cuil}
-          name="cuil"
-          onChange={(el) => handleChange(el)}
-          placeholder="01-23456789-01"
-        />
-        {errors.cuil ? <label>{errors.cuil}</label> : null}
-      </div>
-      <div>
-        <div className="">
-          <label className="text-sm">{"Linkedin (Opcional)"}</label>
-          <input
-            className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
-            type="text"
-            value={input.user_linkedin}
-            name="user_linkedin"
-            onChange={(el) => handleChange(el)}
-            placeholder="https://www.linkedin.com/in/ejemplo"
-          />
-          {errors.user_linkedin ? (
-            <label>{errors.user_linkedin}</label>
-          ) : null}
-        </div>
-      </div>
-      <input
-        type="submit"
-        value={"Registrarse"}
-        className="w-full px-8 py-3 font-semibold  bg-black text-white hover:bg-zinc-800 transition-colors rounded my-4 cursor-pointer"
-      />
-    </form>
+    </div>
   );
 }
