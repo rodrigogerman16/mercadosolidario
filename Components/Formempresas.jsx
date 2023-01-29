@@ -16,7 +16,7 @@ function Validate(input) {
   return errors;
 }
 
-export default function Formempresas() {
+export default function Formempresas({ email, password, accountType }) {
 
   const [input, setInput] = useState({
     name: "",
@@ -140,7 +140,7 @@ export default function Formempresas() {
                 <input
                   class=""
                   type="file"
-                  name="image"               
+                  name="image"
                   onChange={(el) => handleImage(el)}
                 />
                 {image === null ? <label>{'Ingrese el Archivo'}</label> : null}

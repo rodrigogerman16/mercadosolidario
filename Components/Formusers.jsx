@@ -27,7 +27,7 @@ function Validate(input) {
   return errors;
 }
 
-export default function Formusers() {
+export default function Formusers({ email, password, accountType }) {
   const [input, setInput] = useState({
     name: "",
     lastName: "",

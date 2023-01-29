@@ -20,7 +20,7 @@ function Validate(input) {
   return errors;
 }
 
-export default function Crearong() {
+export default function Crearong({ email, password, accountType }) {
 
   const router = useRouter();
 
@@ -35,7 +35,7 @@ export default function Crearong() {
 
   const [image, setImage] = useState(null);
 
-  const postONG = async(props) => {
+  const postONG = async (props) => {
     let info = await axios.post(`https://pf-backend-mercadosolidario-production.up.railway.app/ongs/newong`, props);
     return console.log(info.data)
   }
@@ -157,7 +157,7 @@ export default function Crearong() {
                 <input
                   class="border border-slate-400 mr-9 mt-1 h-10 w-72 rounded"
                   type="file"
-                  name="image"               
+                  name="image"
                   onChange={(el) => handleImage(el)}
                 />
                 {image === null ? <label>{'Ingrese el Archivo'}</label> : null}

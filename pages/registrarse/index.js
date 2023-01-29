@@ -6,7 +6,7 @@ import emailPost from "@/Components/emailPost";
 import CreateONG from '../../Components/createONG'
 import Formusers from "@/Components/Formusers";
 import Formempresas from "@/Components/Formempresas";
-import {useSession, signIn} from "next-auth/react"
+import { useSession, signIn } from "next-auth/react"
 
 export default function Register() {
 
@@ -15,6 +15,9 @@ export default function Register() {
     password: null,
     type: null,
   })
+
+  const [email, setEmail] = useState(false)
+  const [password, setPassword] = useState(false)
 
   const [step, setStep] = useState(1)
   const backHandler = (num) => {
@@ -45,9 +48,10 @@ export default function Register() {
     else aux.password = false
 
     setErrors(aux)
-    console.log(errors)
     if (aux.password == false && aux.email == false) {
       setStep(2);
+      setEmail(emailValue)
+      setPassword(passwordValue)
     }
   }
 
@@ -74,12 +78,12 @@ export default function Register() {
   }
 
   /*Si ingreso con la cuenta de google en "ingresar" pero no completo estos steps te redirecciona al step 2*/
-  const {data: session} = useSession()
-  useEffect(()=>{
-    if(session && !session.role){
+  const { data: session } = useSession()
+  useEffect(() => {
+    if (session && !session.role) {
       setStep(2)
     }
-  },[session])
+  }, [session])
 
   return (
     <div className="w-full max-w-md p-4 rounded-md sm:p-8 m-auto min-h-[calc(100vh-100px)] flex flex-col justify-center items-center">
@@ -183,7 +187,7 @@ export default function Register() {
         {
           step == 3 && accountType == 1 && <div>
             <h2 className="mb-3 text-3xl font-semibold text-center">Completa el formulario</h2>
-            <Formusers></Formusers>
+            <Formusers email={email} password={password} accountType={accountType}></Formusers>
           </div>
         }
       </div>
@@ -192,7 +196,7 @@ export default function Register() {
         {
           step == 3 && accountType == 2 && <div>
             <h2 className="mb-3 text-3xl font-semibold text-center">Completa el formulario</h2>
-            <CreateONG></CreateONG>
+            <CreateONG email={email} password={password} accountType={accountType}></CreateONG>
           </div>
         }
       </div>
@@ -201,7 +205,7 @@ export default function Register() {
         {
           step == 3 && accountType == 3 && <div>
             <h2 className="mb-3 text-3xl font-semibold text-center">Completa el formulario</h2>
-            <Formempresas></Formempresas>
+            <Formempresas email={email} password={password} accountType={accountType}></Formempresas>
           </div>
         }
       </div>
