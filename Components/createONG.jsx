@@ -35,7 +35,7 @@ export default function Crearong() {
 
   const [image, setImage] = useState(null);
 
-  const postONG = async(props) => {
+  const postONG = async (props) => {
     let info = await axios.post(`https://pf-backend-mercadosolidario-production.up.railway.app/ongs/newong`, props);
     return console.log(info.data)
   }
@@ -102,87 +102,73 @@ export default function Crearong() {
   //console.log(image)
 
   return (
-    <div>
-      <div class="flex flex-col justify-center items-start m-auto min-h-full mt-16 bg-white w-3/5">
-        <div className="text-2xl font-montserrat justify-items-start w-full">
-          <h1 class="text-start">Formulario para Registro de ONG</h1>
-        </div>
-        <form class="pt-7" onSubmit={(el) => handleSubmit(el, image, input)}>
-          <div class="flex">
-            <div class="flex flex-col font-medium">
-              <div class="flex flex-col">
-                <label class="font-hind text-lg">Nombre del titular</label>
-                <input
-                  class="border border-slate-400 mr-9 mt-1 h-10 w-72 rounded"
-                  type="text"
-                  value={input.name}
-                  name={"name"}
-                  onChange={(el) => handleChange(el)}
-                  placeholder=""
-                />
-                {errors.name ? <label>{errors.name}</label> : null}
-              </div>
-              <div class="flex flex-col">
-                <label class="pt-3 font-hind text-lg">
-                  Apellido del titular
-                </label>
-                <input
-                  class="border border-slate-400 mr-9 mt-1 h-10 w-72 rounded"
-                  type="text"
-                  value={input.lastName}
-                  name="lastName"
-                  onChange={(el) => handleChange(el)}
-                  placeholder=""
-                />
-                {errors.lastName ? <label>{errors.lastName}</label> : null}
-              </div>
-              <div class="flex flex-col">
-                <label class="pt-3 font-hind text-lg">Cuit de la ONG</label>
-                <input
-                  class="border border-slate-400 mr-9 mt-1 h-10 w-72 rounded"
-                  type="text"
-                  value={input.cuit}
-                  name="cuit"
-                  onChange={(el) => handleChange(el)}
-                  placeholder=""
-                />
-                {errors.cuit ? <label>{errors.cuit}</label> : null}
-              </div>
-            </div>
-            <div>
-              <div class="flex flex-col">
-                <label class="font-hind text-lg">
-                  Registro Unico Tributario
-                </label>
-                <input
-                  class="border border-slate-400 mr-9 mt-1 h-10 w-72 rounded"
-                  type="file"
-                  name="image"               
-                  onChange={(el) => handleImage(el)}
-                />
-                {image === null ? <label>{'Ingrese el Archivo'}</label> : null}
-              </div>
-              <div class="flex flex-col font-medium">
-                <label class="pt-3 font-hind text-lg">Telefono</label>
-                <input
-                  class="border border-slate-400 mr-9 mt-1 h-10 w-72 rounded"
-                  type="text"
-                  value={input.phone}
-                  name="phone"
-                  onChange={(el) => handleChange(el)}
-                  placeholder=""
-                />
-                {errors.phone ? <label>{errors.phone}</label> : null}
-              </div>
-            </div>
-          </div>
-          <input
-            type="submit"
-            value={"Registrar ONG"}
-            class="mt-8 w-52 h-10 bg-blue-600 rounded-md text-white font-hind"
-          />
-        </form>
+    <form className="grid gap-4 justify-center items-center" onSubmit={(el) => handleSubmit(el, image, input)}>
+      <div className="">
+        <label className="text-sm">Nombre del titular</label>
+        <input
+          className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
+          type="text"
+          value={input.name}
+          name={"name"}
+          onChange={(el) => handleChange(el)}
+          placeholder=""
+        />
+        {errors.name ? <label>{errors.name}</label> : null}
       </div>
-    </div>
+      <div className="">
+        <label className="text-sm">
+          Apellido del titular
+        </label>
+        <input
+          className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
+          type="text"
+          value={input.lastName}
+          name="lastName"
+          onChange={(el) => handleChange(el)}
+          placeholder=""
+        />
+        {errors.lastName ? <label>{errors.lastName}</label> : null}
+      </div>
+      <div className="">
+        <label className="text-sm">Cuit de la ONG</label>
+        <input
+          className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
+          type="text"
+          value={input.cuit}
+          name="cuit"
+          onChange={(el) => handleChange(el)}
+          placeholder=""
+        />
+        {errors.cuit ? <label>{errors.cuit}</label> : null}
+      </div>
+      <div className="">
+        <label className="text-sm">Telefono</label>
+        <input
+          className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
+          type="text"
+          value={input.phone}
+          name="phone"
+          onChange={(el) => handleChange(el)}
+          placeholder=""
+        />
+        {errors.phone ? <label>{errors.phone}</label> : null}
+      </div>
+      <div className="">
+        <label className="text-sm">
+          Registro Unico Tributario
+        </label>
+        <input
+          className="text-sm"
+          type="file"
+          name="image"
+          onChange={(el) => handleImage(el)}
+        />
+      </div>
+      <input
+        type="submit"
+        value={"Registrar ONG"}
+        className="w-full px-8 py-3 font-semibold  bg-black text-white hover:bg-zinc-800 transition-colors rounded my-4 cursor-pointer"
+      />
+    </form>
   );
 }

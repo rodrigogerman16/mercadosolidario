@@ -7,7 +7,15 @@ export default function Login() {
 
   return (
     <div className="w-full max-w-md p-4 rounded-md sm:p-8 m-auto min-h-[calc(100vh-100px)] flex flex-col justify-center items-center">
-      <h2 className="mb-3 text-3xl font-semibold text-center">Ingresa a tu cuenta</h2>
+      <span className="block mb-2 text-xs font-semibold tracking-widest text-center uppercase dark:text-pink-400">Login</span>
+      <h2 className="text-5xl font-bold text-center">Ingresa a tu cuenta</h2>
+      <div className="text-center mb-10">
+        <span className="inline-block w-1 h-1 rounded-full bg-pink-500 ml-1"></span>
+        <span className="inline-block w-3 h-1 rounded-full bg-pink-500 ml-1"></span>
+        <span className="inline-block w-40 h-1 rounded-full bg-pink-500"></span>
+        <span className="inline-block w-3 h-1 rounded-full bg-pink-500 ml-1"></span>
+        <span className="inline-block w-1 h-1 rounded-full bg-pink-500 ml-1"></span>
+      </div>
       <p className="text-sm text-center dark:text-gray-400">No tienes cuenta?&nbsp;
         <Link href="/registrarse" rel="noopener noreferrer" className="focus:underline hover:underline">Registrate aquí</Link>
       </p>
