@@ -198,17 +198,17 @@ export default function Creariniciativa() {
               <option value="Catamarca">Catamarca</option>
               <option value="Chaco">Chaco</option>
               <option value="Chubut">Chubut</option>
-              <option value="Córdoba">Córdoba</option>
+              <option value="Cordoba">Córdoba</option>
               <option value="Corrientes">Corrientes</option>
-              <option value="Entre Ríos">Entre Ríos</option>
+              <option value="Entre Rios">Entre Ríos</option>
               <option value="Formosa">Formosa</option>
               <option value="Jujuy">Jujuy</option>
               <option value="La Pampa">La Pampa</option>
               <option value="La Rioja">La Rioja</option>
               <option value="Mendoza">Mendoza</option>
               <option value="Misiones">Misiones</option>
-              <option value="Neuquén">Neuquén</option>
-              <option value="Río Negro">Río Negro</option>
+              <option value="Neuquen">Neuquén</option>
+              <option value="Rio Negro">Río Negro</option>
               <option value="Salta">Salta</option>
               <option value="San Juan">San Juan</option>
               <option value="San Luis">San Luis</option>
@@ -216,7 +216,7 @@ export default function Creariniciativa() {
               <option value="Santa Fe">Santa Fe</option>
               <option value="Santiago del Estero">Santiago del Estero</option>
               <option value="Tierra del Fuego">Tierra del Fuego</option>
-              <option value="Tucumán">Tucumán</option>
+              <option value="Tucuman">Tucumán</option>
             </select>
             {errors.location ? <label>{errors.location}</label> : null}
           </div>
