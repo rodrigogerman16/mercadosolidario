@@ -20,7 +20,7 @@ function Validate(input) {
   if (input.phone.length < 8) {
     errors.phone = "Ingrese su Telefono";
   }
-  if (input.cuil.length !== 13) {
+  if (input.cuil.length !== 11) {
     errors.cuil = "Ingrese su CUIL";
   }
   if (input.user_linkedin.length === 0) {
@@ -35,7 +35,7 @@ export default function Formusers(props) {
 
   const postUser = async (props) => {
     let info = await axios.post(
-      `https://pf-backend-mercadosolidario-production.up.railway.app/users/newuser`,
+      `https://pf-backend-mercadosolidario-production.up.railway.app/user/newuser`,
       props
       // {headers: {
       //   'Content-Type': 'application/json; charset=utf-8'

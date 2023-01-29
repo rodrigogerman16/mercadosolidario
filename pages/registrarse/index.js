@@ -76,7 +76,7 @@ export default function Register() {
       if (accountType === 1) {
         user = {
           ...user,
-          type_of_user: "users"
+          type_of_user: "user"
         }
 
         setUser(user)
@@ -92,7 +92,7 @@ export default function Register() {
       if (accountType === 3) {
         user = {
           ...user,
-          type_of_user: "companies"
+          type_of_user: "company"
         }
 
         setUser(user)

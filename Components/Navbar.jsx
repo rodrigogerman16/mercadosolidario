@@ -8,14 +8,14 @@ import { Transition } from "@headlessui/react";
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    let session = JSON.parse(localStorage.getItem("user"));
-    setUser(session);
-  }, [user]);
+  // useEffect(() => {
+  //   let session = JSON.parse(localStorage.getItem("user"));
+  //   setUser(session);
+  // }, [user]);
 
-  console.log(user);
+  // console.log(user);
 
   return (
     <div>
@@ -56,7 +56,21 @@ export default function Navbar() {
                   </Link>
                 </div>
               </div>
-              {user ? (
+              <div className="hidden gap-4 md:flex">
+                  <Link
+                    href="/ingresar"
+                    className="font-semibold text-black bg-zinc-100 px-6 py-2 hover:bg-zinc-200 transition-colors rounded"
+                  >
+                    Ingresar
+                  </Link>
+                  <Link
+                    href="/registrarse"
+                    className="font-semibold text-white bg-pink-400 px-6 py-2 hover:bg-pink-300 transition-colors rounded"
+                  >
+                    Registrarme
+                  </Link>
+                </div>
+              {/* {user ? (
                 <Link href="/perfil">{`${user.name} ${user.lastName}`}</Link>
               ) : (
                 <div className="hidden gap-4 md:flex">
@@ -73,7 +87,7 @@ export default function Navbar() {
                     Registrarme
                   </Link>
                 </div>
-              )}
+              )} */}
             </div>
             <div className="-mr-2 flex md:hidden">
               <button

@@ -38,7 +38,7 @@ export default function Crearong(props) {
 
   const postONG = async (props) => {
     let info = await axios.post(
-      `https://pf-backend-mercadosolidario-production.up.railway.app/ongs/newong`,
+      `https://pf-backend-mercadosolidario-production.up.railway.app/ong/newong`,
       props,
       {
         headers: {
