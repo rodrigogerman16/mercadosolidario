@@ -18,10 +18,8 @@ export default function Products({ data }) {
   const [edit, setEdit] = useState();
   const [orden, setOrden] = useState();
   const [input, setInput] = useState();
-  const [checkedPaises, setCheckedPaises] = useState();
-  const [valuePaises, setValuePaises] = useState();
-  const [datosFiltrados, setDatosFiltrados] = useState([]);
-  const [lenguajeSeleccionado, setLenguajeSeleccionado] = useState({
+  const [datosFiltradosPaises, setDatosFiltradosPaises] = useState([]);
+  const [checkedPaises, setCheckedPaises] = useState({
     buenosAires: false,
     Catamarca: false,
     Chaco: false,
@@ -46,18 +44,102 @@ export default function Products({ data }) {
     tierraDelFuego: false,
     Tucumán: false,
   });
-
-  const filterDonacionn = (e) => {
-    const value = e.target.name;
-    console.log("Soy filterDonacion" + value);
-    const informacion =
-      value === "efectivo"
-        ? data.filter((e) => e.type_of_help === "efectivo")
-        : data.filter((e) => e.type_of_help === "especie");
-    console.log(data);
-    setInfo(value === "all" ? data : informacion);
-  };
+  const [datosFiltradosCategorias, setDatosFiltradosCategorias] = useState([]);
+  const [checkedCategorias, setCheckedCategorias] = useState({
+    Alimentacion: false,
+    asesoriaLegal: false,
+    ayudaARefugiados: false,
+    ayudaAAnimales: false,
+    apoyoAComunidadesIndigenas: false,
+    apoyoALgbt: false,
+    apoyoALaMujer: false,
+    construccionObras: false,
+    cultura: false,
+    deportes: false,
+    derechosHumanos: false,
+    discapacitados: false,
+    educacion: false,
+    medioAmbiente: false,
+    entretenimiento: false,
+    gobiernoNoLucro: false,
+    materiaPrima: false,
+    mediosDeComunicacion: false,
+    saludMedicina: false,
+    servicioComunitario: false,
+    transporte: false,
+  });
   let results = [];
+  const [datosFiltradosDonaciones, setDatosFiltradosDonaciones] = useState([]);
+  const [checkedDonaciones, setCheckedDonaciones] = useState({
+    efectivo: false,
+    especie: false,
+    servicio: false,
+  });
+  const handlerDonaciones = (e) => {
+    setCheckedDonaciones({
+      ...checkedDonaciones,
+      [e.target.value]: e.target.checked,
+    });
+    if (e.target.checked) {
+      const value = e.target.value;
+      const resultadoLenguaje = edit.filter((e) => e.type_of_help === value);
+      setDatosFiltradosDonaciones([
+        ...datosFiltradosDonaciones,
+        ...resultadoLenguaje,
+      ]);
+    } else {
+      const value = e.target.value;
+      const resultadoLenguaje = datosFiltradosCategorias.filter(
+        (e) => e.type_of_help === value
+      );
+      setDatosFiltradosDonaciones([...resultadoLenguaje]);
+    }
+  };
+
+  const handlerCategorias = (e) => {
+    setCheckedCategorias({
+      ...checkedCategorias,
+      [e.target.value]: e.target.checked,
+    });
+
+    if (e.target.checked) {
+      const value = e.target.value;
+      const resultadoLenguaje = edit.filter((e) => e.type_of_help === value);
+      setDatosFiltradosCategorias([
+        ...datosFiltradosCategorias,
+        ...resultadoLenguaje,
+      ]);
+    } else {
+      const value = e.target.value;
+      const resultadoLenguaje = datosFiltradosCategorias.filter(
+        (e) => e.type_of_help !== value
+      );
+      setDatosFiltradosCategorias([...resultadoLenguaje]);
+    }
+  };
+
+  const filterPaises = (e) => {
+    setCheckedPaises({
+      ...checkedPaises,
+      [e.target.value]: e.target.checked,
+    });
+
+    console.log(results);
+    if (e.target.checked) {
+      const value = e.target.value;
+      const resultadoLenguaje = edit.filter((e) => e.location === value);
+      setDatosFiltradosPaises([...datosFiltradosPaises, ...resultadoLenguaje]);
+      results = datosFiltradosPaises;
+    } else {
+      const value = e.target.value;
+      const resultadoLenguaje = datosFiltradosPaises.filter(
+        (e) => e.location !== value
+      );
+      setDatosFiltradosPaises([...resultadoLenguaje]);
+      results = datosFiltradosPaises;
+    }
+  };
+
   const filterInput = async (e) => {
     const value = e.target.value;
     setInput(value);
@@ -72,7 +154,6 @@ export default function Products({ data }) {
   const filterOrder = async (e) => {
     setOrden(e.target.outerText);
   };
-
   if (orden === "Titulo Asc") {
     results = edit.sort((a, b) => a.title.localeCompare(b.title));
     console.log(results);
@@ -205,19 +286,19 @@ export default function Products({ data }) {
           value: "efectivo",
           label: "Efectivo",
           checked: false,
-          onChange: filterDonacionn,
+          onChange: handlerDonaciones,
         },
         {
           value: "especie",
           label: "Especie",
           checked: false,
-          onChange: filterDonacionn,
+          onChange: handlerDonaciones,
         },
         {
-          value: "12l",
-          label: "12L",
+          value: "servicio",
+          label: "Servicio",
           checked: false,
-          onChange: filterDonacionn,
+          onChange: handlerDonaciones,
         },
       ],
     },
@@ -313,27 +394,9 @@ export default function Products({ data }) {
   //   }
   // };
 
-  const filterPaises = (e) => {
-    setLenguajeSeleccionado({
-      ...lenguajeSeleccionado,
-      [e.target.value]: e.target.checked,
-    });
-
-    console.log(results);
-    if (e.target.checked) {
-      const value = e.target.value;
-      const resultadoLenguaje = edit.filter((e) => e.location === value);
-      setDatosFiltrados([...datosFiltrados, ...resultadoLenguaje]);
-    } else {
-      const value = e.target.value;
-      const resultadoLenguaje = datosFiltrados.filter(
-        (e) => e.location !== value
-      );
-      setDatosFiltrados([...resultadoLenguaje]);
-    }
-  };
-
-  datosFiltrados.length === 0 ? (results = edit) : (results = datosFiltrados);
+  datosFiltradosPaises.length === 0
+    ? (results = edit)
+    : (results = [...datosFiltradosPaises]);
   // results = datosFiltrados;
 
   return (
