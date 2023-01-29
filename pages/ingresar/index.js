@@ -6,12 +6,24 @@ import Router from "next/router";
 
 export default function Login() {
   const {data: session} = useSession()
-    useEffect(() => {
-      {/*Solo se genera el token en el loggin, luego de registrarse redirigir a loggin*/}
-      localStorage.setItem('token', "Eltoken");
-    }, []);
+  
+  useEffect(() => {
+    if(!session){
+      console.log("holaa")
+    } else if 
+    (session.role === "admin") {        
+      <div>
+        <p>redireccione al dashboard</p>
+        <button onClick={e => signOut()}>Cerrar</button>
+      </div>
+    } else  if
+      (!session.role) {
+        Router.push("/registrarse")
+      }  else {
+        Router.push("/")
+      }
+  }, [session])  
 
-  if(!session){   
     return (
     <div className="w-full max-w-md p-4 rounded-md sm:p-8 m-auto min-h-[calc(100vh-100px)] flex flex-col justify-center items-center">
       <h2 className="mb-3 text-3xl font-semibold text-center">Ingresa a tu cuenta</h2>
@@ -49,21 +61,10 @@ export default function Login() {
       </div>
     </div>    
   )
-  }
-
- if(session.role === 'admin'){
-    return(
-      <div>
-        <p>redireccione al dashboard</p>
-        <button onClick={e => signOut()}>Cerrar</button>
-      </div>
-    )
-  }
-  else{
-    Router.push("/")
-  }
-};  
-{/*
+  }  
+{
+  
+/*
 export const getServerSideProps = async(context) => {
   const session = await getSession(context)
   if(!session){

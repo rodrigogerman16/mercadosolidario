@@ -6,6 +6,7 @@ import emailPost from "@/Components/emailPost";
 import CreateONG from '../../Components/createONG'
 import Formusers from "@/Components/Formusers";
 import Formempresas from "@/Components/Formempresas";
+import {useSession} from "next-auth/react"
 
 export default function Register() {
 
@@ -71,6 +72,8 @@ export default function Register() {
 
   const thirdHandler = () => {
   }
+
+  /*Si ingreso con la cuenta de google en "ingresar" pero no completo estos steps te redirecciona al step 2*/
 
   return (
     <div className="w-full max-w-md p-4 rounded-md sm:p-8 m-auto min-h-[calc(100vh-100px)] flex flex-col justify-center items-center">

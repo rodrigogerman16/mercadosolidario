@@ -11,6 +11,7 @@ export default NextAuth({
   callbacks: {
     async session({ session, token, user }) {
       const admins = ["rodrigoezequielgerman@gmail.com"];
+      // const role = await authservice.getRoleByEmail(user)
       if (admins.includes(session.user?.email)) {
         session.role = "admin";
       }
