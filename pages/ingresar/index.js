@@ -87,6 +87,11 @@ export default function Login() {
         alert("Hay datos incorrectos o sin completar!");
       }
     } catch (error) {
+      setInput({
+        email: "",
+        password: "",
+      });
+      alert('Error, Intente nuevamente')
       console.log(error)
     }
   }
