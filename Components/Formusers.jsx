@@ -69,6 +69,10 @@ export default function Formusers() {
         input.user_linkedin !== ""
       ) {
         alert("Usuario creado!");
+// reqiest de axios
+// te devuelve user type
+// lo metes al localstorage
+        
         setInput({
           name: "",
           lastName: "",
