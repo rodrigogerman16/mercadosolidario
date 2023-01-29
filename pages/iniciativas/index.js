@@ -1,9 +1,16 @@
-import React, { Fragment, useEffect, useState } from 'react'
-import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
-import { BsChevronDown, BsFunnelFill, BsDash, BsPlus, BsSearch, BsX } from 'react-icons/bs'
-import Link from 'next/link'
-import Card from '../../Components/Card'
-import InfiniteScroll from 'react-infinite-scroll-component';
+import React, { Fragment, useEffect, useState } from "react";
+import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
+import {
+  BsChevronDown,
+  BsFunnelFill,
+  BsDash,
+  BsPlus,
+  BsSearch,
+  BsX,
+} from "react-icons/bs";
+import Link from "next/link";
+import Card from "../../Components/Card";
+import InfiniteScroll from "react-infinite-scroll-component";
 import { useRouter } from "next/router";
 
 export default function Products({ data }) {
@@ -11,17 +18,128 @@ export default function Products({ data }) {
   const [edit, setEdit] = useState();
   const [orden, setOrden] = useState();
   const [input, setInput] = useState();
-  const filterDonacionn = (e) => {
-    const value = e.target.name;
-    console.log("Soy filterDonacion" + value);
-    const informacion =
-      value === "efectivo"
-        ? data.filter((e) => e.type_of_help === "efectivo")
-        : data.filter((e) => e.type_of_help === "especie");
-    console.log(data);
-    setInfo(value === "all" ? data : informacion);
-  };
+  const [datosFiltradosPaises, setDatosFiltradosPaises] = useState([]);
+  const [checkedPaises, setCheckedPaises] = useState({
+    buenosAires: false,
+    Catamarca: false,
+    Chaco: false,
+    Chubut: false,
+    Córdoba: false,
+    Corrientes: false,
+    entreRios: false,
+    Formosa: false,
+    Jujuy: false,
+    laPampa: false,
+    laRioja: false,
+    Mendoza: false,
+    Misiones: false,
+    Neuquén: false,
+    ríoNegro: false,
+    Salta: false,
+    sanJuan: false,
+    sanLuis: false,
+    santaCruz: false,
+    santaFe: false,
+    santiagoDelEstero: false,
+    tierraDelFuego: false,
+    Tucumán: false,
+  });
+  const [datosFiltradosCategorias, setDatosFiltradosCategorias] = useState([]);
+  const [checkedCategorias, setCheckedCategorias] = useState({
+    Alimentacion: false,
+    asesoriaLegal: false,
+    ayudaARefugiados: false,
+    ayudaAAnimales: false,
+    apoyoAComunidadesIndigenas: false,
+    apoyoALgbt: false,
+    apoyoALaMujer: false,
+    construccionObras: false,
+    cultura: false,
+    deportes: false,
+    derechosHumanos: false,
+    discapacitados: false,
+    educacion: false,
+    medioAmbiente: false,
+    entretenimiento: false,
+    gobiernoNoLucro: false,
+    materiaPrima: false,
+    mediosDeComunicacion: false,
+    saludMedicina: false,
+    servicioComunitario: false,
+    transporte: false,
+  });
   let results = [];
+  const [datosFiltradosDonaciones, setDatosFiltradosDonaciones] = useState([]);
+  const [checkedDonaciones, setCheckedDonaciones] = useState({
+    efectivo: false,
+    especie: false,
+    servicio: false,
+  });
+  const handlerDonaciones = (e) => {
+    setCheckedDonaciones({
+      ...checkedDonaciones,
+      [e.target.value]: e.target.checked,
+    });
+    if (e.target.checked) {
+      const value = e.target.value;
+      const resultadoLenguaje = edit.filter((e) => e.type_of_help === value);
+      setDatosFiltradosDonaciones([
+        ...datosFiltradosDonaciones,
+        ...resultadoLenguaje,
+      ]);
+    } else {
+      const value = e.target.value;
+      const resultadoLenguaje = datosFiltradosCategorias.filter(
+        (e) => e.type_of_help === value
+      );
+      setDatosFiltradosDonaciones([...resultadoLenguaje]);
+    }
+  };
+
+  const handlerCategorias = (e) => {
+    setCheckedCategorias({
+      ...checkedCategorias,
+      [e.target.value]: e.target.checked,
+    });
+
+    if (e.target.checked) {
+      const value = e.target.value;
+      const resultadoLenguaje = edit.filter((e) => e.type_of_help === value);
+      setDatosFiltradosCategorias([
+        ...datosFiltradosCategorias,
+        ...resultadoLenguaje,
+      ]);
+    } else {
+      const value = e.target.value;
+      const resultadoLenguaje = datosFiltradosCategorias.filter(
+        (e) => e.type_of_help !== value
+      );
+      setDatosFiltradosCategorias([...resultadoLenguaje]);
+    }
+  };
+
+  const filterPaises = (e) => {
+    setCheckedPaises({
+      ...checkedPaises,
+      [e.target.value]: e.target.checked,
+    });
+
+    console.log(results);
+    if (e.target.checked) {
+      const value = e.target.value;
+      const resultadoLenguaje = edit.filter((e) => e.location === value);
+      setDatosFiltradosPaises([...datosFiltradosPaises, ...resultadoLenguaje]);
+      results = datosFiltradosPaises;
+    } else {
+      const value = e.target.value;
+      const resultadoLenguaje = datosFiltradosPaises.filter(
+        (e) => e.location !== value
+      );
+      setDatosFiltradosPaises([...resultadoLenguaje]);
+      results = datosFiltradosPaises;
+    }
+  };
+
   const filterInput = async (e) => {
     const value = e.target.value;
     setInput(value);
@@ -36,7 +154,6 @@ export default function Products({ data }) {
   const filterOrder = async (e) => {
     setOrden(e.target.outerText);
   };
-
   if (orden === "Titulo Asc") {
     results = edit.sort((a, b) => a.title.localeCompare(b.title));
     console.log(results);
@@ -169,19 +286,19 @@ export default function Products({ data }) {
           value: "efectivo",
           label: "Efectivo",
           checked: false,
-          onChange: filterDonacionn,
+          onChange: handlerDonaciones,
         },
         {
           value: "especie",
           label: "Especie",
           checked: false,
-          onChange: filterDonacionn,
+          onChange: handlerDonaciones,
         },
         {
-          value: "12l",
-          label: "12L",
+          value: "servicio",
+          label: "Servicio",
           checked: false,
-          onChange: filterDonacionn,
+          onChange: handlerDonaciones,
         },
       ],
     },
@@ -193,80 +310,94 @@ export default function Products({ data }) {
 
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
-  const [newData, setNewData] = useState(data)
+  const [newData, setNewData] = useState(data);
 
-  const [search, setSearch] = useState(false)
+  const [search, setSearch] = useState(false);
 
-  const offSearch = e => {
-    if (e.target === e.currentTarget) setSearch(false)
-  }
+  const offSearch = (e) => {
+    if (e.target === e.currentTarget) setSearch(false);
+  };
 
   const onSearch = () => {
-    setSearch(true)
+    setSearch(true);
     setTimeout(() => {
-      document.querySelector('#search').focus()
+      document.querySelector("#search").focus();
     }, 1);
-  }
-
+  };
+  const [pagination, setPagination] = useState(1);
+  const [hydrated, setHydrated] = React.useState(false);
   useEffect(() => {
     /* Disable scroll if search is open */
+    setEdit(data);
+    setInfo(data);
+    setHydrated(true);
     if (search) {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop
-      const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft
+      const scrollTop =
+        window.pageYOffset || document.documentElement.scrollTop;
+      const scrollLeft =
+        window.pageXOffset || document.documentElement.scrollLeft;
 
       window.onscroll = function () {
         window.scrollTo(scrollLeft, scrollTop);
       };
     } else {
-      window.onscroll = function () { };
+      window.onscroll = function () {};
     }
-
-  }, [search])
-
-
-  const searchHandler = e => {
-    const value = document.querySelector('#search').value.toLowerCase()
-    if (e.key == "Enter" || e.target.id == 'icon') {
-      setNewData(data.filter(p => p.title.toLowerCase().includes(value)))
-      setSearch(false)
-      document.querySelector('#search').value = ''
-    }
-    if (e.key == "Escape") {
-      setSearch(false)
-      document.querySelector('#search').value = ''
-    }
-  }
-
-  const [pagination, setPagination] = useState(1)
-  
-  const [hydrated, setHydrated] = React.useState(false);
-  useEffect(() => {
-    setEdit(data);
-    setInfo(data);
-    setHydrated(true);
-  }, []);
+  }, [search]);
   if (!hydrated) {
     return null;
   }
 
-  const filterPaises = (e) => {
-    if (e.target.checked) {
-      if (!e.target.value) return setInfo(data);
-      const value = e.target.value;
-      const filtros = data.filter((e) => e.location === value);
-      setInfo(value === "all" ? data : filtros);
-      // console.log((e.target.checked = !e.target.checked));
-      console.log(info);
-    }
-    if (!e.target.checked) {
-      const value = e.target.value;
-      const filtros = info.filter((e) => e.location !== value);
-      setInfo(filtros);
-      // e.target.checked = !e.target.checked;
-      // console.log((e.target.checked = !e.target.checked));
-      console.log(info);
-    }
-  };
+  // const searchHandler = (e) => {
+  //   setEnter(e.key);
+  //   setInputSearch(e.target.value);
+  //   if (enter == "Enter") {
+  //     results = edit.filter((p) => {
+  //       console.log(inputSearch);
+  //       return p.title.toLowerCase().includes(inputSearch.toLowerCase());
+  //     });
+  //     setSearch(false);
+  //     setInputSearch("");
+  //   }
+  //   if (enter == "Escape") {
+  //     setSearch(false);
+  //     setInputSearch("");
+  //   }
+  // };
+
+  // const filterPaises = (e) => {
+  //   let provinciasChecked = [];
+  //   if (e.target.checked) {
+  //     provinciasChecked.push(e.target.value);
+  //     // results = edit.filter(
+  //     //   (e) => {
+
+  //     //     e.location.toLowerCase() === value.toLowerCase()}
+  //     // )
+  //     let provinciasAcumulador = []
+  //     results = edit.filter((obj) => {
+  //       for (const prov of provinciasChecked) {
+  //         provinciasAcumulador.push(prov)
+  //         return prov.toLowerCase() === obj.location.toLowerCase();
+  //       }
+  //     });
+
+  //     console.log(results);
+  //   }
+  //   if (!e.target.checked) {
+  //     const value = e.target.value;
+  //     results = [
+  //       ...results,
+  //       edit.filter((e) => e.location.toLowerCase() !== value.toLowerCase()),
+  //     ];
+  //     console.log(results);
+  //   }
+  // };
+
+  datosFiltradosPaises.length === 0
+    ? (results = edit)
+    : (results = [...datosFiltradosPaises]);
+  // results = datosFiltrados;
 
   return (
     <div className="bg-white">
@@ -389,7 +520,6 @@ export default function Products({ data }) {
 
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-baseline justify-end border-b border-gray-200 pt-12 pb-6">
-
             <div className="flex items-center">
               <Menu as="div" className="relative inline-block text-left">
                 <div>
@@ -439,16 +569,22 @@ export default function Products({ data }) {
                 </Transition>
               </Menu>
 
+
               <div className={`h-[100%] w-full z-30 bg-black backdrop-blur-sm bg-opacity-60  top-0 left-0 ${search ? "fixed" : "none"}`} onClick={offSearch}>
                 <div className='absolute shadow top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
                   <input type={'search'} id='search' className={`rounded-full pr-16 w-full h-full shadow border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200  ${search ? "visible" : "hidden"}`} placeholder='Buscar...' onKeyDown={searchHandler}></input>
                   <BsSearch id='icon' className={`text-gray-400 hover:text-gray-500 h-5 w-5 cursor-pointer absolute top top-1/2 right-6 transform -translate-y-1/2 ${search ? "visible" : "hidden"}`} onClick={searchHandler}></BsSearch>
+
                 </div>
               </div>
 
               <div className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7">
                 <span className="sr-only">View grid</span>
-                <BsSearch className="h-5 w-5 cursor-pointer" aria-hidden="true" onClick={onSearch} />
+                <BsSearch
+                  className="h-5 w-5 cursor-pointer"
+                  aria-hidden="true"
+                  onClick={onSearch}
+                />
               </div>
               <button
                 type="button"
@@ -479,7 +615,7 @@ export default function Products({ data }) {
                   <Disclosure
                     as="div"
                     key={section.id}
-                    onChange={(e) => filterPaises(e)}
+                    onChange={filterPaises}
                     className="border-b border-gray-200 py-6"
                   >
                     {({ open }) => (
@@ -533,40 +669,44 @@ export default function Products({ data }) {
               </form>
 
               {/* Product grid */}
-              <div className="grid w-full col-span-3" id='infiniteScroll'>
-                {
-                  results.length && <InfiniteScroll
+              <div className="grid w-full col-span-3" id="infiniteScroll">
+                {results.length && (
+                  <InfiniteScroll
                     dataLength={results.length}
                     next={() => setPagination(pagination + 1)}
                     hasMore={true}
                     loader={<h4>Loading..</h4>}
                     scrollableTarget="infiniteScroll"
-                    className='grid w-full sm:grid-cols-2 xl:grid-cols-3 gap-4 overflow-auto'
+                    className="grid w-full sm:grid-cols-2 xl:grid-cols-3 gap-4 overflow-auto"
                   >
                     {results.length !== 0
                       ? results.map((e) => (
-                        <Link className='w-full' key={e.id} href={`/iniciativas/${e.id}`}>
-                          <Card
+                          <Link
+                            className="w-full"
                             key={e.id}
-                            title={e.title}
-                            image={e.image}
-                            description={e.description}
-                            location={e.location}
-                            isVolunteer={e.type_of_help}
-                            expirationDate={e.expirationDate}
-                          />
-                        </Link>
-                      ))
+                            href={`/iniciativas/${e.id}`}
+                          >
+                            <Card
+                              key={e.id}
+                              title={e.title}
+                              image={e.image}
+                              description={e.description}
+                              location={e.location}
+                              isVolunteer={e.type_of_help}
+                              expirationDate={e.expirationDate}
+                            />
+                          </Link>
+                        ))
                       : "No hay cartas para mostrar"}
                   </InfiniteScroll>
-                }
+                )}
               </div>
-            </div >
-          </section >
-        </main >
-      </div >
-    </div >
-  )
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+  );
 }
 
 export function getStaticProps() {
