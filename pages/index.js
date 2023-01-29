@@ -2,6 +2,8 @@
 import Image from 'next/image'
 import Link from 'next/link';
 import recomendacion from '../Assets/recomendacion.jpeg'
+import { BiDonateHeart } from 'react-icons/bi'
+import { AiOutlineUser, AiOutlineGift } from 'react-icons/ai'
 
 export default function Home() {
 
@@ -62,11 +64,7 @@ export default function Home() {
         <div className="container grid grid-cols-1 justify-between items-center gap-6 mx-auto sm:grid-cols-2 lg:grid-cols-4">
           <div className="flex p-4 space-x-4 rounded-lg md:space-x-6 justify-center">
             <div className="flex justify-center p-2 align-middle rounded-lg sm:p-4 bg-pink-400">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor" className="h-9 w-9 text-white">
-                <polygon points="160 96.039 160 128.039 464 128.039 464 191.384 428.5 304.039 149.932 304.039 109.932 16 16 16 16 48 82.068 48 122.068 336.039 451.968 336.039 496 196.306 496 96.039 160 96.039"></polygon>
-                <path d="M176.984,368.344a64.073,64.073,0,0,0-64,64h0a64,64,0,0,0,128,0h0A64.072,64.072,0,0,0,176.984,368.344Zm0,96a32,32,0,1,1,32-32A32.038,32.038,0,0,1,176.984,464.344Z"></path>
-                <path d="M400.984,368.344a64.073,64.073,0,0,0-64,64h0a64,64,0,0,0,128,0h0A64.072,64.072,0,0,0,400.984,368.344Zm0,96a32,32,0,1,1,32-32A32.038,32.038,0,0,1,400.984,464.344Z"></path>
-              </svg>
+              <AiOutlineUser className="h-9 w-9 text-white"></AiOutlineUser>
             </div>
             <div className="flex flex-col justify-center align-middle text-center">
               <p className="text-3xl font-semibold leading-none">+400k</p>
@@ -75,12 +73,7 @@ export default function Home() {
           </div>
           <div className="flex p-4 space-x-4 rounded-lg md:space-x-6 justify-center">
             <div className="flex justify-center p-2 align-middle rounded-lg sm:p-4 bg-pink-400">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor" className="h-9 w-9 text-white">
-                <path d="M256,16C123.452,16,16,123.452,16,256S123.452,496,256,496,496,388.548,496,256,388.548,16,256,16ZM403.078,403.078a207.253,207.253,0,1,1,44.589-66.125A207.332,207.332,0,0,1,403.078,403.078Z"></path>
-                <path d="M256,384A104,104,0,0,0,360,280H152A104,104,0,0,0,256,384Z"></path>
-                <polygon points="205.757 228.292 226.243 203.708 168 155.173 109.757 203.708 130.243 228.292 168 196.827 205.757 228.292"></polygon>
-                <polygon points="285.757 203.708 306.243 228.292 344 196.827 381.757 228.292 402.243 203.708 344 155.173 285.757 203.708"></polygon>
-              </svg>
+              <BiDonateHeart className="h-9 w-9 text-white"></BiDonateHeart>
             </div>
             <div className="flex flex-col justify-center align-middle text-center">
               <p className="text-3xl font-semibold leading-none">+200</p>
@@ -89,14 +82,7 @@ export default function Home() {
           </div>
           <div className="flex p-4 space-x-4 rounded-lg md:space-x-6 justify-center">
             <div className="flex justify-center p-2 align-middle rounded-lg sm:p-4 bg-pink-400">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor" className="h-9 w-9 text-white">
-                <path d="M425.706,142.294A240,240,0,0,0,16,312v88H160V368H48V312c0-114.691,93.309-208,208-208s208,93.309,208,208v56H352v32H496V312A238.432,238.432,0,0,0,425.706,142.294Z"></path>
-                <rect width="32" height="32" x="80" y="264"></rect>
-                <rect width="32" height="32" x="240" y="128"></rect>
-                <rect width="32" height="32" x="136" y="168"></rect>
-                <rect width="32" height="32" x="400" y="264"></rect>
-                <path d="M297.222,335.1l69.2-144.173-28.85-13.848L268.389,321.214A64.141,64.141,0,1,0,297.222,335.1ZM256,416a32,32,0,1,1,32-32A32.036,32.036,0,0,1,256,416Z"></path>
-              </svg>
+              <AiOutlineGift className="h-9 w-9 text-white"></AiOutlineGift>
             </div>
             <div className="flex flex-col justify-center align-middle text-center">
               <p className="text-3xl font-semibold leading-none">+80k</p>
@@ -137,8 +123,8 @@ export default function Home() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
               </svg>
               <div className="ml-3">
-                <dt className="text-lg font-medium">Quisque at urna</dt>
-                <dd className="mt-2 dark:text-gray-400">Vivamus ultricies bibendum tortor, molestie imperdiet justo cursus eu. Donec quis arcu magna. Integer tempor egestas dolor.</dd>
+                <dt className="text-lg font-medium">Conexión</dt>
+                <dd className="mt-2 dark:text-gray-400">Buscamos facilitar las conexiones entre ONG&apos;s, donantes y voluntarios.</dd>
               </div>
             </div>
             <div className="flex">
@@ -146,8 +132,8 @@ export default function Home() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
               </svg>
               <div className="ml-3">
-                <dt className="text-lg font-medium">Quisque eu dui lacinia</dt>
-                <dd className="mt-2 dark:text-gray-400">Quisque ultricies volutpat sapien nec varius. Sed sit amet justo vestibulum, efficitur risus quis, gravida libero.</dd>
+                <dt className="text-lg font-medium">Rápido</dt>
+                <dd className="mt-2 dark:text-gray-400">Ayudar en una causa nunca fue tan rápido y sencillo, simplemente busca la iniciativa que mas te guste y empieza a colaborar!</dd>
               </div>
             </div>
             <div className="flex">
@@ -155,8 +141,8 @@ export default function Home() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
               </svg>
               <div className="ml-3">
-                <dt className="text-lg font-medium">Mauris dignissim</dt>
-                <dd className="mt-2 dark:text-gray-400">Phasellus nec molestie arcu. Proin dictum, lorem mollis rutrum efficitur, lectus velit pharetra elit, et dictum purus nibh auctor velit.</dd>
+                <dt className="text-lg font-medium">Seguro</dt>
+                <dd className="mt-2 dark:text-gray-400">No te preocupes mas por los fraudes! Nos encargaremos de validar la veracidad de cada iniciativa.</dd>
               </div>
             </div>
             <div className="flex">
@@ -164,8 +150,8 @@ export default function Home() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
               </svg>
               <div className="ml-3">
-                <dt className="text-lg font-medium">Proin nulla eros</dt>
-                <dd className="mt-2 dark:text-gray-400">Sed ornare ultricies gravida. Morbi egestas dolor turpis, ornare laoreet est vehicula non.</dd>
+                <dt className="text-lg font-medium">Información</dt>
+                <dd className="mt-2 dark:text-gray-400">Mantente informado de todas las ultimas iniciativas sin importar el rubro</dd>
               </div>
             </div>
             <div className="flex">
@@ -173,8 +159,8 @@ export default function Home() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
               </svg>
               <div className="ml-3">
-                <dt className="text-lg font-medium">Proin dictum</dt>
-                <dd className="mt-2 dark:text-gray-400">Lorem mollis rutrum efficitur, lectus velit pharetra elit, et dictum purus nibh auctor velit.</dd>
+                <dt className="text-lg font-medium">Sube tu nivel</dt>
+                <dd className="mt-2 dark:text-gray-400">A medida que vayas colaborando en iniciativas recibirás y/o mejoraras insignias</dd>
               </div>
             </div>
             <div className="flex">
@@ -182,8 +168,8 @@ export default function Home() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
               </svg>
               <div className="ml-3">
-                <dt className="text-lg font-medium">Quisque eu dui lacinia</dt>
-                <dd className="mt-2 dark:text-gray-400">Cras a mauris tincidunt, scelerisque justo sit amet, hendrerit est. Fusce venenatis diam fringilla metus convallis, at dapibus enim congue.</dd>
+                <dt className="text-lg font-medium">Todos ganan</dt>
+                <dd className="mt-2 dark:text-gray-400">Las ONG&apos;s recaudan, las personas se vuelven mas espirituales y las empresas encuentran talento profesional espiritual</dd>
               </div>
             </div>
             <div className="flex">
@@ -191,8 +177,8 @@ export default function Home() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
               </svg>
               <div className="ml-3">
-                <dt className="text-lg font-medium">Cras vel bibendum tellus</dt>
-                <dd className="mt-2 dark:text-gray-400">Curabitur molestie neque ac massa pulvinar, nec sollicitudin nunc consequat. Donec mattis orci eros, vitae porttitor risus pretium eget.</dd>
+                <dt className="text-lg font-medium">Cambia el mundo</dt>
+                <dd className="mt-2 dark:text-gray-400">Ahora es mas fácil que todos pongamos nuestro granito de arena, el cambio empieza por uno mismo</dd>
               </div>
             </div>
             <div className="flex">
@@ -200,8 +186,8 @@ export default function Home() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
               </svg>
               <div className="ml-3">
-                <dt className="text-lg font-medium">Dignissim magna</dt>
-                <dd className="mt-2 dark:text-gray-400">Cras ac lectus erat. Curabitur condimentum luctus nisi, non lacinia ipsum.</dd>
+                <dt className="text-lg font-medium">Sistema de suscripciones</dt>
+                <dd className="mt-2 dark:text-gray-400">Asegúrate de apoyar una causa todos los meses mediante una suscripción!</dd>
               </div>
             </div>
           </dl>
@@ -222,114 +208,114 @@ export default function Home() {
               <span className="inline-block w-1 h-1 rounded-full bg-pink-500 ml-1"></span>
             </div>
           </div>
-          <div className="flex flex-wrap items-stretch">
+          <div className="flex flex-wrap items-stretch justify-items-stretch">
             <div className="md:flex w-full mb-8 sm:px-4 md:w-1/2 lg:w-1/3 lg:mb-0">
-              <div className="flex flex-col p-6 space-y-6 rounded shadow sm:p-8">
+              <div className="flex flex-auto flex-col p-6 space-y-6 rounded shadow sm:p-8">
                 <div className="space-y-2">
-                  <h4 className="text-2xl font-bold">Beginner</h4>
+                  <h4 className="text-2xl font-bold">Iniciante</h4>
                   <span className="text-6xl font-bold">Free</span>
                 </div>
-                <p className="mt-3 leading-relaxed dark:text-gray-400">Etiam ac convallis enim, eget euismod dolor.</p>
+                <p className="mt-3 leading-relaxed dark:text-gray-400">Plan inicial, no pagas nada.</p>
                 <ul className="flex-1 mb-6 dark:text-gray-400">
                   <li className="flex mb-2 space-x-2">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="flex-shrink-0 w-6 h-6 text-pink-400">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path>
                     </svg>
-                    <span>Aenean quis</span>
+                    <span>Donar efectivo a iniciativas</span>
                   </li>
                   <li className="flex mb-2 space-x-2">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="flex-shrink-0 w-6 h-6 text-pink-400">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path>
                     </svg>
-                    <span>Morbi semper</span>
+                    <span>Donar especias a iniciativas</span>
                   </li>
                   <li className="flex mb-2 space-x-2">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="flex-shrink-0 w-6 h-6 text-pink-400">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path>
                     </svg>
-                    <span>Tristique enim nec</span>
+                    <span>Hacer voluntariados en iniciativas</span>
                   </li>
                 </ul>
                 <button type="button" className="inline-block px-5 py-3 font-semibold tracking-wider text-center rounde text-white bg-pink-400 rounded">Get Started</button>
               </div>
             </div>
             <div className="md:flex w-full mb-8 sm:px-4 md:w-1/2 lg:w-1/3 lg:mb-0">
-              <div className="flex flex-col p-6 space-y-6 rounded shadow sm:p-8 bg-pink-400 text-white">
+              <div className="flex flex-auto flex-col p-6 space-y-6 rounded shadow sm:p-8 bg-pink-400 text-white">
                 <div className="space-y-2">
                   <h4 className="text-2xl font-bold">Pro</h4>
-                  <span className="text-6xl font-bold">$24
+                  <span className="text-6xl font-bold">$5
                     <span className="text-sm tracking-wide">/month</span>
                   </span>
                 </div>
-                <p className="leading-relaxed">Morbi cursus ut sapien sit amet consectetur.</p>
+                <p className="leading-relaxed">Donacion mensual de 5 USD.</p>
                 <ul className="flex-1 space-y-2">
                   <li className="flex items-center space-x-2">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="flex-shrink-0 w-6 h-6">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path>
                     </svg>
-                    <span>Everything in Free</span>
+                    <span>Donar efectivo a iniciativas</span>
                   </li>
                   <li className="flex items-center space-x-2">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="flex-shrink-0 w-6 h-6">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path>
                     </svg>
-                    <span>Phasellus tellus</span>
+                    <span>Donar especias a iniciativas</span>
                   </li>
                   <li className="flex items-center space-x-2">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="flex-shrink-0 w-6 h-6">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path>
                     </svg>
-                    <span>Praesent faucibus</span>
+                    <span>Hacer voluntariados en iniciativas</span>
                   </li>
                   <li className="flex items-center space-x-2">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="flex-shrink-0 w-6 h-6">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path>
                     </svg>
-                    <span>Aenean et lectus blandit</span>
+                    <span>Apoyar mensualmente una causa</span>
                   </li>
                 </ul>
                 <a rel="noopener noreferrer" href="#" className="inline-block w-full px-5 py-3 font-bold tracking-wider text-center rounded bg-white text-pink-400">Get Started</a>
               </div>
             </div>
             <div className="md:flex w-full mb-8 sm:px-4 md:w-1/2 lg:w-1/3 lg:mb-0">
-              <div className="p-6 space-y-6 rounded shadow sm:p-8">
+              <div className="p-6 flex-auto space-y-6 rounded shadow sm:p-8">
                 <div className="space-y-2">
-                  <h4 className="text-2xl font-bold">Team</h4>
-                  <span className="text-6xl font-bold">$72
+                  <h4 className="text-2xl font-bold">Custom</h4>
+                  <span className="text-6xl font-bold">?
                     <span className="text-sm tracking-wide">/month</span>
                   </span>
                 </div>
-                <p className="leading-relaxed dark:text-gray-400">Phasellus ultrices bibendum nibh in vehicula.</p>
+                <p className="leading-relaxed dark:text-gray-400">Donacion mensual personalizada.</p>
                 <ul className="space-y-2 dark:text-gray-400">
                   <li className="flex items-start space-x-2">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="flex-shrink-0 w-6 h-6 text-pink-400">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path>
                     </svg>
-                    <span>Everything in Pro</span>
+                    <span>Donar efectivo a iniciativas</span>
                   </li>
                   <li className="flex items-start space-x-2">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="flex-shrink-0 w-6 h-6 text-pink-400">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path>
                     </svg>
-                    <span>Fusce sem ligula</span>
+                    <span>Donar especias a iniciativas</span>
                   </li>
                   <li className="flex items-start space-x-2">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="flex-shrink-0 w-6 h-6 text-pink-400">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path>
                     </svg>
-                    <span>Curabitur dictum</span>
+                    <span>Hacer voluntariados en iniciativas</span>
                   </li>
                   <li className="flex items-start space-x-2">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="flex-shrink-0 w-6 h-6 text-pink-400">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path>
                     </svg>
-                    <span>Duis odio eros</span>
+                    <span>Apoyar mensualmente una causa</span>
                   </li>
                   <li className="flex items-start space-x-2">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="flex-shrink-0 w-6 h-6 text-pink-400">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path>
                     </svg>
-                    <span>Vivamus ut lectus ex</span>
+                    <span>Donacion de monton personalizado</span>
                   </li>
                 </ul>
                 <a rel="noopener noreferrer" href="#" className="inline-block w-full px-5 py-3 font-semibold tracking-wider text-center rounded text-white bg-pink-400">Get Started</a>
@@ -391,7 +377,7 @@ export default function Home() {
                     </div>
                   </div>
                   <div className="w-full">
-                    <p className="text-sm leading-tight"><span className="text-lg leading-none italic font-bold text-gray-400 mr-1">``</span>Mercado Solidario es una excelente herramienta para ayudar a aquellos en necesidad. Es fácil de usar, segura y permite a los usuarios donar de manera rápida y sencilla. También proporcionan información transparente sobre cómo se utilizan los fondos y los impactos que están generando. En resumen, Mercado Solidario es una forma eficiente de ayudar a aquellos en necesidad y contribuir a mejorar el mundo.<span className="text-lg leading-none italic font-bold text-gray-400 ml-1">´´</span></p>
+                    <p className="text-sm leading-tight"><span className="text-lg leading-none italic font-bold text-gray-400 mr-1">``</span>Siempre que usó Mercado Solidario me impresiona lo bien que manejan todo y lo claros que son con sus iniciativas, por lo que me transmite seguridad a la hora de querer apoyar alguna causa o al ofrecerme de voluntario, y ni hablar de sus sistemas de insignias, me incitan a querer apoyar mucho más!<span className="text-lg leading-none italic font-bold text-gray-400 ml-1">´´</span></p>
                   </div>
                 </div>
               </div>
@@ -431,7 +417,7 @@ export default function Home() {
                     </div>
                   </div>
                   <div className="w-full">
-                    <p className="text-sm leading-tight"><span className="text-lg leading-none italic font-bold text-gray-400 mr-1">``</span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto inventore voluptatum nostrum atque, corrupti, vitae esse id accusamus dignissimos neque reprehenderit natus, hic sequi itaque dicta nisi voluptatem! Culpa, iusto.<span className="text-lg leading-none italic font-bold text-gray-400 ml-1">´´</span></p>
+                    <p className="text-sm leading-tight"><span className="text-lg leading-none italic font-bold text-gray-400 mr-1">``</span>Esta aplicación fue lo que siempre estuve buscando, ¡es una maravilla! Sacia totalmente mis ganas de colaborar con la gente necesitada de forma muy rápida, ágil e intuitiva. Les agradezco a los que hicieron esta página realidad porque la verdad que cumplieron 100% mis necesidades. Estoy super contento, seguro y ansioso de seguir donando en causas benéficas a través de Mercado Solidario.<span className="text-lg leading-none italic font-bold text-gray-400 ml-1">´´</span></p>
                   </div>
                 </div>
               </div>
@@ -452,7 +438,7 @@ export default function Home() {
                     </div>
                   </div>
                   <div className="w-full">
-                    <p className="text-sm leading-tight"><span className="text-lg leading-none italic font-bold text-gray-400 mr-1">``</span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, voluptatem porro obcaecati dicta, quibusdam sunt ipsum, laboriosam nostrum facere exercitationem pariatur deserunt tempora molestiae assumenda nesciunt alias eius? Illo, autem!<span className="text-lg leading-none italic font-bold text-gray-400 ml-1">´´</span></p>
+                    <p className="text-sm leading-tight"><span className="text-lg leading-none italic font-bold text-gray-400 mr-1">``</span>Mercado Solidario es una excelente herramienta para ayudar a aquellos en necesidad. Es fácil de usar, segura y permite a los usuarios donar de manera rápida y sencilla. También proporcionan información transparente sobre cómo se utilizan los fondos y los impactos que están generando. En resumen, Mercado Solidario es una forma eficiente de ayudar a aquellos en necesidad y contribuir a mejorar el mundo.<span className="text-lg leading-none italic font-bold text-gray-400 ml-1">´´</span></p>
                   </div>
                 </div>
                 <div className="w-full mx-auto rounded-lg bg-white border border-gray-200 p-5 text-gray-800 font-light mb-6">
@@ -471,7 +457,7 @@ export default function Home() {
                     </div>
                   </div>
                   <div className="w-full">
-                    <p className="text-sm leading-tight"><span className="text-lg leading-none italic font-bold text-gray-400 mr-1">``</span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem iusto, explicabo, cupiditate quas totam!<span className="text-lg leading-none italic font-bold text-gray-400 ml-1">´´</span></p>
+                    <p className="text-sm leading-tight"><span className="text-lg leading-none italic font-bold text-gray-400 mr-1">``</span>Siempre tenía mis dudas sobre hacer caridad por internet, desde que descubrí Mercado Solidario ese problema se resolvió. Siempre al terminar la causa me envian un mail con un agradecimiento por haber colaborado, sumado a información sobre la recaudación.<span className="text-lg leading-none italic font-bold text-gray-400 ml-1">´´</span></p>
                   </div>
                 </div>
               </div>

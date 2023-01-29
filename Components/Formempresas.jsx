@@ -89,75 +89,63 @@ export default function Formempresas(props) {
   //console.log(image)
 
   return (
-    <div>
-      <div class="">
-        <div className="">
-          <h1 class="">Formulario para Registro de Empresas Great Place to Work</h1>
-        </div>
-        <form class="" onSubmit={(el) => handleSubmit(el, image, input)}>
-          <div class="">
-            <div class="">
-              <div class="">
-                <label class="">Nombre</label>
-                <input
-                  class=""
-                  type="text"
-                  value={input.name}
-                  name={"name"}
-                  onChange={(el) => handleChange(el)}
-                  placeholder=""
-                />
-                {errors.name ? <label>{errors.name}</label> : null}
-              </div>
-              <div class="">
-                <label class="">
-                  Apellido
-                </label>
-                <input
-                  class=""
-                  type="text"
-                  value={input.lastName}
-                  name="lastName"
-                  onChange={(el) => handleChange(el)}
-                  placeholder=""
-                />
-                {errors.lastName ? <label>{errors.lastName}</label> : null}
-              </div>
-              <div class="">
-                <label class="">Cuit</label>
-                <input
-                  class=""
-                  type="text"
-                  value={input.cuit}
-                  name="cuit"
-                  onChange={(el) => handleChange(el)}
-                  placeholder=""
-                />
-                {errors.cuit ? <label>{errors.cuit}</label> : null}
-              </div>
-            </div>
-            <div>
-              <div class="">
-                <label class="">
-                  Registro Unico Tributario
-                </label>
-                <input
-                  class=""
-                  type="file"
-                  name="image"               
-                  onChange={(el) => handleImage(el)}
-                />
-                {image === null ? <label>{'Ingrese el Archivo'}</label> : null}
-              </div>
-            </div>
-          </div>
-          <input
-            type="submit"
-            value={"Registrar Empresa"}
-            class=""
-          />
-        </form>
+    <form className="grid gap-4 justify-center items-center" onSubmit={(el) => handleSubmit(el, image, input)}>
+      <div className="">
+        <label className="text-sm">Nombre</label>
+        <input
+          className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
+          type="text"
+          value={input.name}
+          name={"name"}
+          onChange={(el) => handleChange(el)}
+          placeholder=""
+        />
+        {errors.name ? <label className="text-sm text-red-600">{errors.name}</label> : null}
       </div>
-    </div>
+      <div className="">
+        <label className="text-sm">
+          Apellido
+        </label>
+        <input
+          className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
+          type="text"
+          value={input.lastName}
+          name="lastName"
+          onChange={(el) => handleChange(el)}
+          placeholder=""
+        />
+        {errors.lastName ? <label className="text-sm text-red-600">{errors.lastName}</label> : null}
+      </div>
+      <div className="">
+        <label className="text-sm">Cuit</label>
+        <input
+          className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
+          type="text"
+          value={input.cuit}
+          name="cuit"
+          onChange={(el) => handleChange(el)}
+          placeholder=""
+        />
+        {errors.cuit ? <label className="text-sm text-red-600">{errors.cuit}</label> : null}
+      </div>
+      <div>
+        <div className="">
+          <label className="text-sm">
+            Registro Unico Tributario
+          </label>
+          <input
+            className="text-sm"
+            type="file"
+            name="image"
+            onChange={(el) => handleImage(el)}
+          />
+        </div>
+      </div>
+      <input
+        type="submit"
+        value={"Registrar Empresa"}
+        className="w-full px-8 py-3 font-semibold  bg-black text-white hover:bg-zinc-800 transition-colors rounded my-4 cursor-pointer"
+      />
+    </form>
   );
 }
