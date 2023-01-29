@@ -22,30 +22,33 @@ export default function Register() {
 
   /* First Handler */
 
-  const validateEmail = (email) => {
-    return String(email)
+  const [credentials, setCredentials] = useState({
+    email: '',
+    password: ''
+  })
+
+  const handleChange = (event) => {
+    setCredentials({ ...credentials, [event.target.name]: event.target.value });
+  };
+
+  const isValidateEmail = (email) => {
+    const match = String(email)
       .toLowerCase()
       .match(
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       );
+    return match != null
   }
 
   const firstHandler = () => {
+    console.log(isValidateEmail(credentials.email));
+    const email = !isValidateEmail(credentials.email) && "Ingrese un mail valido"
+    const password = (credentials.password.length < 6 || credentials.password.length > 15) ? "Ingrese password valido" : false
 
-    const emailValue = document.querySelector('#email').value
-    const passwordValue = document.querySelector('#password').value
-    const validate = validateEmail(emailValue)
-    let aux = errors
+    setErrors({ ...errors, email, password })
+    console.log(errors);
 
-    if (!validate) aux.email = "Ingrese un mail valido"
-    else aux.email = false
-
-    if (passwordValue.length < 6 || passwordValue.length > 15) aux.password = "La contraseña debe contener entre 6 y 15 caracteres"
-    else aux.password = false
-
-    setErrors(aux)
-    console.log(errors)
-    if (aux.password == false && aux.email == false) {
+    if (!password && !email) {
       setStep(2);
     }
   }
@@ -117,12 +120,12 @@ export default function Register() {
             <div className="space-y-4 w-full">
               <div className="space-y-2">
                 <label htmlFor="email" className="block text-sm">Email address</label>
-                <input type="email" name="email" id="email" placeholder="ejemplo@mail.com" className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200" />
+                <input type="email" value={credentials.email} onChange={handleChange} name="email" id="email" placeholder="ejemplo@mail.com" className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200" />
                 {errors.email && <span className="w-full text-red-600">{errors.email}</span>}
               </div>
               <div className="space-y-2">
                 <label htmlFor="password" name={"password"} className="text-sm">Password</label>
-                <input type="password" name="password" id="password" placeholder="********" className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200" />
+                <input type="password" value={credentials.password} onChange={handleChange} name="password" id="password" placeholder="********" className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200" />
                 {errors.password && <span className="w-full text-red-600">{errors.password}</span>}
               </div>
             </div>
