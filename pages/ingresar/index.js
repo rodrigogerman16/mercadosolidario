@@ -53,6 +53,7 @@ export default function Login() {
         const user = {
           email: input.email,
           password: input.password,
+          type_of_user: 'user'
         };
 
         //console.log(user)
