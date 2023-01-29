@@ -7,7 +7,7 @@ import CompaniesNavbar from "./CompaniesNavbar";
 
 export default function Navbar() {
     const {data: session} = useSession()
-    if(!session){
+    if(!session || !session.role){
         return (
             <DefaultNavbar/>
         )
