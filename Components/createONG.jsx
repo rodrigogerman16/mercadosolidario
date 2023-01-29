@@ -11,7 +11,7 @@ function Validate(input) {
   if (input.lastName.length < 3 || input.lastName.length > 15) {
     errors.lastName = "Al menos 3 Caracteres";
   }
-  if (input.cuit.length !== 13) {
+  if (input.cuit.length !== 11) {
     errors.cuit = "Ingrese su CUIT";
   }
   if (input.phone.length < 8) {
@@ -20,7 +20,8 @@ function Validate(input) {
   return errors;
 }
 
-export default function Crearong() {
+export default function Crearong(props) {
+  const [imageSrc, setImageSrc] = useState(null);
 
   const router = useRouter();
 
@@ -35,13 +36,33 @@ export default function Crearong() {
 
   const [image, setImage] = useState(null);
 
-  const postONG = async(props) => {
-    let info = await axios.post(`https://pf-backend-mercadosolidario-production.up.railway.app/ongs/newong`, props);
-    return console.log(info.data)
-  }
+  const postONG = async (props) => {
+    let info = await axios.post(
+      `https://pf-backend-mercadosolidario-production.up.railway.app/ong/newong`,
+      props,
+      {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+      }
+    );
 
-  const handleImage = (el) => {
-    setImage(el.target.files[0]);
+    const aux = {
+      name: info.data.name,
+      lastName: info.data.lastName,
+      email: info.data.email,
+      type_of_user: info.data.type_of_user,
+      id: info.data.id,
+      cuit: info.data.cuit,
+      province: info.data.province,
+      rut: info.data.rut,
+      address: info.data.address,
+      phone: info.data.phone,
+    }
+
+    window.localStorage.setItem("user", JSON.stringify(aux));
+
+    return console.log(info.data, aux);
   };
 
   function handleChange(el) {
@@ -57,7 +78,7 @@ export default function Crearong() {
     );
   }
 
-  function handleSubmit(el, image) {
+  async function handleSubmit(el) {
     try {
       el.preventDefault();
       setErrors(
@@ -71,16 +92,45 @@ export default function Crearong() {
         input.name !== "" &&
         input.lastName !== "" &&
         input.cuit !== "" &&
-        input.phone !== "" &&
-        image
+        input.phone !== ""
       ) {
+        const form = el.currentTarget;
+        const fileInput = Array.from(form.elements).find(
+          ({ name }) => name === "file"
+        );
+
+        const formData2 = new FormData();
+
+        for (const file of fileInput.files) {
+          formData2.append("file", file);
+        }
+
+        formData2.append("upload_preset", "my-uploads");
+        //formData.append()
+
+        const data = await fetch(
+          "https://api.cloudinary.com/v1_1/dc9pehmoz/image/upload",
+          {
+            method: "POST",
+            body: formData2,
+          }
+        ).then((r) => r.json());
+
+        // console.log(data.secure_url)
+        // console.log(props)
+
         const formData = new FormData();
         formData.append("name", input.name);
         formData.append("lastName", input.lastName);
-        formData.append("cuit", input.cuit);
-        formData.append("rut", image);
         formData.append("phone", input.phone);
-        //postONG(formData)
+        formData.append("email", props.email);
+        formData.append("password", props.password);
+        formData.append("rut", data.secure_url);
+        formData.append("cuit", input.cuit);
+        formData.append("type_of_user", props.type_of_user);
+
+        postONG(formData);
+
         alert("ONG Registrada con Exito!");
         setInput({
           name: "",
@@ -88,8 +138,7 @@ export default function Crearong() {
           cuit: "",
           phone: "",
         });
-        setImage(null);
-        router.push('/')
+        router.push("/");
       } else {
         alert("Hay datos incorrectos o sin completar!");
       }
@@ -102,87 +151,73 @@ export default function Crearong() {
   //console.log(image)
 
   return (
-    <div>
-      <div class="flex flex-col justify-center items-start m-auto min-h-full mt-16 bg-white w-3/5">
-        <div className="text-2xl font-montserrat justify-items-start w-full">
-          <h1 class="text-start">Formulario para Registro de ONG</h1>
-        </div>
-        <form class="pt-7" onSubmit={(el) => handleSubmit(el, image, input)}>
-          <div class="flex">
-            <div class="flex flex-col font-medium">
-              <div class="flex flex-col">
-                <label class="font-hind text-lg">Nombre del titular</label>
-                <input
-                  class="border border-slate-400 mr-9 mt-1 h-10 w-72 rounded"
-                  type="text"
-                  value={input.name}
-                  name={"name"}
-                  onChange={(el) => handleChange(el)}
-                  placeholder=""
-                />
-                {errors.name ? <label>{errors.name}</label> : null}
-              </div>
-              <div class="flex flex-col">
-                <label class="pt-3 font-hind text-lg">
-                  Apellido del titular
-                </label>
-                <input
-                  class="border border-slate-400 mr-9 mt-1 h-10 w-72 rounded"
-                  type="text"
-                  value={input.lastName}
-                  name="lastName"
-                  onChange={(el) => handleChange(el)}
-                  placeholder=""
-                />
-                {errors.lastName ? <label>{errors.lastName}</label> : null}
-              </div>
-              <div class="flex flex-col">
-                <label class="pt-3 font-hind text-lg">Cuit de la ONG</label>
-                <input
-                  class="border border-slate-400 mr-9 mt-1 h-10 w-72 rounded"
-                  type="text"
-                  value={input.cuit}
-                  name="cuit"
-                  onChange={(el) => handleChange(el)}
-                  placeholder=""
-                />
-                {errors.cuit ? <label>{errors.cuit}</label> : null}
-              </div>
-            </div>
-            <div>
-              <div class="flex flex-col">
-                <label class="font-hind text-lg">
-                  Registro Unico Tributario
-                </label>
-                <input
-                  class="border border-slate-400 mr-9 mt-1 h-10 w-72 rounded"
-                  type="file"
-                  name="image"               
-                  onChange={(el) => handleImage(el)}
-                />
-                {image === null ? <label>{'Ingrese el Archivo'}</label> : null}
-              </div>
-              <div class="flex flex-col font-medium">
-                <label class="pt-3 font-hind text-lg">Telefono</label>
-                <input
-                  class="border border-slate-400 mr-9 mt-1 h-10 w-72 rounded"
-                  type="text"
-                  value={input.phone}
-                  name="phone"
-                  onChange={(el) => handleChange(el)}
-                  placeholder=""
-                />
-                {errors.phone ? <label>{errors.phone}</label> : null}
-              </div>
-            </div>
-          </div>
-          <input
-            type="submit"
-            value={"Registrar ONG"}
-            class="mt-8 w-52 h-10 bg-blue-600 rounded-md text-white font-hind"
-          />
-        </form>
+    <form className="grid gap-4 justify-center items-center" onSubmit={(el) => handleSubmit(el, image, input)}>
+      <div className="">
+        <label className="text-sm">Nombre del titular</label>
+        <input
+          className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
+          type="text"
+          value={input.name}
+          name={"name"}
+          onChange={(el) => handleChange(el)}
+          placeholder=""
+        />
+        {errors.name ? <label>{errors.name}</label> : null}
       </div>
-    </div>
+      <div className="">
+        <label className="text-sm">
+          Apellido del titular
+        </label>
+        <input
+          className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
+          type="text"
+          value={input.lastName}
+          name="lastName"
+          onChange={(el) => handleChange(el)}
+          placeholder=""
+        />
+        {errors.lastName ? <label>{errors.lastName}</label> : null}
+      </div>
+      <div className="">
+        <label className="text-sm">Cuit de la ONG</label>
+        <input
+          className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
+          type="text"
+          value={input.cuit}
+          name="cuit"
+          onChange={(el) => handleChange(el)}
+          placeholder=""
+        />
+        {errors.cuit ? <label>{errors.cuit}</label> : null}
+      </div>
+      <div className="">
+        <label className="text-sm">Telefono</label>
+        <input
+          className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
+          type="text"
+          value={input.phone}
+          name="phone"
+          onChange={(el) => handleChange(el)}
+          placeholder=""
+        />
+        {errors.phone ? <label>{errors.phone}</label> : null}
+      </div>
+      <div className="">
+        <label className="text-sm">
+          Registro Unico Tributario
+        </label>
+        <input
+          className="text-sm"
+          type="file"
+          name="image"
+          onChange={(el) => handleImage(el)}
+        />
+      </div>
+      <input
+        type="submit"
+        value={"Registrar ONG"}
+        className="w-full px-8 py-3 font-semibold  bg-black text-white hover:bg-zinc-800 transition-colors rounded my-4 cursor-pointer"
+      />
+    </form>
   );
 }

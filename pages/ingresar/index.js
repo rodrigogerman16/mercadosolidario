@@ -2,29 +2,130 @@
 import { useState } from "react";
 import Link from "next/link";
 import axios from "axios";
+import { useRouter } from "next/router";
+
+function Validate(input) {
+  let errors = {};
+  if (input.password.length < 6) {
+    errors.password = "Minimo 6 Caracteres";
+  }
+  return errors;
+}
 
 export default function Login() {
 
+  const router = useRouter();
+
+  const [input, setInput] = useState({
+    email: "",
+    password: ""
+  });
+
+  const [errors, setErrors] = useState({});
+
+  function handleChange(el) {
+    setInput({
+      ...input,
+      [el.target.name]: el.target.value,
+    });
+    setErrors(
+      Validate({
+        ...input,
+        [el.target.name]: el.target.value,
+      })
+    );
+  }
+
+  async function handleSubmit(el) {
+    try {
+      el.preventDefault();
+      setErrors(
+        Validate({
+          ...input,
+          [el.target.name]: el.target.value,
+        })
+      );
+      if (
+        Object.values(errors).length === 0 &&
+        input.email !== "" &&
+        input.password !== ""
+      ) {
+        const user = {
+          email: input.email,
+          password: input.password,
+        };
+
+        //console.log(user)
+
+        let info = await axios.post(
+          `https://pf-backend-mercadosolidario-production.up.railway.app/login`,
+          user,
+        );
+    
+        const aux = {
+          id: info.data.id,
+          name: info.data.name,
+          lastName: info.data.lastName,
+          phone: info.data.phone,
+          cuil: info.data.cuil,
+          user_linkedin: info.data.user_linkedin,
+          email: info.data.email,
+          type_of_user: info.data.type_of_user,
+        }
+    
+        window.localStorage.setItem("user", JSON.stringify(aux));
+    
+        console.log(info.data, aux);
+
+        alert("Logeado Satisfactoriamente!");
+        setInput({
+          email: "",
+          password: "",
+        });
+        router.push("/");
+      } else {
+        alert("Hay datos incorrectos o sin completar!");
+      }
+    } catch (error) {
+      setInput({
+        email: "",
+        password: "",
+      });
+      alert('Error, Intente nuevamente')
+      console.log(error)
+    }
+  }
+
+  console.log(input)
+
   return (
     <div className="w-full max-w-md p-4 rounded-md sm:p-8 m-auto min-h-[calc(100vh-100px)] flex flex-col justify-center items-center">
-      <h2 className="mb-3 text-3xl font-semibold text-center">Ingresa a tu cuenta</h2>
+      <span className="block mb-2 text-xs font-semibold tracking-widest text-center uppercase dark:text-pink-400">Login</span>
+      <h2 className="text-5xl font-bold text-center">Ingresa a tu cuenta</h2>
+      <div className="text-center mb-10">
+        <span className="inline-block w-1 h-1 rounded-full bg-pink-500 ml-1"></span>
+        <span className="inline-block w-3 h-1 rounded-full bg-pink-500 ml-1"></span>
+        <span className="inline-block w-40 h-1 rounded-full bg-pink-500"></span>
+        <span className="inline-block w-3 h-1 rounded-full bg-pink-500 ml-1"></span>
+        <span className="inline-block w-1 h-1 rounded-full bg-pink-500 ml-1"></span>
+      </div>
       <p className="text-sm text-center dark:text-gray-400">No tienes cuenta?&nbsp;
         <Link href="/registrarse" rel="noopener noreferrer" className="focus:underline hover:underline">Registrate aquí</Link>
       </p>
-      <form novalidate="" action="" className="space-y-8 ng-untouched ng-pristine ng-valid my-8 w-full">
+      <form onSubmit={(el) => handleSubmit(el)} novalidate="" action="" className="space-y-8 ng-untouched ng-pristine ng-valid my-8 w-full">
         <div className="space-y-4 w-full">
           <div className="space-y-2">
             <label for="email" className="block text-sm">Email</label>
-            <input type="email" name="email" id="email" placeholder="ejemplo@mail.com" className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200" />
+            <input type="email" name="email" id="email" placeholder="ejemplo@mail.com" onChange={(el) => handleChange(el)} className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200" />
           </div>
           <div className="space-y-2">
             <div className="flex justify-between">
               <label for="password" name={"password"} className="text-sm">Contraseña</label>
             </div>
-            <input type="password" name="password" id="password" placeholder="********" className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200" />
+            <input type="password" name="password" id="password" placeholder="********" onChange={(el) => handleChange(el)} className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200" />
           </div>
         </div>
-        <button type="button" className="w-full px-8 py-3 font-semibold bg-black text-white hover:bg-zinc-800 transition-colors rounded">Ingresar</button>
+        <button type="submit" className="w-full px-8 py-3 font-semibold bg-black text-white hover:bg-zinc-800 transition-colors rounded">Ingresar</button>
         <a rel="noopener noreferrer" href="#" className="text-xs hover:underline text-gray-400 text-center w-full m-auto block">Olvidaste tu contraseña?</a>
         <div className="flex items-center w-full my-4">
           <hr className="w-full dark:text-gray-400" />
