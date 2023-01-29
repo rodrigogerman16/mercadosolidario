@@ -9,13 +9,10 @@ export default function Login() {
   
   useEffect(() => {
     if(!session){
-      console.log("holaa")
+      console.log("No inicio sesion")
     } else if 
     (session.role === "admin") {        
-      <div>
-        <p>redireccione al dashboard</p>
-        <button onClick={e => signOut()}>Cerrar</button>
-      </div>
+      Router.push("/dashboard")
     } else  if
       (!session.role) {
         Router.push("/registrarse")
