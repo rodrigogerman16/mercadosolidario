@@ -3,13 +3,25 @@ import Image from "next/image";
 import logo from "../Assets/mercado-solidario-logo.jpg"
 import { useState } from "react";
 import { Transition } from "@headlessui/react";
-import {useSession, signOut} from "next-auth/react"
+import {signOut} from "next-auth/react"
+import { useUser } from "../hooks/user.js";
+import Router from "next/router";
 
 
-export default function UserNavbar() {
-    const {data: session} = useSession()
-    const [isOpen, setIsOpen] = useState(false);    
-    if(session){
+
+export default function UserNavbar() {    
+    const user = useUser();
+    const [isOpen, setIsOpen] = useState(false);   
+
+    function handleLogOut() {
+        signOut();
+        localStorage.removeItem('user');
+        alert("Deslogeado Satisfactoriamente")
+        Router.push('/')
+        window.location.reload()
+    } 
+
+    if(user){
         return (
             <div>
                 <nav className="bg-white py-4">
@@ -47,16 +59,17 @@ export default function UserNavbar() {
                                 </div>
                                 <div className="hidden gap-4 md:flex">
                                     <button
-                                        onClick={ () => signOut()}
+                                        onClick={ () => handleLogOut()}
                                         className="font-semibold px-6 py-2 hover:text-pink-400 transition-colors rounded"
                                     >
                                         Cerrar sesion
                                     </button>
                                     <Image
-                                        src={session.user.image}
+                                        src={user.image ? user.image : logo}
                                         width={50}
                                         height={50}
-                                        className='rounded-3xl cursor-pointer'
+                                        className='rounded-3xl cursor-pointer object-contain'
+                                        alt='profile'
                                     />
                                 </div>
                             </div>
@@ -69,15 +82,15 @@ export default function UserNavbar() {
                                     aria-expanded="false"
                                 >
                                     <span className="sr-only">Open main menu</span>
-                                    {console.log(session)}
                                     {!isOpen ? (
                                         
                                         
                                         <Image
                                             className="block rounded-3xl"
-                                            src={session.user.image}
+                                            src={user.image ? user.image : logo}
                                             width={50}
                                             height={50}
+                                            alt='profile'
                                         />
                                     ) : (
                                         <svg
@@ -141,7 +154,7 @@ export default function UserNavbar() {
                                         Perfil
                                     </Link>                                    
                                     <button
-                                        onClick={ () => signOut()}
+                                        onClick={ () => handleLogOut()}
                                         className="font-semibold text-white bg-pink-400 px-6 py-2 hover:bg-pink-300 transition-colors rounded"
                                     >
                                         Cerrar sesion
