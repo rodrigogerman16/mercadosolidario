@@ -25,12 +25,15 @@ export default function Register() {
   };
 
   /* First Handler */
+
   const validateEmail = (email) => {
     return String(email)
+
       .toLowerCase()
       .match(
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       );
+
   };
 
   const firstHandler = () => {
@@ -55,6 +58,7 @@ export default function Register() {
       };
 
       setUser(aux);
+
       setStep(2);
       setEmail(emailValue)
       setPassword(passwordValue)
@@ -134,6 +138,7 @@ export default function Register() {
         </div>
       </div>
 
+
       <div className="w-full">
         {step == 1 && (
           <div>
@@ -212,6 +217,7 @@ export default function Register() {
                 <hr className="w-full dark:text-gray-400" />
                 <p className="px-3 dark:text-gray-400">OR</p>
                 <hr className="w-full dark:text-gray-400" />
+
               </div>
             </form>
             <div className="my-6 space-y-4 w-full">
@@ -338,11 +344,13 @@ export default function Register() {
               <span className="inline-block w-3 h-1 rounded-full bg-pink-500 ml-1"></span>
               <span className="inline-block w-1 h-1 rounded-full bg-pink-500 ml-1"></span>
             </div>
+
             <Formusers
               email={user.email}
               password={user.password}
               type_of_user={user.type_of_user}
             />
+
           </div>
         )}
       </div>
@@ -363,11 +371,13 @@ export default function Register() {
               <span className="inline-block w-3 h-1 rounded-full bg-pink-500 ml-1"></span>
               <span className="inline-block w-1 h-1 rounded-full bg-pink-500 ml-1"></span>
             </div>
+
             <CreateONG
               email={user.email}
               password={user.password}
               type_of_user={user.type_of_user}
             />
+
           </div>
         )}
       </div>
@@ -388,11 +398,13 @@ export default function Register() {
               <span className="inline-block w-3 h-1 rounded-full bg-pink-500 ml-1"></span>
               <span className="inline-block w-1 h-1 rounded-full bg-pink-500 ml-1"></span>
             </div>
+
             <Formempresas
               email={user.email}
               password={user.password}
               type_of_user={user.type_of_user}
             />
+
           </div>
         )}
       </div>
