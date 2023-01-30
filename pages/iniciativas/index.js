@@ -20,7 +20,7 @@ export default function Products({ data }) {
   const [orden, setOrden] = useState();
   const [input, setInput] = useState();
   const [currentPage, setCurrentPage] = useState(1);
-  const [perPage, setPerPage] = useState(6);
+  const [perPage, setPerPage] = useState(12);
   const indexofLast = currentPage * perPage;
   const indexofFirst = indexofLast - perPage;
 
@@ -507,7 +507,7 @@ export default function Products({ data }) {
               Products
             </h2>
 
-            <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
+            <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4 justify-start items-start">
               {/* Filters */}
               <form className="hidden lg:block">
                 <h3 className="sr-only">Categories</h3>
