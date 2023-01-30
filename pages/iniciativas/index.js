@@ -367,17 +367,6 @@ export default function Products({ data }) {
     }
   }
 
-  const [hydrated, setHydrated] = React.useState(false);
-  useEffect(() => {
-    setEdit(data);
-    setInfo(data);
-    setHydrated(true);
-  }, []);
-
-  if (!hydrated) {
-    return null;
-  }
-
   const searchHandler = (e) => {
     setEnter(e.key);
     setInputSearch(e.target.value);
