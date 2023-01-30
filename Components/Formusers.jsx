@@ -59,7 +59,6 @@ export default function Formusers(props) {
     window.localStorage.setItem("user", JSON.stringify(aux));
     return console.log(info.data, aux);
   };
-
   const [input, setInput] = useState({
     name: "",
     lastName: "",

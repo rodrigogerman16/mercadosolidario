@@ -39,6 +39,7 @@ export default function Crearong(props) {
   const [image, setImage] = useState(null);
 
   const postONG = async (props) => {
+  
     let info = await axios.post(
       `${VERCEL_URL}/api/ong/newong`,
       props,
