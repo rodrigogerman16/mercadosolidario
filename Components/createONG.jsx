@@ -3,6 +3,8 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 
+const {VERCEL_URL = 'http://localhost:3000/api/railway-backend'} = process.env
+
 function Validate(input) {
   let errors = {};
   if (input.name.length < 3 || input.name.length > 15) {
@@ -37,8 +39,9 @@ export default function Crearong(props) {
   const [image, setImage] = useState(null);
 
   const postONG = async (props) => {
+  
     let info = await axios.post(
-      `https://pf-backend-mercadosolidario-production.up.railway.app/ong/newong`,
+      `${VERCEL_URL}/api/ong/newong`,
       props,
       {
         headers: {

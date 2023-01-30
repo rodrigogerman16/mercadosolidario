@@ -1,7 +1,10 @@
 "use client";
 import { useState } from "react";
 import axios from "axios";
-import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
+
+const { VERCEL_URL = "http://localhost:3000/api/railway-backend" } =
+  process.env;
 
 function Validate(input) {
   let errors = {};
@@ -31,11 +34,11 @@ function Validate(input) {
 
 export default function Formusers(props) {
   //console.log(props)
-  const router = useRouter();
+  const { data: session } = useSession();
 
   const postUser = async (props) => {
     let info = await axios.post(
-      `https://pf-backend-mercadosolidario-production.up.railway.app/user/newuser`,
+      `${VERCEL_URL}/user/newuser`,
       props
       // {headers: {
       //   'Content-Type': 'application/json; charset=utf-8'
@@ -50,14 +53,12 @@ export default function Formusers(props) {
       id: info.data.id,
       cuil: info.data.cuil,
       phone: info.data.phone,
-      user_linkedin: info.data.user_linkedin
-    }
+      user_linkedin: info.data.user_linkedin,
+    };
 
     window.localStorage.setItem("user", JSON.stringify(aux));
-
     return console.log(info.data, aux);
   };
-
   const [input, setInput] = useState({
     name: "",
     lastName: "",
@@ -102,26 +103,28 @@ export default function Formusers(props) {
           name: input.name,
           lastName: input.lastName,
           phone: input.phone,
-          email: props.email,
-          password: props.password,
-          type_of_user: props.type_of_user,
+          email: props.email || session.user.email,
+          password: props.password || "asdasdasd",
+          type_of_user: props.type_of_user || "user",
           cuil: input.cuil,
           user_linkedin: input.user_linkedin,
         };
 
-        //console.log(user)
-
-        postUser(user);
-
-        alert("Usuario creado!");
-        setInput({
-          name: "",
-          lastName: "",
-          phone: "",
-          cuil: "",
-          user_linkedin: "",
+        postUser(user).then(() => {
+          axios.post('https://pf-backend-mercadosolidario-production.up.railway.app/mailer/email', {email: user.email})
+          setInput({
+            name: "",
+            lastName: "",
+            phone: "",
+            cuil: "",
+            user_linkedin: "",
+          });          
+          alert("Usuario creado!");
+          window.location.href = '../';
+        }).catch(error => {
+          alert("error creando usuario", error)
         });
-        router.push("/");
+
       } else {
         alert("Hay datos incorrectos o sin completar!");
       }
@@ -199,6 +202,79 @@ export default function Formusers(props) {
             <label>{errors.user_linkedin}</label>
           ) : null}
         </div>
+
+        <form class="" onSubmit={(el) => handleSubmit(el, input)}>
+          <div class="">
+            <div class="">
+              <label class="">Nombre</label>
+              <input
+                class=""
+                type="text"
+                value={input.name}
+                name={"name"}
+                onChange={(el) => handleChange(el)}
+                placeholder=""
+              />
+              {errors.name ? <label>{errors.name}</label> : null}
+            </div>
+            <div class="">
+              <label class="">Apellido</label>
+              <input
+                class=""
+                type="text"
+                value={input.lastName}
+                name="lastName"
+                onChange={(el) => handleChange(el)}
+                placeholder=""
+              />
+              {errors.lastName ? <label>{errors.lastName}</label> : null}
+            </div>
+            <div>
+              <div class="">
+                <label class="">Telefono</label>
+                <input
+                  class=""
+                  type="text"
+                  value={input.phone}
+                  name="phone"
+                  onChange={(el) => handleChange(el)}
+                  placeholder=""
+                />
+                {errors.phone ? <label>{errors.phone}</label> : null}
+              </div>
+            </div>
+            <div class="">
+              <label class="">Cuil</label>
+              <input
+                class=""
+                type="text"
+                value={input.cuil}
+                name="cuil"
+                onChange={(el) => handleChange(el)}
+                placeholder=""
+              />
+              {errors.cuil ? <label>{errors.cuil}</label> : null}
+            </div>
+            <div>
+              <div class="">
+                <label class="">Usuario de Linkedin</label>
+                <input
+                  class=""
+                  type="text"
+                  value={input.user_linkedin}
+                  name="user_linkedin"
+                  onChange={(el) => handleChange(el)}
+                  placeholder=""
+                />
+                {errors.user_linkedin ? (
+                  <label>{errors.user_linkedin}</label>
+                ) : null}
+              </div>
+            </div>
+          </div>
+          <input type="submit" name={"Registrarse"} class="" />
+        </form>
+
       </div>
       <input
         type="submit"

@@ -3,6 +3,8 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 
+const {VERCEL_URL = 'http://localhost:3000/api/railway-backend'} = process.env
+
 function Validate(input) {
   let errors = {};
   if (input.title.length < 5 || input.title.length > 50) {
@@ -42,7 +44,7 @@ export default function Creariniciativa() {
 
   const postIniciatives = async (props) => {
     let info = await axios.post(
-      `https://pf-backend-mercadosolidario-production.up.railway.app/posts/newpost`,
+      `${VERCEL_URL}/posts/newpost`,
       props,
       {
         headers: {
