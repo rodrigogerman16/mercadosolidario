@@ -1,29 +1,152 @@
-import React, { Fragment, useEffect, useState } from 'react'
-import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
-import { BsChevronDown, BsFunnelFill, BsDash, BsPlus, BsSearch, BsX } from 'react-icons/bs'
-import Link from 'next/link'
-import Card from '../../Components/Card'
-import InfiniteScroll from 'react-infinite-scroll-component';
+import React, { Fragment, useEffect, useState } from "react";
+import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
+import Paginate from "../../Components/Paginate";
+import {
+  BsChevronDown,
+  BsFunnelFill,
+  BsDash,
+  BsPlus,
+  BsSearch,
+  BsX,
+} from "react-icons/bs";
+import Link from "next/link";
+import Card from "../../Components/Card";
+import InfiniteScroll from "react-infinite-scroll-component";
 import { useRouter } from "next/router";
 
 export default function Products({ data }) {
-  const [counter, setCounter] = useState(1)
-  const [value, setValue] = useState('')
+  const [currentPage, setCurrentPage] = useState(1);
+  const publicationsPerPage = 6;
+  const indexLastPublications = currentPage * publicationsPerPage;
+  const indexFirstPublications = indexLastPublications - publicationsPerPage;
   const [info, setInfo] = useState();
   const [edit, setEdit] = useState();
   const [orden, setOrden] = useState();
   const [input, setInput] = useState();
-  const filterDonacionn = (e) => {
-    const value = e.target.name;
-    console.log("Soy filterDonacion" + value);
-    const informacion =
-      value === "efectivo"
-        ? data.filter((e) => e.type_of_help === "efectivo")
-        : data.filter((e) => e.type_of_help === "especie");
-    console.log(data);
-    setInfo(value === "all" ? data : informacion);
-  };
+  const [datosFiltradosPaises, setDatosFiltradosPaises] = useState([]);
+  const [checkedPaises, setCheckedPaises] = useState({
+    buenosAires: false,
+    Catamarca: false,
+    Chaco: false,
+    Chubut: false,
+    Córdoba: false,
+    Corrientes: false,
+    entreRios: false,
+    Formosa: false,
+    Jujuy: false,
+    laPampa: false,
+    laRioja: false,
+    Mendoza: false,
+    Misiones: false,
+    Neuquén: false,
+    ríoNegro: false,
+    Salta: false,
+    sanJuan: false,
+    sanLuis: false,
+    santaCruz: false,
+    santaFe: false,
+    santiagoDelEstero: false,
+    tierraDelFuego: false,
+    Tucumán: false,
+  });
+  const [datosFiltradosCategorias, setDatosFiltradosCategorias] = useState([]);
+  const [checkedCategorias, setCheckedCategorias] = useState({
+    Alimentacion: false,
+    asesoriaLegal: false,
+    ayudaARefugiados: false,
+    ayudaAAnimales: false,
+    apoyoAComunidadesIndigenas: false,
+    apoyoALgbt: false,
+    apoyoALaMujer: false,
+    construccionObras: false,
+    cultura: false,
+    deportes: false,
+    derechosHumanos: false,
+    discapacitados: false,
+    educacion: false,
+    medioAmbiente: false,
+    entretenimiento: false,
+    gobiernoNoLucro: false,
+    materiaPrima: false,
+    mediosDeComunicacion: false,
+    saludMedicina: false,
+    servicioComunitario: false,
+    transporte: false,
+  });
   let results = [];
+  const [datosFiltradosDonaciones, setDatosFiltradosDonaciones] = useState([]);
+  const [checkedDonaciones, setCheckedDonaciones] = useState({
+    efectivo: false,
+    especie: false,
+    servicio: false,
+  });
+  const handlerDonaciones = (e) => {};
+
+  const handlerCategorias = (e) => {
+    setCheckedCategorias({
+      ...checkedCategorias,
+      [e.target.value]: e.target.checked,
+    });
+
+    if (e.target.checked) {
+      const value = e.target.value;
+      const resultadoLenguaje = edit.filter((e) => e.rubros === value);
+      setDatosFiltradosCategorias([
+        ...datosFiltradosCategorias,
+        ...resultadoLenguaje,
+      ]);
+    } else {
+      const value = e.target.value;
+      const resultadoLenguaje = datosFiltradosCategorias.filter(
+        (e) => e.rubros !== value
+      );
+      setDatosFiltradosCategorias([...resultadoLenguaje]);
+    }
+  };
+
+  const filterPaises = (e) => {
+    setCheckedPaises({
+      ...checkedPaises,
+      [e.target.value]: e.target.checked,
+    });
+
+    console.log(results);
+    if (e.target.checked) {
+      const value = e.target.value;
+      const resultadoLenguaje = edit.filter((e) => e.location === value);
+      setDatosFiltradosPaises([...datosFiltradosPaises, ...resultadoLenguaje]);
+      results = datosFiltradosPaises;
+    } else {
+      const value = e.target.value;
+      const resultadoLenguaje = datosFiltradosPaises.filter(
+        (e) => e.location !== value
+      );
+      setDatosFiltradosPaises([...resultadoLenguaje]);
+      results = datosFiltradosPaises;
+    }
+
+    setCheckedDonaciones({
+      ...checkedDonaciones,
+      [e.target.value]: e.target.checked,
+    });
+    if (e.target.checked) {
+      const value = e.target.value;
+      console.log(value);
+      const resultadoLenguaje = edit.filter((e) => e.type_of_help === value);
+      console.log(resultadoLenguaje);
+      setDatosFiltradosDonaciones([
+        ...datosFiltradosDonaciones,
+        ...resultadoLenguaje,
+      ]);
+    } else {
+      const value = e.target.value;
+      const resultadoLenguaje = datosFiltradosCategorias.filter(
+        (e) => e.type_of_help === value
+      );
+      setDatosFiltradosDonaciones([...resultadoLenguaje]);
+    }
+  };
+
   const filterInput = async (e) => {
     const value = e.target.value;
     setInput(value);
@@ -38,7 +161,6 @@ export default function Products({ data }) {
   const filterOrder = async (e) => {
     setOrden(e.target.outerText);
   };
-
   if (orden === "Titulo Asc") {
     results = edit.sort((a, b) => a.title.localeCompare(b.title));
     console.log(results);
@@ -171,19 +293,19 @@ export default function Products({ data }) {
           value: "efectivo",
           label: "Efectivo",
           checked: false,
-          onChange: filterDonacionn,
+          onChange: handlerDonaciones,
         },
         {
           value: "especie",
           label: "Especie",
           checked: false,
-          onChange: filterDonacionn,
+          onChange: handlerDonaciones,
         },
         {
-          value: "12l",
-          label: "12L",
+          value: "servicio",
+          label: "Servicio",
           checked: false,
-          onChange: filterDonacionn,
+          onChange: handlerDonaciones,
         },
       ],
     },
@@ -197,28 +319,34 @@ export default function Products({ data }) {
 
   const [search, setSearch] = useState(false)
 
-  const offSearch = e => {
-    if (e.target === e.currentTarget) setSearch(false)
-  }
+  const offSearch = (e) => {
+    if (e.target === e.currentTarget) setSearch(false);
+  };
 
   const onSearch = () => {
-    setSearch(true)
+    setSearch(true);
     setTimeout(() => {
-      document.querySelector('#search').focus()
+      document.querySelector("#search").focus();
     }, 1);
-  }
-
+  };
+  const [pagination, setPagination] = useState(1);
+  const [hydrated, setHydrated] = React.useState(false);
   useEffect(() => {
     /* Disable scroll if search is open */
+    setEdit(data);
+    setInfo(data);
+    setHydrated(true);
     if (search) {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop
-      const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft
+      const scrollTop =
+        window.pageYOffset || document.documentElement.scrollTop;
+      const scrollLeft =
+        window.pageXOffset || document.documentElement.scrollLeft;
 
       window.onscroll = function () {
         window.scrollTo(scrollLeft, scrollTop);
       };
     } else {
-      window.onscroll = function () { };
+      window.onscroll = function () {};
     }
 
   }, [search])
@@ -248,29 +376,65 @@ export default function Products({ data }) {
     setInfo(data);
     setHydrated(true);
   }, []);
+
   if (!hydrated) {
     return null;
   }
 
-  const filterPaises = (e) => {
-    if (e.target.checked) {
-      if (!e.target.value) return setInfo(data);
-      const value = e.target.value;
-      const filtros = data.filter((e) => e.location === value);
-      setInfo(value === "all" ? data : filtros);
-      // console.log((e.target.checked = !e.target.checked));
-      console.log(info);
+  const searchHandler = (e) => {
+    setEnter(e.key);
+    setInputSearch(e.target.value);
+    if (enter == "Enter") {
+      results = edit.filter((p) => {
+        console.log(inputSearch);
+        return p.title.toLowerCase().includes(inputSearch.toLowerCase());
+      });
+      setSearch(false);
+      setInputSearch("");
     }
-    if (!e.target.checked) {
-      const value = e.target.value;
-      const filtros = info.filter((e) => e.location !== value);
-      setInfo(filtros);
-      // e.target.checked = !e.target.checked;
-      // console.log((e.target.checked = !e.target.checked));
-      console.log(info);
+    if (enter == "Escape") {
+      setSearch(false);
+      setInputSearch("");
     }
   };
 
+  // const filterPaises = (e) => {
+  //   let provinciasChecked = [];
+  //   if (e.target.checked) {
+  //     provinciasChecked.push(e.target.value);
+  //     // results = edit.filter(
+  //     //   (e) => {
+
+  //     //     e.location.toLowerCase() === value.toLowerCase()}
+  //     // )
+  //     let provinciasAcumulador = []
+  //     results = edit.filter((obj) => {
+  //       for (const prov of provinciasChecked) {
+  //         provinciasAcumulador.push(prov)
+  //         return prov.toLowerCase() === obj.location.toLowerCase();
+  //       }
+  //     });
+
+  //     console.log(results);
+  //   }
+  //   if (!e.target.checked) {
+  //     const value = e.target.value;
+  //     results = [
+  //       ...results,
+  //       edit.filter((e) => e.location.toLowerCase() !== value.toLowerCase()),
+  //     ];
+  //     console.log(results);
+  //   }
+  // };
+
+  datosFiltradosPaises.length === 0
+    ? (results = edit)
+    : (results = [...datosFiltradosPaises]);
+  // results = datosFiltrados;
+
+  const paginado = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
   return (
     <div className="bg-white">
       <div>
@@ -392,7 +556,6 @@ export default function Products({ data }) {
 
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-baseline justify-end border-b border-gray-200 pt-12 pb-6">
-
             <div className="flex items-center">
               <Menu as="div" className="relative inline-block text-left">
                 <div>
@@ -451,7 +614,11 @@ export default function Products({ data }) {
 
               <div className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7">
                 <span className="sr-only">View grid</span>
-                <BsSearch className="h-5 w-5 cursor-pointer" aria-hidden="true" onClick={onSearch} />
+                <BsSearch
+                  className="h-5 w-5 cursor-pointer"
+                  aria-hidden="true"
+                  onClick={onSearch}
+                />
               </div>
               <button
                 type="button"
@@ -482,7 +649,7 @@ export default function Products({ data }) {
                   <Disclosure
                     as="div"
                     key={section.id}
-                    onChange={(e) => filterPaises(e)}
+                    onChange={filterPaises}
                     className="border-b border-gray-200 py-6"
                   >
                     {({ open }) => (
@@ -536,40 +703,49 @@ export default function Products({ data }) {
               </form>
 
               {/* Product grid */}
-              <div className="grid w-full col-span-3" id='infiniteScroll'>
-                {
-                  results.length && <InfiniteScroll
+              <div className="grid w-full col-span-3" id="infiniteScroll">
+                {results.length && (
+                  <InfiniteScroll
                     dataLength={results.length}
                     next={() => setPagination(pagination + 1)}
                     hasMore={true}
                     loader={<h4>Loading..</h4>}
                     scrollableTarget="infiniteScroll"
-                    className='grid w-full sm:grid-cols-2 xl:grid-cols-3 gap-4 overflow-auto'
+                    className="grid w-full sm:grid-cols-2 xl:grid-cols-3 gap-4 overflow-auto"
                   >
                     {results.length !== 0
                       ? results.map((e) => (
-                        <Link className='w-full' key={e.id} href={`/iniciativas/${e.id}`}>
-                          <Card
+                          <Link
+                            className="w-full"
                             key={e.id}
-                            title={e.title}
-                            image={e.image}
-                            description={e.description}
-                            location={e.location}
-                            isVolunteer={e.type_of_help}
-                            expirationDate={e.expirationDate}
-                          />
-                        </Link>
-                      ))
+                            href={`/iniciativas/${e.id}`}
+                          >
+                            <Card
+                              key={e.id}
+                              title={e.title}
+                              image={e.image}
+                              description={e.description}
+                              location={e.location}
+                              isVolunteer={e.type_of_help}
+                              expirationDate={e.expirationDate}
+                            />
+                          </Link>
+                        ))
                       : "No hay cartas para mostrar"}
                   </InfiniteScroll>
-                }
+                )}
+                <Paginate
+                  publicationsPerPage={publicationsPerPage}
+                  allPublications={edit.length}
+                  paginado={paginado}
+                />
               </div>
-            </div >
-          </section >
-        </main >
-      </div >
-    </div >
-  )
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+  );
 }
 
 export function getStaticProps() {
