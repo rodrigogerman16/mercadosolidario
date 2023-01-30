@@ -156,6 +156,7 @@ export default function Creariniciativa() {
   console.log(input);
 
   return (
+
     <div class="flex flex-col justify-center items-start m-auto min-h-full mt-16 bg-white w-3/5">
       <div>
         <div class="text-3xl font-montserrat justify-items-start w-full">
@@ -235,6 +236,7 @@ export default function Creariniciativa() {
             {errors.type_of_help ? <label>{errors.type_of_help}</label> : null}
           </div>
           {/* <div class="mt-2 font-hind text-lg">
+
             <label>Tipo de Ayudas/Donaciones</label>
 
             <div class="mt-2 font-hind text-lg">
@@ -268,36 +270,31 @@ export default function Creariniciativa() {
               <label class="ml-2">Voluntarios</label>
             </div>
           </div> */}
-          <div class="flex flex-col mt-2">
-            <label class="font-hind text-lg">Fecha de Expiracion</label>
-            <input
-              class="border border-slate-400 mr-9 mt-1 h-10 w-72 rounded"
-              type="text"
-              value={input.expirationDate}
-              name="expirationDate"
-              onChange={(el) => handleChange(el)}
-              placeholder="AAAA-MM-DD"
-            />
-            {errors.expirationDate ? (
-              <label>{errors.expirationDate}</label>
-            ) : null}
-          </div>
-          <div class="flex flex-col">
-            <label class="font-hind text-lg">Imagen</label>
-            <input
-              class="border border-slate-400 mr-9 mt-1 h-10 w-72 rounded"
-              type="file"
-              name="file"
-            />
-            {/* {imageSrc === null ? <label>{'Ingrese el Archivo'}</label> : null} */}
-          </div>
-          <input
-            type="submit"
-            value={"Publicar"}
-            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 my-6"
-          />
-        </form>
-      </div>
+        <label class="block text-sm">Fecha de Expiracion</label>
+        <input
+          class="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
+          type="text"
+          value={input.expirationDate}
+          name="expirationDate"
+          onChange={(el) => handleChange(el)}
+          placeholder="AAAA-MM-DD"
+        />
+        {errors.expirationDate ? (
+          <label className="w-full text-red-600">{errors.expirationDate}</label>
+        ) : null}
+        <label class="block text-sm">Imagen</label>
+        <input
+          class="w-full "
+          type="file"
+          name="file"
+        />
+        {/* {imageSrc === null ? <label>{'Ingrese el Archivo'}</label> : null} */}
+        <input
+          type="submit"
+          value={"Publicar"}
+          class="w-full px-8 py-3 font-semibold bg-black text-white hover:bg-zinc-800 transition-colors rounded"
+        />
+      </form>
     </div>
   );
 }
