@@ -1,33 +1,23 @@
 "use client";
-import { useState, useEffect } from "react";
-import {useSession} from "next-auth/react";
 import UserNavbar from "./UserNavbar";
 import OngNavbar from "./OngNavbar";
 import DefaultNavbar from "./DefaultNavbar";
 import CompaniesNavbar from "./CompaniesNavbar";
-
+import { useUser } from "../hooks/user.js";
 
 export default function Navbar() {
-    const {data: session} = useSession()
-    if(!session || !session.role){
-        return (
-            <DefaultNavbar/>
-        )
-    }
+  const user = useUser();
+  const userObject = user && JSON.parse(user)
+  console.log(userObject)
+  
+  return(
+    <div>
+    {(user && userObject.type_of_user === "user") && <UserNavbar />}
+    {(user && userObject.type_of_user === "ong") && <OngNavbar />}
+    {(user && userObject.type_of_user === "company") && <CompaniesNavbar />}
     
-    if(session.role === 'user'){
-        return (
-           <UserNavbar/>
-        )
-    }
-    if(session.role === 'ong'){
-        return(
-            <OngNavbar/>
-        )
-    }
-    if(session.role === 'companies'){
-        return(
-            <CompaniesNavbar/>
-        )
-    }
+    {(!user) && <DefaultNavbar/>}
+
+    </div>
+  )  
 }
