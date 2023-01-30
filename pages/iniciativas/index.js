@@ -408,7 +408,7 @@ export default function Products({ data }) {
         </Transition.Root>
 
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex border-b border-gray-200 pt-12 pb-6">
+          <div className="flex border-b border-gray-200 pt-12 pb-6 justify-end">
             <div className="flex items-center">
               <Menu as="div" className="relative inline-block text-left">
                 <div>
