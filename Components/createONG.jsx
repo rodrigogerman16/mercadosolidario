@@ -212,8 +212,7 @@ export default function Crearong(props) {
         <input
           className="text-sm"
           type="file"
-          name="image"
-          onChange={(el) => handleImage(el)}
+          name="file"
         />
       </div>
       <input
