@@ -20,7 +20,7 @@ export default function Products({ data }) {
   const [orden, setOrden] = useState();
   const [input, setInput] = useState();
   const [currentPage, setCurrentPage] = useState(1);
-  const [perPage, setPerPage] = useState(12);
+  const [perPage, setPerPage] = useState(6);
   const indexofLast = currentPage * perPage;
   const indexofFirst = indexofLast - perPage;
 
@@ -408,7 +408,7 @@ export default function Products({ data }) {
         </Transition.Root>
 
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex items-baseline justify-end border-b border-gray-200 pt-12 pb-6">
+          <div className="flex border-b border-gray-200 pt-12 pb-6">
             <div className="flex items-center">
               <Menu as="div" className="relative inline-block text-left">
                 <div>
