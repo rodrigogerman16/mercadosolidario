@@ -57,12 +57,6 @@ export const useBackendUser = () => {
       return;
     }
 
-    if (user) {
-      router.push("/");   
-      window.location.reload()  
-      return
-    }
-
     if (!session) {
       return;
     }
