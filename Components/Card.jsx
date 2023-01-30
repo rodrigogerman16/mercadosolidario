@@ -15,7 +15,7 @@ const Card = ({
   if (day < 10) day = "0" + day;
 
   return (
-    <div className="shadow p-4 rounded-lg bg-white grid gap-2 group">
+    <div className="shadow p-4 rounded-lg bg-white grid gap-2 group h-full">
       <div className="flex justify-center relative rounded overflow-hidden h-52">
         <div className="transition-transform duration-500 transform ease-in-out group-hover:scale-110 w-full h-full">
           <img
