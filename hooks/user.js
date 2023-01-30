@@ -33,15 +33,15 @@ export const useBackendUser = () => {
     //Actualizar estado User
     if(session){
       //Recopilamos todos los usuarios
-      const info = await axios.get(`http://localhost:3001/allusers`);
+      const info = await axios.get(`https://pf-backend-mercadosolidario-production.up.railway.app/allusers`);
       //Filtramos al usuario via email
-      const userFinded = info.data.filter(user => user.email === session.user.email);
+      const userFinded = info.data.data.filter(user => user.email === session.user.email);
 
       //Si existe session pero no el usuario local, redirige a registrarse para cumplir con los pasos 2 y 3 del /registrarse
       if(!userFinded) return router.push("/registrarse")
 
       //
-      const info2 = await axios.post('http://localhost:3001/login', {
+      const info2 = await axios.post('https://pf-backend-mercadosolidario-production.up.railway.app/login', {
         email: userFinded[0].email,
         password: "asdasdasd",
         type_of_user: userFinded[0].type_of_user
