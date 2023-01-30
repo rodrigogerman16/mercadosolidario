@@ -63,7 +63,7 @@ export default function Login() {
           type_of_user: "user",
         };
 
-        let info = await axios.post(`${VERCEL_URL}/login`, user);
+        let info = await axios.post(`https://pf-backend-mercadosolidario-production.up.railway.app/login`, user);
 
         {
           /*const aux = {
