@@ -7,6 +7,8 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { useRouter } from "next/router";
 
 export default function Products({ data }) {
+  const [counter, setCounter] = useState(1)
+  const [value, setValue] = useState('')
   const [info, setInfo] = useState();
   const [edit, setEdit] = useState();
   const [orden, setOrden] = useState();
@@ -30,8 +32,8 @@ export default function Products({ data }) {
   !input
     ? (results = info)
     : (results = edit.filter((e) =>
-        e.title.toLowerCase().includes(input.toLowerCase())
-      ));
+      e.title.toLowerCase().includes(input.toLowerCase())
+    ));
 
   const filterOrder = async (e) => {
     setOrden(e.target.outerText);
@@ -193,8 +195,6 @@ export default function Products({ data }) {
 
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
-  const [newData, setNewData] = useState(data)
-
   const [search, setSearch] = useState(false)
 
   const offSearch = e => {
@@ -223,22 +223,25 @@ export default function Products({ data }) {
 
   }, [search])
 
+  const [e, setE] = useState('')
 
-  const searchHandler = e => {
-    const value = document.querySelector('#search').value.toLowerCase()
-    if (e.key == "Enter" || e.target.id == 'icon') {
-      setNewData(data.filter(p => p.title.toLowerCase().includes(value)))
+  const searchHandler = ev => {
+    setE(ev.target.value)
+  }
+
+  if (e) {
+    results = results.filter(p => p.title.toLowerCase().includes(e))
+  }
+
+  const searchLogic = (e) => {
+    if (e.key == 'Enter' || e.key == 'Escape' || e.target.id == 'icon') {
       setSearch(false)
-      document.querySelector('#search').value = ''
-    }
-    if (e.key == "Escape") {
-      setSearch(false)
-      document.querySelector('#search').value = ''
     }
   }
 
+
   const [pagination, setPagination] = useState(1)
-  
+
   const [hydrated, setHydrated] = React.useState(false);
   useEffect(() => {
     setEdit(data);
@@ -441,8 +444,8 @@ export default function Products({ data }) {
 
               <div className={`h-[100%] w-full z-30 bg-black backdrop-blur-sm bg-opacity-60  top-0 left-0 ${search ? "fixed" : "none"}`} onClick={offSearch}>
                 <div className='absolute shadow top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
-                  <input type={'search'} id='search' className={`rounded-full pr-16 w-full h-full shadow border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200  ${search ? "visible" : "hidden"}`} placeholder='Buscar...' onKeyDown={searchHandler}></input>
-                  <BsSearch id='icon' className={`text-gray-400 hover:text-gray-500 h-5 w-5 cursor-pointer absolute top top-1/2 right-6 transform -translate-y-1/2 ${search ? "visible" : "hidden"}`} onClick={searchHandler}></BsSearch>
+                  <input type={'search'} id='search' className={`rounded-full pr-16 w-full h-full shadow border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200  ${search ? "visible" : "hidden"}`} placeholder='Buscar...' onKeyDown={searchLogic} onChange={searchHandler} value={e}></input>
+                  <BsSearch id='icon' className={`text-gray-400 hover:text-gray-500 h-5 w-5 cursor-pointer absolute top top-1/2 right-6 transform -translate-y-1/2 ${search ? "visible" : "hidden"}`} onClick={searchLogic}></BsSearch>
                 </div>
               </div>
 
