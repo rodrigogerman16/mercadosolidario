@@ -367,23 +367,6 @@ export default function Products({ data }) {
     }
   }
 
-  const searchHandler = (e) => {
-    setEnter(e.key);
-    setInputSearch(e.target.value);
-    if (enter == "Enter") {
-      results = edit.filter((p) => {
-        console.log(inputSearch);
-        return p.title.toLowerCase().includes(inputSearch.toLowerCase());
-      });
-      setSearch(false);
-      setInputSearch("");
-    }
-    if (enter == "Escape") {
-      setSearch(false);
-      setInputSearch("");
-    }
-  };
-
   // const filterPaises = (e) => {
   //   let provinciasChecked = [];
   //   if (e.target.checked) {
