@@ -156,7 +156,6 @@ export default function Creariniciativa() {
   console.log(input);
 
   return (
-
     <div class="flex flex-col justify-center items-start m-auto min-h-full mt-16 bg-white w-3/5">
       <div>
         <div class="text-3xl font-montserrat justify-items-start w-full">
@@ -270,31 +269,30 @@ export default function Creariniciativa() {
               <label class="ml-2">Voluntarios</label>
             </div>
           </div> */}
-        <label class="block text-sm">Fecha de Expiracion</label>
-        <input
-          class="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
-          type="text"
-          value={input.expirationDate}
-          name="expirationDate"
-          onChange={(el) => handleChange(el)}
-          placeholder="AAAA-MM-DD"
-        />
-        {errors.expirationDate ? (
-          <label className="w-full text-red-600">{errors.expirationDate}</label>
-        ) : null}
-        <label class="block text-sm">Imagen</label>
-        <input
-          class="w-full "
-          type="file"
-          name="file"
-        />
-        {/* {imageSrc === null ? <label>{'Ingrese el Archivo'}</label> : null} */}
-        <input
-          type="submit"
-          value={"Publicar"}
-          class="w-full px-8 py-3 font-semibold bg-black text-white hover:bg-zinc-800 transition-colors rounded"
-        />
-      </form>
+          <label class="block text-sm">Fecha de Expiracion</label>
+          <input
+            class="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
+            type="text"
+            value={input.expirationDate}
+            name="expirationDate"
+            onChange={(el) => handleChange(el)}
+            placeholder="AAAA-MM-DD"
+          />
+          {errors.expirationDate ? (
+            <label className="w-full text-red-600">
+              {errors.expirationDate}
+            </label>
+          ) : null}
+          <label class="block text-sm">Imagen</label>
+          <input class="w-full " type="file" name="file" />
+          {/* {imageSrc === null ? <label>{'Ingrese el Archivo'}</label> : null} */}
+          <input
+            type="submit"
+            value={"Publicar"}
+            class="w-full px-8 py-3 font-semibold bg-black text-white hover:bg-zinc-800 transition-colors rounded"
+          />
+        </form>
+      </div>
     </div>
   );
 }
