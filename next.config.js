@@ -10,6 +10,14 @@ const nextConfig = {
         pathname: '*/**'
       }
     ]
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/api/railway-backend/:path*',
+        destination: 'https://pf-backend-mercadosolidario-production.up.railway.app/:path*' // Proxy to Backend
+      }
+    ]
   }
 }
 
