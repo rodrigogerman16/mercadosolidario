@@ -367,9 +367,6 @@ export default function Products({ data }) {
     }
   }
 
-
-  const [pagination, setPagination] = useState(1)
-
   const [hydrated, setHydrated] = React.useState(false);
   useEffect(() => {
     setEdit(data);
