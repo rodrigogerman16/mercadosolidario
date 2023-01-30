@@ -1,18 +1,29 @@
-import React, { Fragment, useEffect, useState } from 'react'
-import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
-import { BsChevronDown, BsFunnelFill, BsDash, BsPlus, BsSearch, BsX } from 'react-icons/bs'
-import Link from 'next/link'
-import Card from '../../Components/Card'
-import InfiniteScroll from 'react-infinite-scroll-component';
+import React, { Fragment, useEffect, useState } from "react";
+import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
+import {
+  BsChevronDown,
+  BsFunnelFill,
+  BsDash,
+  BsPlus,
+  BsSearch,
+  BsX,
+} from "react-icons/bs";
+import Link from "next/link";
+import Card from "../../Components/Card";
+import InfiniteScroll from "react-infinite-scroll-component";
 import { useRouter } from "next/router";
+import Paginado from "../../Components/Paginate";
 
 export default function Products({ data }) {
-  const [counter, setCounter] = useState(1)
-  const [value, setValue] = useState('')
   const [info, setInfo] = useState();
   const [edit, setEdit] = useState();
   const [orden, setOrden] = useState();
   const [input, setInput] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [perPage, setPerPage] = useState(6);
+  const indexofLast = currentPage * perPage;
+  const indexofFirst = indexofLast - perPage;
+
   const filterDonacionn = (e) => {
     const value = e.target.name;
     console.log("Soy filterDonacion" + value);
@@ -32,8 +43,8 @@ export default function Products({ data }) {
   !input
     ? (results = info)
     : (results = edit.filter((e) =>
-      e.title.toLowerCase().includes(input.toLowerCase())
-    ));
+        e.title.toLowerCase().includes(input.toLowerCase())
+      ));
 
   const filterOrder = async (e) => {
     setOrden(e.target.outerText);
@@ -195,52 +206,52 @@ export default function Products({ data }) {
 
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
-  const [search, setSearch] = useState(false)
+  const [search, setSearch] = useState(false);
 
-  const offSearch = e => {
-    if (e.target === e.currentTarget) setSearch(false)
-  }
+  const offSearch = (e) => {
+    if (e.target === e.currentTarget) setSearch(false);
+  };
 
   const onSearch = () => {
-    setSearch(true)
+    setSearch(true);
     setTimeout(() => {
-      document.querySelector('#search').focus()
+      document.querySelector("#search").focus();
     }, 1);
-  }
+  };
 
   useEffect(() => {
     /* Disable scroll if search is open */
     if (search) {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop
-      const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft
+      const scrollTop =
+        window.pageYOffset || document.documentElement.scrollTop;
+      const scrollLeft =
+        window.pageXOffset || document.documentElement.scrollLeft;
 
       window.onscroll = function () {
         window.scrollTo(scrollLeft, scrollTop);
       };
     } else {
-      window.onscroll = function () { };
+      window.onscroll = function () {};
     }
+  }, [search]);
 
-  }, [search])
+  const [e, setE] = useState("");
 
-  const [e, setE] = useState('')
-
-  const searchHandler = ev => {
-    setE(ev.target.value)
-  }
+  const searchHandler = (ev) => {
+    setE(ev.target.value);
+  };
 
   if (e) {
-    results = results.filter(p => p.title.toLowerCase().includes(e))
+    results = results.filter((p) => p.title.toLowerCase().includes(e));
   }
 
   const searchLogic = (e) => {
-    if (e.key == 'Enter' || e.key == 'Escape' || e.target.id == 'icon') {
-      setSearch(false)
+    if (e.key == "Enter" || e.key == "Escape" || e.target.id == "icon") {
+      setSearch(false);
     }
-  }
+  };
 
-
-  const [pagination, setPagination] = useState(1)
+  const [pagination, setPagination] = useState(1);
 
   const [hydrated, setHydrated] = React.useState(false);
   useEffect(() => {
@@ -253,6 +264,7 @@ export default function Products({ data }) {
   }
 
   const filterPaises = (e) => {
+    setCurrentPage(1);
     if (e.target.checked) {
       if (!e.target.value) return setInfo(data);
       const value = e.target.value;
@@ -270,6 +282,11 @@ export default function Products({ data }) {
       console.log(info);
     }
   };
+
+  const paginado = (number) => {
+    setCurrentPage(number);
+  };
+  const current = results.slice(indexofFirst, indexofLast);
 
   return (
     <div className="bg-white">
@@ -392,7 +409,6 @@ export default function Products({ data }) {
 
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-baseline justify-end border-b border-gray-200 pt-12 pb-6">
-
             <div className="flex items-center">
               <Menu as="div" className="relative inline-block text-left">
                 <div>
@@ -442,16 +458,41 @@ export default function Products({ data }) {
                 </Transition>
               </Menu>
 
-              <div className={`h-[100%] w-full z-30 bg-black backdrop-blur-sm bg-opacity-60  top-0 left-0 ${search ? "fixed" : "none"}`} onClick={offSearch}>
-                <div className='absolute shadow top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
-                  <input type={'search'} id='search' className={`rounded-full pr-16 w-full h-full shadow border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200  ${search ? "visible" : "hidden"}`} placeholder='Buscar...' onKeyDown={searchLogic} onChange={searchHandler} value={e}></input>
-                  <BsSearch id='icon' className={`text-gray-400 hover:text-gray-500 h-5 w-5 cursor-pointer absolute top top-1/2 right-6 transform -translate-y-1/2 ${search ? "visible" : "hidden"}`} onClick={searchLogic}></BsSearch>
+              <div
+                className={`h-[100%] w-full z-30 bg-black backdrop-blur-sm bg-opacity-60  top-0 left-0 ${
+                  search ? "fixed" : "none"
+                }`}
+                onClick={offSearch}
+              >
+                <div className="absolute shadow top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                  <input
+                    type={"search"}
+                    id="search"
+                    className={`rounded-full pr-16 w-full h-full shadow border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200  ${
+                      search ? "visible" : "hidden"
+                    }`}
+                    placeholder="Buscar..."
+                    onKeyDown={searchLogic}
+                    onChange={searchHandler}
+                    value={e}
+                  ></input>
+                  <BsSearch
+                    id="icon"
+                    className={`text-gray-400 hover:text-gray-500 h-5 w-5 cursor-pointer absolute top top-1/2 right-6 transform -translate-y-1/2 ${
+                      search ? "visible" : "hidden"
+                    }`}
+                    onClick={searchLogic}
+                  ></BsSearch>
                 </div>
               </div>
 
               <div className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7">
                 <span className="sr-only">View grid</span>
-                <BsSearch className="h-5 w-5 cursor-pointer" aria-hidden="true" onClick={onSearch} />
+                <BsSearch
+                  className="h-5 w-5 cursor-pointer"
+                  aria-hidden="true"
+                  onClick={onSearch}
+                />
               </div>
               <button
                 type="button"
@@ -536,40 +577,42 @@ export default function Products({ data }) {
               </form>
 
               {/* Product grid */}
-              <div className="grid w-full col-span-3" id='infiniteScroll'>
-                {
-                  results.length && <InfiniteScroll
-                    dataLength={results.length}
-                    next={() => setPagination(pagination + 1)}
-                    hasMore={true}
-                    loader={<h4>Loading..</h4>}
-                    scrollableTarget="infiniteScroll"
-                    className='grid w-full sm:grid-cols-2 xl:grid-cols-3 gap-4 overflow-auto'
-                  >
-                    {results.length !== 0
-                      ? results.map((e) => (
-                        <Link className='w-full' key={e.id} href={`/iniciativas/${e.id}`}>
-                          <Card
-                            key={e.id}
-                            title={e.title}
-                            image={e.image}
-                            description={e.description}
-                            location={e.location}
-                            isVolunteer={e.type_of_help}
-                            expirationDate={e.expirationDate}
-                          />
-                        </Link>
-                      ))
-                      : "No hay cartas para mostrar"}
-                  </InfiniteScroll>
-                }
+              <div
+                className="grid w-full col-span-3 grid w-full sm:grid-cols-2 xl:grid-cols-3 gap-4 overflow-auto "
+                id="infiniteScroll"
+              >
+                {current.length !== 0
+                  ? current.map((e) => (
+                      <Link
+                        className="w-full"
+                        key={e.id}
+                        href={`/iniciativas/${e.id}`}
+                      >
+                        <Card
+                          key={e.id}
+                          title={e.title}
+                          image={e.image}
+                          description={e.description}
+                          location={e.location}
+                          isVolunteer={e.type_of_help}
+                          expirationDate={e.expirationDate}
+                        />
+                      </Link>
+                    ))
+                  : "No hay cartas para mostrar"}
               </div>
-            </div >
-          </section >
-        </main >
-      </div >
-    </div >
-  )
+              <Paginado
+                perPage={perPage}
+                results={results.length}
+                paginado={paginado}
+                key="Paginado"
+              />
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+  );
 }
 
 export function getStaticProps() {
