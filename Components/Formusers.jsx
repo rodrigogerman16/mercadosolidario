@@ -1,7 +1,10 @@
 "use client";
 import { useState } from "react";
 import axios from "axios";
-import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
+
+const { VERCEL_URL = "http://localhost:3000/api/railway-backend" } =
+  process.env;
 
 function Validate(input) {
   let errors = {};
@@ -31,11 +34,11 @@ function Validate(input) {
 
 export default function Formusers(props) {
   //console.log(props)
-  const router = useRouter();
+  const { data: session } = useSession();
 
   const postUser = async (props) => {
     let info = await axios.post(
-      `https://pf-backend-mercadosolidario-production.up.railway.app/user/newuser`,
+      `${VERCEL_URL}/user/newuser`,
       props
       // {headers: {
       //   'Content-Type': 'application/json; charset=utf-8'
@@ -50,11 +53,10 @@ export default function Formusers(props) {
       id: info.data.id,
       cuil: info.data.cuil,
       phone: info.data.phone,
-      user_linkedin: info.data.user_linkedin
-    }
+      user_linkedin: info.data.user_linkedin,
+    };
 
     window.localStorage.setItem("user", JSON.stringify(aux));
-
     return console.log(info.data, aux);
   };
 
@@ -102,30 +104,28 @@ export default function Formusers(props) {
           name: input.name,
           lastName: input.lastName,
           phone: input.phone,
-          email: props.email,
-          password: props.password,
-          type_of_user: props.type_of_user,
+          email: props.email || session.user.email,
+          password: props.password || "asdasdasd",
+          type_of_user: props.type_of_user || "user",
           cuil: input.cuil,
           user_linkedin: input.user_linkedin,
         };
 
-        //console.log(user)
-
-        postUser(user);
-
-        alert("Usuario creado!");
-// reqiest de axios
-// te devuelve user type
-// lo metes al localstorage
-        
-        setInput({
-          name: "",
-          lastName: "",
-          phone: "",
-          cuil: "",
-          user_linkedin: "",
+        postUser(user).then(() => {
+          axios.post('https://pf-backend-mercadosolidario-production.up.railway.app/mailer/email', {email: user.email})
+          setInput({
+            name: "",
+            lastName: "",
+            phone: "",
+            cuil: "",
+            user_linkedin: "",
+          });          
+          alert("Usuario creado!");
+          window.location.href = '../';
+        }).catch(error => {
+          alert("error creando usuario", error)
         });
-        router.push("/");
+
       } else {
         alert("Hay datos incorrectos o sin completar!");
       }
@@ -211,7 +211,7 @@ export default function Formusers(props) {
               </div>
             </div>
           </div>
-          <input type="submit" value={"Registrarse"} class="" />
+          <input type="submit" name={"Registrarse"} class="" />
         </form>
       </div>
     </div>
