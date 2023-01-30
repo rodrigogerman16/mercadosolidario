@@ -158,87 +158,83 @@ export default function Creariniciativa() {
   console.log(input);
 
   return (
-    <div class="flex flex-col justify-center items-start m-auto min-h-full mt-16 bg-white w-3/5">
-      <div>
-        <div class="text-3xl font-montserrat justify-items-start w-full">
-          <h1 class="text-start">Crear Iniciativa</h1>
-        </div>
-        <form onSubmit={(el) => handleSubmit(el)}>
-          <div class="flex flex-col mt-2">
-            <label class="font-hind text-lg">Titulo</label>
-            <input
-              class="border border-slate-400 mr-9 mt-1 h-10 w-72 rounded"
-              type="text"
-              value={input.title}
-              name="title"
-              onChange={(el) => handleChange(el)}
-              placeholder=""
-            />
-            {errors.title ? <label>{errors.title}</label> : null}
-          </div>
-          <div class="flex flex-col mt-2">
-            <label class="font-hind text-lg">Descripción</label>
-            <input
-              class="border border-slate-400 mr-9 mt-1 h-10 w-72 rounded"
-              type="text"
-              value={input.description}
-              name="description"
-              onChange={(el) => handleChange(el)}
-              placeholder=""
-            />
-            {errors.description ? <label>{errors.description}</label> : null}
-          </div>
-          <div class="mt-6">
-            <label class="font-hind text-lg">Elige una Ubicación</label>
-            <select
-              class="ml-2 cursor-pointer"
-              name="location"
-              onChange={(el) => handleChange(el)}
-            >
-              <option value="">Elige una Opcion</option>
-              <option value="Buenos Aires">Buenos Aires</option>
-              <option value="Catamarca">Catamarca</option>
-              <option value="Chaco">Chaco</option>
-              <option value="Chubut">Chubut</option>
-              <option value="Córdoba">Córdoba</option>
-              <option value="Corrientes">Corrientes</option>
-              <option value="Entre Ríos">Entre Ríos</option>
-              <option value="Formosa">Formosa</option>
-              <option value="Jujuy">Jujuy</option>
-              <option value="La Pampa">La Pampa</option>
-              <option value="La Rioja">La Rioja</option>
-              <option value="Mendoza">Mendoza</option>
-              <option value="Misiones">Misiones</option>
-              <option value="Neuquén">Neuquén</option>
-              <option value="Río Negro">Río Negro</option>
-              <option value="Salta">Salta</option>
-              <option value="San Juan">San Juan</option>
-              <option value="San Luis">San Luis</option>
-              <option value="Santa Cruz">Santa Cruz</option>
-              <option value="Santa Fe">Santa Fe</option>
-              <option value="Santiago del Estero">Santiago del Estero</option>
-              <option value="Tierra del Fuego">Tierra del Fuego</option>
-              <option value="Tucumán">Tucumán</option>
-            </select>
-            {errors.location ? <label>{errors.location}</label> : null}
-          </div>
-          <div class="mt-6">
-            <label class="font-hind text-lg">Tipo de Ayuda</label>
-            <select
-              class="ml-2 cursor-pointer"
-              name="type_of_help"
-              onChange={(el) => handleChange(el)}
-            >
-              <option value="">Elige una Opcion</option>
-              <option value="efectivo">En Efectivo</option>
-              <option value="especie">En Especie</option>
-              <option value="servicio">Voluntariados</option>
-            </select>
-            {errors.type_of_help ? <label>{errors.type_of_help}</label> : null}
-          </div>
-          {/* <div class="mt-2 font-hind text-lg">
+    <div className="w-full max-w-md p-4 rounded-md sm:p-8 m-auto min-h-[calc(100vh-100px)] flex flex-col justify-center items-center">
+      <span className="block mb-2 text-xs font-semibold tracking-widest text-center uppercase dark:text-pink-400">Iniciativas</span>
+      <h2 className="text-5xl font-bold text-center">Crear una iniciativa</h2>
+      <div className="text-center mb-10">
+        <span className="inline-block w-1 h-1 rounded-full bg-pink-500 ml-1"></span>
+        <span className="inline-block w-3 h-1 rounded-full bg-pink-500 ml-1"></span>
+        <span className="inline-block w-40 h-1 rounded-full bg-pink-500"></span>
+        <span className="inline-block w-3 h-1 rounded-full bg-pink-500 ml-1"></span>
+        <span className="inline-block w-1 h-1 rounded-full bg-pink-500 ml-1"></span>
+      </div>
+      <form onSubmit={(el) => handleSubmit(el)} className='grid gap-4 w-full'>
+        <label class="block text-sm">Titulo</label>
+        <input
+          class="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
+          type="text"
+          value={input.title}
+          name="title"
+          onChange={(el) => handleChange(el)}
+          placeholder=""
+        />
+        {errors.title ? <label className="w-full text-red-600">{errors.title}</label> : null}
+        <label class="block text-sm">Descripción</label>
+        <input
+          class="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
+          type="text"
+          value={input.description}
+          name="description"
+          onChange={(el) => handleChange(el)}
+          placeholder=""
+        />
+        {errors.description ? <label className="w-full text-red-600">{errors.description}</label> : null}
+        <label class="block text-sm">Elige una Ubicación</label>
+        <select
+          class="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
+          name="location"
+          onChange={(el) => handleChange(el)}
+        >
+          <option value="">Elige una Opcion</option>
+          <option value="Buenos Aires">Buenos Aires</option>
+          <option value="Catamarca">Catamarca</option>
+          <option value="Chaco">Chaco</option>
+          <option value="Chubut">Chubut</option>
+          <option value="Córdoba">Córdoba</option>
+          <option value="Corrientes">Corrientes</option>
+          <option value="Entre Ríos">Entre Ríos</option>
+          <option value="Formosa">Formosa</option>
+          <option value="Jujuy">Jujuy</option>
+          <option value="La Pampa">La Pampa</option>
+          <option value="La Rioja">La Rioja</option>
+          <option value="Mendoza">Mendoza</option>
+          <option value="Misiones">Misiones</option>
+          <option value="Neuquén">Neuquén</option>
+          <option value="Río Negro">Río Negro</option>
+          <option value="Salta">Salta</option>
+          <option value="San Juan">San Juan</option>
+          <option value="San Luis">San Luis</option>
+          <option value="Santa Cruz">Santa Cruz</option>
+          <option value="Santa Fe">Santa Fe</option>
+          <option value="Santiago del Estero">Santiago del Estero</option>
+          <option value="Tierra del Fuego">Tierra del Fuego</option>
+          <option value="Tucumán">Tucumán</option>
+        </select>
+        {errors.location ? <label className="w-full text-red-600">{errors.location}</label> : null}
+        <label class="block text-sm">Tipo de Ayuda</label>
+        <select
+          class="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
+          name="type_of_help"
+          onChange={(el) => handleChange(el)}
+        >
+          <option value="">Elige una Opcion</option>
+          <option value="efectivo">En Efectivo</option>
+          <option value="especie">En Especie</option>
+          <option value="servicio">Voluntariados</option>
+        </select>
+        {errors.type_of_help ? <label className="w-full text-red-600">{errors.type_of_help}</label> : null}
+        {/* <div class="mt-2 font-hind text-lg">
             <label>Tipo de Ayudas/Donaciones</label>
-
             <div class="mt-2 font-hind text-lg">
               <input
                 class="cursor-pointer"
@@ -270,36 +266,31 @@ export default function Creariniciativa() {
               <label class="ml-2">Voluntarios</label>
             </div>
           </div> */}
-          <div class="flex flex-col mt-2">
-            <label class="font-hind text-lg">Fecha de Expiracion</label>
-            <input
-              class="border border-slate-400 mr-9 mt-1 h-10 w-72 rounded"
-              type="text"
-              value={input.expirationDate}
-              name="expirationDate"
-              onChange={(el) => handleChange(el)}
-              placeholder="AAAA-MM-DD"
-            />
-            {errors.expirationDate ? (
-              <label>{errors.expirationDate}</label>
-            ) : null}
-          </div>
-          <div class="flex flex-col">
-            <label class="font-hind text-lg">Imagen</label>
-            <input
-              class="border border-slate-400 mr-9 mt-1 h-10 w-72 rounded"
-              type="file"
-              name="file"
-            />
-            {/* {imageSrc === null ? <label>{'Ingrese el Archivo'}</label> : null} */}
-          </div>
-          <input
-            type="submit"
-            value={"Publicar"}
-            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 my-6"
-          />
-        </form>
-      </div>
+        <label class="block text-sm">Fecha de Expiracion</label>
+        <input
+          class="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
+          type="text"
+          value={input.expirationDate}
+          name="expirationDate"
+          onChange={(el) => handleChange(el)}
+          placeholder="AAAA-MM-DD"
+        />
+        {errors.expirationDate ? (
+          <label className="w-full text-red-600">{errors.expirationDate}</label>
+        ) : null}
+        <label class="block text-sm">Imagen</label>
+        <input
+          class="w-full "
+          type="file"
+          name="file"
+        />
+        {/* {imageSrc === null ? <label>{'Ingrese el Archivo'}</label> : null} */}
+        <input
+          type="submit"
+          value={"Publicar"}
+          class="w-full px-8 py-3 font-semibold bg-black text-white hover:bg-zinc-800 transition-colors rounded"
+        />
+      </form>
     </div>
   );
 }
