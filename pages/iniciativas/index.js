@@ -283,10 +283,10 @@ export default function Products({ data }) {
     }
   };
 
-  const current = results.slice(indexofFirst, indexofLast);
   const paginado = (number) => {
     setCurrentPage(number);
   };
+  const current = results.slice(indexofFirst, indexofLast);
 
   return (
     <div className="bg-white">
