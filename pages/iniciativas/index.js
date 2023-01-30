@@ -43,8 +43,8 @@ export default function Products({ data }) {
   !input
     ? (results = info)
     : (results = edit.filter((e) =>
-        e.title.toLowerCase().includes(input.toLowerCase())
-      ));
+      e.title.toLowerCase().includes(input.toLowerCase())
+    ));
 
   const filterOrder = async (e) => {
     setOrden(e.target.outerText);
@@ -231,7 +231,7 @@ export default function Products({ data }) {
         window.scrollTo(scrollLeft, scrollTop);
       };
     } else {
-      window.onscroll = function () {};
+      window.onscroll = function () { };
     }
   }, [search]);
 
@@ -459,18 +459,16 @@ export default function Products({ data }) {
               </Menu>
 
               <div
-                className={`h-[100%] w-full z-30 bg-black backdrop-blur-sm bg-opacity-60  top-0 left-0 ${
-                  search ? "fixed" : "none"
-                }`}
+                className={`h-[100%] w-full z-30 bg-black backdrop-blur-sm bg-opacity-60  top-0 left-0 ${search ? "fixed" : "none"
+                  }`}
                 onClick={offSearch}
               >
                 <div className="absolute shadow top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                   <input
                     type={"search"}
                     id="search"
-                    className={`rounded-full pr-16 w-full h-full shadow border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200  ${
-                      search ? "visible" : "hidden"
-                    }`}
+                    className={`rounded-full pr-16 w-full h-full shadow border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200  ${search ? "visible" : "hidden"
+                      }`}
                     placeholder="Buscar..."
                     onKeyDown={searchLogic}
                     onChange={searchHandler}
@@ -478,9 +476,8 @@ export default function Products({ data }) {
                   ></input>
                   <BsSearch
                     id="icon"
-                    className={`text-gray-400 hover:text-gray-500 h-5 w-5 cursor-pointer absolute top top-1/2 right-6 transform -translate-y-1/2 ${
-                      search ? "visible" : "hidden"
-                    }`}
+                    className={`text-gray-400 hover:text-gray-500 h-5 w-5 cursor-pointer absolute top top-1/2 right-6 transform -translate-y-1/2 ${search ? "visible" : "hidden"
+                      }`}
                     onClick={searchLogic}
                   ></BsSearch>
                 </div>
@@ -578,35 +575,38 @@ export default function Products({ data }) {
 
               {/* Product grid */}
               <div
-                className="grid w-full col-span-3 grid w-full sm:grid-cols-2 xl:grid-cols-3 gap-4 overflow-auto "
+                className="grid w-full col-span-3 grid w-full sm:grid-cols-2 xl:grid-cols-3 gap-4 "
                 id="infiniteScroll"
               >
                 {current.length !== 0
                   ? current.map((e) => (
-                      <Link
-                        className="w-full"
+                    <Link
+                      className="w-full"
+                      key={e.id}
+                      href={`/iniciativas/${e.id}`}
+                    >
+                      <Card
                         key={e.id}
-                        href={`/iniciativas/${e.id}`}
-                      >
-                        <Card
-                          key={e.id}
-                          title={e.title}
-                          image={e.image}
-                          description={e.description}
-                          location={e.location}
-                          isVolunteer={e.type_of_help}
-                          expirationDate={e.expirationDate}
-                        />
-                      </Link>
-                    ))
+                        title={e.title}
+                        image={e.image}
+                        description={e.description}
+                        location={e.location}
+                        isVolunteer={e.type_of_help}
+                        expirationDate={e.expirationDate}
+                      />
+                    </Link>
+                  ))
                   : "No hay cartas para mostrar"}
+                <div className="w-full sm:col-span-2 xl:col-span-3 m-auto my-8">
+                  <Paginado
+                    perPage={perPage}
+                    results={results.length}
+                    paginado={paginado}
+                    key="Paginado"
+                    current={currentPage}
+                  />
+                </div>
               </div>
-              <Paginado
-                perPage={perPage}
-                results={results.length}
-                paginado={paginado}
-                key="Paginado"
-              />
             </div>
           </section>
         </main>
