@@ -60,8 +60,8 @@ export default function Register() {
       setUser(aux);
 
       setStep(2);
-      setEmail(emailValue)
-      setPassword(passwordValue)
+      //setEmail(emailValue)
+      //setPassword(passwordValue)
     }
   };
 
