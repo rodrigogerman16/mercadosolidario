@@ -109,8 +109,6 @@ export default function Login() {
     if (!user) {
       // esta registrandose
       if (session) {
-        
-        console.log(session)
         // estamos todavia pidiendo informacion del usuario existente
         if (isLoading) {
           return;
@@ -135,9 +133,6 @@ export default function Login() {
       Router.push("/dashboard");
       return;
     }
-
-    // cualquier otro usuario
-    Router.push("/");
   }, [user]);
 
   return (
