@@ -27,7 +27,9 @@
     "react-dom": "18.2.0",
     "react-icons": "^4.7.1",
     "react-infinite-scroll-component": "^6.1.0",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "sweetalert2": "^11.7.1",
+    "sweetalert2-react-content": "^5.0.7"
   },
   "devDependencies": {
     "tailwindcss": "^3.2.4"
