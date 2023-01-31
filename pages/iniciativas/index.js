@@ -12,59 +12,158 @@ import Link from "next/link";
 import Card from "../../Components/Card";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useRouter } from "next/router";
-import Paginado from "../../Components/Paginate";
 
 export default function Products({ data }) {
   const [info, setInfo] = useState();
   const [edit, setEdit] = useState();
   const [orden, setOrden] = useState();
   const [input, setInput] = useState();
-  const [currentPage, setCurrentPage] = useState(1);
-  const [perPage, setPerPage] = useState(6);
-  const indexofLast = currentPage * perPage;
-  const indexofFirst = indexofLast - perPage;
+  const [datosFiltradosPaises, setDatosFiltradosPaises] = useState([]);
+  const [checkedPaises, setCheckedPaises] = useState({
+    buenosAires: false,
+    Catamarca: false,
+    Chaco: false,
+    Chubut: false,
+    Cordoba: false,
+    Corrientes: false,
+    entreRios: false,
+    Formosa: false,
+    Jujuy: false,
+    laPampa: false,
+    laRioja: false,
+    Mendoza: false,
+    Misiones: false,
+    Neuquen: false,
+    rioNegro: false,
+    Salta: false,
+    sanJuan: false,
+    sanLuis: false,
+    santaCruz: false,
+    santaFe: false,
+    santiagoDelEstero: false,
+    tierraDelFuego: false,
+    Tucumán: false,
+  });
+  const [datosFiltradosCategorias, setDatosFiltradosCategorias] = useState([]);
+  const [checkedCategorias, setCheckedCategorias] = useState({
+    Alimentacion: false,
+    asesoriaLegal: false,
+    ayudaARefugiados: false,
+    ayudaAAnimales: false,
+    apoyoAComunidadesIndigenas: false,
+    apoyoALgbt: false,
+    apoyoALaMujer: false,
+    construccionObras: false,
+    cultura: false,
+    deportes: false,
+    derechosHumanos: false,
+    discapacitados: false,
+    educacion: false,
+    medioAmbiente: false,
+    entretenimiento: false,
+    gobiernoNoLucro: false,
+    materiaPrima: false,
+    mediosDeComunicacion: false,
+    saludMedicina: false,
+    servicioComunitario: false,
+    transporte: false,
+  });
 
-  const filterDonacionn = (e) => {
-    const value = e.target.name;
-    console.log("Soy filterDonacion" + value);
-    const informacion =
-      value === "efectivo"
-        ? data.filter((e) => e.type_of_help === "efectivo")
-        : data.filter((e) => e.type_of_help === "especie");
-    console.log(data);
-    setInfo(value === "all" ? data : informacion);
+  let results = data;
+  const [datosFiltradosDonaciones, setDatosFiltradosDonaciones] = useState([]);
+  const [checkedDonaciones, setCheckedDonaciones] = useState({
+    efectivo: false,
+    especie: false,
+    voluntario: false,
+  });
+
+  const handlerDonaciones = (e) => {
+    setCheckedDonaciones({
+      ...checkedDonaciones,
+      [e.target.value]: e.target.checked,
+    });
+    if (e.target.checked) {
+      const value = e.target.value;
+      console.log(value);
+      const resultadoLenguaje = edit.filter((e) => e.type_of_help === value);
+      setDatosFiltradosDonaciones([
+        ...datosFiltradosDonaciones,
+        ...resultadoLenguaje,
+      ]);
+    } else {
+      const value = e.target.value;
+      const resultadoLenguaje = datosFiltradosCategorias.filter(
+        (e) => e.type_of_help === value
+      );
+      setDatosFiltradosDonaciones([...resultadoLenguaje]);
+    }
   };
-  let results = [];
-  const filterInput = async (e) => {
+
+  const handlerCategorias = (e) => {
+    setCheckedCategorias({
+      ...checkedCategorias,
+      [e.target.value]: e.target.checked,
+    });
+
+    if (e.target.checked) {
+      const value = e.target.value;
+      const resultadoLenguaje = edit.filter((e) => e.type_of_help === value);
+      setDatosFiltradosCategorias([
+        ...datosFiltradosCategorias,
+        ...resultadoLenguaje,
+      ]);
+    } else {
+      const value = e.target.value;
+      const resultadoLenguaje = datosFiltradosCategorias.filter(
+        (e) => e.type_of_help !== value
+      );
+      setDatosFiltradosCategorias([...resultadoLenguaje]);
+    }
+  };
+
+  const filterPaises = (e) => {
+    setCheckedPaises({
+      ...checkedPaises,
+      [e.target.value]: e.target.checked,
+    });
+    console.log(e.target.value);
+    if (e.target.checked) {
+      const value = e.target.value;
+      const resultadoLenguaje = edit.filter(
+        (e) => e.location.toLowerCase() === value.toLowerCase()
+      );
+      setDatosFiltradosPaises([...datosFiltradosPaises, ...resultadoLenguaje]);
+      results = datosFiltradosPaises;
+    } else {
+      const value = e.target.value;
+      const resultadoLenguaje = datosFiltradosPaises.filter(
+        (e) => e.location.toLowerCase() !== value.toLowerCase()
+      );
+      setDatosFiltradosPaises([...resultadoLenguaje]);
+      results = datosFiltradosPaises;
+    }
+  };
+
+  const searchHandler = async (e) => {
     const value = e.target.value;
     setInput(value);
   };
 
-  !input
-    ? (results = info)
-    : (results = edit.filter((e) =>
-        e.title.toLowerCase().includes(input.toLowerCase())
-      ));
-
   const filterOrder = async (e) => {
     setOrden(e.target.outerText);
+    if (orden === "Titulo Desc") {
+      results = datosFiltradosPaises.sort((a, b) =>
+        a.title.localeCompare(b.title)
+      );
+      edit.sort((a, b) => a.title.localeCompare(b.title));
+      console.log("Titulo asc :" + results);
+    } else if (orden === "Titulo Asc") {
+      results = datosFiltradosPaises.sort((a, b) =>
+        b.title.localeCompare(a.title)
+      );
+      edit.sort((a, b) => b.title.localeCompare(a.title));
+    }
   };
-
-  if (orden === "Titulo Asc") {
-    results = edit.sort((a, b) => a.title.localeCompare(b.title));
-    console.log(results);
-  } else if (orden === "Titulo Desc") {
-    results = edit.sort((a, b) => b.title.localeCompare(a.title));
-    console.log(results);
-  } else if (orden === "Fecha Asc") {
-    results = edit.sort((a, b) =>
-      a.expirationDate.localeCompare(b.expirationDate)
-    );
-  } else if (orden === "Fecha Desc") {
-    results = edit.sort((a, b) =>
-      b.expirationDate.localeCompare(a.expirationDate)
-    );
-  }
 
   const sortOptions = [
     { name: "Titulo Asc", href: "#", current: false, onClick: filterOrder },
@@ -82,22 +181,22 @@ export default function Products({ data }) {
         { value: "Catamarca", label: "Catamarca", checked: false },
         { value: "Chaco", label: "Chaco", checked: false },
         { value: "Chubut", label: "Chubut", checked: false },
-        { value: "Córdoba", label: "Córdoba", checked: false },
+        { value: "Cordoba", label: "Córdoba", checked: false },
         { value: "Corrientes", label: "Corrientes", checked: false },
-        { value: "Entre Ríos", label: "Entre Ríos", checked: false },
+        { value: "Entre Rios", label: "Entre Ríos", checked: false },
         { value: "Formosa", label: "Formosa", checked: false },
         { value: "Jujuy", label: "Jujuy", checked: false },
         { value: "La Pampa", label: "La Pampa", checked: false },
         { value: "La Rioja", label: "La Rioja", checked: false },
         { value: "Mendoza", label: "Mendoza", checked: false },
         { value: "Misiones", label: "Misiones", checked: false },
-        { value: "Neuquén", label: "Neuquén", checked: false },
-        { value: "Río Negro", label: "Río Negro", checked: false },
+        { value: "Neuquen", label: "Neuquén", checked: false },
+        { value: "Rio Negro", label: "Río Negro", checked: false },
         { value: "Salta", label: "Salta", checked: false },
         { value: "San Juan", label: "San Juan", checked: false },
         { value: "San Luis", label: "San Luis", checked: false },
         { value: "Santa Cruz", label: "Santa Cruz", checked: false },
-        { value: "Santa Fé", label: "Santa Fé", checked: false },
+        { value: "Santa Fe", label: "Santa Fé", checked: false },
         {
           value: "Santiago del Estero",
           label: "Santiago del Estero",
@@ -182,19 +281,19 @@ export default function Products({ data }) {
           value: "efectivo",
           label: "Efectivo",
           checked: false,
-          onChange: filterDonacionn,
+          onChange: handlerDonaciones,
         },
         {
           value: "especie",
           label: "Especie",
           checked: false,
-          onChange: filterDonacionn,
+          onChange: handlerDonaciones,
         },
         {
-          value: "12l",
-          label: "12L",
+          value: "servicio",
+          label: "Voluntario",
           checked: false,
-          onChange: filterDonacionn,
+          onChange: handlerDonaciones,
         },
       ],
     },
@@ -220,13 +319,15 @@ export default function Products({ data }) {
   };
 
   useEffect(() => {
+    setInfo(data);
+    results = info;
+    setEdit(data);
     /* Disable scroll if search is open */
     if (search) {
-      const scrollTop =
-        window.pageYOffset || document.documentElement.scrollTop;
-      const scrollLeft =
-        window.pageXOffset || document.documentElement.scrollLeft;
-
+      const scrollTop = window.pageYOffset;
+      document.documentElement.scrollTop;
+      const scrollLeft = window.pageXOffset;
+      document.documentElement.scrollLeft;
       window.onscroll = function () {
         window.scrollTo(scrollLeft, scrollTop);
       };
@@ -234,60 +335,39 @@ export default function Products({ data }) {
       window.onscroll = function () {};
     }
   }, [search]);
+  // const [e, setE] = useState("");
 
-  const [e, setE] = useState("");
+  // const searchHandler = (ev) => {
+  //   setE(ev.target.value);
+  //   if (!e) {
+  //     results = info;
+  //     console.log(e);
+  //     console.log(info);
+  //   }
+  // };
 
-  const searchHandler = (ev) => {
-    setE(ev.target.value);
-  };
+  // const searchLogic = (ev) => {
+  //   if (ev.key == "Enter" || ev.key == "Escape" || ev.target.id == "icon") {
+  //     setSearch(false);
+  //   }
+  //   if (e) {
+  //     setEdit((prev) => prev.filter((p) => p.title.toLowerCase().includes(e)));
+  //     setDatosFiltradosPaises(
+  //       datosFiltradosPaises.filter((p) => p.title.toLowerCase().includes(e))
+  //     );
+  //   }
+  // };
 
-  if (e) {
-    results = results.filter((p) => p.title.toLowerCase().includes(e));
-  }
+  datosFiltradosPaises.length === 0
+    ? (results = edit)
+    : (results = [...datosFiltradosPaises]);
+  // results = datosFiltrados;
 
-  const searchLogic = (e) => {
-    if (e.key == "Enter" || e.key == "Escape" || e.target.id == "icon") {
-      setSearch(false);
-    }
-  };
-
-  const [pagination, setPagination] = useState(1);
-
-  const [hydrated, setHydrated] = React.useState(false);
-  useEffect(() => {
-    setEdit(data);
-    setInfo(data);
-    setHydrated(true);
-  }, []);
-  if (!hydrated) {
-    return null;
-  }
-
-  const filterPaises = (e) => {
-    setCurrentPage(1);
-    if (e.target.checked) {
-      if (!e.target.value) return setInfo(data);
-      const value = e.target.value;
-      const filtros = data.filter((e) => e.location === value);
-      setInfo(value === "all" ? data : filtros);
-      // console.log((e.target.checked = !e.target.checked));
-      console.log(info);
-    }
-    if (!e.target.checked) {
-      const value = e.target.value;
-      const filtros = info.filter((e) => e.location !== value);
-      setInfo(filtros);
-      // e.target.checked = !e.target.checked;
-      // console.log((e.target.checked = !e.target.checked));
-      console.log(info);
-    }
-  };
-
-  const paginado = (number) => {
-    setCurrentPage(number);
-  };
-  const current = results.slice(indexofFirst, indexofLast);
-
+  !input
+    ? data
+    : (results = data.filter((e) =>
+        e.title.toLowerCase().includes(input.toLowerCase())
+      ));
   return (
     <div className="bg-white">
       <div>
@@ -384,6 +464,7 @@ export default function Products({ data }) {
                                       defaultValue={option.value}
                                       type="checkbox"
                                       defaultChecked={option.checked}
+                                      onChange={option.onChange}
                                       className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                     />
                                     <label
@@ -463,36 +544,25 @@ export default function Products({ data }) {
                   search ? "fixed" : "none"
                 }`}
                 onClick={offSearch}
-              >
-                <div className="absolute shadow top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+              ></div>
+
+              <div className=" text-gray-400 hover:text-gray-500 ">
+                <div className="shadow w-full">
                   <input
                     type={"search"}
                     id="search"
-                    className={`rounded-full pr-16 w-full h-full shadow border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200  ${
-                      search ? "visible" : "hidden"
-                    }`}
+                    className={`rounded-full shadow border-gray-200 bg-gray-100 ml-4 text-black  text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200  
+                    `}
                     placeholder="Buscar..."
-                    onKeyDown={searchLogic}
                     onChange={searchHandler}
-                    value={e}
                   ></input>
                   <BsSearch
                     id="icon"
                     className={`text-gray-400 hover:text-gray-500 h-5 w-5 cursor-pointer absolute top top-1/2 right-6 transform -translate-y-1/2 ${
                       search ? "visible" : "hidden"
                     }`}
-                    onClick={searchLogic}
                   ></BsSearch>
                 </div>
-              </div>
-
-              <div className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7">
-                <span className="sr-only">View grid</span>
-                <BsSearch
-                  className="h-5 w-5 cursor-pointer"
-                  aria-hidden="true"
-                  onClick={onSearch}
-                />
               </div>
               <button
                 type="button"
@@ -523,7 +593,7 @@ export default function Products({ data }) {
                   <Disclosure
                     as="div"
                     key={section.id}
-                    onChange={(e) => filterPaises(e)}
+                    onChange={filterPaises}
                     className="border-b border-gray-200 py-6"
                   >
                     {({ open }) => (
@@ -581,8 +651,8 @@ export default function Products({ data }) {
                 className="grid w-full col-span-3 grid w-full sm:grid-cols-2 xl:grid-cols-3 gap-4 overflow-auto "
                 id="infiniteScroll"
               >
-                {current.length !== 0
-                  ? current.map((e) => (
+                {results && results.length !== 0
+                  ? results.map((e) => (
                       <Link
                         className="w-full"
                         key={e.id}
@@ -601,12 +671,6 @@ export default function Products({ data }) {
                     ))
                   : "No hay cartas para mostrar"}
               </div>
-              <Paginado
-                perPage={perPage}
-                results={results.length}
-                paginado={paginado}
-                key="Paginado"
-              />
             </div>
           </section>
         </main>
