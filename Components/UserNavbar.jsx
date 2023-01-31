@@ -14,7 +14,8 @@ export default function UserNavbar() {
     const user = useUser();
     const [isOpen, setIsOpen] = useState(false);   
 
-    function handleLogOut() {
+    function handleLogOut(e) {
+        e.preventDefault(e)
         console.log(session)
         signOut();
         localStorage.removeItem('user');
@@ -61,7 +62,7 @@ export default function UserNavbar() {
                                 </div>
                                 <div className="hidden gap-4 md:flex">
                                     <button
-                                        onClick={ () => handleLogOut()}
+                                        onClick={ (e) => handleLogOut(e)}
                                         className="font-semibold px-6 py-2 hover:text-pink-400 transition-colors rounded"
                                     >
                                         Cerrar sesion

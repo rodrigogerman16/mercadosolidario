@@ -133,6 +133,9 @@ export default function Login() {
       Router.push("/dashboard");
       return;
     }
+
+    if(user) Router.push('/')
+    
   }, [user]);
 
   return (
