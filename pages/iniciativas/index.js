@@ -68,7 +68,8 @@ export default function Products({ data }) {
     transporte: false,
   });
 
-  let results = data;
+  // let results = [];
+  const [results, setResults] = useState();
   const [datosFiltradosDonaciones, setDatosFiltradosDonaciones] = useState([]);
   const [checkedDonaciones, setCheckedDonaciones] = useState({
     efectivo: false,
@@ -86,22 +87,14 @@ export default function Products({ data }) {
       const resultadoLenguaje = edit.filter(
         (e) => e.type_of_help.toLowerCase() === value.toLowerCase()
       );
-      console.log(edit);
-      setDatosFiltradosDonaciones([
-        ...datosFiltradosDonaciones,
-        ...resultadoLenguaje,
-      ]);
-      console.log(resultadoLenguaje);
-      results = datosFiltradosDonaciones;
+      setResults([...resultadoLenguaje, ...datosFiltradosDonaciones]);
     } else {
       const value = e.target.value;
-      const resultadoLenguaje = datosFiltradosCategorias.filter(
+      const resultadoLenguaje = datosFiltradosDonaciones.filter(
         (e) => e.type_of_help.toLowerCase() !== value.toLowerCase()
       );
-      setDatosFiltradosDonaciones([...resultadoLenguaje]);
-      results = datosFiltradosDonaciones;
+      setResults([...resultadoLenguaje]);
     }
-    results = datosFiltradosDonaciones;
   };
 
   const handlerCategorias = (e) => {
@@ -117,7 +110,7 @@ export default function Products({ data }) {
         ...datosFiltradosCategorias,
         ...resultadoLenguaje,
       ]);
-      results = datosFiltradosCategorias;
+      setResults(datosFiltradosCategorias);
     } else {
       const value = e.target.value;
       const resultadoLenguaje = datosFiltradosCategorias.filter(
@@ -125,7 +118,7 @@ export default function Products({ data }) {
       );
       setDatosFiltradosCategorias([...resultadoLenguaje]);
     }
-    results = datosFiltradosCategorias;
+    setResults(datosFiltradosCategorias);
   };
 
   const filterPaises = (e) => {
@@ -140,39 +133,39 @@ export default function Products({ data }) {
         (e) => e.location.toLowerCase() === value.toLowerCase()
       );
       setDatosFiltradosPaises([...datosFiltradosPaises, ...resultadoLenguaje]);
-      results = datosFiltradosPaises;
+      setResults(datosFiltradosPaises);
     } else {
       const value = e.target.value;
       const resultadoLenguaje = datosFiltradosPaises.filter(
         (e) => e.location.toLowerCase() !== value.toLowerCase()
       );
       setDatosFiltradosPaises([...resultadoLenguaje]);
-      results = datosFiltradosPaises;
+      setResults(datosFiltradosPaises);
     }
   };
 
   const searchHandler = async (e) => {
     const value = e.target.value;
     setInput(value);
+    !input
+      ? data
+      : setResults(
+          data.filter((e) =>
+            e.title.toLowerCase().includes(input.toLowerCase())
+          )
+        );
   };
-
-  !input
-    ? (results = info)
-    : (results = edit.filter((e) =>
-        e.title.toLowerCase().includes(input.toLowerCase())
-      ));
 
   const filterOrder = async (e) => {
     setOrden(e.target.outerText);
     if (orden === "Titulo Desc") {
-      results = datosFiltradosPaises.sort((a, b) =>
-        a.title.localeCompare(b.title)
+      setResults(
+        datosFiltradosPaises.sort((a, b) => a.title.localeCompare(b.title))
       );
       edit.sort((a, b) => a.title.localeCompare(b.title));
-      console.log("Titulo asc :" + results);
     } else if (orden === "Titulo Asc") {
-      results = datosFiltradosPaises.sort((a, b) =>
-        b.title.localeCompare(a.title)
+      setResults(
+        datosFiltradosPaises.sort((a, b) => b.title.localeCompare(a.title))
       );
       edit.sort((a, b) => b.title.localeCompare(a.title));
     }
@@ -332,8 +325,11 @@ export default function Products({ data }) {
   };
 
   useEffect(() => {
+    setResults(info);
+  }, [info]);
+
+  useEffect(() => {
     setInfo(data);
-    results = info;
     setEdit(data);
     /* Disable scroll if search is open */
     if (search) {
@@ -348,6 +344,18 @@ export default function Products({ data }) {
       window.onscroll = function () {};
     }
   }, [search]);
+
+  useEffect(() => {
+    datosFiltradosPaises.length === 0
+      ? setResults(edit)
+      : setResults([...datosFiltradosPaises]);
+  }, [datosFiltradosPaises]);
+
+  useEffect(() => {
+    results && results.length === 0 ? setResults(data) : "";
+    console.log(results);
+  }, [results]);
+
   // const [e, setE] = useState("");
 
   // const searchHandler = (ev) => {
@@ -371,16 +379,7 @@ export default function Products({ data }) {
   //   }
   // };
 
-  datosFiltradosPaises.length === 0
-    ? (results = edit)
-    : (results = [...datosFiltradosPaises]);
   // results = datosFiltrados;
-
-  !input
-    ? data
-    : (results = data.filter((e) =>
-        e.title.toLowerCase().includes(input.toLowerCase())
-      ));
 
   const handlers = (e) => {
     const value = e.target.value;
