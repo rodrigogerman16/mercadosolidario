@@ -24,7 +24,7 @@ const Card = ({
           ></img>
         </div>
         <span className="absolute top-0 left-0 inline-flex mt-3 ml-3 px-3 py-2 rounded-lg z-1 bg-pink-400 text-sm font-medium text-white select-none">
-          {isVolunteer == "servicio" ? "Voluntario" : "Efectivo"}
+          {isVolunteer.charAt(0).toUpperCase() + isVolunteer.slice(1)}
         </span>
       </div>
 
