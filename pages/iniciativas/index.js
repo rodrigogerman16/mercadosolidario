@@ -102,23 +102,17 @@ export default function Products({ data }) {
       ...checkedCategorias,
       [e.target.value]: e.target.checked,
     });
-
     if (e.target.checked) {
       const value = e.target.value;
       const resultadoLenguaje = edit.filter((e) => e.rubros === value);
-      setDatosFiltradosCategorias([
-        ...datosFiltradosCategorias,
-        ...resultadoLenguaje,
-      ]);
-      setResults(datosFiltradosCategorias);
+      setResults([...datosFiltradosCategorias, ...resultadoLenguaje]);
     } else {
       const value = e.target.value;
       const resultadoLenguaje = datosFiltradosCategorias.filter(
         (e) => e.rubros !== value
       );
-      setDatosFiltradosCategorias([...resultadoLenguaje]);
+      setResults([...resultadoLenguaje]);
     }
-    setResults(datosFiltradosCategorias);
   };
 
   const filterPaises = (e) => {
