@@ -11,7 +11,6 @@ const userTypes = ["", "user", "ong", "company"];
 
 export default function Register() {
   const { data: session } = useSession();
-  console.log(session)
   const [user, setUser] = useState(null);
   const [errors, setErrors] = useState({
     email: null,

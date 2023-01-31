@@ -183,7 +183,7 @@ export default function Login() {
           </div>
           <div className="space-y-2">
             <div className="flex justify-between">
-              <label for="password" name={"password"} className="text-sm">
+              <label htmlFor="password" name={"password"} className="text-sm">
                 Contraseña
               </label>
             </div>
