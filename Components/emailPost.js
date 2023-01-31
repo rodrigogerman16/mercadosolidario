@@ -5,7 +5,7 @@ const {VERCEL_URL = 'http://localhost:3000/api/railway-backend'} = process.env
 const emailPost = async (email) => {
   try {
     console.log(email);
-    const emailapi = await axios.post(`${VERCEL_URL}/mailer/email`, { email });
+    const emailapi = await axios.post(`https://pf-backend-mercadosolidario-production.up.railway.app/mailer/email`, { email });
     return emailapi;
   } catch (error) {
     console.log(error.message);

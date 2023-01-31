@@ -38,7 +38,7 @@ export default function Formusers(props) {
 
   const postUser = async (props) => {
     let info = await axios.post(
-      `${VERCEL_URL}/user/newuser`,
+      `https://pf-backend-mercadosolidario-production.up.railway.app/user/newuser`,
       props
       // {headers: {
       //   'Content-Type': 'application/json; charset=utf-8'

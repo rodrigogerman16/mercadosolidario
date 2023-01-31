@@ -3,17 +3,19 @@ import Image from "next/image";
 import logo from "../Assets/mercado-solidario-logo.jpg"
 import { useState } from "react";
 import { Transition } from "@headlessui/react";
-import {signOut} from "next-auth/react"
+import {signOut, useSession} from "next-auth/react"
 import { useUser } from "../hooks/user.js";
 import Router from "next/router";
 
 
 
-export default function UserNavbar() {    
+export default function UserNavbar() {   
+    const {data: session} = useSession() 
     const user = useUser();
     const [isOpen, setIsOpen] = useState(false);   
 
     function handleLogOut() {
+        console.log(session)
         signOut();
         localStorage.removeItem('user');
         alert("Deslogeado Satisfactoriamente")

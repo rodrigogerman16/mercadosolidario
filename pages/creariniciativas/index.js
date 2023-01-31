@@ -44,7 +44,7 @@ export default function Creariniciativa() {
 
   const postIniciatives = async (props) => {
     let info = await axios.post(
-      `${VERCEL_URL}/posts/newpost`,
+      `https://pf-backend-mercadosolidario-production.up.railway.app/posts/newpost`,
       props,
       {
         headers: {
