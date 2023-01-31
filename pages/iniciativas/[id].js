@@ -9,7 +9,7 @@ const Detail = ({ data }) => {
   console.log(data);
   return (
     <div className='grid gap-8 max-w-3xl w-full m-auto gap-8 my-8 p-8'>
-      <img className='rounded m-auto w-full' src={data.image} alt={data.title}></img>
+      <img className='rounded m-auto w-full aspect-video object-cover' src={data.image} alt={data.title}></img>
       <div className='flex flex-col gap-4'>
         <div className='flex items-center justify-between'>
           <span className="px-2 py-1 rounded bg-pink-400 text-white">{data.type_of_help[0].toUpperCase() + data.type_of_help.slice(1)}</span> {/* UpperCase first letter */}
