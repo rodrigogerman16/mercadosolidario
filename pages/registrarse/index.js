@@ -15,7 +15,7 @@ export default function Register() {
   const [errors, setErrors] = useState({
     email: null,
     password: null,
-    type: null,
+    type_of_user: null,
   });
   const [step, setStep] = useState(1);
 
@@ -65,20 +65,20 @@ export default function Register() {
   };
 
   /* Second Handler */
-  const [accountType, setAccountType] = useState(false);
+  const [accountType, setAccountType] = useState("");
+  console.log(accountType)
 
-  const accountTypeHandler = (num) => {
-    setAccountType(num);
-    setErrors({ ...errors, type: false });
+  const accountTypeHandler = (string) => {
+    setAccountType(string);
+    setErrors({ ...errors, type_of_user: false });
   };
 
   const secondHandler = () => {
-    if (accountType) {
-      const type_of_user = userTypes[accountType];
-      setUser({ ...user, type_of_user });
+    if (accountType) {;
+      setUser({ ...user, type_of_user: accountType });
       setStep(3);
     } else {
-      setErrors({ ...errors, type: "Selecciona un tipo de cuenta" });
+      setErrors({ ...errors, type_of_user: "Selecciona un tipo de cuenta" });
     }
   };
 
@@ -262,9 +262,9 @@ export default function Register() {
               className="space-y-8 ng-untouched ng-pristine ng-valid my-8 w-full"
             >
               <div
-                onClick={() => accountTypeHandler(1)}
+                onClick={() => accountTypeHandler("user")}
                 className={`max-w-sm p-6 bg-white border rounded shadow ${
-                  accountType == 1 ? "border-pink-400" : "border-gray-200"
+                  accountType == "user" ? "border-pink-400" : "border-gray-200"
                 }`}
               >
                 <BiUser className="w-10 h-10 mb-2 text-pink-400 "></BiUser>
@@ -278,9 +278,9 @@ export default function Register() {
               </div>
 
               <div
-                onClick={() => accountTypeHandler(2)}
+                onClick={() => accountTypeHandler("ong")}
                 className={`max-w-sm p-6 bg-white border rounded shadow ${
-                  accountType == 2 ? "border-pink-400" : "border-gray-200"
+                  accountType == "ong" ? "border-pink-400" : "border-gray-200"
                 }`}
               >
                 <BiDonateHeart className="w-10 h-10 mb-2 text-pink-400 "></BiDonateHeart>
@@ -293,9 +293,9 @@ export default function Register() {
               </div>
 
               <div
-                onClick={() => accountTypeHandler(3)}
+                onClick={() => accountTypeHandler("company")}
                 className={`max-w-sm p-6 bg-white border rounded shadow ${
-                  accountType == 3 ? "border-pink-400" : "border-gray-200"
+                  accountType == "company" ? "border-pink-400" : "border-gray-200"
                 }`}
               >
                 <BiBuildings className="w-10 h-10 mb-2 text-pink-400 "></BiBuildings>
@@ -328,7 +328,7 @@ export default function Register() {
       </div>
 
       <div className="w-full">
-        {step == 3 && accountType == 1 && (
+        {step == 3 && accountType == "user" && (
           <div>
             <span className="block mb-2 text-xs font-semibold tracking-widest text-center uppercase dark:text-pink-400">
               Create account
@@ -355,7 +355,7 @@ export default function Register() {
       </div>
 
       <div className="w-full">
-        {step == 3 && accountType == 2 && (
+        {step == 3 && accountType == "ong" && (
           <div>
             <span className="block mb-2 text-xs font-semibold tracking-widest text-center uppercase dark:text-pink-400">
               Create account
@@ -382,7 +382,7 @@ export default function Register() {
       </div>
 
       <div className="w-full">
-        {step == 3 && accountType == 3 && (
+        {step == 3 && accountType == "company" && (
           <div>
             <span className="block mb-2 text-xs font-semibold tracking-widest text-center uppercase dark:text-pink-400">
               Create account

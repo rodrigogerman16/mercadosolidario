@@ -14,6 +14,7 @@ export const useUser = () => {
 
 export const useLocalstorageUser = () => {
   const [user, setUser] = useState();
+  console.log(user)
   useEffect(() => {
     const localStorageUser = localStorage.getItem("user");
     setUser(localStorageUser);

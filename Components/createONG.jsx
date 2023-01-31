@@ -3,8 +3,6 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 
-const {VERCEL_URL = 'http://localhost:3000/api/railway-backend'} = process.env
-
 function Validate(input) {
   let errors = {};
   if (input.name.length < 3 || input.name.length > 15) {
@@ -41,7 +39,7 @@ export default function Crearong(props) {
   const postONG = async (props) => {
   
     let info = await axios.post(
-      `https://pf-backend-mercadosolidario-production.up.railway.app/api/ong/newong`,
+      `http://localhost:3001/ong/newong`,
       props,
       {
         headers: {
@@ -134,24 +132,20 @@ export default function Crearong(props) {
 
         postONG(formData);
 
-        alert("ONG Registrada con Exito!");
         setInput({
           name: "",
           lastName: "",
           cuit: "",
           phone: "",
         });
-        router.push("/");
+        alert("ONG Registrada con Exito!");
+        window.location.href = '../';
       } else {
         alert("Hay datos incorrectos o sin completar!");
       }
     } catch (error) {
-      //console.log(error)
     }
   }
-
-  //console.log(input)
-  //console.log(image)
 
   return (
     <form className="grid gap-4 justify-center items-center" onSubmit={(el) => handleSubmit(el, image, input)}>

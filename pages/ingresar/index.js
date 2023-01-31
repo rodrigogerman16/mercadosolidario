@@ -60,23 +60,10 @@ export default function Login() {
         const user = {
           email: input.email,
           password: input.password,
-          type_of_user: "user",
         };
 
-        let info = await axios.post(`https://pf-backend-mercadosolidario-production.up.railway.app/login`, user);
+        let info = await axios.post(`http://localhost:3001/login`, user);
 
-        {
-          /*const aux = {
-          id: info.data.id,
-          name: info.data.name,
-          lastName: info.data.lastName,
-          phone: info.data.phone,
-          cuil: info.data.cuil,
-          user_linkedin: info.data.user_linkedin,
-          email: info.data.email,
-          type_of_user: info.data.type_of_user,
-        }*/
-        }
         const decoded = jwt_decode(info.data.token);
 
         window.localStorage.setItem("user", JSON.stringify(decoded));
