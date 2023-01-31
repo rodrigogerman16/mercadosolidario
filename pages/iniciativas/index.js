@@ -83,19 +83,25 @@ export default function Products({ data }) {
     });
     if (e.target.checked) {
       const value = e.target.value;
-      console.log(value);
-      const resultadoLenguaje = edit.filter((e) => e.type_of_help === value);
+      const resultadoLenguaje = edit.filter(
+        (e) => e.type_of_help.toLowerCase() === value.toLowerCase()
+      );
+      console.log(edit);
       setDatosFiltradosDonaciones([
         ...datosFiltradosDonaciones,
         ...resultadoLenguaje,
       ]);
+      console.log(resultadoLenguaje);
+      results = datosFiltradosDonaciones;
     } else {
       const value = e.target.value;
       const resultadoLenguaje = datosFiltradosCategorias.filter(
-        (e) => e.type_of_help === value
+        (e) => e.type_of_help.toLowerCase() !== value.toLowerCase()
       );
       setDatosFiltradosDonaciones([...resultadoLenguaje]);
+      results = datosFiltradosDonaciones;
     }
+    results = datosFiltradosDonaciones;
   };
 
   const handlerCategorias = (e) => {
@@ -106,18 +112,20 @@ export default function Products({ data }) {
 
     if (e.target.checked) {
       const value = e.target.value;
-      const resultadoLenguaje = edit.filter((e) => e.type_of_help === value);
+      const resultadoLenguaje = edit.filter((e) => e.rubros === value);
       setDatosFiltradosCategorias([
         ...datosFiltradosCategorias,
         ...resultadoLenguaje,
       ]);
+      results = datosFiltradosCategorias;
     } else {
       const value = e.target.value;
       const resultadoLenguaje = datosFiltradosCategorias.filter(
-        (e) => e.type_of_help !== value
+        (e) => e.rubros !== value
       );
       setDatosFiltradosCategorias([...resultadoLenguaje]);
     }
+    results = datosFiltradosCategorias;
   };
 
   const filterPaises = (e) => {
@@ -373,6 +381,39 @@ export default function Products({ data }) {
     : (results = data.filter((e) =>
         e.title.toLowerCase().includes(input.toLowerCase())
       ));
+
+  const handlers = (e) => {
+    const value = e.target.value;
+    if (value === "servicio" || value === "especie" || value === "efectivo") {
+      return handlerDonaciones(e);
+    } else if (
+      value === "Alimentacion" ||
+      value === "Asesoria Legal" ||
+      value === "Ayuda_a_refugiados" ||
+      value === "Ayuda_a_animales" ||
+      value === "Apoyo a comunidades indigenas" ||
+      value === "Apoyo_a_lgbg" ||
+      value === "Apoyo_a_la_mujer" ||
+      value === "Construccion_obras" ||
+      value === "Cultura" ||
+      value === "Deportes" ||
+      value === "Derechos_humanos" ||
+      value === "Discapacitados" ||
+      value === "Educacion" ||
+      value === "Medio_ambiente" ||
+      value === "Entretenimiento" ||
+      value === "Gobierno_no_lucro" ||
+      value === "Materia_prima" ||
+      value === "Medios_de_comunicacion" ||
+      value === "Salud_medicina" ||
+      value === "Servicio_comunitario" ||
+      value === "Transporte"
+    ) {
+      return handlerCategorias(e);
+    } else {
+      return filterPaises(e);
+    }
+  };
   return (
     <div className="bg-white">
       <div>
@@ -598,7 +639,7 @@ export default function Products({ data }) {
                   <Disclosure
                     as="div"
                     key={section.id}
-                    onChange={filterPaises}
+                    onChange={handlers}
                     className="border-b border-gray-200 py-6"
                   >
                     {({ open }) => (
