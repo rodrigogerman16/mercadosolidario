@@ -1,7 +1,10 @@
 "use client";
 import { useState } from "react";
 import axios from "axios";
-import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
+
+const { VERCEL_URL = "http://localhost:3000/api/railway-backend" } =
+  process.env;
 
 function Validate(input) {
   let errors = {};
@@ -30,8 +33,8 @@ function Validate(input) {
 }
 
 export default function Formusers(props) {
-  //console.log(props)
-  const router = useRouter();
+  console.log(props)
+  const { data: session } = useSession();
 
   const postUser = async (props) => {
     let info = await axios.post(
@@ -50,14 +53,12 @@ export default function Formusers(props) {
       id: info.data.id,
       cuil: info.data.cuil,
       phone: info.data.phone,
-      user_linkedin: info.data.user_linkedin
-    }
+      user_linkedin: info.data.user_linkedin,
+    };
 
     window.localStorage.setItem("user", JSON.stringify(aux));
-
     return console.log(info.data, aux);
   };
-
   const [input, setInput] = useState({
     name: "",
     lastName: "",
@@ -102,26 +103,28 @@ export default function Formusers(props) {
           name: input.name,
           lastName: input.lastName,
           phone: input.phone,
-          email: props.email,
-          password: props.password,
-          type_of_user: props.type_of_user,
+          email: props.email || session.user.email,
+          password: props.password || "asdasdasd",
+          type_of_user: props.type_of_user || "user",
           cuil: input.cuil,
           user_linkedin: input.user_linkedin,
         };
 
-        //console.log(user)
-
-        postUser(user);
-
-        alert("Usuario creado!");
-        setInput({
-          name: "",
-          lastName: "",
-          phone: "",
-          cuil: "",
-          user_linkedin: "",
+        postUser(user).then(() => {
+          axios.post('https://pf-backend-mercadosolidario-production.up.railway.app/mailer/email', {email: user.email})
+          setInput({
+            name: "",
+            lastName: "",
+            phone: "",
+            cuil: "",
+            user_linkedin: "",
+          });          
+          alert("Usuario creado!");
+          window.location.href = '../';
+        }).catch(error => {
+          alert("error creando usuario", error)
         });
-        router.push("/");
+
       } else {
         alert("Hay datos incorrectos o sin completar!");
       }
@@ -173,20 +176,20 @@ export default function Formusers(props) {
         </div>
       </div>
       <div className="">
-        <label className="text-sm">{"Cuil (Opcional)"}</label>
+        <label className="text-sm">Cuil</label>
         <input
           className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
           type="text"
           value={input.cuil}
           name="cuil"
           onChange={(el) => handleChange(el)}
-          placeholder="01-23456789-01"
+          placeholder="12345678901"
         />
         {errors.cuil ? <label>{errors.cuil}</label> : null}
       </div>
       <div>
         <div className="">
-          <label className="text-sm">{"Linkedin (Opcional)"}</label>
+          <label className="text-sm">Linkedin</label>
           <input
             className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
             type="text"
