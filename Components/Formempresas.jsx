@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
+import Alert from "./Alert";
 
 function Validate(input) {
   let errors = {};
@@ -69,7 +70,7 @@ export default function Formempresas(props) {
         formData.append("lastName", input.lastName);
         formData.append("cuit", input.cuit);
         formData.append("rut", image);
-        alert("Empresa Registrada con Exito!");
+        Alert({ title: 'Registro', text: 'Empresa registrada con éxito!', icon: 'success' })
         setInput({
           name: "",
           lastName: "",
@@ -78,7 +79,7 @@ export default function Formempresas(props) {
         setImage(null);
         router.push('/')
       } else {
-        alert("Hay datos incorrectos o sin completar!");
+        Alert({ title: 'Registro', text: 'Hay datos incorrectos o sin completar!', icon: 'error' })
       }
     } catch (error) {
       //console.log(error)

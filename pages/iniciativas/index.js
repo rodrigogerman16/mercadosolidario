@@ -152,11 +152,13 @@ export default function Products({ data }) {
     setInput(value);
     !input
       ? data
+
       : setCurrent(
           data.filter((e) =>
             e.title.toLowerCase().includes(input.toLowerCase())
           )
         );
+
   };
 
   const fetchData = () => {
@@ -357,7 +359,7 @@ export default function Products({ data }) {
         window.scrollTo(scrollLeft, scrollTop);
       };
     } else {
-      window.onscroll = function () {};
+      window.onscroll = function () { };
     }
   }, [search]);
 
@@ -596,14 +598,13 @@ export default function Products({ data }) {
               </Menu>
 
               <div
-                className={`h-[100%] w-full z-30 bg-black backdrop-blur-sm bg-opacity-60  top-0 left-0 ${
-                  search ? "fixed" : "none"
-                }`}
+                className={`h-[100%] w-full z-30 bg-black backdrop-blur-sm bg-opacity-60  top-0 left-0 ${search ? "fixed" : "none"
+                  }`}
                 onClick={offSearch}
               ></div>
 
               <div className=" text-gray-400 hover:text-gray-500 ">
-                <div className="shadow w-full">
+                <div className="w-full">
                   <input
                     type={"search"}
                     id="search"
@@ -614,9 +615,8 @@ export default function Products({ data }) {
                   ></input>
                   <BsSearch
                     id="icon"
-                    className={`text-gray-400 hover:text-gray-500 h-5 w-5 cursor-pointer absolute top top-1/2 right-6 transform -translate-y-1/2 ${
-                      search ? "visible" : "hidden"
-                    }`}
+                    className={`text-gray-400 hover:text-gray-500 h-5 w-5 cursor-pointer absolute top top-1/2 right-6 transform -translate-y-1/2 ${search ? "visible" : "hidden"
+                      }`}
                   ></BsSearch>
                 </div>
               </div>
@@ -744,9 +744,14 @@ export default function Products({ data }) {
                 </InfiniteScroll>
                 {/* {results && results.length !== 0
                   ? results.map((e) => (
-                      <Link
-                        className="w-full"
+                    <Link
+                      className="w-full"
+                      key={e.id}
+                      href={`/iniciativas/${e.id}`}
+                    >
+                      <Card
                         key={e.id}
+
                         href={`/iniciativas/${e.id}`}
                       >
                         <Card
@@ -761,6 +766,7 @@ export default function Products({ data }) {
                       </Link>
                     ))
                   : "No hay cartas para mostrar"} */}
+
 
                 <div className="w-full sm:col-span-2 xl:col-span-3 m-auto my-8"></div>
               </div>
