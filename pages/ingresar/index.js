@@ -8,9 +8,6 @@ import Router from "next/router";
 import { useBackendUser, useUser } from "../../hooks/user.js";
 import jwt_decode from "jwt-decode";
 
-const { VERCEL_URL = "http://localhost:3000/api/railway-backend" } =
-  process.env;
-
 function Validate(input) {
   let errors = {};
   if (input.password.length < 6) {

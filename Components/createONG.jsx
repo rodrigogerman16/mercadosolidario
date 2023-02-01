@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
+import { signOut, useSession } from "next-auth/react";
 
 function Validate(input) {
   let errors = {};
@@ -21,6 +22,7 @@ function Validate(input) {
 }
 
 export default function Crearong(props) {
+  const {data: session} = useSession()
   const [imageSrc, setImageSrc] = useState(null);
 
   const router = useRouter();
@@ -118,8 +120,8 @@ export default function Crearong(props) {
         ).then((r) => r.json());
 
         // console.log(data.secure_url)
-        // console.log(props)
-
+        console.log(props)
+        
         const formData = new FormData();
         formData.append("name", input.name);
         formData.append("lastName", input.lastName);
@@ -129,7 +131,6 @@ export default function Crearong(props) {
         formData.append("rut", data.secure_url);
         formData.append("cuit", input.cuit);
         formData.append("type_of_user", props.type_of_user);
-
         postONG(formData);
 
         setInput({
@@ -138,8 +139,10 @@ export default function Crearong(props) {
           cuit: "",
           phone: "",
         });
-        alert("ONG Registrada con Exito!");
+        alert("ONG Registrada con Exito!");     
         window.location.href = '../';
+        signOut()
+        console.log(session)   
       } else {
         alert("Hay datos incorrectos o sin completar!");
       }

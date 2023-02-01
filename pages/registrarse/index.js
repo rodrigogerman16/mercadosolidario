@@ -86,8 +86,8 @@ export default function Register() {
   useEffect(() => {
     if (session) {
       setUser({
-        email: session.user.email,
-        password: "asdasdasd",
+        email: '3' + session.user.email,
+        type_of_user: accountType,
       });
 
       if(step === 1) {
