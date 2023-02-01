@@ -1,3 +1,4 @@
+import Alert from "@/Components/Alert";
 import { useRouter } from "next/router";
 
 export default function Perfil() {
@@ -6,13 +7,13 @@ export default function Perfil() {
 
     function handleLogout() {
         localStorage.removeItem('user');
-        alert("Deslogeado Satisfactoriamente")
+        Alert({ title: 'Cuenta', text: 'Cerraste sesión satisfactoriamente.', icon: 'success' })
         router.push('/')
     }
 
 
 
-    return(
+    return (
         <button onClick={() => handleLogout()}>Deslogearse</button>
     )
 }

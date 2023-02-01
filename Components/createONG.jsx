@@ -2,8 +2,9 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
+import Alert from "./Alert";
 
-const {VERCEL_URL = 'http://localhost:3000/api/railway-backend'} = process.env
+const { VERCEL_URL = 'http://localhost:3000/api/railway-backend' } = process.env
 
 function Validate(input) {
   let errors = {};
@@ -39,7 +40,7 @@ export default function Crearong(props) {
   const [image, setImage] = useState(null);
 
   const postONG = async (props) => {
-  
+
     let info = await axios.post(
       `https://pf-backend-mercadosolidario-production.up.railway.app/api/ong/newong`,
       props,
@@ -134,7 +135,7 @@ export default function Crearong(props) {
 
         postONG(formData);
 
-        alert("ONG Registrada con Exito!");
+        Alert({ title: 'Registro', text: 'ONG Registrada con éxito!', icon: 'success' })
         setInput({
           name: "",
           lastName: "",
@@ -143,7 +144,7 @@ export default function Crearong(props) {
         });
         router.push("/");
       } else {
-        alert("Hay datos incorrectos o sin completar!");
+        Alert({ title: 'Registro', text: 'Hay datos incorrectos o sin completar', icon: 'error' })
       }
     } catch (error) {
       //console.log(error)

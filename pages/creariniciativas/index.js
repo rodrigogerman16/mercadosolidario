@@ -2,8 +2,9 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useRouter } from "next/router";
+import Alert from "@/Components/Alert";
 
-const {VERCEL_URL = 'http://localhost:3000/api/railway-backend'} = process.env
+const { VERCEL_URL = 'http://localhost:3000/api/railway-backend' } = process.env
 
 function Validate(input) {
   let errors = {};
@@ -148,7 +149,7 @@ export default function Creariniciativa() {
         });
         setImageSrc(null);
       } else {
-        alert("Hay datos incorrectos o sin completar!");
+        Alert({ title: 'Iniciativa', text: 'Hay datos incorrectos o sin completar', icon: 'error' })
       }
     } catch (error) {
       console.log(error);
