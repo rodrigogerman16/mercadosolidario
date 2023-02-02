@@ -16,7 +16,6 @@ export default function UserNavbar() {
     const [isOpen, setIsOpen] = useState(false);
 
     function handleLogOut(e) {
-        e.preventDefault(e)
         console.log(session)
         signOut();
         localStorage.removeItem('user');
