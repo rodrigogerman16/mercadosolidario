@@ -7,7 +7,7 @@ import UsersChart from './UsersChart'
 import RubroChart from './RubroChart'
 import Link from 'next/link'
 
-const index = ({ data }) => {
+const index = ({ posts, users, company, ong }) => {
   return (
     <div>
       <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 ">
@@ -72,7 +72,7 @@ const index = ({ data }) => {
               <a href="#" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100">
                 <svg aria-hidden="true" className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75  group-hover:text-gray-900 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M8.707 7.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l2-2a1 1 0 00-1.414-1.414L11 7.586V3a1 1 0 10-2 0v4.586l-.293-.293z" /><path d="M3 5a2 2 0 012-2h1a1 1 0 010 2H5v7h2l1 2h4l1-2h2V5h-1a1 1 0 110-2h1a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5z" /></svg>
                 <span className="flex-1 ml-3 whitespace-nowrap">Inbox</span>
-                <span className="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full d">3</span>
+                <span className="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-pink-400 bg-pink-100 rounded-full d">3</span>
               </a>
             </li>
             <li>
@@ -96,7 +96,7 @@ const index = ({ data }) => {
 
             <div className="flex flex-col gap-8 items-center justify-center h-24 rounded bg-white  p-8 pl-0 h-96 col-span-1 lg:col-span-5">
               <h2 className='font-bold text-gray-700 text-lg'>Iniciativas creadas</h2>
-              <InitiativesChart posts={data}></InitiativesChart>
+              <InitiativesChart posts={posts}></InitiativesChart>
             </div>
 
             <div className="flex flex-col gap-8 items-center justify-center h-24 rounded bg-white p-8 h-96 w-full col-span-1 lg:col-span-3">
@@ -106,12 +106,12 @@ const index = ({ data }) => {
 
             <div className="flex flex-col gap-8 items-center justify-center h-24 rounded bg-white p-8 h-96 w-full col-span-1 lg:col-span-4">
               <h2 className='font-bold text-gray-700 text-lg'>Rubros de iniciativas</h2>
-              <RubroChart posts={data}></RubroChart>
+              <RubroChart posts={posts}></RubroChart>
             </div>
 
             <div className="flex flex-col items-center justify-center h-24 rounded bg-white p-8 h-96 w-full col-span-1 lg:col-span-4">
               <h2 className='font-bold text-gray-700 text-lg'>Tipos de usuario</h2>
-              <UsersChart posts={data}></UsersChart>
+              <UsersChart posts={posts} users={users.length} company={company.length} ong={ong.length}></UsersChart>
             </div>
 
           </div>
@@ -125,16 +125,26 @@ const index = ({ data }) => {
 
 export default index
 
-export function getStaticProps() {
-  return fetch(
-    "https://pf-backend-mercadosolidario-production.up.railway.app/posts"
-  )
+export const getStaticProps = async () => {
+
+  const posts = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/posts")
     .then((res) => res.json())
-    .then((data) => {
-      return {
-        props: {
-          data,
-        },
-      };
-    });
-}
+
+  const company = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/company")
+    .then((res) => res.json())
+
+  const ong = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/ong")
+    .then((res) => res.json())
+
+  const users = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/user")
+    .then((res) => res.json())
+
+  return {
+    props: {
+      posts,
+      company,
+      ong,
+      users
+    }
+  };
+};
