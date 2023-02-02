@@ -2,6 +2,8 @@ import Image from 'next/image'
 import React from 'react'
 import Logo from '../../Assets/logo-mercado-solidario-sintexto.png'
 import Rechart from '@/Components/Rechart'
+import LatestDonations from './LatestDonations'
+import Link from 'next/link'
 
 const index = ({ data }) => {
   return (
@@ -86,20 +88,25 @@ const index = ({ data }) => {
           </ul>
         </div>
       </aside>
-      <div className="p-4 md:ml-64">
+      <div className="p-4 md:ml-64 bg-gray-50">
         <div className="p-4 rounded-lg mt-14">
-          <div className="grid grid-cols-1 gap-4 mb-4 lg:grid-cols-2">
+          <div className="grid grid-cols-1 gap-8 mb-4 lg:grid-cols-8">
 
-            <div className="flex flex-col gap-8 items-center justify-center h-24 rounded bg-gray-50 col-span-1 lg:col-span-2 p-8 h-96">
+            <div className="flex flex-col gap-8 items-center justify-center h-24 rounded bg-white  p-8 pl-0 h-96 col-span-1 lg:col-span-5">
               <h2 className='font-bold text-gray-700 text-lg'>Iniciativas creadas</h2>
               <Rechart></Rechart>
             </div>
 
-            <div className="flex items-center justify-center h-24 rounded bg-gray-50 p-8 h-96 w-full col-span-1">
+            <div className="flex flex-col gap-8 items-center justify-center h-24 rounded bg-white p-8 h-96 w-full col-span-1 lg:col-span-3">
+              <h2 className='font-bold text-gray-700 text-lg'>ultimas donaciones</h2>
+              <LatestDonations></LatestDonations>
+            </div>
+
+            <div className="flex items-center justify-center h-24 rounded bg-white p-8 h-96 w-full col-span-1 lg:col-span-4">
               <p className="text-2xl text-gray-400">+</p>
             </div>
 
-            <div className="flex items-center justify-center h-24 rounded bg-gray-50 p-8 h-96 w-full col-span-1">
+            <div className="flex items-center justify-center h-24 rounded bg-white p-8 h-96 w-full col-span-1 lg:col-span-4">
               <p className="text-2xl text-gray-400">+</p>
             </div>
 
