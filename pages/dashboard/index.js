@@ -3,6 +3,8 @@ import React from 'react'
 import Logo from '../../Assets/logo-mercado-solidario-sintexto.png'
 import Rechart from '@/Components/Rechart'
 import LatestDonations from './LatestDonations'
+import UsersChart from './UsersChart'
+import RubroChart from './RubroChart'
 import Link from 'next/link'
 
 const index = ({ data }) => {
@@ -102,12 +104,14 @@ const index = ({ data }) => {
               <LatestDonations></LatestDonations>
             </div>
 
-            <div className="flex items-center justify-center h-24 rounded bg-white p-8 h-96 w-full col-span-1 lg:col-span-4">
-              <p className="text-2xl text-gray-400">+</p>
+            <div className="flex flex-col gap-8 items-center justify-center h-24 rounded bg-white p-8 h-96 w-full col-span-1 lg:col-span-4">
+              <h2 className='font-bold text-gray-700 text-lg'>Rubros de iniciativas</h2>
+              <RubroChart></RubroChart>
             </div>
 
-            <div className="flex items-center justify-center h-24 rounded bg-white p-8 h-96 w-full col-span-1 lg:col-span-4">
-              <p className="text-2xl text-gray-400">+</p>
+            <div className="flex flex-col items-center justify-center h-24 rounded bg-white p-8 h-96 w-full col-span-1 lg:col-span-4">
+              <h2 className='font-bold text-gray-700 text-lg'>Tipos de usuario</h2>
+              <UsersChart></UsersChart>
             </div>
 
           </div>
