@@ -28,6 +28,7 @@
     "react-icons": "^4.7.1",
     "react-infinite-scroll-component": "^6.1.0",
     "react-router-dom": "^5.2.0",
+    "recharts": "^2.3.2",
     "sweetalert2": "^11.7.1",
     "sweetalert2-react-content": "^5.0.7"
   },
