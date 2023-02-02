@@ -100,7 +100,10 @@ const index = ({ posts, users, company, ong }) => {
             </div>
 
             <div className="flex flex-col gap-8 items-center justify-center h-24 rounded bg-white p-8 h-96 w-full col-span-1 lg:col-span-3">
-              <h2 className='font-bold text-gray-700 text-lg'>ultimas donaciones</h2>
+              <div className='grid items-center text-center justify-center'>
+                <h2 className='font-bold text-gray-700 text-lg'>ultimas donaciones</h2>
+                <Link href='/dashboard/donaciones' className='text-pink-400 cursor-pointer w-fit m-auto'>Ver todas</Link>
+              </div>
               <LatestDonations></LatestDonations>
             </div>
 
