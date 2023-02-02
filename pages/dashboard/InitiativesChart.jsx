@@ -5,22 +5,6 @@ const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', '
 const date = new Date()
 const day = date.getDay()
 
-export function getStaticProps() {
-  return fetch(
-    "https://pf-backend-mercadosolidario-production.up.railway.app/posts"
-  )
-    .then((res) => res.json())
-    .then((data) => {
-      return {
-        data
-      };
-    });
-}
-
-const datosF = async () => {
-  return await getStaticProps()
-}
-
 const data = [
   {
     name: days[(days.indexOf(day) - 5 + 7) % 7], // Get day of two days ago

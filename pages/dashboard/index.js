@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import React from 'react'
 import Logo from '../../Assets/logo-mercado-solidario-sintexto.png'
-import Rechart from '@/Components/Rechart'
+import InitiativesChart from '@/pages/dashboard/InitiativesChart'
 import LatestDonations from './LatestDonations'
 import UsersChart from './UsersChart'
 import RubroChart from './RubroChart'
@@ -96,7 +96,7 @@ const index = ({ data }) => {
 
             <div className="flex flex-col gap-8 items-center justify-center h-24 rounded bg-white  p-8 pl-0 h-96 col-span-1 lg:col-span-5">
               <h2 className='font-bold text-gray-700 text-lg'>Iniciativas creadas</h2>
-              <Rechart></Rechart>
+              <InitiativesChart posts={data}></InitiativesChart>
             </div>
 
             <div className="flex flex-col gap-8 items-center justify-center h-24 rounded bg-white p-8 h-96 w-full col-span-1 lg:col-span-3">
@@ -106,12 +106,12 @@ const index = ({ data }) => {
 
             <div className="flex flex-col gap-8 items-center justify-center h-24 rounded bg-white p-8 h-96 w-full col-span-1 lg:col-span-4">
               <h2 className='font-bold text-gray-700 text-lg'>Rubros de iniciativas</h2>
-              <RubroChart></RubroChart>
+              <RubroChart posts={data}></RubroChart>
             </div>
 
             <div className="flex flex-col items-center justify-center h-24 rounded bg-white p-8 h-96 w-full col-span-1 lg:col-span-4">
               <h2 className='font-bold text-gray-700 text-lg'>Tipos de usuario</h2>
-              <UsersChart></UsersChart>
+              <UsersChart posts={data}></UsersChart>
             </div>
 
           </div>
