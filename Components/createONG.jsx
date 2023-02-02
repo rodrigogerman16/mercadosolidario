@@ -2,7 +2,10 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
+import Alert from "./Alert";
 import { signOut, useSession } from "next-auth/react";
+
+const { VERCEL_URL = 'http://localhost:3000/api/railway-backend' } = process.env
 
 function Validate(input) {
   let errors = {};
@@ -39,7 +42,7 @@ export default function Crearong(props) {
   const [image, setImage] = useState(null);
 
   const postONG = async (props) => {
-  
+
     let info = await axios.post(
       `http://localhost:3001/ong/newong`,
       props,
@@ -133,6 +136,7 @@ export default function Crearong(props) {
         formData.append("type_of_user", props.type_of_user);
         postONG(formData);
 
+        Alert({ title: 'Registro', text: 'ONG Registrada con éxito!', icon: 'success' })
         setInput({
           name: "",
           lastName: "",
@@ -144,7 +148,7 @@ export default function Crearong(props) {
         signOut()
         console.log(session)   
       } else {
-        alert("Hay datos incorrectos o sin completar!");
+        Alert({ title: 'Registro', text: 'Hay datos incorrectos o sin completar', icon: 'error' })
       }
     } catch (error) {
     }

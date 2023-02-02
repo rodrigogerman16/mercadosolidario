@@ -2,6 +2,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import Alert from "./Alert";
 
 const { VERCEL_URL = "http://localhost:3000/api/railway-backend" } =
   process.env;
@@ -111,22 +112,22 @@ export default function Formusers(props) {
         };
 
         postUser(user).then(() => {
-          axios.post('https://pf-backend-mercadosolidario-production.up.railway.app/mailer/email', {email: user.email})
+          axios.post('https://pf-backend-mercadosolidario-production.up.railway.app/mailer/email', { email: user.email })
           setInput({
             name: "",
             lastName: "",
             phone: "",
             cuil: "",
             user_linkedin: "",
-          });          
-          alert("Usuario creado!");
+          });
+          Alert({ title: 'Registro', text: 'Usuario creado con éxito!', icon: 'success' })
           window.location.href = '../';
         }).catch(error => {
-          alert("error creando usuario", error)
+          Alert({ title: 'Registro', text: 'Hubo un error al crear el usuario, si el error persiste, vuelve a intentarlo mas tarde.', icon: 'error' })
         });
 
       } else {
-        alert("Hay datos incorrectos o sin completar!");
+        Alert({ title: 'Registro', text: 'Hay datos incorrectos o sin completar!', icon: 'error' })
       }
     } catch (error) {
       console.log(error);

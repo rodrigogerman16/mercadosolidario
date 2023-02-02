@@ -7,6 +7,7 @@ import { signIn, useSession } from "next-auth/react";
 import Router from "next/router";
 import { useBackendUser, useUser } from "../../hooks/user.js";
 import jwt_decode from "jwt-decode";
+import Alert from "@/Components/Alert.jsx";
 
 function Validate(input) {
   let errors = {};
@@ -65,7 +66,7 @@ export default function Login() {
 
         window.localStorage.setItem("user", JSON.stringify(decoded));
 
-        alert("Logeado Satisfactoriamente!");
+        Alert({ title: 'Cuenta', text: 'Iniciaste sesión satisfactoriamente!', icon: 'success' })
         setInput({
           email: "",
           password: "",
@@ -73,14 +74,14 @@ export default function Login() {
         router.push("/");
         window.location.reload();
       } else {
-        alert("Hay datos incorrectos o sin completar!");
+        Alert({ title: 'Cuenta', text: 'Hay datos incorrectos o sin completar', icon: 'error' })
       }
     } catch (error) {
       setInput({
         email: "",
         password: "",
       });
-      alert("Error, Intente nuevamente");
+      Alert({ title: 'Cuenta', text: 'Hubo un error al iniciar sesión, si el error persiste, vuelva a intentar mas tarde.', icon: 'error' })
     }
   }
 
