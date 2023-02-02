@@ -49,7 +49,7 @@ export default function Equipo() {
 
           <EquipoCard
             name="Fabian Carabajal"
-            img={fabi}
+            img={bauti}
             github="https://github.com/Fabio1501"
             linkedin="https://www.linkedin.com/in/fabian-carabajal-890450249/"
           />
