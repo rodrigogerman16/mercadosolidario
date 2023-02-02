@@ -110,7 +110,7 @@ export default class Example extends PureComponent {
             </Bar>
           </BarChart>
         </ResponsiveContainer>
-        <p className="content">{`Iniciativas de "${activeItem.name}": ${activeItem.val}`}</p>
+        <p className="content text-center my-4 text-gray-700">Iniciativas de <br></br><strong>{activeItem.name}</strong> : <strong className='text-pink-400'>{activeItem.val}</strong></p>
       </div>
     );
   }
