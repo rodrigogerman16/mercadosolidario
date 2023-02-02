@@ -2,7 +2,6 @@ import EquipoCard from "../../Components/EquipoCard";
 import bauti from "../../Assets/bauti.png";
 import gusti from "../../Assets/gusti.jpg";
 import rodri from "../../Assets/rodri.png";
-import fabi from "../../Assets/fabi.png";
 
 export default function Equipo() {
   return (
