@@ -2,6 +2,7 @@ import EquipoCard from "../../Components/EquipoCard";
 import bauti from "../../Assets/bauti.png";
 import gusti from "../../Assets/gusti.jpg";
 import rodri from "../../Assets/rodri.png";
+import fabi from "../../Assets/Fabi.png";
 
 export default function Equipo() {
   return (
@@ -48,7 +49,7 @@ export default function Equipo() {
 
           <EquipoCard
             name="Fabian Carabajal"
-            img={bauti}
+            img={fabi}
             github="https://github.com/Fabio1501"
             linkedin="https://www.linkedin.com/in/fabian-carabajal-890450249/"
           />
