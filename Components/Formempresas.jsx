@@ -99,7 +99,6 @@ export default function Formempresas(props) {
         }
 
         formData2.append("upload_preset", "my-uploads");
-        //formData.append()
 
         const data = await fetch(
           "https://api.cloudinary.com/v1_1/dc9pehmoz/image/upload",
@@ -108,9 +107,6 @@ export default function Formempresas(props) {
             body: formData2,
           }
         ).then((r) => r.json());
-
-        // console.log(data.secure_url)
-        // console.log(props)
 
         const formData = new FormData();
         formData.append("name", input.name);
@@ -121,9 +117,7 @@ export default function Formempresas(props) {
         formData.append("password", props.password);
         formData.append("type_of_user", props.type_of_user);
 
-        postCompany(formData);
-
-        
+        postCompany(formData);       
         
         Alert({
           title: "Registro",
@@ -135,7 +129,8 @@ export default function Formempresas(props) {
           lastName: "",
           cuit: "",
         });
-        router.push("/");
+        window.location.href = '../';
+        signOut()
       } else {
         Alert({
           title: "Registro",
@@ -144,12 +139,9 @@ export default function Formempresas(props) {
         });
       }
     } catch (error) {
-      //console.log(error)
+      console.log(error)
     }
   }
-
-  //console.log(input)
-  //console.log(image)
 
   return (
     <form

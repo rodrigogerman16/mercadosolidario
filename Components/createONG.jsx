@@ -112,7 +112,6 @@ export default function Crearong(props) {
         }
 
         formData2.append("upload_preset", "my-uploads");
-        //formData.append()
 
         const data = await fetch(
           "https://api.cloudinary.com/v1_1/dc9pehmoz/image/upload",
@@ -121,9 +120,6 @@ export default function Crearong(props) {
             body: formData2,
           }
         ).then((r) => r.json());
-
-        // console.log(data.secure_url)
-        console.log(props)
         
         const formData = new FormData();
         formData.append("name", input.name);
@@ -142,8 +138,7 @@ export default function Crearong(props) {
           lastName: "",
           cuit: "",
           phone: "",
-        });
-        alert("ONG Registrada con Exito!");     
+        });   
         window.location.href = '../';
         signOut()
         console.log(session)   

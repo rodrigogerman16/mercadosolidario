@@ -26,7 +26,6 @@ export const useBackendUser = () => {
   const main = async () => {
 
     //Vincular session.user.email (session) con user.email (local)
-    //Actualizar estado User
     if(session){
       const usuario = await axios.post('http://localhost:3001/login', {        
         email: session.user.email,
@@ -35,7 +34,6 @@ export const useBackendUser = () => {
 
       const decoded = jwt_decode(usuario.data.token);
       window.localStorage.setItem("user", JSON.stringify(decoded));
-      console.log(decoded)
       setUser(decoded)
     }
 
