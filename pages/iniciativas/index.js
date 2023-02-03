@@ -13,6 +13,10 @@ import Card from "../../Components/Card";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useRouter } from "next/router";
 export default function Products({ data }) {
+  const [current, setCurrent] = useState([]);
+  const [hasMore, setHasMore] = useState(true);
+  const [page, setPage] = useState(1);
+  const perPage = 3;
   const [info, setInfo] = useState();
   const [edit, setEdit] = useState();
   const [orden, setOrden] = useState();
@@ -69,7 +73,7 @@ export default function Products({ data }) {
   });
 
   // let results = [];
-  const [results, setResults] = useState();
+  const [results, setResults] = useState([]);
   const [datosFiltradosDonaciones, setDatosFiltradosDonaciones] = useState([]);
   const [checkedDonaciones, setCheckedDonaciones] = useState({
     efectivo: false,
@@ -87,13 +91,17 @@ export default function Products({ data }) {
       const resultadoLenguaje = edit.filter(
         (e) => e.type_of_help.toLowerCase() === value.toLowerCase()
       );
-      setResults([...resultadoLenguaje, ...datosFiltradosDonaciones]);
+
+      setCurrent([...datosFiltradosDonaciones, ...resultadoLenguaje]);
     } else {
       const value = e.target.value;
       const resultadoLenguaje = datosFiltradosDonaciones.filter(
         (e) => e.type_of_help.toLowerCase() !== value.toLowerCase()
       );
-      setResults([...resultadoLenguaje]);
+      setCurrent([...resultadoLenguaje]);
+      if (current.length === 0) {
+        setCurrent(data);
+      }
     }
   };
 
@@ -102,23 +110,17 @@ export default function Products({ data }) {
       ...checkedCategorias,
       [e.target.value]: e.target.checked,
     });
-
     if (e.target.checked) {
       const value = e.target.value;
       const resultadoLenguaje = edit.filter((e) => e.rubros === value);
-      setDatosFiltradosCategorias([
-        ...datosFiltradosCategorias,
-        ...resultadoLenguaje,
-      ]);
-      setResults(datosFiltradosCategorias);
+      setResults([...datosFiltradosCategorias, ...resultadoLenguaje]);
     } else {
       const value = e.target.value;
       const resultadoLenguaje = datosFiltradosCategorias.filter(
         (e) => e.rubros !== value
       );
-      setDatosFiltradosCategorias([...resultadoLenguaje]);
+      setResults([...resultadoLenguaje]);
     }
-    setResults(datosFiltradosCategorias);
   };
 
   const filterPaises = (e) => {
@@ -132,15 +134,16 @@ export default function Products({ data }) {
       const resultadoLenguaje = edit.filter(
         (e) => e.location.toLowerCase() === value.toLowerCase()
       );
-      setDatosFiltradosPaises([...datosFiltradosPaises, ...resultadoLenguaje]);
-      setResults(datosFiltradosPaises);
+      setCurrent([...datosFiltradosPaises, ...resultadoLenguaje]);
     } else {
       const value = e.target.value;
       const resultadoLenguaje = datosFiltradosPaises.filter(
         (e) => e.location.toLowerCase() !== value.toLowerCase()
       );
-      setDatosFiltradosPaises([...resultadoLenguaje]);
-      setResults(datosFiltradosPaises);
+      setCurrent([...resultadoLenguaje]);
+    }
+    if (current.length === 0) {
+      setCurrent(data);
     }
   };
 
@@ -149,22 +152,37 @@ export default function Products({ data }) {
     setInput(value);
     !input
       ? data
-      : setResults(
-        data.filter((e) =>
-          e.title.toLowerCase().includes(input.toLowerCase())
-        )
-      );
+
+      : setCurrent(
+          data.filter((e) =>
+            e.title.toLowerCase().includes(input.toLowerCase())
+          )
+        );
+
+  };
+
+  const fetchData = () => {
+    setTimeout(() => {
+      setPage(page + 1);
+      setCurrent([
+        ...current,
+        ...data.slice((page - 1) * perPage, page * perPage),
+      ]);
+      if (page * perPage >= info.length) {
+        setHasMore(false);
+      }
+    }, 300);
   };
 
   const filterOrder = async (e) => {
     setOrden(e.target.outerText);
     if (orden === "Titulo Desc") {
-      setResults(
+      setCurrent(
         datosFiltradosPaises.sort((a, b) => a.title.localeCompare(b.title))
       );
       edit.sort((a, b) => a.title.localeCompare(b.title));
     } else if (orden === "Titulo Asc") {
-      setResults(
+      setCurrent(
         datosFiltradosPaises.sort((a, b) => b.title.localeCompare(a.title))
       );
       edit.sort((a, b) => b.title.localeCompare(a.title));
@@ -350,11 +368,6 @@ export default function Products({ data }) {
       ? setResults(edit)
       : setResults([...datosFiltradosPaises]);
   }, [datosFiltradosPaises]);
-
-  useEffect(() => {
-    results && results.length === 0 ? setResults(data) : "";
-    console.log(results);
-  }, [results]);
 
   // const [e, setE] = useState("");
 
@@ -694,7 +707,42 @@ export default function Products({ data }) {
                 className="grid w-full col-span-3 grid w-full sm:grid-cols-2 xl:grid-cols-3 gap-4 "
                 id="infiniteScroll"
               >
-                {results && results.length !== 0
+                <InfiniteScroll
+                  dataLength={current.length}
+                  next={fetchData}
+                  hasMore={hasMore}
+                  loader={<h4>Loading...</h4>}
+                  endMessage={
+                    <p style={{ textAlign: "center" }}>
+                      {current.length !== 0
+                        ? "No hay más cartas para mostrar"
+                        : "No hay cartas para mostrar"}
+                    </p>
+                  }
+                >
+                  <div className="grid w-full col-span-3 grid w-full sm:grid-cols-2 xl:grid-cols-3 gap-4">
+                    {current.length !== 0
+                      ? current.map((e) => (
+                          <Link
+                            className="w-full"
+                            key={e.id}
+                            href={`/iniciativas/${e.id}`}
+                          >
+                            <Card
+                              key={e.id}
+                              title={e.title}
+                              image={e.image}
+                              description={e.description}
+                              location={e.location}
+                              isVolunteer={e.type_of_help}
+                              expirationDate={e.expirationDate}
+                            />
+                          </Link>
+                        ))
+                      : "No hay cartas para mostrar"}
+                  </div>
+                </InfiniteScroll>
+                {/* {results && results.length !== 0
                   ? results.map((e) => (
                     <Link
                       className="w-full"
@@ -703,16 +751,23 @@ export default function Products({ data }) {
                     >
                       <Card
                         key={e.id}
-                        title={e.title}
-                        image={e.image}
-                        description={e.description}
-                        location={e.location}
-                        isVolunteer={e.type_of_help}
-                        expirationDate={e.expirationDate}
-                      />
-                    </Link>
-                  ))
-                  : "No hay cartas para mostrar"}
+
+                        href={`/iniciativas/${e.id}`}
+                      >
+                        <Card
+                          key={e.id}
+                          title={e.title}
+                          image={e.image}
+                          description={e.description}
+                          location={e.location}
+                          isVolunteer={e.type_of_help}
+                          expirationDate={e.expirationDate}
+                        />
+                      </Link>
+                    ))
+                  : "No hay cartas para mostrar"} */}
+
+
                 <div className="w-full sm:col-span-2 xl:col-span-3 m-auto my-8"></div>
               </div>
             </div>

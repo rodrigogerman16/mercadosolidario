@@ -1,18 +1,25 @@
 'use client'
 import Image from 'next/image'
 import Link from 'next/link';
-import recomendacion from '../Assets/recomendacion.jpeg'
 import { BiDonateHeart } from 'react-icons/bi'
 import { AiOutlineUser, AiOutlineGift } from 'react-icons/ai'
+import { useEffect } from 'react';
+import Alert from "@/Components/Alert.jsx";
 
 export default function Home() {
-
   const scroll = (e) => {
     e.preventDefault
     const section = document.querySelector('#about');
     section.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
+  useEffect(()=>{
+    const loginError = window.localStorage.getItem("loginError")    
+    if(loginError){                     
+      Alert({ title: 'Cuenta', text: 'Su cuenta esta siendo validada, intentelo mas tarde.', icon: 'error', timer: 4000 })  
+      window.localStorage.removeItem("loginError")
+    }
+  },[])
   return (<div className='text-gray-800'>
 
     {/* Landing */}

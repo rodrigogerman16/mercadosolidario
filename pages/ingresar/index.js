@@ -3,14 +3,11 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { signIn, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import Router from "next/router";
 import { useBackendUser, useUser } from "../../hooks/user.js";
 import jwt_decode from "jwt-decode";
 import Alert from "@/Components/Alert.jsx";
-
-const { VERCEL_URL = "http://localhost:3000/api/railway-backend" } =
-  process.env;
 
 function Validate(input) {
   let errors = {};
@@ -29,6 +26,12 @@ export default function Login() {
   });
 
   const [errors, setErrors] = useState({});
+
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+    await signIn({ provider: 'google' });
+  };
+
 
   function handleChange(el) {
     setInput({
@@ -61,26 +64,20 @@ export default function Login() {
         const user = {
           email: input.email,
           password: input.password,
-          type_of_user: "user",
         };
 
-        let info = await axios.post(`https://pf-backend-mercadosolidario-production.up.railway.app/login`, user);
+        let info = await axios.post(`http://localhost:3001/login`, user);
 
-        {
-          /*const aux = {
-          id: info.data.id,
-          name: info.data.name,
-          lastName: info.data.lastName,
-          phone: info.data.phone,
-          cuil: info.data.cuil,
-          user_linkedin: info.data.user_linkedin,
-          email: info.data.email,
-          type_of_user: info.data.type_of_user,
-        }*/
-        }
         const decoded = jwt_decode(info.data.token);
 
         window.localStorage.setItem("user", JSON.stringify(decoded));
+        
+        if(!user.isActive){
+          window.localStorage.removeItem("user");
+          window.localStorage.setItem("loginError", true)
+          window.location.href = '../';
+          return
+        }
 
         Alert({ title: 'Cuenta', text: 'Iniciaste sesión satisfactoriamente!', icon: 'success' })
         setInput({
@@ -103,6 +100,7 @@ export default function Login() {
 
   const user = useUser();
   const { data: session } = useSession();
+  console.log(session)
   const { backendUser, isLoading } = useBackendUser();
 
   useEffect(() => {
@@ -129,11 +127,25 @@ export default function Login() {
       return;
     }
 
-    // es admin
+    // es admin (contacto.mercadosolidario@gmail.com   henryms123)
     if (user.type_of_user === "admin") {
       Router.push("/dashboard");
       return;
     }
+
+    
+
+    if(user){
+      if(session) signOut()
+      if(!user.isActive){
+        window.localStorage.removeItem("user");
+        signOut()
+        window.localStorage.setItem("loginError", true)
+        window.location.href = '../';
+      }
+      Router.push('/')
+    } 
+    
   }, [user]);
 
   return (
@@ -181,7 +193,7 @@ export default function Login() {
           </div>
           <div className="space-y-2">
             <div className="flex justify-between">
-              <label for="password" name={"password"} className="text-sm">
+              <label htmlFor="password" name={"password"} className="text-sm">
                 Contraseña
               </label>
             </div>
@@ -216,7 +228,7 @@ export default function Login() {
       </form>
       <div className="my-6 space-y-4 w-full">
         <button
-          onClick={() => signIn()}
+          onClick={handleSignIn}
           aria-label="Login with Google"
           type="button"
           className="flex items-center justify-center w-full p-4 space-x-4 border shadow focus:ring-0 w-full rounded"

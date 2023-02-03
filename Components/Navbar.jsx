@@ -8,7 +8,6 @@ import { useUser } from "../hooks/user.js";
 export default function Navbar() {
   const user = useUser();
   const userObject = user && JSON.parse(user)
-  console.log(userObject)
   
   return(
     <div>

@@ -118,7 +118,7 @@ export default function Creariniciativa() {
           "https://api.cloudinary.com/v1_1/dc9pehmoz/image/upload",
           {
             method: "POST",
-            body: formData,
+            body: formData,            
           }
         ).then((r) => r.json());
 
