@@ -5,6 +5,7 @@ import Rating from 'react-rating';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar as fullStar } from '@fortawesome/free-solid-svg-icons';
 import { faStar as emptyStar } from '@fortawesome/free-regular-svg-icons';
+import { useUser } from "../hooks/user.js";
 
 function Validate(input) {
   let errors = {};
@@ -15,6 +16,8 @@ function Validate(input) {
 }
 
 export default function Review() {
+  const user = useUser();
+  const userObject = user && JSON.parse(user)
   const router = useRouter();
   const [rating, setRating] = useState(1);
   const [input, setInput] = useState({
@@ -68,7 +71,12 @@ export default function Review() {
         })
       );
       if (Object.values(errors).length === 0) {
-        //Funcion post al back sendReview(input)
+        let aux = {
+          //id: userObject.id,
+          rating: input.rating,
+          review: input.review,
+        }
+        //Funcion post al back sendReview(aux)
         //alert('Gracias por dejar tu Reseña')
         setInput({
           rating: "",
