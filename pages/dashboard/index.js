@@ -35,20 +35,11 @@ const index = ({ posts, users, company, ong }) => {
                 </div>
                 <div className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow " id="dropdown-user">
                   <div className="px-4 py-3" role="none">
-                    <p className="text-sm text-gray-900" role="none">
-                      Nombre Apellido
-                    </p>
                     <p className="text-sm font-medium text-gray-900 truncate" role="none">
-                      ejemplo@mail.com
+                    contacto.mercadosolidario@gmail.com
                     </p>
                   </div>
                   <ul className="py-1" role="none">
-                    <li>
-                      <a href="/" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 " role="menuitem">Home</a>
-                    </li>
-                    <li>
-                      <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 " role="menuitem">Settings</a>
-                    </li>
                     <li>
                       <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 " role="menuitem">Sign out</a>
                     </li>
@@ -76,16 +67,16 @@ const index = ({ posts, users, company, ong }) => {
               </a>
             </li>
             <li>
-              <a href="#" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 ">
+              <Link href="/dashboard/iniciativas" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 ">
                 <svg aria-hidden="true" className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75  group-hover:text-gray-900 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
                 <span className="flex-1 ml-3 whitespace-nowrap">Iniciativas</span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 ">
+              <Link href="/dashboard/usuarios" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 ">
                 <svg aria-hidden="true" className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75  group-hover:text-gray-900" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" /></svg>
-                <span className="flex-1 ml-3 whitespace-nowrap">Users</span>
-              </a>
+                <span className="flex-1 ml-3 whitespace-nowrap">Usuarios</span>
+              </Link>
             </li>
           </ul>
         </div>
