@@ -7,7 +7,7 @@ import { Router, useRouter } from "next/router";
 export default function App({ Component, pageProps, session }) {
   const router = useRouter()
 
-  if (router.pathname == '/dashboard')
+  if (router.pathname === '/dashboard' || /^\/dashboard\//.test(router.pathname))
     return (
       <>
         <Component {...pageProps} />
