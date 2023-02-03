@@ -123,7 +123,7 @@ export default function Products({ data }) {
       for (let checked of filtersChecked) {
         return (
           post.profession.toLowerCase().includes(checked.toLowerCase()) ||
-          post.insignias.toLowerCase().includes(checked.toLowerCase())
+          post.type_of_insignia.toLowerCase().includes(checked.toLowerCase())
         );
       }
     });
@@ -467,6 +467,7 @@ export default function Products({ data }) {
                               user_linkedin={e.user_linkedin}
                               profession={e.profession}
                               email={e.email}
+                              province={e.province}
                             />
                           </Link>
                         ))
