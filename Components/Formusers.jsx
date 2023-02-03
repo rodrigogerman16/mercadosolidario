@@ -138,7 +138,7 @@ export default function Formusers(props) {
           type_of_user: props.type_of_user || "user",
           cuil: input.cuil,
           user_linkedin: input.user_linkedin,
-          //image: data.secure_url || "Imagen alt default"
+          //image: data.secure_url || "https://t3.ftcdn.net/jpg/04/51/93/48/360_F_451934847_V7rc18Ibs9UNU5sSihQBY0MzSDgei4Cr.jpg"
         };
 
         postUser(user).then(() => {
