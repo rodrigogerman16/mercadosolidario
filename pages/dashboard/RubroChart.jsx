@@ -7,83 +7,83 @@ export default class Example extends PureComponent {
     data: [
       {
         name: 'Alimentacion',
-        val: this.props.posts.filter(p => p.rubro == 'Alimentacion').length,
+        val: this.props.posts && this.props.posts.filter(p => p.rubro == 'Alimentacion').length,
       },
       {
         name: 'Asesoria_legal',
-        val: this.props.posts.filter(p => p.rubro == 'Asesoria_legal').length,
+        val: this.props.posts && this.props.posts.filter(p => p.rubro == 'Asesoria_legal').length,
       },
       {
         name: 'Ayuda_a_refugiados',
-        val: this.props.posts.filter(p => p.rubro == 'Ayuda_a_refugiados').length,
+        val: this.props.posts && this.props.posts.filter(p => p.rubro == 'Ayuda_a_refugiados').length,
       },
       {
         name: 'Apoyo_a_comunidades_indigenas',
-        val: this.props.posts.filter(p => p.rubro == 'Apoyo_a_comunidades_indigenas').length,
+        val: this.props.posts && this.props.posts.filter(p => p.rubro == 'Apoyo_a_comunidades_indigenas').length,
       },
       {
         name: 'Apoyo_a_lgbt',
-        val: this.props.posts.filter(p => p.rubro == 'Apoyo_a_lgbt').length,
+        val: this.props.posts && this.props.posts.filter(p => p.rubro == 'Apoyo_a_lgbt').length,
       },
       {
         name: 'Apoyo_a_la_mujer',
-        val: this.props.posts.filter(p => p.rubro == 'Apoyo_a_la_mujer').length,
+        val: this.props.posts && this.props.posts.filter(p => p.rubro == 'Apoyo_a_la_mujer').length,
       },
       {
         name: 'Construccion_obras',
-        val: this.props.posts.filter(p => p.rubro == 'Construccion_obras').length,
+        val: this.props.posts && this.props.posts.filter(p => p.rubro == 'Construccion_obras').length,
       },
       {
         name: 'Cultura',
-        val: this.props.posts.filter(p => p.rubro == 'Cultura').length,
+        val: this.props.posts && this.props.posts.filter(p => p.rubro == 'Cultura').length,
       },
       {
         name: 'Deportes',
-        val: this.props.posts.filter(p => p.rubro == 'Deportes').length,
+        val: this.props.posts && this.props.posts.filter(p => p.rubro == 'Deportes').length,
       },
       {
         name: 'Derechos_humanos',
-        val: this.props.posts.filter(p => p.rubro == 'Derechos_humanos').length,
+        val: this.props.posts && this.props.posts.filter(p => p.rubro == 'Derechos_humanos').length,
       },
       {
         name: 'Discapacitados',
-        val: this.props.posts.filter(p => p.rubro == 'Discapacitados').length,
+        val: this.props.posts && this.props.posts.filter(p => p.rubro == 'Discapacitados').length,
       },
       {
         name: 'Educacion',
-        val: this.props.posts.filter(p => p.rubro == 'Educacion').length,
+        val: this.props.posts && this.props.posts.filter(p => p.rubro == 'Educacion').length,
       },
       {
         name: 'Medio_ambiente',
-        val: this.props.posts.filter(p => p.rubro == 'Medio_ambiente').length,
+        val: this.props.posts && this.props.posts.filter(p => p.rubro == 'Medio_ambiente').length,
       },
       {
         name: 'Entretenimiento',
-        val: this.props.posts.filter(p => p.rubro == 'Entretenimiento').length,
+        val: this.props.posts && this.props.posts.filter(p => p.rubro == 'Entretenimiento').length,
       },
       {
         name: 'Gobierno_no_lucro',
-        val: this.props.posts.filter(p => p.rubro == 'Gobierno_no_lucro').length,
+        val: this.props.posts && this.props.posts.filter(p => p.rubro == 'Gobierno_no_lucro').length,
       },
       {
         name: 'Materia_prima',
-        val: this.props.posts.filter(p => p.rubro == 'Materia_prima').length,
+        val: this.props.posts && this.props.posts.filter(p => p.rubro == 'Materia_prima').length,
       },
       {
         name: 'Medios_de_comunicacion',
-        val: this.props.posts.filter(p => p.rubro == 'Medios_de_comunicacion').length,
+        val: this.props.posts && this.props.posts.filter(p => p.rubro == 'Medios_de_comunicacion').length,
       },
       {
         name: 'Salud_medicina',
-        val: this.props.posts.filter(p => p.rubro == 'Salud_medicina').length,
+        val: this.props.posts && this.props.posts.filter(p => p.rubro == 'Salud_medicina').length,
       },
       {
         name: 'Servicio_comunitario',
-        val: this.props.posts.filter(p => p.rubro == 'Servicio_comunitario').length,
+        val: this.props.posts && this.props.posts.filter(p => p.rubro == 'Servicio_comunitario').length,
       },
       {
         name: 'Transporte',
-        val: this.props.posts.filter(p => p.rubro == 'Transporte').length,
+        val: this.props.posts && this.props.posts.filter(p => p.rubro == 'Transporte').length,
       },
     ],
     activeIndex: 0,
