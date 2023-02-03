@@ -9,6 +9,18 @@ const nextConfig = {
         hostname: 'lh3.googleusercontent.com',
         port: '',
         pathname: '*/**'
+      },
+      { 
+        protocol: 'https',
+        hostname: 'th.bing.com',
+        port: '',
+        pathname: '*/**'
+      },
+      { 
+        protocol: 'https',
+        hostname: 'encrypted-tbn0.gstatic.com',
+        port: '',
+        pathname: '*/**'
       }
     ]
   },
