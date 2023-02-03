@@ -4,6 +4,7 @@ import {
   PayPalButtons,
   usePayPalScriptReducer
 } from "@paypal/react-paypal-js";
+import Alert from "./Alert";
 
 const ButtonWrapper = ({ currency }) => {
   // usePayPalScriptReducer can be use only inside children of PayPalScriptProviders
@@ -23,6 +24,8 @@ const ButtonWrapper = ({ currency }) => {
 
   return (<PayPalButtons
     fundingSource="paypal"
+    onCancel={() => Alert({ title: 'Donación', text: 'La transacción fue cancelada', icon: 'error' })}
+    onApprove={() => Alert({ title: 'Donación', text: 'La transacción fue realizada con éxito', icon: 'success' })}
     style={{ "layout": "vertical", "color": "silver", "label": "donate" }}
     disabled={false}
     createOrder={(data, actions) => {
@@ -31,11 +34,11 @@ const ButtonWrapper = ({ currency }) => {
           purchase_units: [
             {
               amount: {
-                value: "2",
+                value: "1",
                 breakdown: {
                   item_total: {
                     currency_code: "USD",
-                    value: "2",
+                    value: "1",
                   },
                 },
               },
