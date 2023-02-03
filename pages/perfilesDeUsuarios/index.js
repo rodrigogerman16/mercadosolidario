@@ -12,8 +12,6 @@ import {
 import Link from "next/link";
 import CardUser from "../../Components/CardUser";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { useRouter } from "next/router";
-import { searchHandler, fetchData } from "./handlers.js";
 
 export default function Products({ data }) {
   //Estados de estilos y generales
@@ -30,9 +28,13 @@ export default function Products({ data }) {
   //Estado barra de busqueda
   const [search, setSearch] = useState(false);
 
+  const [arrFilters, setArrFilters] = useState([]);
+
+
   //UseEffect
   useEffect(() => {
     setInfo(data);
+    setArrFilters(filters)
   }, []);
 
   //Handlers de DOM
@@ -73,17 +75,11 @@ export default function Products({ data }) {
 
   //Handlers de filtros
   const allfilters = (e) => {
-    // setCheckedProvincias({
-    //   ...checkedProvincias,
-    //   [e.target.value]: e.target.checked,
-    // });
-    console.log(e.target.value);
-    // console.log(checkedProvincias);
-
     if (e.target.checked) {
       const finder = filtersChecked.find((prov) => prov === e.target.value);
       if (!finder) {
         filtersChecked.push(e.target.value);
+        setArrFilters(...filters, )
       }
     }
 
@@ -95,25 +91,9 @@ export default function Products({ data }) {
         filtersChecked.splice(elementoNoCheckeado, 1);
       }
     }
-    console.log(filtersChecked);
-    // if (e.target.checked) {
 
-    //   const value = e.target.value;
-    //   const resultProvincia = data.filter(
-    //     (e) => e.location.toLowerCase() === value.toLowerCase()
-    //   );
-    //   setCurrent([ ...resultProvincia]);
-    // } else {
-    //   const value = e.target.value;
-    //   const resultadoLenguaje = datosFiltradosPaises.filter(
-    //     (e) => e.location.toLowerCase() !== value.toLowerCase()
-    //   );
-    //   setCurrent([...resultadoLenguaje]);
-    // }
-    // if (current.length === 0) {
-    //   setCurrent(data);
-    // }
   };
+  console.log('Soy el array de checked true',filtersChecked);
 
   // Aplicacion de Filtros
   const applyFilters = (e) => {
@@ -122,16 +102,15 @@ export default function Products({ data }) {
     const resultFilters = info.filter((post) => {
       for (let checked of filtersChecked) {
         return (
-          post.profession.toLowerCase().includes(checked.toLowerCase()) ||
-          post.insignias.toLowerCase().includes(checked.toLowerCase())
+          post.profession?.toLowerCase().includes(checked.toLowerCase()) ||
+          post.province?.toLowerCase().includes(checked.toLowerCase()) ||
+          post.type_of_insignia?.toLowerCase().includes(checked.toLowerCase())
         );
       }
     });
     setCurrent(resultFilters);
-    console.log(resultFilters);
+    console.log('Soy el array de cards filtradas', resultFilters);
   };
-  console.log(info);
-  console.log(data);
 
   return (
     <div className="bg-white">
@@ -191,6 +170,7 @@ export default function Products({ data }) {
                     {filters.map((section) => (
                       <Disclosure
                         as="div"
+                        onChange={allfilters}
                         key={section.id}
                         className="border-t border-gray-200 px-4 py-6"
                       >
@@ -202,17 +182,29 @@ export default function Products({ data }) {
                                   {section.name}
                                 </span>
                                 <span className="ml-6 flex items-center">
-                                  {open ? (
-                                    <BsDash
-                                      className="h-5 w-5"
-                                      aria-hidden="true"
-                                    />
-                                  ) : (
-                                    <BsX
-                                      className="h-5 w-5"
-                                      aria-hidden="true"
-                                    />
-                                  )}
+                                {open ? (
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="24"
+                                  height="24"
+                                  fill="currentColor"
+                                  class="bi bi-dash"
+                                  viewBox="0 0 16 16"
+                                >
+                                  <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
+                                </svg>
+                              ) : (
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="24"
+                                  height="24"
+                                  fill="currentColor"
+                                  class="bi bi-plus"
+                                  viewBox="0 0 16 16"
+                                >
+                                  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                                </svg>
+                              )}
                                 </span>
                               </Disclosure.Button>
                             </h3>
@@ -246,6 +238,7 @@ export default function Products({ data }) {
                         )}
                       </Disclosure>
                     ))}
+                  <button onClick={applyFilters}>Aplicar Filtros</button>
                   </form>
                 </Dialog.Panel>
               </Transition.Child>
@@ -485,7 +478,7 @@ export default function Products({ data }) {
 
 export function getStaticProps() {
   return fetch(
-    "https://pf-backend-mercadosolidario-production.up.railway.app/user"
+    "http://localhost:3001/user"
   )
     .then((res) => res.json())
     .then((data) => {
