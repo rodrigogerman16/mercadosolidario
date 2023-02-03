@@ -5,7 +5,7 @@ import Rating from 'react-rating';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar as fullStar } from '@fortawesome/free-solid-svg-icons';
 import { faStar as emptyStar } from '@fortawesome/free-regular-svg-icons';
-import { useUser } from "../hooks/user.js";
+import { useUser } from "@/hooks/user";
 
 function Validate(input) {
   let errors = {};
