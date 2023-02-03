@@ -5,15 +5,48 @@ import { useState } from "react";
 import { Transition } from "@headlessui/react";
 import { useUser } from "../hooks/user.js";
 import Router from "next/router";
-import { signOut } from "next-auth/react"
+import { signOut, useSession } from "next-auth/react"
 import Alert from "./Alert";
 
 
 export default function OngNavbar() {
+    const {data: session} = useSession()
     const user = useUser();
     const [isOpen, setIsOpen] = useState(false);
 
-    function handleLogOut() {
+    const handleLogOut = async() => {
+        if (session) {
+            await fetch("api/auth/signout", {
+              method: "GET",
+              credentials: "include",
+            })
+              .then((response) => {
+                if (response.status === 200) {
+                  signOut()
+                  localStorage.removeItem("user");
+                  Alert({
+                    title: "Cuenta",
+                    text: "Cerraste sesión satisfactoriamente",
+                    icon: "success",
+                  });
+                  Router.push("/");
+                  window.location.reload();
+                } else {
+                  Alert({
+                    title: "Cuenta",
+                    text: "Error signing out of Google",
+                    icon: "error",
+                  });
+                }
+              })
+              .catch((error) => {
+                Alert({
+                  title: "Cuenta",
+                  text: "Error signing out of Google" + error,
+                  icon: "error",
+                });
+              });
+          }
         signOut();
         localStorage.removeItem('user');
         Alert({ title: 'Cuenta', text: 'Cerraste sesión satisfactoriamente.', icon: 'success' })

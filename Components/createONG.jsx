@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import Alert from "./Alert";
+import { signOut, useSession } from "next-auth/react";
 
 const { VERCEL_URL = 'http://localhost:3000/api/railway-backend' } = process.env
 
@@ -24,6 +25,7 @@ function Validate(input) {
 }
 
 export default function Crearong(props) {
+  const {data: session} = useSession()
   const [imageSrc, setImageSrc] = useState(null);
 
   const router = useRouter();
@@ -42,7 +44,7 @@ export default function Crearong(props) {
   const postONG = async (props) => {
 
     let info = await axios.post(
-      `https://pf-backend-mercadosolidario-production.up.railway.app/api/ong/newong`,
+      `http://localhost:3001/ong/newong`,
       props,
       {
         headers: {
@@ -110,7 +112,6 @@ export default function Crearong(props) {
         }
 
         formData2.append("upload_preset", "my-uploads");
-        //formData.append()
 
         const data = await fetch(
           "https://api.cloudinary.com/v1_1/dc9pehmoz/image/upload",
@@ -119,10 +120,7 @@ export default function Crearong(props) {
             body: formData2,
           }
         ).then((r) => r.json());
-
-        // console.log(data.secure_url)
-        // console.log(props)
-
+        
         const formData = new FormData();
         formData.append("name", input.name);
         formData.append("lastName", input.lastName);
@@ -132,7 +130,6 @@ export default function Crearong(props) {
         formData.append("rut", data.secure_url);
         formData.append("cuit", input.cuit);
         formData.append("type_of_user", props.type_of_user);
-
         postONG(formData);
 
         Alert({ title: 'Registro', text: 'ONG Registrada con éxito!', icon: 'success' })
@@ -141,18 +138,16 @@ export default function Crearong(props) {
           lastName: "",
           cuit: "",
           phone: "",
-        });
-        router.push("/");
+        });   
+        window.location.href = '../';
+        signOut()
+        console.log(session)   
       } else {
         Alert({ title: 'Registro', text: 'Hay datos incorrectos o sin completar', icon: 'error' })
       }
     } catch (error) {
-      //console.log(error)
     }
   }
-
-  //console.log(input)
-  //console.log(image)
 
   return (
     <form className="grid gap-4 justify-center items-center" onSubmit={(el) => handleSubmit(el, image, input)}>

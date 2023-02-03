@@ -27,13 +27,11 @@
     "next": "13.1.4",
     "next-auth": "^4.18.10",
     "nodemailer": "^6.9.0",
-    "react": "18.2.0",
+    "react": "^18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.7.1",
     "react-infinite-scroll-component": "^6.1.0",
-
-    "react-rating": "^2.0.5",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
     "sweetalert2": "^11.7.1",
     "sweetalert2-react-content": "^5.0.7"
   },

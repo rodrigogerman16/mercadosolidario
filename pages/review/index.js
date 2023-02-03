@@ -16,7 +16,7 @@ function Validate(input) {
 
 export default function Review() {
   const router = useRouter();
-  const [rating, setRating] = useState(0);
+  const [rating, setRating] = useState(1);
   const [input, setInput] = useState({
     rating: rating,
     review: "",
@@ -33,6 +33,19 @@ export default function Review() {
       Validate({
         ...input,
         [el.target.name]: el.target.value,
+      })
+    );
+  }
+
+  function handlerRating(value) {
+    setRating(value)
+    setInput({
+      ...input,
+      rating: value
+    });
+    setErrors(
+      Validate({
+        ...input,
       })
     );
   }
@@ -97,7 +110,7 @@ export default function Review() {
                 emptySymbol={<FontAwesomeIcon icon={emptyStar} />}
                 fullSymbol={<FontAwesomeIcon icon={fullStar} />}
                 initialRating={rating}
-                onClick={(value) => setRating(value)}
+                onClick={(el) => handlerRating(el)}
               />
               </div>
               {/* <input

@@ -55,9 +55,9 @@ export default function Footer() {
                                 <a className="text-gray-700 transition hover:text-gray-700/75" href="/">
                                     History
                                 </a>
-                                <a className="text-gray-700 transition hover:text-gray-700/75" href="/">
-                                    Our Team
-                                </a>
+                                <Link className="text-gray-700 transition hover:text-gray-700/75" href="/equipo">
+                                    Equipo
+                                </Link>
                             </nav>
                         </div>
                         <div>
