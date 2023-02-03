@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
+import { filters, sortOptions } from "./staticInfo";
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
 import {
   BsChevronDown,
@@ -12,154 +13,37 @@ import Link from "next/link";
 import Card from "../../Components/Card";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useRouter } from "next/router";
+import { searchHandler, fetchData } from "./handlers.js";
+
 export default function Products({ data }) {
+  //Estados de estilos y generales
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const [info, setInfo] = useState();
+  const [input, setInput] = useState();
+
+  //Estados de scroll infinito
   const [current, setCurrent] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
   const perPage = 3;
-  const [info, setInfo] = useState();
-  const [edit, setEdit] = useState();
-  const [orden, setOrden] = useState();
-  const [input, setInput] = useState();
-  const [datosFiltradosPaises, setDatosFiltradosPaises] = useState([]);
-  const [checkedPaises, setCheckedPaises] = useState({
-    buenosAires: false,
-    Catamarca: false,
-    Chaco: false,
-    Chubut: false,
-    Cordoba: false,
-    Corrientes: false,
-    entreRios: false,
-    Formosa: false,
-    Jujuy: false,
-    laPampa: false,
-    laRioja: false,
-    Mendoza: false,
-    Misiones: false,
-    Neuquen: false,
-    rioNegro: false,
-    Salta: false,
-    sanJuan: false,
-    sanLuis: false,
-    santaCruz: false,
-    santaFe: false,
-    santiagoDelEstero: false,
-    tierraDelFuego: false,
-    Tucumán: false,
-  });
-  const [datosFiltradosCategorias, setDatosFiltradosCategorias] = useState([]);
-  const [checkedCategorias, setCheckedCategorias] = useState({
-    Alimentacion: false,
-    asesoriaLegal: false,
-    ayudaARefugiados: false,
-    ayudaAAnimales: false,
-    apoyoAComunidadesIndigenas: false,
-    apoyoALgbt: false,
-    apoyoALaMujer: false,
-    construccionObras: false,
-    cultura: false,
-    deportes: false,
-    derechosHumanos: false,
-    discapacitados: false,
-    educacion: false,
-    medioAmbiente: false,
-    entretenimiento: false,
-    gobiernoNoLucro: false,
-    materiaPrima: false,
-    mediosDeComunicacion: false,
-    saludMedicina: false,
-    servicioComunitario: false,
-    transporte: false,
-  });
 
-  // let results = [];
-  const [results, setResults] = useState([]);
-  const [datosFiltradosDonaciones, setDatosFiltradosDonaciones] = useState([]);
-  const [checkedDonaciones, setCheckedDonaciones] = useState({
-    efectivo: false,
-    especie: false,
-    voluntario: false,
-  });
+  //Estado barra de busqueda
+  const [search, setSearch] = useState(false);
 
-  const handlerDonaciones = (e) => {
-    setCheckedDonaciones({
-      ...checkedDonaciones,
-      [e.target.value]: e.target.checked,
-    });
-    if (e.target.checked) {
-      const value = e.target.value;
-      const resultadoLenguaje = edit.filter(
-        (e) => e.type_of_help.toLowerCase() === value.toLowerCase()
-      );
+  //UseEffect
+  useEffect(() => {
+    setInfo(data);
+    fetchData();
+  }, []);
 
-      setCurrent([...datosFiltradosDonaciones, ...resultadoLenguaje]);
-    } else {
-      const value = e.target.value;
-      const resultadoLenguaje = datosFiltradosDonaciones.filter(
-        (e) => e.type_of_help.toLowerCase() !== value.toLowerCase()
-      );
-      setCurrent([...resultadoLenguaje]);
-      if (current.length === 0) {
-        setCurrent(data);
-      }
-    }
+  //Handlers de DOM
+  const offSearch = (e) => {
+    if (e.target === e.currentTarget) setSearch(false);
   };
 
-  const handlerCategorias = (e) => {
-    setCheckedCategorias({
-      ...checkedCategorias,
-      [e.target.value]: e.target.checked,
-    });
-    if (e.target.checked) {
-      const value = e.target.value;
-      const resultadoLenguaje = edit.filter((e) => e.rubros === value);
-      setResults([...datosFiltradosCategorias, ...resultadoLenguaje]);
-    } else {
-      const value = e.target.value;
-      const resultadoLenguaje = datosFiltradosCategorias.filter(
-        (e) => e.rubros !== value
-      );
-      setResults([...resultadoLenguaje]);
-    }
-  };
-
-  const filterPaises = (e) => {
-    setCheckedPaises({
-      ...checkedPaises,
-      [e.target.value]: e.target.checked,
-    });
-    console.log(e.target.value);
-    if (e.target.checked) {
-      const value = e.target.value;
-      const resultadoLenguaje = edit.filter(
-        (e) => e.location.toLowerCase() === value.toLowerCase()
-      );
-      setCurrent([...datosFiltradosPaises, ...resultadoLenguaje]);
-    } else {
-      const value = e.target.value;
-      const resultadoLenguaje = datosFiltradosPaises.filter(
-        (e) => e.location.toLowerCase() !== value.toLowerCase()
-      );
-      setCurrent([...resultadoLenguaje]);
-    }
-    if (current.length === 0) {
-      setCurrent(data);
-    }
-  };
-
-  const searchHandler = async (e) => {
-    const value = e.target.value;
-    setInput(value);
-    !input
-      ? data
-
-      : setCurrent(
-          data.filter((e) =>
-            e.title.toLowerCase().includes(input.toLowerCase())
-          )
-        );
-
-  };
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(" ");
+  }
 
   const fetchData = () => {
     setTimeout(() => {
@@ -168,264 +52,90 @@ export default function Products({ data }) {
         ...current,
         ...data.slice((page - 1) * perPage, page * perPage),
       ]);
-      if (page * perPage >= info.length) {
+      if (page * perPage >= data.length) {
         setHasMore(false);
       }
     }, 300);
   };
 
-  const filterOrder = async (e) => {
-    setOrden(e.target.outerText);
-    if (orden === "Titulo Desc") {
-      setCurrent(
-        datosFiltradosPaises.sort((a, b) => a.title.localeCompare(b.title))
-      );
-      edit.sort((a, b) => a.title.localeCompare(b.title));
-    } else if (orden === "Titulo Asc") {
-      setCurrent(
-        datosFiltradosPaises.sort((a, b) => b.title.localeCompare(a.title))
-      );
-      edit.sort((a, b) => b.title.localeCompare(a.title));
-    }
-  };
-
-  const sortOptions = [
-    { name: "Titulo Asc", href: "#", current: false, onClick: filterOrder },
-    { name: "Titulo Desc", href: "#", current: false, onClick: filterOrder },
-    { name: "Fecha Asc", href: "#", current: false, onClick: filterOrder },
-    { name: "Fecha Desc", href: "#", current: false, onClick: filterOrder },
-  ];
-
-  const filters = [
-    {
-      id: "Provincias",
-      name: "Provincias",
-      options: [
-        { value: "Buenos Aires", label: "Buenos Aires", checked: false },
-        { value: "Catamarca", label: "Catamarca", checked: false },
-        { value: "Chaco", label: "Chaco", checked: false },
-        { value: "Chubut", label: "Chubut", checked: false },
-        { value: "Cordoba", label: "Córdoba", checked: false },
-        { value: "Corrientes", label: "Corrientes", checked: false },
-        { value: "Entre Rios", label: "Entre Ríos", checked: false },
-        { value: "Formosa", label: "Formosa", checked: false },
-        { value: "Jujuy", label: "Jujuy", checked: false },
-        { value: "La Pampa", label: "La Pampa", checked: false },
-        { value: "La Rioja", label: "La Rioja", checked: false },
-        { value: "Mendoza", label: "Mendoza", checked: false },
-        { value: "Misiones", label: "Misiones", checked: false },
-        { value: "Neuquen", label: "Neuquén", checked: false },
-        { value: "Rio Negro", label: "Río Negro", checked: false },
-        { value: "Salta", label: "Salta", checked: false },
-        { value: "San Juan", label: "San Juan", checked: false },
-        { value: "San Luis", label: "San Luis", checked: false },
-        { value: "Santa Cruz", label: "Santa Cruz", checked: false },
-        { value: "Santa Fe", label: "Santa Fé", checked: false },
-        {
-          value: "Santiago del Estero",
-          label: "Santiago del Estero",
-          checked: false,
-        },
-        {
-          value: "Tierra del Fuego",
-          label: "Tierra del Fuego",
-          checked: false,
-        },
-        { value: "Tucuman", label: "Tucuman", checked: false },
-      ],
-    },
-    {
-      id: "Categorias",
-      name: "Categorias",
-      options: [
-        { value: "Alimentacion", label: "Alimentacion", checked: false },
-        { value: "Asesoria Legal", label: "Asesoria Legal", checked: false },
-        {
-          value: "Ayuda_a_refugiados",
-          label: "Ayuda_a_refugiados",
-          checked: false,
-        },
-        {
-          value: "Ayuda_a_animales",
-          label: "Ayuda_a_animales",
-          checked: false,
-        },
-        {
-          value: "Apoyo_a_comunidades_indigenas",
-          label: "Apoyo_a_comunidades_indigenas",
-          checked: false,
-        },
-        { value: "Apoyo_a_lgbt", label: "Apoyo_a_lgbt", checked: false },
-        {
-          value: "Apoyo_a_la_mujer",
-          label: "Apoyo_a_la_mujer",
-          checked: false,
-        },
-        {
-          value: "Construccion_obras",
-          label: "Construccion_obras",
-          checked: false,
-        },
-        { value: "Cultura", label: "Cultura", checked: false },
-        { value: "Deportes", label: "Deportes", checked: false },
-        {
-          value: "Derechos_humanos",
-          label: "Derechos_humanos",
-          checked: false,
-        },
-        { value: "Discapacitados", label: "Discapacitados", checked: false },
-        { value: "Educacion", label: "Educacion", checked: false },
-        { value: "Medio_ambiente", label: "Medio_ambiente", checked: false },
-        { value: "Entretenimiento", label: "Entretenimiento", checked: false },
-        {
-          value: "Gobierno_no_lucro",
-          label: "Gobierno_no_lucro",
-          checked: false,
-        },
-        { value: "Materia_prima", label: "Materia_prima", checked: false },
-        {
-          value: "Medios_de_comunicacion",
-          label: "Medios_de_comunicacion",
-          checked: false,
-        },
-        { value: "Salud_medicina", label: "Salud_medicina", checked: false },
-        {
-          value: "Servicio_comunitario",
-          label: "Servicio_comunitario",
-          checked: false,
-        },
-        { value: "Transporte", label: "Transporte", checked: false },
-      ],
-    },
-    {
-      id: "Donaciones",
-      name: "Donaciones",
-      options: [
-        {
-          value: "efectivo",
-          label: "Efectivo",
-          checked: false,
-          onChange: handlerDonaciones,
-        },
-        {
-          value: "especie",
-          label: "Especie",
-          checked: false,
-          onChange: handlerDonaciones,
-        },
-        {
-          value: "servicio",
-          label: "Voluntario",
-          checked: false,
-          onChange: handlerDonaciones,
-        },
-      ],
-    },
-  ];
-
-  function classNames(...classes) {
-    return classes.filter(Boolean).join(" ");
-  }
-
-  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
-
-  const [search, setSearch] = useState(false);
-
-  const offSearch = (e) => {
-    if (e.target === e.currentTarget) setSearch(false);
-  };
-
-  const onSearch = () => {
-    setSearch(true);
-    setTimeout(() => {
-      document.querySelector("#search").focus();
-    }, 1);
-  };
-
-  useEffect(() => {
-    setResults(info);
-  }, [info]);
-
-  useEffect(() => {
-    setInfo(data);
-    setEdit(data);
-    /* Disable scroll if search is open */
-    if (search) {
-      const scrollTop = window.pageYOffset;
-      document.documentElement.scrollTop;
-      const scrollLeft = window.pageXOffset;
-      document.documentElement.scrollLeft;
-      window.onscroll = function () {
-        window.scrollTo(scrollLeft, scrollTop);
-      };
-    } else {
-      window.onscroll = function () { };
-    }
-  }, [search]);
-
-  useEffect(() => {
-    datosFiltradosPaises.length === 0
-      ? setResults(edit)
-      : setResults([...datosFiltradosPaises]);
-  }, [datosFiltradosPaises]);
-
-  // const [e, setE] = useState("");
-
-  // const searchHandler = (ev) => {
-  //   setE(ev.target.value);
-  //   if (!e) {
-  //     results = info;
-  //     console.log(e);
-  //     console.log(info);
-  //   }
-  // };
-
-  // const searchLogic = (ev) => {
-  //   if (ev.key == "Enter" || ev.key == "Escape" || ev.target.id == "icon") {
-  //     setSearch(false);
-  //   }
-  //   if (e) {
-  //     setEdit((prev) => prev.filter((p) => p.title.toLowerCase().includes(e)));
-  //     setDatosFiltradosPaises(
-  //       datosFiltradosPaises.filter((p) => p.title.toLowerCase().includes(e))
-  //     );
-  //   }
-  // };
-
-  // results = datosFiltrados;
-
-  const handlers = (e) => {
+  //Handler de barra de busqueda
+  const searchHandler = async (e) => {
     const value = e.target.value;
-    if (value === "servicio" || value === "especie" || value === "efectivo") {
-      return handlerDonaciones(e);
-    } else if (
-      value === "Alimentacion" ||
-      value === "Asesoria Legal" ||
-      value === "Ayuda_a_refugiados" ||
-      value === "Ayuda_a_animales" ||
-      value === "Apoyo a comunidades indigenas" ||
-      value === "Apoyo_a_lgbg" ||
-      value === "Apoyo_a_la_mujer" ||
-      value === "Construccion_obras" ||
-      value === "Cultura" ||
-      value === "Deportes" ||
-      value === "Derechos_humanos" ||
-      value === "Discapacitados" ||
-      value === "Educacion" ||
-      value === "Medio_ambiente" ||
-      value === "Entretenimiento" ||
-      value === "Gobierno_no_lucro" ||
-      value === "Materia_prima" ||
-      value === "Medios_de_comunicacion" ||
-      value === "Salud_medicina" ||
-      value === "Servicio_comunitario" ||
-      value === "Transporte"
-    ) {
-      return handlerCategorias(e);
-    } else {
-      return filterPaises(e);
-    }
+    setInput(value);
+    !input
+      ? info
+      : setCurrent(
+          info.filter((e) =>
+            e.title.toLowerCase().includes(input.toLowerCase())
+          )
+        );
   };
+
+  let filtersChecked = [];
+
+  //Handlers de filtros
+  const allfilters = (e) => {
+    // setCheckedProvincias({
+    //   ...checkedProvincias,
+    //   [e.target.value]: e.target.checked,
+    // });
+    console.log(e.target.value);
+    // console.log(checkedProvincias);
+
+    if (e.target.checked) {
+      const finder = filtersChecked.find((prov) => prov === e.target.value);
+      if (!finder) {
+        filtersChecked.push(e.target.value);
+      }
+    }
+
+    if (!e.target.checked) {
+      let elementoNoCheckeado = filtersChecked.findIndex(
+        (elem) => elem == e.target.value
+      );
+      if (elementoNoCheckeado >= 0) {
+        filtersChecked.splice(elementoNoCheckeado, 1);
+      }
+    }
+    console.log(filtersChecked);
+    // if (e.target.checked) {
+
+    //   const value = e.target.value;
+    //   const resultProvincia = data.filter(
+    //     (e) => e.location.toLowerCase() === value.toLowerCase()
+    //   );
+    //   setCurrent([ ...resultProvincia]);
+    // } else {
+    //   const value = e.target.value;
+    //   const resultadoLenguaje = datosFiltradosPaises.filter(
+    //     (e) => e.location.toLowerCase() !== value.toLowerCase()
+    //   );
+    //   setCurrent([...resultadoLenguaje]);
+    // }
+    // if (current.length === 0) {
+    //   setCurrent(data);
+    // }
+  };
+
+  // Aplicacion de Filtros
+  const applyFilters = (e) => {
+    console.log(info);
+    console.log(data);
+    const resultFilters = info.filter((post) => {
+      for (let checked of filtersChecked) {
+        return (
+          post.location.toLowerCase().includes(checked.toLowerCase()) ||
+          post.description.toLowerCase().includes(checked.toLowerCase()) ||
+          post.type_of_help.toLowerCase().includes(checked.toLowerCase())
+        );
+      }
+    });
+    setCurrent(resultFilters);
+    console.log(resultFilters);
+  };
+  console.log(info);
+  console.log(data);
+
   return (
     <div className="bg-white">
       <div>
@@ -463,6 +173,7 @@ export default function Products({ data }) {
                     <h2 className="text-lg font-medium text-gray-900">
                       Filters
                     </h2>
+
                     <button
                       type="button"
                       className="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400"
@@ -548,7 +259,10 @@ export default function Products({ data }) {
 
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex border-b border-gray-200 pt-12 pb-6 justify-end">
+            {/* -----------Todo DOM - Nada de logica-----------*/}
+            <button onClick={applyFilters}>Aplicar Filtros</button>
             <div className="flex items-center">
+              {/*------------ Menu de ordenamientos ---------*/}
               <Menu as="div" className="relative inline-block text-left">
                 <div>
                   <Menu.Button className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
@@ -559,7 +273,6 @@ export default function Products({ data }) {
                     />
                   </Menu.Button>
                 </div>
-
                 <Transition
                   as={Fragment}
                   enter="transition ease-out duration-100"
@@ -574,7 +287,7 @@ export default function Products({ data }) {
                       {sortOptions.map((option) => (
                         <Menu.Item
                           key={option.name}
-                          onClick={(e) => option.onClick(e)}
+                          // onClick={(e) => option.onClick(e)}
                         >
                           {({ active }) => (
                             <a
@@ -596,13 +309,13 @@ export default function Products({ data }) {
                   </Menu.Items>
                 </Transition>
               </Menu>
-
+              {/* ---------------SearchBar-------------- */}
               <div
-                className={`h-[100%] w-full z-30 bg-black backdrop-blur-sm bg-opacity-60  top-0 left-0 ${search ? "fixed" : "none"
-                  }`}
+                className={`h-[100%] w-full z-30 bg-black backdrop-blur-sm bg-opacity-60  top-0 left-0 ${
+                  search ? "fixed" : "none"
+                }`}
                 onClick={offSearch}
               ></div>
-
               <div className=" text-gray-400 hover:text-gray-500 ">
                 <div className="w-full">
                   <input
@@ -615,17 +328,19 @@ export default function Products({ data }) {
                   ></input>
                   <BsSearch
                     id="icon"
-                    className={`text-gray-400 hover:text-gray-500 h-5 w-5 cursor-pointer absolute top top-1/2 right-6 transform -translate-y-1/2 ${search ? "visible" : "hidden"
-                      }`}
+                    className={`text-gray-400 hover:text-gray-500 h-5 w-5 cursor-pointer absolute top top-1/2 right-6 transform -translate-y-1/2 ${
+                      search ? "visible" : "hidden"
+                    }`}
                   ></BsSearch>
                 </div>
               </div>
+              {/* --------------Filtros Mobile-------------- */}
               <button
                 type="button"
                 className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
                 onClick={() => setMobileFiltersOpen(true)}
               >
-                <span className="sr-only">Filters</span>
+                <span className="sr-only">Filtrar por:</span>
                 <BsFunnelFill className="h-5 w-5" aria-hidden="true" />
               </button>
             </div>
@@ -633,44 +348,61 @@ export default function Products({ data }) {
 
           <section aria-labelledby="products-heading" className="pt-6 pb-24">
             <h2 id="products-heading" className="sr-only">
-              Products
+              Provincias
             </h2>
 
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4 justify-start items-start">
-              {/* Filters */}
               <form className="hidden lg:block">
-                <h3 className="sr-only">Categories</h3>
+                <h3 className="sr-only">Categorias</h3>
                 <ul
                   role="list"
                   className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900"
                 ></ul>
 
+                {/*------------------ Filters --------------*/}
                 {filters.map((section) => (
                   <Disclosure
                     as="div"
                     key={section.id}
-                    onChange={handlers}
+                    onChange={allfilters}
                     className="border-b border-gray-200 py-6"
                   >
                     {({ open }) => (
                       <>
                         <h3 className="-my-3 flow-root">
+                          {/* ----------Boton para desplegar filtros------- */}
                           <Disclosure.Button className="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
                             <span className="font-medium text-gray-900">
                               {section.name}
                             </span>
                             <span className="ml-6 flex items-center">
                               {open ? (
-                                <BsDash
-                                  className="h-5 w-5"
-                                  aria-hidden="true"
-                                />
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="24"
+                                  height="24"
+                                  fill="currentColor"
+                                  class="bi bi-dash"
+                                  viewBox="0 0 16 16"
+                                >
+                                  <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
+                                </svg>
                               ) : (
-                                <BsX className="h-5 w-5" aria-hidden="true" />
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="24"
+                                  height="24"
+                                  fill="currentColor"
+                                  class="bi bi-plus"
+                                  viewBox="0 0 16 16"
+                                >
+                                  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                                </svg>
                               )}
                             </span>
                           </Disclosure.Button>
                         </h3>
+                        {/* ---------- Opciones de filtros ------- */}
                         <Disclosure.Panel className="pt-6">
                           <div className="space-y-4">
                             {section.options.map((option, optionIdx) => (
@@ -704,17 +436,19 @@ export default function Products({ data }) {
 
               {/* Product grid */}
               <div
-                className="grid w-full col-span-3 grid w-full sm:grid-cols-2 xl:grid-cols-3 gap-4 "
+                className="grid w-full col-span-3 grid w-full sm:grid-cols-2 xl:grid-cols-1 gap-4 "
                 id="infiniteScroll"
               >
+                {/*------- Scroll infinito y mapeado de cards -------*/}
+                {console.log(current)}
                 <InfiniteScroll
-                  dataLength={current.length}
+                  dataLength={current && current.length}
                   next={fetchData}
                   hasMore={hasMore}
                   loader={<h4>Loading...</h4>}
                   endMessage={
                     <p style={{ textAlign: "center" }}>
-                      {current.length !== 0
+                      {current && current.length !== 0
                         ? "No hay más cartas para mostrar"
                         : "No hay cartas para mostrar"}
                     </p>
@@ -742,32 +476,6 @@ export default function Products({ data }) {
                       : "No hay cartas para mostrar"}
                   </div>
                 </InfiniteScroll>
-                {/* {results && results.length !== 0
-                  ? results.map((e) => (
-                    <Link
-                      className="w-full"
-                      key={e.id}
-                      href={`/iniciativas/${e.id}`}
-                    >
-                      <Card
-                        key={e.id}
-
-                        href={`/iniciativas/${e.id}`}
-                      >
-                        <Card
-                          key={e.id}
-                          title={e.title}
-                          image={e.image}
-                          description={e.description}
-                          location={e.location}
-                          isVolunteer={e.type_of_help}
-                          expirationDate={e.expirationDate}
-                        />
-                      </Link>
-                    ))
-                  : "No hay cartas para mostrar"} */}
-
-
                 <div className="w-full sm:col-span-2 xl:col-span-3 m-auto my-8"></div>
               </div>
             </div>
