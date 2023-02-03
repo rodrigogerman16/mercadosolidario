@@ -10,21 +10,21 @@ export default class Example extends PureComponent {
     const data = [
       {
         name: days[(days.indexOf(day) + 3) % 7], // Get day of two days ago
-        'Iniciativas creadas': this.props.posts.filter(p => {
+        'Iniciativas creadas': this.props.posts && this.props.posts.filter(p => {
           const postDate = new Date(p.date)
           if (postDate.getDay() == (day - 2)) return true
         }).length
       },
       {
         name: 'Ayer',
-        'Iniciativas creadas': this.props.posts.filter(p => {
+        'Iniciativas creadas': this.props.posts && this.props.posts.filter(p => {
           const postDate = new Date(p.date)
           if (postDate.getDay() == (day - 1)) return true
         }).length
       },
       {
         name: 'Hoy',
-        'Iniciativas creadas': this.props.posts.filter(p => {
+        'Iniciativas creadas': this.props.posts && this.props.posts.filter(p => {
           const postDate = new Date(p.date)
           if (postDate.getDay() == day) return true
         }).length
