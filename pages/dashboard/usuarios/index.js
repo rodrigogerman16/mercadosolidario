@@ -1,16 +1,12 @@
-import Image from 'next/image'
-import React from 'react'
-import Logo from '../../Assets/logo-mercado-solidario-sintexto.png'
-import InitiativesChart from '@/pages/dashboard/InitiativesChart'
-import LatestDonations from './LatestDonations'
-import UsersChart from './UsersChart'
-import RubroChart from './RubroChart'
-import Link from 'next/link'
+import UsuarioCard from "./UsuarioCard";
+import Link from "next/link";
+import Logo from '../../../Assets/logo-mercado-solidario-sintexto.png'
+import Image from "next/image";
 
-const index = ({ posts, users, company, ong }) => {
-  return (
-    <div>
-      <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 ">
+export default function Iniciativas({users}){
+    return(
+        <div>
+            <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 ">
         <div className="px-3 py-3 lg:px-5 lg:pl-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center justify-start">
@@ -30,7 +26,7 @@ const index = ({ posts, users, company, ong }) => {
                 <div>
                   <button type="button" className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 " aria-expanded="false" data-dropdown-toggle="dropdown-user">
                     <span className="sr-only">Open user menu</span>
-                    <img className="w-8 h-8 rounded-full" src="https://xsgames.co/randomusers/avatar.php?g=male" alt="user photo" />
+                    <Image className="w-8 h-8 rounded-full" src={Logo} alt="user photo" />
                   </button>
                 </div>
                 <div className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow " id="dropdown-user">
@@ -50,14 +46,14 @@ const index = ({ posts, users, company, ong }) => {
           </div>
         </div>
       </nav>
-      <aside id="logo-sidebar" className="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 " aria-label="Sidebar">
+            <aside id="logo-sidebar" className="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 " aria-label="Sidebar">
         <div className="h-full px-3 pb-4 overflow-y-auto bg-white ">
           <ul className="space-y-2">
             <li>
-              <a href="#" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 ">
+              <Link href="/dashboard" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 ">
                 <svg aria-hidden="true" className="w-6 h-6 text-gray-500 transition duration-75  group-hover:text-gray-900 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z" /><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z" /></svg>
                 <span className="ml-3">Dashboard</span>
-              </a>
+              </Link>
             </li>
             <li>
               <a href="#" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100">
@@ -73,72 +69,34 @@ const index = ({ posts, users, company, ong }) => {
               </Link>
             </li>
             <li>
-              <Link href="/dashboard/usuarios" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 ">
+              <a href="#" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 ">
                 <svg aria-hidden="true" className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75  group-hover:text-gray-900" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" /></svg>
                 <span className="flex-1 ml-3 whitespace-nowrap">Usuarios</span>
-              </Link>
+              </a>
             </li>
           </ul>
         </div>
       </aside>
-      <div className="p-4 md:ml-64 bg-gray-50">
-        <div className="p-4 rounded-lg mt-14">
-          <div className="grid grid-cols-1 gap-8 mb-4 lg:grid-cols-8">
-
-            <div className="flex flex-col gap-8 items-center justify-center h-24 rounded bg-white  p-8 pl-0 h-96 col-span-1 lg:col-span-5">
-              <h2 className='font-bold text-gray-700 text-lg'>Iniciativas creadas</h2>
-              <InitiativesChart posts={posts}></InitiativesChart>
-            </div>
-
-            <div className="flex flex-col gap-8 items-center justify-center h-24 rounded bg-white p-8 h-96 w-full col-span-1 lg:col-span-3">
-              <div className='grid items-center text-center justify-center'>
-                <h2 className='font-bold text-gray-700 text-lg'>ultimas donaciones</h2>
-                <Link href='/dashboard/donaciones' className='text-pink-400 cursor-pointer w-fit m-auto'>Ver todas</Link>
-              </div>
-              <LatestDonations></LatestDonations>
-            </div>
-
-            <div className="flex flex-col gap-8 items-center justify-center h-24 rounded bg-white p-8 h-96 w-full col-span-1 lg:col-span-4">
-              <h2 className='font-bold text-gray-700 text-lg'>Rubros de iniciativas</h2>
-              <RubroChart posts={posts}></RubroChart>
-            </div>
-
-            <div className="flex flex-col items-center justify-center h-24 rounded bg-white p-8 h-96 w-full col-span-1 lg:col-span-4">
-              <h2 className='font-bold text-gray-700 text-lg'>Tipos de usuario</h2>
-              <UsersChart posts={posts} users={users.length} company={company.length} ong={ong.length}></UsersChart>
-            </div>
-
-          </div>
+            <UsuarioCard users={users}/>
         </div>
-      </div >
-    </div>
-
-
-  )
+    )
 }
 
-export default index
-
-export const getStaticProps = async () => {
-
-  const posts = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/posts")
-    .then((res) => res.json())
-
-  const company = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/company")
-    .then((res) => res.json())
-
-  const ong = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/ong")
-    .then((res) => res.json())
-
-  const users = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/user")
-    .then((res) => res.json())
-
-  return {
-    props: {
-      posts,
-      company,
-      ong,
-      users
-    }
+export const getStaticProps = async () => {  
+    const company = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/company")
+      .then((res) => res.json())
+  
+    const ong = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/ong")
+      .then((res) => res.json())
+  
+    const users = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/allusers")
+      .then((res) => res.json())
+  
+    return {
+      props: {
+        company,
+        ong,
+        users
+      }
+    };
   };
-};
