@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { filters, sortOptions } from "./staticInfo.js";
+
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
 import {
   BsChevronDown,
@@ -13,7 +13,6 @@ import Link from "next/link";
 import CardUser from "../../Components/CardUser";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useRouter } from "next/router";
-import { searchHandler, fetchData } from "./handlers.js";
 
 export default function Products({ data }) {
   //Estados de estilos y generales
