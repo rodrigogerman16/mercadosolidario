@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
+
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
 import {
   BsChevronDown,
@@ -12,191 +13,29 @@ import Link from "next/link";
 import Card from "../../Components/Card";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useRouter } from "next/router";
-export default function Products({ data }) {
-  const [current, setCurrent] = useState([]);
-  const [hasMore, setHasMore] = useState(true);
-  const [page, setPage] = useState(1);
-  const perPage = 3;
-  const [info, setInfo] = useState();
-  const [edit, setEdit] = useState();
-  const [orden, setOrden] = useState();
-  const [input, setInput] = useState();
-  const [datosFiltradosPaises, setDatosFiltradosPaises] = useState([]);
-  const [checkedPaises, setCheckedPaises] = useState({
-    buenosAires: false,
-    Catamarca: false,
-    Chaco: false,
-    Chubut: false,
-    Cordoba: false,
-    Corrientes: false,
-    entreRios: false,
-    Formosa: false,
-    Jujuy: false,
-    laPampa: false,
-    laRioja: false,
-    Mendoza: false,
-    Misiones: false,
-    Neuquen: false,
-    rioNegro: false,
-    Salta: false,
-    sanJuan: false,
-    sanLuis: false,
-    santaCruz: false,
-    santaFe: false,
-    santiagoDelEstero: false,
-    tierraDelFuego: false,
-    Tucumán: false,
-  });
-  const [datosFiltradosCategorias, setDatosFiltradosCategorias] = useState([]);
-  const [checkedCategorias, setCheckedCategorias] = useState({
-    Alimentacion: false,
-    asesoriaLegal: false,
-    ayudaARefugiados: false,
-    ayudaAAnimales: false,
-    apoyoAComunidadesIndigenas: false,
-    apoyoALgbt: false,
-    apoyoALaMujer: false,
-    construccionObras: false,
-    cultura: false,
-    deportes: false,
-    derechosHumanos: false,
-    discapacitados: false,
-    educacion: false,
-    medioAmbiente: false,
-    entretenimiento: false,
-    gobiernoNoLucro: false,
-    materiaPrima: false,
-    mediosDeComunicacion: false,
-    saludMedicina: false,
-    servicioComunitario: false,
-    transporte: false,
-  });
 
-  // let results = [];
-  const [results, setResults] = useState([]);
-  const [datosFiltradosDonaciones, setDatosFiltradosDonaciones] = useState([]);
-  const [checkedDonaciones, setCheckedDonaciones] = useState({
-    efectivo: false,
-    especie: false,
-    voluntario: false,
-  });
+function Products({ data }) {
+  //..Estados Globales...//
+  const [provinceFilter, setProvinceFilter] = useState([]); //  Estado para filtrado de provincias.
+  const [categoryFilter, setCategoryFilter] = useState([]); //  Estado para filtrado de Categorias.
+  const [donationsFilter, setDonationsFilter] = useState([]); //  Estado para filtrado de Donaciones.
+  const [order, setOrder] = useState("asc"); //  Estado para la dirección de ordenamiento.
+  const [limit, setLimit] = useState(6); // Estado para el limite de paginado Infinity Scroll.
+  const [searchTerm, setSearchTerm] = useState(""); // Estado para la Searchbar.
+  const [search, setSearch] = useState(false);
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const [hydrated, setHydrated] = React.useState(false);
+  React.useEffect(() => {
+    // This forces a rerender, so the date is rendered
+    // the second time but not the first
+    setHydrated(true);
+  }, []);
+  if (!hydrated) {
+    // Returns null on first render, so the client and server match
+    return null;
+  }
 
-  const handlerDonaciones = (e) => {
-    setCheckedDonaciones({
-      ...checkedDonaciones,
-      [e.target.value]: e.target.checked,
-    });
-    if (e.target.checked) {
-      const value = e.target.value;
-      const resultadoLenguaje = edit.filter(
-        (e) => e.type_of_help.toLowerCase() === value.toLowerCase()
-      );
-
-      setCurrent([...datosFiltradosDonaciones, ...resultadoLenguaje]);
-    } else {
-      const value = e.target.value;
-      const resultadoLenguaje = datosFiltradosDonaciones.filter(
-        (e) => e.type_of_help.toLowerCase() !== value.toLowerCase()
-      );
-      setCurrent([...resultadoLenguaje]);
-      if (current.length === 0) {
-        setCurrent(data);
-      }
-    }
-  };
-
-  const handlerCategorias = (e) => {
-    setCheckedCategorias({
-      ...checkedCategorias,
-      [e.target.value]: e.target.checked,
-    });
-    if (e.target.checked) {
-      const value = e.target.value;
-      const resultadoLenguaje = edit.filter((e) => e.rubros === value);
-      setResults([...datosFiltradosCategorias, ...resultadoLenguaje]);
-    } else {
-      const value = e.target.value;
-      const resultadoLenguaje = datosFiltradosCategorias.filter(
-        (e) => e.rubros !== value
-      );
-      setResults([...resultadoLenguaje]);
-    }
-  };
-
-  const filterPaises = (e) => {
-    setCheckedPaises({
-      ...checkedPaises,
-      [e.target.value]: e.target.checked,
-    });
-    console.log(e.target.value);
-    if (e.target.checked) {
-      const value = e.target.value;
-      const resultadoLenguaje = edit.filter(
-        (e) => e.location.toLowerCase() === value.toLowerCase()
-      );
-      setCurrent([...datosFiltradosPaises, ...resultadoLenguaje]);
-    } else {
-      const value = e.target.value;
-      const resultadoLenguaje = datosFiltradosPaises.filter(
-        (e) => e.location.toLowerCase() !== value.toLowerCase()
-      );
-      setCurrent([...resultadoLenguaje]);
-    }
-    if (current.length === 0) {
-      setCurrent(data);
-    }
-  };
-
-  const searchHandler = async (e) => {
-    const value = e.target.value;
-    setInput(value);
-    !input
-      ? data
-
-      : setCurrent(
-          data.filter((e) =>
-            e.title.toLowerCase().includes(input.toLowerCase())
-          )
-        );
-
-  };
-
-  const fetchData = () => {
-    setTimeout(() => {
-      setPage(page + 1);
-      setCurrent([
-        ...current,
-        ...data.slice((page - 1) * perPage, page * perPage),
-      ]);
-      if (page * perPage >= info.length) {
-        setHasMore(false);
-      }
-    }, 300);
-  };
-
-  const filterOrder = async (e) => {
-    setOrden(e.target.outerText);
-    if (orden === "Titulo Desc") {
-      setCurrent(
-        datosFiltradosPaises.sort((a, b) => a.title.localeCompare(b.title))
-      );
-      edit.sort((a, b) => a.title.localeCompare(b.title));
-    } else if (orden === "Titulo Asc") {
-      setCurrent(
-        datosFiltradosPaises.sort((a, b) => b.title.localeCompare(a.title))
-      );
-      edit.sort((a, b) => b.title.localeCompare(a.title));
-    }
-  };
-
-  const sortOptions = [
-    { name: "Titulo Asc", href: "#", current: false, onClick: filterOrder },
-    { name: "Titulo Desc", href: "#", current: false, onClick: filterOrder },
-    { name: "Fecha Asc", href: "#", current: false, onClick: filterOrder },
-    { name: "Fecha Desc", href: "#", current: false, onClick: filterOrder },
-  ];
-
-  const filters = [
+  const provinces = [
     {
       id: "Provincias",
       name: "Provincias",
@@ -234,6 +73,9 @@ export default function Products({ data }) {
         { value: "Tucuman", label: "Tucuman", checked: false },
       ],
     },
+  ];
+
+  const categories = [
     {
       id: "Categorias",
       name: "Categorias",
@@ -297,6 +139,9 @@ export default function Products({ data }) {
         { value: "Transporte", label: "Transporte", checked: false },
       ],
     },
+  ];
+
+  const donations = [
     {
       id: "Donaciones",
       name: "Donaciones",
@@ -305,127 +150,111 @@ export default function Products({ data }) {
           value: "efectivo",
           label: "Efectivo",
           checked: false,
-          onChange: handlerDonaciones,
         },
         {
           value: "especie",
           label: "Especie",
           checked: false,
-          onChange: handlerDonaciones,
         },
         {
           value: "servicio",
           label: "Voluntario",
           checked: false,
-          onChange: handlerDonaciones,
         },
       ],
     },
   ];
 
-  function classNames(...classes) {
-    return classes.filter(Boolean).join(" ");
-  }
+  //.. Filtrar data Provincias..//
+  let filteredData = data.filter((item) => {
+    //.. Filtramos "data".
+    if (!provinceFilter.length) return true; //..  Si "!provinceFilter.length" ), devuelve "true" para todos los elementos en "data", y no se aplica ningún filtro adicional.
+    return provinceFilter.includes(item.location); //.. //.. SI no está vacío,  se devuelve "true" y evalua la condicion.
+  });
+  //.. Entonces, filteredData" contiene solo aquellos elementos de "data" cuya "location" coincide con alguno de los valores en "provinceFilter".
 
-  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  //.. Filtrar data Categorias..//
+  filteredData = filteredData.filter((item) => {
+    if (!categoryFilter.length) return true;
+    return categoryFilter.includes(item.rubro);
+  });
 
-  const [search, setSearch] = useState(false);
+  //.. Filtrar data Donaciones..//
+  filteredData = filteredData.filter((item) => {
+    if (!donationsFilter.length) return true;
+    return donationsFilter.includes(item.type_of_help);
+  });
+
+  //.. Filtrar data Searchbar..//
+  filteredData = filteredData.filter((item) => {
+    return item.title.toLowerCase().includes(searchTerm.toLowerCase());
+  });
+
+  //..Filtrar data asc-desc..//
+
+  filteredData =
+    order === "asc"
+      ? filteredData.sort((a, b) => (a.title > b.title ? 1 : -1))
+      : filteredData.sort((a, b) => (b.title > a.title ? 1 : -1));
+
+  //..handler Pronvincias..//
+  const handleProvinceFilter = (event) => {
+    //..Se toma un evento como argumento.
+    const { value } = event.target; //.. Se extrae su valor asociado.(valor de la provincia seleccionada)
+    const newProvinceFilter = [...provinceFilter]; //.. Se crea una nueva variable utilizando una copia de la existente para no modificar la original.
+    if (newProvinceFilter.includes(value)) {
+      //Si el valor seleccionado está incluido en la variable :
+      newProvinceFilter.splice(newProvinceFilter.indexOf(value), 1); //se elimina utilizando el método "splice()"
+    } else {
+      //.. Se hace mas que todo para permitir que el user seleccione y deseleccione el tipo de filtro en la lista.
+      newProvinceFilter.push(value); //..De lo contrario, se agrega al final usando el método "push()".
+    }
+    setProvinceFilter(newProvinceFilter); //.. Seteamos la variable que provocará un re-render de la aplicación y aplicará los filtros actualizados. :D
+  };
+
+  //..handler categorias..//
+  const handleCategoryFilter = (event) => {
+    const { value } = event.target;
+    const newCategoryFilter = [...categoryFilter];
+    if (newCategoryFilter.includes(value)) {
+      newCategoryFilter.splice(newCategoryFilter.indexOf(value), 1);
+    } else {
+      newCategoryFilter.push(value);
+    }
+    setCategoryFilter(newCategoryFilter);
+  };
+
+  //..handler Donaciones..//
+  const handleDonatiosFilter = (event) => {
+    const { value } = event.target;
+    const newDonationsFilter = [...donationsFilter];
+    if (newDonationsFilter.includes(value)) {
+      newDonationsFilter.splice(newDonationsFilter.indexOf(value), 1);
+    } else {
+      newDonationsFilter.push(value);
+    }
+    setDonationsFilter(newDonationsFilter);
+  };
+  //..Handler limit infinity Srcoll..//
+  const handleInfiniteScroll = () => {
+    setLimit(limit + 6);
+  };
+
+  //..Handler order asc - desc.. //
+  const handleOrder = () => {
+    setOrder(order === "asc" ? "desc" : "asc");
+  };
+
+  //..Handler de barra de busqueda..//
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
 
   const offSearch = (e) => {
     if (e.target === e.currentTarget) setSearch(false);
   };
 
-  const onSearch = () => {
-    setSearch(true);
-    setTimeout(() => {
-      document.querySelector("#search").focus();
-    }, 1);
-  };
-
-  useEffect(() => {
-    setResults(info);
-  }, [info]);
-
-  useEffect(() => {
-    setInfo(data);
-    setEdit(data);
-    /* Disable scroll if search is open */
-    if (search) {
-      const scrollTop = window.pageYOffset;
-      document.documentElement.scrollTop;
-      const scrollLeft = window.pageXOffset;
-      document.documentElement.scrollLeft;
-      window.onscroll = function () {
-        window.scrollTo(scrollLeft, scrollTop);
-      };
-    } else {
-      window.onscroll = function () { };
-    }
-  }, [search]);
-
-  useEffect(() => {
-    datosFiltradosPaises.length === 0
-      ? setResults(edit)
-      : setResults([...datosFiltradosPaises]);
-  }, [datosFiltradosPaises]);
-
-  // const [e, setE] = useState("");
-
-  // const searchHandler = (ev) => {
-  //   setE(ev.target.value);
-  //   if (!e) {
-  //     results = info;
-  //     console.log(e);
-  //     console.log(info);
-  //   }
-  // };
-
-  // const searchLogic = (ev) => {
-  //   if (ev.key == "Enter" || ev.key == "Escape" || ev.target.id == "icon") {
-  //     setSearch(false);
-  //   }
-  //   if (e) {
-  //     setEdit((prev) => prev.filter((p) => p.title.toLowerCase().includes(e)));
-  //     setDatosFiltradosPaises(
-  //       datosFiltradosPaises.filter((p) => p.title.toLowerCase().includes(e))
-  //     );
-  //   }
-  // };
-
-  // results = datosFiltrados;
-
-  const handlers = (e) => {
-    const value = e.target.value;
-    if (value === "servicio" || value === "especie" || value === "efectivo") {
-      return handlerDonaciones(e);
-    } else if (
-      value === "Alimentacion" ||
-      value === "Asesoria Legal" ||
-      value === "Ayuda_a_refugiados" ||
-      value === "Ayuda_a_animales" ||
-      value === "Apoyo a comunidades indigenas" ||
-      value === "Apoyo_a_lgbg" ||
-      value === "Apoyo_a_la_mujer" ||
-      value === "Construccion_obras" ||
-      value === "Cultura" ||
-      value === "Deportes" ||
-      value === "Derechos_humanos" ||
-      value === "Discapacitados" ||
-      value === "Educacion" ||
-      value === "Medio_ambiente" ||
-      value === "Entretenimiento" ||
-      value === "Gobierno_no_lucro" ||
-      value === "Materia_prima" ||
-      value === "Medios_de_comunicacion" ||
-      value === "Salud_medicina" ||
-      value === "Servicio_comunitario" ||
-      value === "Transporte"
-    ) {
-      return handlerCategorias(e);
-    } else {
-      return filterPaises(e);
-    }
-  };
   return (
     <div className="bg-white">
       <div>
@@ -481,10 +310,11 @@ export default function Products({ data }) {
                       className="px-2 py-3 font-medium text-gray-900"
                     ></ul>
 
-                    {filters.map((section) => (
+                    {provinces.map((section) => (
                       <Disclosure
                         as="div"
                         key={section.id}
+                        onChange={handleProvinceFilter}
                         className="border-t border-gray-200 px-4 py-6"
                       >
                         {({ open }) => (
@@ -496,15 +326,169 @@ export default function Products({ data }) {
                                 </span>
                                 <span className="ml-6 flex items-center">
                                   {open ? (
-                                    <BsDash
-                                      className="h-5 w-5"
-                                      aria-hidden="true"
-                                    />
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="24"
+                                      height="24"
+                                      fill="currentColor"
+                                      className="bi bi-dash"
+                                      viewBox="0 0 16 16"
+                                    >
+                                      <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
+                                    </svg>
                                   ) : (
-                                    <BsX
-                                      className="h-5 w-5"
-                                      aria-hidden="true"
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="24"
+                                      height="24"
+                                      fill="currentColor"
+                                      className="bi bi-plus"
+                                      viewBox="0 0 16 16"
+                                    >
+                                      <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                                    </svg>
+                                  )}
+                                </span>
+                              </Disclosure.Button>
+                            </h3>
+                            <Disclosure.Panel className="pt-6">
+                              <div className="space-y-6">
+                                {section.options.map((option, optionIdx) => (
+                                  <div
+                                    key={option.value}
+                                    className="flex items-center"
+                                  >
+                                    <input
+                                      id={`filter-mobile-${section.id}-${optionIdx}`}
+                                      name={`${section.id}[]`}
+                                      defaultValue={option.value}
+                                      type="checkbox"
+                                      defaultChecked={option.checked}
+                                      onChange={option.onChange}
+                                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                     />
+                                    <label
+                                      htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
+                                      className="ml-3 min-w-0 flex-1 text-gray-500"
+                                    >
+                                      {option.label}
+                                    </label>
+                                  </div>
+                                ))}
+                              </div>
+                            </Disclosure.Panel>
+                          </>
+                        )}
+                      </Disclosure>
+                    ))}
+                    {categories.map((section) => (
+                      <Disclosure
+                        as="div"
+                        key={section.id}
+                        onChange={handleCategoryFilter}
+                        className="border-t border-gray-200 px-4 py-6"
+                      >
+                        {({ open }) => (
+                          <>
+                            <h3 className="-mx-2 -my-3 flow-root">
+                              <Disclosure.Button className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
+                                <span className="font-medium text-gray-900">
+                                  {section.name}
+                                </span>
+                                <span className="ml-6 flex items-center">
+                                  {open ? (
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="24"
+                                      height="24"
+                                      fill="currentColor"
+                                      className="bi bi-dash"
+                                      viewBox="0 0 16 16"
+                                    >
+                                      <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
+                                    </svg>
+                                  ) : (
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="24"
+                                      height="24"
+                                      fill="currentColor"
+                                      className="bi bi-plus"
+                                      viewBox="0 0 16 16"
+                                    >
+                                      <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                                    </svg>
+                                  )}
+                                </span>
+                              </Disclosure.Button>
+                            </h3>
+                            <Disclosure.Panel className="pt-6">
+                              <div className="space-y-6">
+                                {section.options.map((option, optionIdx) => (
+                                  <div
+                                    key={option.value}
+                                    className="flex items-center"
+                                  >
+                                    <input
+                                      id={`filter-mobile-${section.id}-${optionIdx}`}
+                                      name={`${section.id}[]`}
+                                      defaultValue={option.value}
+                                      type="checkbox"
+                                      defaultChecked={option.checked}
+                                      onChange={option.onChange}
+                                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                    />
+                                    <label
+                                      htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
+                                      className="ml-3 min-w-0 flex-1 text-gray-500"
+                                    >
+                                      {option.label}
+                                    </label>
+                                  </div>
+                                ))}
+                              </div>
+                            </Disclosure.Panel>
+                          </>
+                        )}
+                      </Disclosure>
+                    ))}
+                    {donations.map((section) => (
+                      <Disclosure
+                        as="div"
+                        key={section.id}
+                        onChange={handleDonatiosFilter}
+                        className="border-t border-gray-200 px-4 py-6"
+                      >
+                        {({ open }) => (
+                          <>
+                            <h3 className="-mx-2 -my-3 flow-root">
+                              <Disclosure.Button className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
+                                <span className="font-medium text-gray-900">
+                                  {section.name}
+                                </span>
+                                <span className="ml-6 flex items-center">
+                                  {open ? (
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="24"
+                                      height="24"
+                                      fill="currentColor"
+                                      className="bi bi-dash"
+                                      viewBox="0 0 16 16"
+                                    >
+                                      <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
+                                    </svg>
+                                  ) : (
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="24"
+                                      height="24"
+                                      fill="currentColor"
+                                      className="bi bi-plus"
+                                      viewBox="0 0 16 16"
+                                    >
+                                      <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                                    </svg>
                                   )}
                                 </span>
                               </Disclosure.Button>
@@ -548,84 +532,55 @@ export default function Products({ data }) {
 
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex border-b border-gray-200 pt-12 pb-6 justify-end">
+            {/* -----------Todo DOM - Nada de logica-----------*/}
             <div className="flex items-center">
+              {/*------------ Menu de ordenamientos ---------*/}
               <Menu as="div" className="relative inline-block text-left">
                 <div>
                   <Menu.Button className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
-                    Ordenamiento
+                    {/* Botón para cambiar la dirección de ordenamiento */}
+                    <button onClick={handleOrder}>
+                      {order === "asc"
+                        ? "Ordenar descendentemente"
+                        : "Ordenar ascendentemente"}
+                    </button>
                     <BsChevronDown
                       className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                       aria-hidden="true"
                     />
                   </Menu.Button>
                 </div>
-
-                <Transition
-                  as={Fragment}
-                  enter="transition ease-out duration-100"
-                  enterFrom="transform opacity-0 scale-95"
-                  enterTo="transform opacity-100 scale-100"
-                  leave="transition ease-in duration-75"
-                  leaveFrom="transform opacity-100 scale-100"
-                  leaveTo="transform opacity-0 scale-95"
-                >
-                  <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
-                    <div className="py-1">
-                      {sortOptions.map((option) => (
-                        <Menu.Item
-                          key={option.name}
-                          onClick={(e) => option.onClick(e)}
-                        >
-                          {({ active }) => (
-                            <a
-                              href={option.href}
-                              className={classNames(
-                                option.current
-                                  ? "font-medium text-gray-900"
-                                  : "text-gray-500",
-                                active ? "bg-gray-100" : "",
-                                "block px-4 py-2 text-sm"
-                              )}
-                            >
-                              {option.name}
-                            </a>
-                          )}
-                        </Menu.Item>
-                      ))}
-                    </div>
-                  </Menu.Items>
-                </Transition>
               </Menu>
 
+              {/* ---------------SearchBar-------------- */}
               <div
-                className={`h-[100%] w-full z-30 bg-black backdrop-blur-sm bg-opacity-60  top-0 left-0 ${search ? "fixed" : "none"
-                  }`}
+                className={`h-[100%] w-full z-30 bg-black backdrop-blur-sm bg-opacity-60  top-0 left-0 ${
+                  search ? "fixed" : "none"
+                }`}
                 onClick={offSearch}
               ></div>
-
               <div className=" text-gray-400 hover:text-gray-500 ">
                 <div className="w-full">
                   <input
-                    type={"search"}
-                    id="search"
-                    className={`rounded-full shadow border-gray-200 bg-gray-100 ml-4 text-black  text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200  
-                    `}
-                    placeholder="Buscar..."
-                    onChange={searchHandler}
-                  ></input>
+                    type="text"
+                    placeholder="Buscar producto"
+                    onChange={handleSearch}
+                  />
                   <BsSearch
                     id="icon"
-                    className={`text-gray-400 hover:text-gray-500 h-5 w-5 cursor-pointer absolute top top-1/2 right-6 transform -translate-y-1/2 ${search ? "visible" : "hidden"
-                      }`}
+                    className={`text-gray-400 hover:text-gray-500 h-5 w-5 cursor-pointer absolute top top-1/2 right-6 transform -translate-y-1/2 ${
+                      search ? "visible" : "hidden"
+                    }`}
                   ></BsSearch>
                 </div>
               </div>
+              {/* --------------Filtros Mobile-------------- */}
               <button
                 type="button"
                 className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
                 onClick={() => setMobileFiltersOpen(true)}
               >
-                <span className="sr-only">Filters</span>
+                <span className="sr-only">Filtrar por:</span>
                 <BsFunnelFill className="h-5 w-5" aria-hidden="true" />
               </button>
             </div>
@@ -633,23 +588,23 @@ export default function Products({ data }) {
 
           <section aria-labelledby="products-heading" className="pt-6 pb-24">
             <h2 id="products-heading" className="sr-only">
-              Products
+              Provincias
             </h2>
 
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4 justify-start items-start">
-              {/* Filters */}
               <form className="hidden lg:block">
-                <h3 className="sr-only">Categories</h3>
+                <h3 className="sr-only">Categorias</h3>
                 <ul
                   role="list"
                   className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900"
                 ></ul>
 
-                {filters.map((section) => (
+                {/*------------------ Filters --------------*/}
+                {provinces.map((section) => (
                   <Disclosure
                     as="div"
+                    onChange={handleProvinceFilter}
                     key={section.id}
-                    onChange={handlers}
                     className="border-b border-gray-200 py-6"
                   >
                     {({ open }) => (
@@ -661,12 +616,167 @@ export default function Products({ data }) {
                             </span>
                             <span className="ml-6 flex items-center">
                               {open ? (
-                                <BsDash
-                                  className="h-5 w-5"
-                                  aria-hidden="true"
-                                />
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="24"
+                                  height="24"
+                                  fill="currentColor"
+                                  className="bi bi-dash"
+                                  viewBox="0 0 16 16"
+                                >
+                                  <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
+                                </svg>
                               ) : (
-                                <BsX className="h-5 w-5" aria-hidden="true" />
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="24"
+                                  height="24"
+                                  fill="currentColor"
+                                  className="bi bi-plus"
+                                  viewBox="0 0 16 16"
+                                >
+                                  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                                </svg>
+                              )}
+                            </span>
+                          </Disclosure.Button>
+                        </h3>
+                        <Disclosure.Panel className="pt-6">
+                          <div className="space-y-4">
+                            {section.options.map((option, optionIdx) => (
+                              <div
+                                key={option.value}
+                                className="flex items-center"
+                              >
+                                <input
+                                  id={`filter-${section.id}-${optionIdx}`}
+                                  name={`${section.id}[]`}
+                                  defaultValue={option.value}
+                                  type="checkbox"
+                                  defaultChecked={option.checked}
+                                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                />
+                                <label
+                                  htmlFor={`filter-${section.id}-${optionIdx}`}
+                                  className="ml-3 text-sm text-gray-600"
+                                >
+                                  {option.label}
+                                </label>
+                              </div>
+                            ))}
+                          </div>
+                        </Disclosure.Panel>
+                      </>
+                    )}
+                  </Disclosure>
+                ))}
+                {categories.map((section) => (
+                  <Disclosure
+                    as="div"
+                    onChange={handleCategoryFilter}
+                    key={section.id}
+                    className="border-b border-gray-200 py-6"
+                  >
+                    {({ open }) => (
+                      <>
+                        <h3 className="-my-3 flow-root">
+                          <Disclosure.Button className="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
+                            <span className="font-medium text-gray-900">
+                              {section.name}
+                            </span>
+                            <span className="ml-6 flex items-center">
+                              {open ? (
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="24"
+                                  height="24"
+                                  fill="currentColor"
+                                  className="bi bi-dash"
+                                  viewBox="0 0 16 16"
+                                >
+                                  <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
+                                </svg>
+                              ) : (
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="24"
+                                  height="24"
+                                  fill="currentColor"
+                                  className="bi bi-plus"
+                                  viewBox="0 0 16 16"
+                                >
+                                  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                                </svg>
+                              )}
+                            </span>
+                          </Disclosure.Button>
+                        </h3>
+                        <Disclosure.Panel className="pt-6">
+                          <div className="space-y-4">
+                            {section.options.map((option, optionIdx) => (
+                              <div
+                                key={option.value}
+                                className="flex items-center"
+                              >
+                                <input
+                                  id={`filter-${section.id}-${optionIdx}`}
+                                  name={`${section.id}[]`}
+                                  defaultValue={option.value}
+                                  type="checkbox"
+                                  defaultChecked={option.checked}
+                                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                />
+                                <label
+                                  htmlFor={`filter-${section.id}-${optionIdx}`}
+                                  className="ml-3 text-sm text-gray-600"
+                                >
+                                  {option.label}
+                                </label>
+                              </div>
+                            ))}
+                          </div>
+                        </Disclosure.Panel>
+                      </>
+                    )}
+                  </Disclosure>
+                ))}
+                {donations.map((section) => (
+                  <Disclosure
+                    as="div"
+                    onChange={handleDonatiosFilter}
+                    key={section.id}
+                    className="border-b border-gray-200 py-6"
+                  >
+                    {({ open }) => (
+                      <>
+                        <h3 className="-my-3 flow-root">
+                          <Disclosure.Button className="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
+                            <span className="font-medium text-gray-900">
+                              {section.name}
+                            </span>
+                            <span className="ml-6 flex items-center">
+                              {open ? (
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="24"
+                                  height="24"
+                                  fill="currentColor"
+                                  className="bi bi-dash"
+                                  viewBox="0 0 16 16"
+                                >
+                                  <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
+                                </svg>
+                              ) : (
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="24"
+                                  height="24"
+                                  fill="currentColor"
+                                  className="bi bi-plus"
+                                  viewBox="0 0 16 16"
+                                >
+                                  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                                </svg>
                               )}
                             </span>
                           </Disclosure.Button>
@@ -707,68 +817,46 @@ export default function Products({ data }) {
                 className="grid w-full col-span-3 grid w-full sm:grid-cols-2 xl:grid-cols-3 gap-4 "
                 id="infiniteScroll"
               >
-                <InfiniteScroll
-                  dataLength={current.length}
-                  next={fetchData}
-                  hasMore={hasMore}
-                  loader={<h4>Loading...</h4>}
-                  endMessage={
-                    <p style={{ textAlign: "center" }}>
-                      {current.length !== 0
-                        ? "No hay más cartas para mostrar"
-                        : "No hay cartas para mostrar"}
-                    </p>
-                  }
-                >
-                  <div className="grid w-full col-span-3 grid w-full sm:grid-cols-2 xl:grid-cols-3 gap-4">
-                    {current.length !== 0
-                      ? current.map((e) => (
-                          <Link
-                            className="w-full"
-                            key={e.id}
-                            href={`/iniciativas/${e.id}`}
-                          >
-                            <Card
-                              key={e.id}
-                              title={e.title}
-                              image={e.image}
-                              description={e.description}
-                              location={e.location}
-                              isVolunteer={e.type_of_help}
-                              expirationDate={e.expirationDate}
-                            />
-                          </Link>
-                        ))
-                      : "No hay cartas para mostrar"}
-                  </div>
-                </InfiniteScroll>
-                {/* {results && results.length !== 0
-                  ? results.map((e) => (
+                {/*------- Scroll infinito y mapeado de cards -------*/}
+                {filteredData
+                  .slice(0, limit)
+                  .sort((a, b) => {
+                    if (order === "asc") return a.title.localeCompare(b.title);
+                    return b.title.localeCompare(a.title);
+                  })
+                  .map((item) => (
                     <Link
                       className="w-full"
-                      key={e.id}
-                      href={`/iniciativas/${e.id}`}
+                      key={item.id}
+                      href={`/iniciativas/${item.id}`}
                     >
                       <Card
-                        key={e.id}
+                        key={item.id}
+                        title={item.title}
+                        image={item.image}
+                        description={item.description}
+                        location={item.location}
+                        isVolunteer={item.type_of_help}
+                        expirationDate={item.expirationDate}
+                      />
+                    </Link>
+                  ))}
+                <div className="w-full flex sm:col-span-2 xl:col-span-3 m-auto my-8">
+                  {/*------- Cargar mas Cards-------*/}
 
-                        href={`/iniciativas/${e.id}`}
-                      >
-                        <Card
-                          key={e.id}
-                          title={e.title}
-                          image={e.image}
-                          description={e.description}
-                          location={e.location}
-                          isVolunteer={e.type_of_help}
-                          expirationDate={e.expirationDate}
-                        />
-                      </Link>
-                    ))
-                  : "No hay cartas para mostrar"} */}
-
-
-                <div className="w-full sm:col-span-2 xl:col-span-3 m-auto my-8"></div>
+                  {limit < filteredData.length ? (
+                    <button
+                      className="w-full m-auto"
+                      onClick={handleInfiniteScroll}
+                    >
+                      Mostrar más
+                    </button>
+                  ) : (
+                    <p className="w-full text-center m-auto">
+                      No hay más cartas para mostrar
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
           </section>
@@ -778,6 +866,7 @@ export default function Products({ data }) {
   );
 }
 
+export default Products;
 export function getStaticProps() {
   return fetch(
     "https://pf-backend-mercadosolidario-production.up.railway.app/posts"
