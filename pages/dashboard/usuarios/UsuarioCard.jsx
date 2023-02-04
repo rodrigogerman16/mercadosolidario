@@ -1,41 +1,42 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
+import {BsArrowUpShort, BsArrowDownShort} from "react-icons/bs"
 
 export default function UsuarioCard({ users }) {
 
+  {/*Borrado Logico*/}
   function handleToggle(user) {
     //user.isActive ?
     //window.localStorage.setItem("isActive", false) :
     //window.localStorage.setItem("isActive", true)
   }
 
-  {/*Ordenamiento Por Nombre*/}
-  const [allUsers, setAllUsers] = useState([users]);
+  
+  
+  const [sortOrder, setSortOrder] = useState('asc');
+  const [searchTerm, setSearchTerm] = useState('');  
+  const [sortBy, setSortBy] = useState('name');
 
-  const handleNameSort = () => {
-    setAllUsers([...allUsers[0].data].sort((a, b) => (a.name > b.name ? 1 : -1)));
-    console.log("name", allUsers)
-  };
+  const sortedData = users.data
+    .filter(user => user.name.toLowerCase().includes(searchTerm.toLowerCase()))
+    .sort((a, b) => {
+      console.log(sortOrder)
+      console.log(sortBy)
+      if(sortBy === 'name'){
+        if (sortOrder === 'asc') {
+          return a.name.localeCompare(b.name);
+        } else {
+          return b.name.localeCompare(a.name);
+        }
+      }
+      
+      if (sortOrder === 'asc') {
+        return a.type_of_user.localeCompare(b.type_of_user);
+      } else {
+        return b.type_of_user.localeCompare(a.type_of_user);
+      }
+    });
 
-  {/*Ordenamiento Por Rubro */}
-  const handleRoleSort = () => {
-    setAllUsers([...allUsers[0].data].sort((a, b) => (a.type_of_user > b.type_of_user ? 1 : -1)));
-    console.log("role", allUsers)
-  };
 
-  {/*Searchbar*/}  
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
-  };
-  console.log(allUsers)
-  const filteredPosts = allUsers[0].data.filter((user) =>
-  user.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  useEffect(()=>{
-    console.log("Hola")
-  },[allUsers])
   return (
     <div class="relative overflow-x-auto mt-20 ml-4 flex flex-col justify-center items-center">
       
@@ -46,7 +47,7 @@ export default function UsuarioCard({ users }) {
             className={`rounded-full shadow border-gray-200 bg-gray-100 ml-4 text-black  text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200  
                     `}
             placeholder="Buscar..."
-            onChange={handleSearch}
+            onChange={e => setSearchTerm(e.target.value)}
             value={searchTerm}
           ></input>          
         </div>
@@ -54,10 +55,10 @@ export default function UsuarioCard({ users }) {
         <thead class="text-xs text-gray-700 uppercase border-b">
           <tr>
             <th scope="col" class="px-6 py-3">
-              <buton onClick={handleNameSort}>Nombre</buton>
+              <buton onClick={ function(){setSortBy("name"); setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}} className="flex items-center gap-2">Nombre {(sortOrder === 'asc' && sortBy === 'name')? <BsArrowUpShort/> : <BsArrowDownShort/>}</buton>
             </th>
             <th scope="col" class="px-6 py-3">
-            <buton onClick={handleRoleSort}>Tipo</buton>
+            <buton onClick={function(event){setSortBy("type_of_user"); setSortOrder( sortOrder === 'asc' ? 'desc' : 'asc')}} className="flex items-center gap-2">Tipo {(sortOrder === 'asc' && sortBy === 'type_of_user') ? <BsArrowUpShort/> : <BsArrowDownShort/>}</buton>
             </th>
             <th scope="col" class="px-6 py-3">
               Email
@@ -71,8 +72,8 @@ export default function UsuarioCard({ users }) {
           </tr>
         </thead>
         <tbody>
-          {filteredPosts.map((user) => (
-            <tr class="border-b">
+          {sortedData.map((user) => (
+            <tr class="border-b" key={user.id}>
               <th
                 scope="row"
                 class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
