@@ -125,7 +125,7 @@ export default function UsuarioCard({ users }) {
               {/*Registro Unico Tributario*/}
               <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                 {user.rut ?
-                <a href={user.rut} target="_blank">
+                <a href={user.rut} target="_blank" rel="noreferrer">
                     Abrir
                 </a>
                 :
