@@ -27,11 +27,9 @@ export default function Login() {
 
   const [errors, setErrors] = useState({});
 
-  const handleSignIn = async (e) => {
-    e.preventDefault();
-    await signIn({ provider: 'google' });
+ async function handleSignIn(){
+    signIn('google',{callbackUrl: "http://localhost:3000" });
   };
-
 
   function handleChange(el) {
     setInput({
@@ -46,7 +44,7 @@ export default function Login() {
     );
   }
 
-  // Ingreso local 
+  // Ingreso local
   async function handleSubmit(el) {
     try {
       el.preventDefault();
@@ -71,15 +69,11 @@ export default function Login() {
         const decoded = jwt_decode(info.data.token);
 
         window.localStorage.setItem("user", JSON.stringify(decoded));
-        
-        if(!user.isActive){
-          window.localStorage.removeItem("user");
-          window.localStorage.setItem("loginError", true)
-          window.location.href = '../';
-          return
-        }
-
-        Alert({ title: 'Cuenta', text: 'Iniciaste sesión satisfactoriamente!', icon: 'success' })
+        Alert({
+          title: "Cuenta",
+          text: "Iniciaste sesión satisfactoriamente!",
+          icon: "success",
+        });
         setInput({
           email: "",
           password: "",
@@ -87,20 +81,28 @@ export default function Login() {
         router.push("/");
         window.location.reload();
       } else {
-        Alert({ title: 'Cuenta', text: 'Hay datos incorrectos o sin completar', icon: 'error' })
+        Alert({
+          title: "Cuenta",
+          text: "Hay datos incorrectos o sin completar",
+          icon: "error",
+        });
       }
     } catch (error) {
       setInput({
         email: "",
         password: "",
       });
-      Alert({ title: 'Cuenta', text: 'Hubo un error al iniciar sesión, si el error persiste, vuelva a intentar mas tarde.', icon: 'error' })
+      Alert({
+        title: "Cuenta",
+        text: "Hubo un error al iniciar sesión, si el error persiste, vuelva a intentar mas tarde.",
+        icon: "error",
+      });
     }
   }
 
   const user = useUser();
   const { data: session } = useSession();
-  console.log(session)
+  console.log(session);
   const { backendUser, isLoading } = useBackendUser();
 
   useEffect(() => {
@@ -133,19 +135,19 @@ export default function Login() {
       return;
     }
 
-    
-
-    if(user){
-      if(session) signOut()
-      if(!user.isActive){
-        window.localStorage.removeItem("user");
-        signOut()
-        window.localStorage.setItem("loginError", true)
-        window.location.href = '../';
+    if (user) {
+      if (session) signOut();
+      console.log(user.isActive)
+      //arreglar 
+      if (user.isActive === 'true') {
+        console.log(user.isActive)
+        window.localStorage.removeItem("user");        
+        window.localStorage.setItem("loginError", true);
+        signOut();
+        window.location.href = "../";
       }
-      Router.push('/')
-    } 
-    
+      Router.push("/");
+    }
   }, [user]);
 
   return (
