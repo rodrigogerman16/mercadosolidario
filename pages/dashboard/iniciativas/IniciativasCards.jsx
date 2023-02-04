@@ -7,9 +7,11 @@ export default function IniciativasCards({ posts }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [iniciatives, setIniciatives] = useState(posts);
 
+  {/*Borrado Logico*/}
+
   async function handleToggle(post) {
-    console.log(post.id);
-    await axios.put(`http://localhost:3001/post/${post.id}`, {
+    console.log(post);
+    await axios.put(`http://localhost:3001/posts/${post.id}`, {
       isActive: post.isActive ? false : true,
     });
   }
@@ -25,7 +27,7 @@ export default function IniciativasCards({ posts }) {
   return (
     <div className="mt-20 flex flex-col items-center justify-center gap-8">
       <div className=" text-gray-400 hover:text-gray-500 ">
-        <div className="w-full text-center">
+        <div className="w-3/4 text-left">
           <input
             type={"search"}
             id="search"
@@ -45,7 +47,7 @@ export default function IniciativasCards({ posts }) {
                 height={400}
                 alt="Imagen de iniciativa"
               />
-              <div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal lg:w-1/2">
+              <div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal lg:w-3/4">
                 <div className="mb-4">
                   <div className="text-gray-900 font-bold text-xl mb-2">
                     {post.title}
