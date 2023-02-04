@@ -9,9 +9,9 @@ export default function App({ Component, pageProps, session }) {
 
   if (router.pathname === '/dashboard' || /^\/dashboard\//.test(router.pathname))
     return (
-      <>
+      <SessionProvider session={session}>
         <Component {...pageProps} />
-      </>
+      </SessionProvider>
     )
   else
     return (
