@@ -2,6 +2,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import Alert from "./Alert";
 
 const { VERCEL_URL = "http://localhost:3000/api/railway-backend" } =
   process.env;
@@ -29,11 +30,14 @@ function Validate(input) {
   if (input.user_linkedin.length === 0) {
     errors.user_linkedin = "Ingrese su Linkedin";
   }
+  //if (input.user_linkedin.includes("www.linkedin.com/in") === false) {
+  //  errors.user_linkedin = "Ingrese bien la direccion URL";
+  //}
   return errors;
 }
 
 export default function Formusers(props) {
-  console.log(props)
+  //console.log(props)
   const { data: session } = useSession();
 
   const postUser = async (props) => {
@@ -54,6 +58,7 @@ export default function Formusers(props) {
       cuil: info.data.cuil,
       phone: info.data.phone,
       user_linkedin: info.data.user_linkedin,
+      //image: info.data.image
     };
 
     window.localStorage.setItem("user", JSON.stringify(aux));
@@ -66,6 +71,8 @@ export default function Formusers(props) {
     cuil: "",
     user_linkedin: "",
   });
+
+  //console.log(input.user_linkedin.includes("www.linkedin.com/in"))
 
   const [errors, setErrors] = useState({});
 
@@ -82,7 +89,7 @@ export default function Formusers(props) {
     );
   }
 
-  function handleSubmit(el) {
+  async function handleSubmit(el) {
     try {
       el.preventDefault();
       setErrors(
@@ -99,6 +106,29 @@ export default function Formusers(props) {
         input.cuil !== "" &&
         input.user_linkedin !== ""
       ) {
+        const form = el.currentTarget;
+        const fileInput = Array.from(form.elements).find(
+          ({ name }) => name === "file"
+        );
+
+        const formData2 = new FormData();
+
+        for (const file of fileInput.files) {
+          formData2.append("file", file);
+        }
+
+        formData2.append("upload_preset", "my-uploads");
+
+        const data = await fetch(
+          "https://api.cloudinary.com/v1_1/dc9pehmoz/image/upload",
+          {
+            method: "POST",
+            body: formData2,
+          }
+        ).then((r) => r.json());
+
+        console.log(data.secure_url)
+
         const user = {
           name: input.name,
           lastName: input.lastName,
@@ -108,25 +138,26 @@ export default function Formusers(props) {
           type_of_user: props.type_of_user || "user",
           cuil: input.cuil,
           user_linkedin: input.user_linkedin,
+          //image: data.secure_url || "https://t3.ftcdn.net/jpg/04/51/93/48/360_F_451934847_V7rc18Ibs9UNU5sSihQBY0MzSDgei4Cr.jpg"
         };
 
         postUser(user).then(() => {
-          axios.post('https://pf-backend-mercadosolidario-production.up.railway.app/mailer/email', {email: user.email})
+          axios.post('https://pf-backend-mercadosolidario-production.up.railway.app/mailer/email', { email: user.email })
           setInput({
             name: "",
             lastName: "",
             phone: "",
             cuil: "",
             user_linkedin: "",
-          });          
-          alert("Usuario creado!");
+          });
+          Alert({ title: 'Registro', text: 'Usuario creado con éxito!', icon: 'success' })
           window.location.href = '../';
         }).catch(error => {
-          alert("error creando usuario", error)
+          Alert({ title: 'Registro', text: 'Hubo un error al crear el usuario, si el error persiste, vuelve a intentarlo mas tarde.', icon: 'error' })
         });
 
       } else {
-        alert("Hay datos incorrectos o sin completar!");
+        Alert({ title: 'Registro', text: 'Hay datos incorrectos o sin completar!', icon: 'error' })
       }
     } catch (error) {
       console.log(error);
@@ -137,6 +168,14 @@ export default function Formusers(props) {
 
   return (
     <form className="grid justify-center items-center gap-4" onSubmit={(el) => handleSubmit(el, input)}>
+      <div>
+        <label>Imagen de Perfil (Opcional)</label>
+        <input
+          className="text-sm"
+          type="file"
+          name="file"
+        />
+      </div>
       <div className="">
         <label className="text-sm">Nombre</label>
         <input

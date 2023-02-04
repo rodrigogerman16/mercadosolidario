@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
+
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
 import {
   BsChevronDown,
@@ -12,68 +13,29 @@ import Link from "next/link";
 import Card from "../../Components/Card";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useRouter } from "next/router";
-import Paginado from "../../Components/Paginate";
 
-export default function Products({ data }) {
-  const [info, setInfo] = useState();
-  const [edit, setEdit] = useState();
-  const [orden, setOrden] = useState();
-  const [input, setInput] = useState();
-  const [currentPage, setCurrentPage] = useState(1);
-  const [perPage, setPerPage] = useState(6);
-  const indexofLast = currentPage * perPage;
-  const indexofFirst = indexofLast - perPage;
-
-  const filterDonacionn = (e) => {
-    const value = e.target.name;
-    console.log("Soy filterDonacion" + value);
-    const informacion =
-      value === "efectivo"
-        ? data.filter((e) => e.type_of_help === "efectivo")
-        : data.filter((e) => e.type_of_help === "especie");
-    console.log(data);
-    setInfo(value === "all" ? data : informacion);
-  };
-  let results = [];
-  const filterInput = async (e) => {
-    const value = e.target.value;
-    setInput(value);
-  };
-
-  !input
-    ? (results = info)
-    : (results = edit.filter((e) =>
-      e.title.toLowerCase().includes(input.toLowerCase())
-    ));
-
-  const filterOrder = async (e) => {
-    setOrden(e.target.outerText);
-  };
-
-  if (orden === "Titulo Asc") {
-    results = edit.sort((a, b) => a.title.localeCompare(b.title));
-    console.log(results);
-  } else if (orden === "Titulo Desc") {
-    results = edit.sort((a, b) => b.title.localeCompare(a.title));
-    console.log(results);
-  } else if (orden === "Fecha Asc") {
-    results = edit.sort((a, b) =>
-      a.expirationDate.localeCompare(b.expirationDate)
-    );
-  } else if (orden === "Fecha Desc") {
-    results = edit.sort((a, b) =>
-      b.expirationDate.localeCompare(a.expirationDate)
-    );
+function Products({ data }) {
+  //..Estados Globales...//
+  const [provinceFilter, setProvinceFilter] = useState([]); //  Estado para filtrado de provincias.
+  const [categoryFilter, setCategoryFilter] = useState([]); //  Estado para filtrado de Categorias.
+  const [donationsFilter, setDonationsFilter] = useState([]); //  Estado para filtrado de Donaciones.
+  const [order, setOrder] = useState("asc"); //  Estado para la dirección de ordenamiento.
+  const [limit, setLimit] = useState(6); // Estado para el limite de paginado Infinity Scroll.
+  const [searchTerm, setSearchTerm] = useState(""); // Estado para la Searchbar.
+  const [search, setSearch] = useState(false);
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const [hydrated, setHydrated] = React.useState(false);
+  React.useEffect(() => {
+    // This forces a rerender, so the date is rendered
+    // the second time but not the first
+    setHydrated(true);
+  }, []);
+  if (!hydrated) {
+    // Returns null on first render, so the client and server match
+    return null;
   }
 
-  const sortOptions = [
-    { name: "Titulo Asc", href: "#", current: false, onClick: filterOrder },
-    { name: "Titulo Desc", href: "#", current: false, onClick: filterOrder },
-    { name: "Fecha Asc", href: "#", current: false, onClick: filterOrder },
-    { name: "Fecha Desc", href: "#", current: false, onClick: filterOrder },
-  ];
-
-  const filters = [
+  const provinces = [
     {
       id: "Provincias",
       name: "Provincias",
@@ -82,22 +44,22 @@ export default function Products({ data }) {
         { value: "Catamarca", label: "Catamarca", checked: false },
         { value: "Chaco", label: "Chaco", checked: false },
         { value: "Chubut", label: "Chubut", checked: false },
-        { value: "Córdoba", label: "Córdoba", checked: false },
+        { value: "Cordoba", label: "Córdoba", checked: false },
         { value: "Corrientes", label: "Corrientes", checked: false },
-        { value: "Entre Ríos", label: "Entre Ríos", checked: false },
+        { value: "Entre Rios", label: "Entre Ríos", checked: false },
         { value: "Formosa", label: "Formosa", checked: false },
         { value: "Jujuy", label: "Jujuy", checked: false },
         { value: "La Pampa", label: "La Pampa", checked: false },
         { value: "La Rioja", label: "La Rioja", checked: false },
         { value: "Mendoza", label: "Mendoza", checked: false },
         { value: "Misiones", label: "Misiones", checked: false },
-        { value: "Neuquén", label: "Neuquén", checked: false },
-        { value: "Río Negro", label: "Río Negro", checked: false },
+        { value: "Neuquen", label: "Neuquén", checked: false },
+        { value: "Rio Negro", label: "Río Negro", checked: false },
         { value: "Salta", label: "Salta", checked: false },
         { value: "San Juan", label: "San Juan", checked: false },
         { value: "San Luis", label: "San Luis", checked: false },
         { value: "Santa Cruz", label: "Santa Cruz", checked: false },
-        { value: "Santa Fé", label: "Santa Fé", checked: false },
+        { value: "Santa Fe", label: "Santa Fé", checked: false },
         {
           value: "Santiago del Estero",
           label: "Santiago del Estero",
@@ -111,6 +73,9 @@ export default function Products({ data }) {
         { value: "Tucuman", label: "Tucuman", checked: false },
       ],
     },
+  ];
+
+  const categories = [
     {
       id: "Categorias",
       name: "Categorias",
@@ -174,6 +139,9 @@ export default function Products({ data }) {
         { value: "Transporte", label: "Transporte", checked: false },
       ],
     },
+  ];
+
+  const donations = [
     {
       id: "Donaciones",
       name: "Donaciones",
@@ -182,111 +150,110 @@ export default function Products({ data }) {
           value: "efectivo",
           label: "Efectivo",
           checked: false,
-          onChange: filterDonacionn,
         },
         {
           value: "especie",
           label: "Especie",
           checked: false,
-          onChange: filterDonacionn,
         },
         {
-          value: "12l",
-          label: "12L",
+          value: "servicio",
+          label: "Voluntario",
           checked: false,
-          onChange: filterDonacionn,
         },
       ],
     },
   ];
 
-  function classNames(...classes) {
-    return classes.filter(Boolean).join(" ");
-  }
+  //.. Filtrar data Provincias..//
+  let filteredData = data.filter((item) => {
+    //.. Filtramos "data".
+    if (!provinceFilter.length) return true; //..  Si "!provinceFilter.length" ), devuelve "true" para todos los elementos en "data", y no se aplica ningún filtro adicional.
+    return provinceFilter.includes(item.location); //.. //.. SI no está vacío,  se devuelve "true" y evalua la condicion.
+  });
+  //.. Entonces, filteredData" contiene solo aquellos elementos de "data" cuya "location" coincide con alguno de los valores en "provinceFilter".
 
-  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  //.. Filtrar data Categorias..//
+  filteredData = filteredData.filter((item) => {
+    if (!categoryFilter.length) return true;
+    return categoryFilter.includes(item.rubro);
+  });
 
-  const [search, setSearch] = useState(false);
+  //.. Filtrar data Donaciones..//
+  filteredData = filteredData.filter((item) => {
+    if (!donationsFilter.length) return true;
+    return donationsFilter.includes(item.type_of_help);
+  });
+
+  //.. Filtrar data Searchbar..//
+  filteredData = filteredData.filter((item) => {
+    return item.title.toLowerCase().includes(searchTerm.toLowerCase());
+  });
+
+  //..Filtrar data asc-desc..//
+
+  filteredData =
+    order === "asc"
+      ? filteredData.sort((a, b) => (a.title > b.title ? 1 : -1))
+      : filteredData.sort((a, b) => (b.title > a.title ? 1 : -1));
+
+  //..handler Pronvincias..//
+  const handleProvinceFilter = (event) => {
+    //..Se toma un evento como argumento.
+    const { value } = event.target; //.. Se extrae su valor asociado.(valor de la provincia seleccionada)
+    const newProvinceFilter = [...provinceFilter]; //.. Se crea una nueva variable utilizando una copia de la existente para no modificar la original.
+    if (newProvinceFilter.includes(value)) {
+      //Si el valor seleccionado está incluido en la variable :
+      newProvinceFilter.splice(newProvinceFilter.indexOf(value), 1); //se elimina utilizando el método "splice()"
+    } else {
+      //.. Se hace mas que todo para permitir que el user seleccione y deseleccione el tipo de filtro en la lista.
+      newProvinceFilter.push(value); //..De lo contrario, se agrega al final usando el método "push()".
+    }
+    setProvinceFilter(newProvinceFilter); //.. Seteamos la variable que provocará un re-render de la aplicación y aplicará los filtros actualizados. :D
+  };
+
+  //..handler categorias..//
+  const handleCategoryFilter = (event) => {
+    const { value } = event.target;
+    const newCategoryFilter = [...categoryFilter];
+    if (newCategoryFilter.includes(value)) {
+      newCategoryFilter.splice(newCategoryFilter.indexOf(value), 1);
+    } else {
+      newCategoryFilter.push(value);
+    }
+    setCategoryFilter(newCategoryFilter);
+  };
+
+  //..handler Donaciones..//
+  const handleDonatiosFilter = (event) => {
+    const { value } = event.target;
+    const newDonationsFilter = [...donationsFilter];
+    if (newDonationsFilter.includes(value)) {
+      newDonationsFilter.splice(newDonationsFilter.indexOf(value), 1);
+    } else {
+      newDonationsFilter.push(value);
+    }
+    setDonationsFilter(newDonationsFilter);
+  };
+  //..Handler limit infinity Srcoll..//
+  const handleInfiniteScroll = () => {
+    setLimit(limit + 6);
+  };
+
+  //..Handler order asc - desc.. //
+  const handleOrder = () => {
+    setOrder(order === "asc" ? "desc" : "asc");
+  };
+
+  //..Handler de barra de busqueda..//
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
 
   const offSearch = (e) => {
     if (e.target === e.currentTarget) setSearch(false);
   };
-
-  const onSearch = () => {
-    setSearch(true);
-    setTimeout(() => {
-      document.querySelector("#search").focus();
-    }, 1);
-  };
-
-  useEffect(() => {
-    /* Disable scroll if search is open */
-    if (search) {
-      const scrollTop =
-        window.pageYOffset || document.documentElement.scrollTop;
-      const scrollLeft =
-        window.pageXOffset || document.documentElement.scrollLeft;
-
-      window.onscroll = function () {
-        window.scrollTo(scrollLeft, scrollTop);
-      };
-    } else {
-      window.onscroll = function () { };
-    }
-  }, [search]);
-
-  const [e, setE] = useState("");
-
-  const searchHandler = (ev) => {
-    setE(ev.target.value);
-  };
-
-  if (e) {
-    results = results.filter((p) => p.title.toLowerCase().includes(e));
-  }
-
-  const searchLogic = (e) => {
-    if (e.key == "Enter" || e.key == "Escape" || e.target.id == "icon") {
-      setSearch(false);
-    }
-  };
-
-  const [pagination, setPagination] = useState(1);
-
-  const [hydrated, setHydrated] = React.useState(false);
-  useEffect(() => {
-    setEdit(data);
-    setInfo(data);
-    setHydrated(true);
-  }, []);
-  if (!hydrated) {
-    return null;
-  }
-
-  const filterPaises = (e) => {
-    setCurrentPage(1);
-    if (e.target.checked) {
-      if (!e.target.value) return setInfo(data);
-      const value = e.target.value;
-      const filtros = data.filter((e) => e.location === value);
-      setInfo(value === "all" ? data : filtros);
-      // console.log((e.target.checked = !e.target.checked));
-      console.log(info);
-    }
-    if (!e.target.checked) {
-      const value = e.target.value;
-      const filtros = info.filter((e) => e.location !== value);
-      setInfo(filtros);
-      // e.target.checked = !e.target.checked;
-      // console.log((e.target.checked = !e.target.checked));
-      console.log(info);
-    }
-  };
-
-  const paginado = (number) => {
-    setCurrentPage(number);
-  };
-  const current = results.slice(indexofFirst, indexofLast);
 
   return (
     <div className="bg-white">
@@ -343,10 +310,11 @@ export default function Products({ data }) {
                       className="px-2 py-3 font-medium text-gray-900"
                     ></ul>
 
-                    {filters.map((section) => (
+                    {provinces.map((section) => (
                       <Disclosure
                         as="div"
                         key={section.id}
+                        onChange={handleProvinceFilter}
                         className="border-t border-gray-200 px-4 py-6"
                       >
                         {({ open }) => (
@@ -358,15 +326,27 @@ export default function Products({ data }) {
                                 </span>
                                 <span className="ml-6 flex items-center">
                                   {open ? (
-                                    <BsDash
-                                      className="h-5 w-5"
-                                      aria-hidden="true"
-                                    />
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="24"
+                                      height="24"
+                                      fill="currentColor"
+                                      className="bi bi-dash"
+                                      viewBox="0 0 16 16"
+                                    >
+                                      <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
+                                    </svg>
                                   ) : (
-                                    <BsX
-                                      className="h-5 w-5"
-                                      aria-hidden="true"
-                                    />
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="24"
+                                      height="24"
+                                      fill="currentColor"
+                                      className="bi bi-plus"
+                                      viewBox="0 0 16 16"
+                                    >
+                                      <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                                    </svg>
                                   )}
                                 </span>
                               </Disclosure.Button>
@@ -384,6 +364,149 @@ export default function Products({ data }) {
                                       defaultValue={option.value}
                                       type="checkbox"
                                       defaultChecked={option.checked}
+                                      onChange={option.onChange}
+                                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                    />
+                                    <label
+                                      htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
+                                      className="ml-3 min-w-0 flex-1 text-gray-500"
+                                    >
+                                      {option.label}
+                                    </label>
+                                  </div>
+                                ))}
+                              </div>
+                            </Disclosure.Panel>
+                          </>
+                        )}
+                      </Disclosure>
+                    ))}
+                    {categories.map((section) => (
+                      <Disclosure
+                        as="div"
+                        key={section.id}
+                        onChange={handleCategoryFilter}
+                        className="border-t border-gray-200 px-4 py-6"
+                      >
+                        {({ open }) => (
+                          <>
+                            <h3 className="-mx-2 -my-3 flow-root">
+                              <Disclosure.Button className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
+                                <span className="font-medium text-gray-900">
+                                  {section.name}
+                                </span>
+                                <span className="ml-6 flex items-center">
+                                  {open ? (
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="24"
+                                      height="24"
+                                      fill="currentColor"
+                                      className="bi bi-dash"
+                                      viewBox="0 0 16 16"
+                                    >
+                                      <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
+                                    </svg>
+                                  ) : (
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="24"
+                                      height="24"
+                                      fill="currentColor"
+                                      className="bi bi-plus"
+                                      viewBox="0 0 16 16"
+                                    >
+                                      <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                                    </svg>
+                                  )}
+                                </span>
+                              </Disclosure.Button>
+                            </h3>
+                            <Disclosure.Panel className="pt-6">
+                              <div className="space-y-6">
+                                {section.options.map((option, optionIdx) => (
+                                  <div
+                                    key={option.value}
+                                    className="flex items-center"
+                                  >
+                                    <input
+                                      id={`filter-mobile-${section.id}-${optionIdx}`}
+                                      name={`${section.id}[]`}
+                                      defaultValue={option.value}
+                                      type="checkbox"
+                                      defaultChecked={option.checked}
+                                      onChange={option.onChange}
+                                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                    />
+                                    <label
+                                      htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
+                                      className="ml-3 min-w-0 flex-1 text-gray-500"
+                                    >
+                                      {option.label}
+                                    </label>
+                                  </div>
+                                ))}
+                              </div>
+                            </Disclosure.Panel>
+                          </>
+                        )}
+                      </Disclosure>
+                    ))}
+                    {donations.map((section) => (
+                      <Disclosure
+                        as="div"
+                        key={section.id}
+                        onChange={handleDonatiosFilter}
+                        className="border-t border-gray-200 px-4 py-6"
+                      >
+                        {({ open }) => (
+                          <>
+                            <h3 className="-mx-2 -my-3 flow-root">
+                              <Disclosure.Button className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
+                                <span className="font-medium text-gray-900">
+                                  {section.name}
+                                </span>
+                                <span className="ml-6 flex items-center">
+                                  {open ? (
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="24"
+                                      height="24"
+                                      fill="currentColor"
+                                      className="bi bi-dash"
+                                      viewBox="0 0 16 16"
+                                    >
+                                      <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
+                                    </svg>
+                                  ) : (
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="24"
+                                      height="24"
+                                      fill="currentColor"
+                                      className="bi bi-plus"
+                                      viewBox="0 0 16 16"
+                                    >
+                                      <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                                    </svg>
+                                  )}
+                                </span>
+                              </Disclosure.Button>
+                            </h3>
+                            <Disclosure.Panel className="pt-6">
+                              <div className="space-y-6">
+                                {section.options.map((option, optionIdx) => (
+                                  <div
+                                    key={option.value}
+                                    className="flex items-center"
+                                  >
+                                    <input
+                                      id={`filter-mobile-${section.id}-${optionIdx}`}
+                                      name={`${section.id}[]`}
+                                      defaultValue={option.value}
+                                      type="checkbox"
+                                      defaultChecked={option.checked}
+                                      onChange={option.onChange}
                                       className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                     />
                                     <label
@@ -409,94 +532,55 @@ export default function Products({ data }) {
 
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex border-b border-gray-200 pt-12 pb-6 justify-end">
+            {/* -----------Todo DOM - Nada de logica-----------*/}
             <div className="flex items-center">
+              {/*------------ Menu de ordenamientos ---------*/}
               <Menu as="div" className="relative inline-block text-left">
                 <div>
                   <Menu.Button className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
-                    Ordenamiento
+                    {/* Botón para cambiar la dirección de ordenamiento */}
+                    <button onClick={handleOrder}>
+                      {order === "asc"
+                        ? "Ordenar descendentemente"
+                        : "Ordenar ascendentemente"}
+                    </button>
                     <BsChevronDown
                       className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                       aria-hidden="true"
                     />
                   </Menu.Button>
                 </div>
-
-                <Transition
-                  as={Fragment}
-                  enter="transition ease-out duration-100"
-                  enterFrom="transform opacity-0 scale-95"
-                  enterTo="transform opacity-100 scale-100"
-                  leave="transition ease-in duration-75"
-                  leaveFrom="transform opacity-100 scale-100"
-                  leaveTo="transform opacity-0 scale-95"
-                >
-                  <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
-                    <div className="py-1">
-                      {sortOptions.map((option) => (
-                        <Menu.Item
-                          key={option.name}
-                          onClick={(e) => option.onClick(e)}
-                        >
-                          {({ active }) => (
-                            <a
-                              href={option.href}
-                              className={classNames(
-                                option.current
-                                  ? "font-medium text-gray-900"
-                                  : "text-gray-500",
-                                active ? "bg-gray-100" : "",
-                                "block px-4 py-2 text-sm"
-                              )}
-                            >
-                              {option.name}
-                            </a>
-                          )}
-                        </Menu.Item>
-                      ))}
-                    </div>
-                  </Menu.Items>
-                </Transition>
               </Menu>
 
+              {/* ---------------SearchBar-------------- */}
               <div
-                className={`h-[100%] w-full z-30 bg-black backdrop-blur-sm bg-opacity-60  top-0 left-0 ${search ? "fixed" : "none"
-                  }`}
+                className={`h-[100%] w-full z-30 bg-black backdrop-blur-sm bg-opacity-60  top-0 left-0 ${
+                  search ? "fixed" : "none"
+                }`}
                 onClick={offSearch}
-              >
-                <div className="absolute shadow top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+              ></div>
+              <div className=" text-gray-400 hover:text-gray-500 ">
+                <div className="w-full">
                   <input
-                    type={"search"}
-                    id="search"
-                    className={`rounded-full pr-16 w-full h-full shadow border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200  ${search ? "visible" : "hidden"
-                      }`}
-                    placeholder="Buscar..."
-                    onKeyDown={searchLogic}
-                    onChange={searchHandler}
-                    value={e}
-                  ></input>
+                    type="text"
+                    placeholder="Buscar producto"
+                    onChange={handleSearch}
+                  />
                   <BsSearch
                     id="icon"
-                    className={`text-gray-400 hover:text-gray-500 h-5 w-5 cursor-pointer absolute top top-1/2 right-6 transform -translate-y-1/2 ${search ? "visible" : "hidden"
-                      }`}
-                    onClick={searchLogic}
+                    className={`text-gray-400 hover:text-gray-500 h-5 w-5 cursor-pointer absolute top top-1/2 right-6 transform -translate-y-1/2 ${
+                      search ? "visible" : "hidden"
+                    }`}
                   ></BsSearch>
                 </div>
               </div>
-
-              <div className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7">
-                <span className="sr-only">View grid</span>
-                <BsSearch
-                  className="h-5 w-5 cursor-pointer"
-                  aria-hidden="true"
-                  onClick={onSearch}
-                />
-              </div>
+              {/* --------------Filtros Mobile-------------- */}
               <button
                 type="button"
                 className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
                 onClick={() => setMobileFiltersOpen(true)}
               >
-                <span className="sr-only">Filters</span>
+                <span className="sr-only">Filtrar por:</span>
                 <BsFunnelFill className="h-5 w-5" aria-hidden="true" />
               </button>
             </div>
@@ -504,23 +588,23 @@ export default function Products({ data }) {
 
           <section aria-labelledby="products-heading" className="pt-6 pb-24">
             <h2 id="products-heading" className="sr-only">
-              Products
+              Provincias
             </h2>
 
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4 justify-start items-start">
-              {/* Filters */}
               <form className="hidden lg:block">
-                <h3 className="sr-only">Categories</h3>
+                <h3 className="sr-only">Categorias</h3>
                 <ul
                   role="list"
                   className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900"
                 ></ul>
 
-                {filters.map((section) => (
+                {/*------------------ Filters --------------*/}
+                {provinces.map((section) => (
                   <Disclosure
                     as="div"
+                    onChange={handleProvinceFilter}
                     key={section.id}
-                    onChange={(e) => filterPaises(e)}
                     className="border-b border-gray-200 py-6"
                   >
                     {({ open }) => (
@@ -532,12 +616,167 @@ export default function Products({ data }) {
                             </span>
                             <span className="ml-6 flex items-center">
                               {open ? (
-                                <BsDash
-                                  className="h-5 w-5"
-                                  aria-hidden="true"
-                                />
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="24"
+                                  height="24"
+                                  fill="currentColor"
+                                  className="bi bi-dash"
+                                  viewBox="0 0 16 16"
+                                >
+                                  <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
+                                </svg>
                               ) : (
-                                <BsX className="h-5 w-5" aria-hidden="true" />
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="24"
+                                  height="24"
+                                  fill="currentColor"
+                                  className="bi bi-plus"
+                                  viewBox="0 0 16 16"
+                                >
+                                  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                                </svg>
+                              )}
+                            </span>
+                          </Disclosure.Button>
+                        </h3>
+                        <Disclosure.Panel className="pt-6">
+                          <div className="space-y-4">
+                            {section.options.map((option, optionIdx) => (
+                              <div
+                                key={option.value}
+                                className="flex items-center"
+                              >
+                                <input
+                                  id={`filter-${section.id}-${optionIdx}`}
+                                  name={`${section.id}[]`}
+                                  defaultValue={option.value}
+                                  type="checkbox"
+                                  defaultChecked={option.checked}
+                                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                />
+                                <label
+                                  htmlFor={`filter-${section.id}-${optionIdx}`}
+                                  className="ml-3 text-sm text-gray-600"
+                                >
+                                  {option.label}
+                                </label>
+                              </div>
+                            ))}
+                          </div>
+                        </Disclosure.Panel>
+                      </>
+                    )}
+                  </Disclosure>
+                ))}
+                {categories.map((section) => (
+                  <Disclosure
+                    as="div"
+                    onChange={handleCategoryFilter}
+                    key={section.id}
+                    className="border-b border-gray-200 py-6"
+                  >
+                    {({ open }) => (
+                      <>
+                        <h3 className="-my-3 flow-root">
+                          <Disclosure.Button className="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
+                            <span className="font-medium text-gray-900">
+                              {section.name}
+                            </span>
+                            <span className="ml-6 flex items-center">
+                              {open ? (
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="24"
+                                  height="24"
+                                  fill="currentColor"
+                                  className="bi bi-dash"
+                                  viewBox="0 0 16 16"
+                                >
+                                  <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
+                                </svg>
+                              ) : (
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="24"
+                                  height="24"
+                                  fill="currentColor"
+                                  className="bi bi-plus"
+                                  viewBox="0 0 16 16"
+                                >
+                                  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                                </svg>
+                              )}
+                            </span>
+                          </Disclosure.Button>
+                        </h3>
+                        <Disclosure.Panel className="pt-6">
+                          <div className="space-y-4">
+                            {section.options.map((option, optionIdx) => (
+                              <div
+                                key={option.value}
+                                className="flex items-center"
+                              >
+                                <input
+                                  id={`filter-${section.id}-${optionIdx}`}
+                                  name={`${section.id}[]`}
+                                  defaultValue={option.value}
+                                  type="checkbox"
+                                  defaultChecked={option.checked}
+                                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                />
+                                <label
+                                  htmlFor={`filter-${section.id}-${optionIdx}`}
+                                  className="ml-3 text-sm text-gray-600"
+                                >
+                                  {option.label}
+                                </label>
+                              </div>
+                            ))}
+                          </div>
+                        </Disclosure.Panel>
+                      </>
+                    )}
+                  </Disclosure>
+                ))}
+                {donations.map((section) => (
+                  <Disclosure
+                    as="div"
+                    onChange={handleDonatiosFilter}
+                    key={section.id}
+                    className="border-b border-gray-200 py-6"
+                  >
+                    {({ open }) => (
+                      <>
+                        <h3 className="-my-3 flow-root">
+                          <Disclosure.Button className="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
+                            <span className="font-medium text-gray-900">
+                              {section.name}
+                            </span>
+                            <span className="ml-6 flex items-center">
+                              {open ? (
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="24"
+                                  height="24"
+                                  fill="currentColor"
+                                  className="bi bi-dash"
+                                  viewBox="0 0 16 16"
+                                >
+                                  <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
+                                </svg>
+                              ) : (
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="24"
+                                  height="24"
+                                  fill="currentColor"
+                                  className="bi bi-plus"
+                                  viewBox="0 0 16 16"
+                                >
+                                  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                                </svg>
                               )}
                             </span>
                           </Disclosure.Button>
@@ -578,33 +817,45 @@ export default function Products({ data }) {
                 className="grid w-full col-span-3 grid w-full sm:grid-cols-2 xl:grid-cols-3 gap-4 "
                 id="infiniteScroll"
               >
-                {current.length !== 0
-                  ? current.map((e) => (
+                {/*------- Scroll infinito y mapeado de cards -------*/}
+                {filteredData
+                  .slice(0, limit)
+                  .sort((a, b) => {
+                    if (order === "asc") return a.title.localeCompare(b.title);
+                    return b.title.localeCompare(a.title);
+                  })
+                  .map((item) => (
                     <Link
                       className="w-full"
-                      key={e.id}
-                      href={`/iniciativas/${e.id}`}
+                      key={item.id}
+                      href={`/iniciativas/${item.id}`}
                     >
                       <Card
-                        key={e.id}
-                        title={e.title}
-                        image={e.image}
-                        description={e.description}
-                        location={e.location}
-                        isVolunteer={e.type_of_help}
-                        expirationDate={e.expirationDate}
+                        key={item.id}
+                        title={item.title}
+                        image={item.image}
+                        description={item.description}
+                        location={item.location}
+                        isVolunteer={item.type_of_help}
+                        expirationDate={item.expirationDate}
                       />
                     </Link>
-                  ))
-                  : "No hay cartas para mostrar"}
-                <div className="w-full sm:col-span-2 xl:col-span-3 m-auto my-8">
-                  <Paginado
-                    perPage={perPage}
-                    results={results.length}
-                    paginado={paginado}
-                    key="Paginado"
-                    current={currentPage}
-                  />
+                  ))}
+                <div className="w-full flex sm:col-span-2 xl:col-span-3 m-auto my-8">
+                  {/*------- Cargar mas Cards-------*/}
+
+                  {limit < filteredData.length ? (
+                    <button
+                      className="w-full m-auto"
+                      onClick={handleInfiniteScroll}
+                    >
+                      Mostrar más
+                    </button>
+                  ) : (
+                    <p className="w-full text-center m-auto">
+                      No hay más cartas para mostrar
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
@@ -615,6 +866,7 @@ export default function Products({ data }) {
   );
 }
 
+export default Products;
 export function getStaticProps() {
   return fetch(
     "https://pf-backend-mercadosolidario-production.up.railway.app/posts"

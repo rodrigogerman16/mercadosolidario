@@ -5,22 +5,56 @@ import { useState } from "react";
 import { Transition } from "@headlessui/react";
 import { useUser } from "../hooks/user.js";
 import Router from "next/router";
-import {signOut} from "next-auth/react"
+import { signOut, useSession } from "next-auth/react"
+import Alert from "./Alert";
 
 
-export default function OngNavbar() {   
+export default function OngNavbar() {
+    const {data: session} = useSession()
     const user = useUser();
-    const [isOpen, setIsOpen] = useState(false);   
-    
-    function handleLogOut() {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const handleLogOut = async() => {
+        if (session) {
+            await fetch("api/auth/signout", {
+              method: "GET",
+              credentials: "include",
+            })
+              .then((response) => {
+                if (response.status === 200) {
+                  signOut()
+                  localStorage.removeItem("user");
+                  Alert({
+                    title: "Cuenta",
+                    text: "Cerraste sesión satisfactoriamente",
+                    icon: "success",
+                  });
+                  Router.push("/");
+                  window.location.reload();
+                } else {
+                  Alert({
+                    title: "Cuenta",
+                    text: "Error signing out of Google",
+                    icon: "error",
+                  });
+                }
+              })
+              .catch((error) => {
+                Alert({
+                  title: "Cuenta",
+                  text: "Error signing out of Google" + error,
+                  icon: "error",
+                });
+              });
+          }
         signOut();
         localStorage.removeItem('user');
-        alert("Deslogeado Satisfactoriamente")
+        Alert({ title: 'Cuenta', text: 'Cerraste sesión satisfactoriamente.', icon: 'success' })
         Router.push('/')
         window.location.reload()
-    } 
+    }
 
-    if(user){
+    if (user) {
         return (
             <div>
                 <nav className="bg-white py-4">
@@ -40,7 +74,7 @@ export default function OngNavbar() {
                                         >
                                             Inicio
                                         </Link>
-    
+
                                         <Link
                                             href="/creariniciativas"
                                             className="font-semibold text-black hover:text-pink-400"
@@ -51,7 +85,7 @@ export default function OngNavbar() {
                                 </div>
                                 <div className="hidden gap-4 md:flex">
                                     <button
-                                        onClick={ () => handleLogOut()}
+                                        onClick={() => handleLogOut()}
                                         className="font-semibold px-6 py-2 hover:text-pink-400 transition-colors rounded"
                                     >
                                         Cerrar sesion
@@ -74,8 +108,8 @@ export default function OngNavbar() {
                                 >
                                     <span className="sr-only">Open main menu</span>
                                     {!isOpen ? (
-                                        
-                                        
+
+
                                         <Image
                                             className="block rounded-3xl"
                                             src={user.image ? user.image : logo}
@@ -103,7 +137,7 @@ export default function OngNavbar() {
                             </div>
                         </div>
                     </div>
-    
+
                     <Transition
                         show={isOpen}
                         enter="transition ease-out duration-100 transform"
@@ -122,23 +156,23 @@ export default function OngNavbar() {
                                     >
                                         Inicio
                                     </Link>
-    
+
                                     <Link
                                         href="/creariniciativas"
                                         className="font-semibold text-black hover:text-pink-400"
                                     >
                                         Crear Iniciativas
                                     </Link>
-    
+
                                     <Link
                                         href=""
                                         className="font-semibold text-black px-6 py-2 hover:text-pink-400"
-                                        
+
                                     >
                                         Perfil
-                                    </Link>                                    
+                                    </Link>
                                     <button
-                                        onClick={ () => handleLogOut()}
+                                        onClick={() => handleLogOut()}
                                         className="font-semibold text-white bg-pink-400 px-6 py-2 hover:bg-pink-300 transition-colors rounded"
                                     >
                                         Cerrar sesion
@@ -150,5 +184,5 @@ export default function OngNavbar() {
                 </nav>
             </div>
         )
-    }        
+    }
 }

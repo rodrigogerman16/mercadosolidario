@@ -2,8 +2,9 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useRouter } from "next/router";
+import Alert from "@/Components/Alert";
 
-const {VERCEL_URL = 'http://localhost:3000/api/railway-backend'} = process.env
+const { VERCEL_URL = 'http://localhost:3000/api/railway-backend' } = process.env
 
 function Validate(input) {
   let errors = {};
@@ -36,6 +37,8 @@ export default function Creariniciativa() {
     location: "",
     expirationDate: "",
     type_of_help: "",
+    cbu: "",
+    items_accepted: "",
   });
 
   const [errors, setErrors] = React.useState({});
@@ -117,7 +120,7 @@ export default function Creariniciativa() {
           "https://api.cloudinary.com/v1_1/dc9pehmoz/image/upload",
           {
             method: "POST",
-            body: formData,
+            body: formData,            
           }
         ).then((r) => r.json());
 
@@ -134,6 +137,8 @@ export default function Creariniciativa() {
         formData2.append("image", data.secure_url);
         formData2.append("resultsAchieved", "Buenos Resultados");
         formData2.append("type_of_help", input.type_of_help);
+        //formData2.append("cbu", input.cbu);
+        //formData2.append("items_accepted", input.items_accepted);
 
         postIniciatives(formData2);
 
@@ -145,10 +150,12 @@ export default function Creariniciativa() {
           description: "",
           location: "",
           type_of_help: "",
+          cbu: "",
+          items_accepted: "",
         });
         setImageSrc(null);
       } else {
-        alert("Hay datos incorrectos o sin completar!");
+        Alert({ title: 'Iniciativa', text: 'Hay datos incorrectos o sin completar', icon: 'error' })
       }
     } catch (error) {
       console.log(error);
@@ -221,6 +228,25 @@ export default function Creariniciativa() {
           <option value="Tucumán">Tucumán</option>
         </select>
         {errors.location ? <label className="w-full text-red-600">{errors.location}</label> : null}
+        <label class="block text-sm">Fecha de Expiracion</label>
+        <input
+          class="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
+          type="text"
+          value={input.expirationDate}
+          name="expirationDate"
+          onChange={(el) => handleChange(el)}
+          placeholder="AAAA-MM-DD"
+        />
+        {errors.expirationDate ? (
+          <label className="w-full text-red-600">{errors.expirationDate}</label>
+        ) : null}
+        <label class="block text-sm">Imagen</label>
+        <input
+          class="w-full "
+          type="file"
+          name="file"
+        />
+        {/* {imageSrc === null ? <label>{'Ingrese el Archivo'}</label> : null} */}
         <label class="block text-sm">Tipo de Ayuda</label>
         <select
           class="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
@@ -233,6 +259,18 @@ export default function Creariniciativa() {
           <option value="servicio">Voluntariados</option>
         </select>
         {errors.type_of_help ? <label className="w-full text-red-600">{errors.type_of_help}</label> : null}
+        {input.type_of_help === "efectivo"? <div>
+          <label>CBU/Paypal/MP</label>
+          <input type="text" value={input.cbu}
+          name="cbu"
+          onChange={(el) => handleChange(el)}></input>
+          </div> : null}
+          {input.type_of_help === "especie"? <div>
+          <label>Items Aceptados(Ej: Ropa, utiles, Arroz, Madera)</label>
+          <input type="text" value={input.items_accepted}
+          name="items_accepted"
+          onChange={(el) => handleChange(el)}></input>
+          </div> : null}
         {/* <div class="mt-2 font-hind text-lg">
             <label>Tipo de Ayudas/Donaciones</label>
             <div class="mt-2 font-hind text-lg">
@@ -266,25 +304,6 @@ export default function Creariniciativa() {
               <label class="ml-2">Voluntarios</label>
             </div>
           </div> */}
-        <label class="block text-sm">Fecha de Expiracion</label>
-        <input
-          class="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
-          type="text"
-          value={input.expirationDate}
-          name="expirationDate"
-          onChange={(el) => handleChange(el)}
-          placeholder="AAAA-MM-DD"
-        />
-        {errors.expirationDate ? (
-          <label className="w-full text-red-600">{errors.expirationDate}</label>
-        ) : null}
-        <label class="block text-sm">Imagen</label>
-        <input
-          class="w-full "
-          type="file"
-          name="file"
-        />
-        {/* {imageSrc === null ? <label>{'Ingrese el Archivo'}</label> : null} */}
         <input
           type="submit"
           value={"Publicar"}
