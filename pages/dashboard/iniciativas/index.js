@@ -2,8 +2,13 @@ import IniciativasCards from "./IniciativasCards";
 import Link from "next/link";
 import Logo from '../../../Assets/logo-mercado-solidario-sintexto.png'
 import Image from "next/image";
+import { signOut, useSession } from 'next-auth/react'
 
 export default function Iniciativas({posts}){
+  const {data: session} = useSession()
+  function handleSignOut(){
+    signOut()
+  }
     return(
         <div>
             <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 ">
@@ -37,7 +42,7 @@ export default function Iniciativas({posts}){
                   </div>
                   <ul className="py-1" role="none">
                     <li>
-                      <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 " role="menuitem">Sign out</a>
+                    <button onClick={handleSignOut} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 " role="menuitem">Cerrar sesion</button>
                     </li>
                   </ul>
                 </div>
