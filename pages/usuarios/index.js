@@ -827,24 +827,18 @@ function Products({ data }) {
                     return b.name.localeCompare(a.name);
                   })
                   .map((item) => (
-                    <Link
-                      className="w-full"
+                    <CardUser
                       key={item.id}
-                      href={`/iniciativas/${item.id}`}
-                    >
-                      <CardUser
-                        key={item.id}
-                        name={item.name}
-                        lastName={item.lastName}
-                        phone={item.phone}
-                        user_linkedin={item.user_linkedin}
-                        profession={item.profession}
-                        province={item.province}
-                        email={item.email}
-                        image={item.image}
-                        type_of_insignia={item.type_of_insignia}
-                      />
-                    </Link>
+                      name={item.name}
+                      lastName={item.lastName}
+                      phone={item.phone}
+                      user_linkedin={item.user_linkedin}
+                      profession={item.profession}
+                      province={item.province}
+                      email={item.email}
+                      image={item.image}
+                      type_of_insignia={item.type_of_insignia}
+                    />
                   ))}
                 <div className="w-full flex sm:col-span-2 xl:col-span-3 m-auto my-8">
                   {/*------- Cargar mas Cards-------*/}
@@ -876,12 +870,12 @@ export function getStaticProps() {
   return fetch(
     "https://pf-backend-mercadosolidario-production.up.railway.app/user"
   )
-    .then((res) => res.json())
-    .then((data) => {
-      return {
-        props: {
-          data,
-        },
-      };
-    });
+  .then((res) => res.json())
+  .then((data) => {
+    return {
+      props: {
+        data,
+      },
+    };
+  });
 }
