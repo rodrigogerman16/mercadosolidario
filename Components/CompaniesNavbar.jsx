@@ -13,13 +13,15 @@ export default function CompaniesNavbar() {
     const user = useUser();
     const [isOpen, setIsOpen] = useState(false);
 
-    function handleLogOut() {
-        signOut();
-        localStorage.removeItem('user');
-        Alert({ title: 'Cuenta', text: 'Cerraste sesión satisfactoriamente', icon: 'success' })
-        Router.push('/')
-        window.location.reload()
-    }
+    function handleSignOut(){
+        localStorage.removeItem("user");
+        Alert({
+          title: "Cuenta",
+          text: "Cerraste sesión satisfactoriamente",
+          icon: "success",
+        });
+        signOut()
+      }
 
     if (user) {
         return (
@@ -52,7 +54,7 @@ export default function CompaniesNavbar() {
                                 </div>
                                 <div className="hidden gap-4 md:flex">
                                     <button
-                                        onClick={() => handleLogOut()}
+                                        onClick={() => handleSignOut()}
                                         className="font-semibold px-6 py-2 hover:text-pink-400 transition-colors rounded"
                                     >
                                         Cerrar sesion
