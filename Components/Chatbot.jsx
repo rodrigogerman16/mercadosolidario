@@ -27,11 +27,11 @@ const Chatbot = () => {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
+        body: {
           email: email,
           question: value,
           answer: false
-        })
+        }
       })
     }
     else {
