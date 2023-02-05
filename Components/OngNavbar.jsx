@@ -53,7 +53,7 @@ export default function OngNavbar() {
                                         </Link>
 
                                         <Link
-                                            href="/ongperfil"
+                                            href="/perfilong"
                                             className="font-semibold text-black hover:text-pink-400"
                                         >
                                             Perfil
