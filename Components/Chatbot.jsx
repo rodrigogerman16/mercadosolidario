@@ -7,23 +7,37 @@ import Alert from './Alert'
 
 const Chatbot = () => {
 
+  const isValidEmail = (email) => {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    return re.test(String(email).toLowerCase())
+  }
+
   const staffHandler = () => {
+    const email = window.document.querySelector('#chatbot-email').value
     const value = window.document.querySelector('#chatbot-input').value
-    setTimeout(() => {
-      Alert({ title: 'Chatbot', text: 'Tu mensaje ha sido enviado, un miembro del staff se contactara contigo lo antes posible.', icon: 'success' })
-    }, 0)
-    if (user) {
-      fetch('https://pf-backend-mercadosolidario-production.up.railway.app/newchat', {
+    const emailValidation = isValidEmail(email)
+
+    if (emailValidation && value.length > 3 && value.length < 1000) {
+      setTimeout(() => {
+        Alert({ title: 'Chatbot', text: 'Tu mensaje ha sido enviado, un miembro del staff se contactara contigo lo antes posible.', icon: 'success' })
+      }, 0)
+
+      fetch('https://pf-backend-mercadosolidario-production.up.railway.app/chat/newchat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          email: user.email,
+          email: email,
           question: value,
           answer: false
         })
       })
+    }
+    else {
+      setTimeout(() => {
+        Alert({ title: 'Chatbot', text: 'Los datos ingresados no son validos.', icon: 'error' })
+      }, 0)
     }
   }
 
@@ -102,25 +116,19 @@ const Chatbot = () => {
     },
     {
       id: '4f',
-      message: user ? `Lo siento si no he podido ayudarte, deja tu mensaje y un miembro de Mercado Solidario se contactara contigo lo antes posible en tu mail: ${user.email}` : 'Lo siento, debes iniciar sesión para poder contactar a un staff',
-      trigger: user ? '5a' : '5b'
+      message: 'Lo siento si no he podido ayudarte, deja tu mensaje y un miembro de Mercado Solidario se contactara contigo lo antes posible en tu email.',
+      trigger: '5a'
     },
     {
       id: '5a',
       component: (
         <div className='flex flex-col items-start justify-center gap-4'>
-          <input type={'text'} placeholder='Ingresa tu pregunta y presiona "ENTER"' id='chatbot-input'></input>
+          <input type={'email'} placeholder='Ingresa tu email' id='chatbot-email'></input>
+          <input type={'text'} placeholder='Ingresa tu pregunta' id='chatbot-input'></input>
           <button onClick={staffHandler} className='font-semibold text-white bg-pink-400 px-6 py-2 hover:bg-pink-300 transition-colors rounded m-auto'>Enviar</button>
         </div>
       ),
       end: true
-    },
-    {
-      id: '5b',
-      component: (
-        <Link href={'/ingresar'}> Inicia sesión </Link>
-      ),
-      end: true,
     },
     {
       id: 5,
