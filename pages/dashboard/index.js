@@ -6,12 +6,10 @@ import LatestDonations from './LatestDonations'
 import UsersChart from './UsersChart'
 import RubroChart from './RubroChart'
 import Link from 'next/link'
-import { getSession, signOut, useSession } from 'next-auth/react'
+import { getSession, signOut } from 'next-auth/react'
 
 
 const index = ({ posts, users, company, ong }) => {
-
-  const {data: session} = useSession()
   function handleSignOut(){
     signOut()
   }
