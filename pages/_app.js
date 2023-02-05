@@ -1,3 +1,4 @@
+import Chatbot from "@/Components/Chatbot";
 import Footer from "@/Components/Footer";
 import Navbar from "@/Components/Navbar";
 import "@/styles/globals.css";
@@ -18,6 +19,7 @@ export default function App({ Component, pageProps, session }) {
       <SessionProvider session={session}>
         <Navbar />
         <Component {...pageProps} />
+        <Chatbot></Chatbot>
         <Footer />
       </SessionProvider>
     );
