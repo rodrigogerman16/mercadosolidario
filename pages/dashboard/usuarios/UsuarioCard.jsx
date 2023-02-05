@@ -70,7 +70,7 @@ export default function UsuarioCard({ users }) {
           </tr>
         </thead>
         <tbody>
-          {sortedData.map((user) => (
+          {sortedData?.map((user) => (
             <tr class="border-b" key={user.id}>
               <th
                 scope="row"

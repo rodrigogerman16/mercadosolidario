@@ -20,7 +20,7 @@ export default function IniciativasCards({ posts }) {
     setSearchTerm(event.target.value);
   };
 
-  const filteredPosts = iniciatives.filter((iniciative) =>
+  const filteredPosts = iniciatives?.filter((iniciative) =>
     iniciative.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -38,7 +38,7 @@ export default function IniciativasCards({ posts }) {
             value={searchTerm}
           ></input>          
         </div>
-        {filteredPosts.map((post) => (
+        {filteredPosts?.map((post) => (
             <div className="justify-center mt-8 max-w-sm w-full lg:max-w-full lg:flex" key={post.id}>
               <Image
                 className="border-b border-l border-gray-400 lg:border-t lg:border-gray-400 h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
