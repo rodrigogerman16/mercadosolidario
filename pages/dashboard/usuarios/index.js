@@ -1,12 +1,17 @@
 import UsuarioCard from "./UsuarioCard";
 import Link from "next/link";
-import Logo from '../../../Assets/logo-mercado-solidario-sintexto.png'
+import Logo from "../../../Assets/logo-mercado-solidario-sintexto.png";
 import Image from "next/image";
+import { signOut, useSession } from 'next-auth/react'
 
-export default function Iniciativas({users}){
-    return(
-        <div>
-            <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 ">
+export default function Iniciativas({ users }) {
+  const {data: session} = useSession()
+  function handleSignOut(){
+    signOut()
+  }
+  return (
+    <div>
+      <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 ">
         <div className="px-3 py-3 lg:px-5 lg:pl-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center justify-start">
@@ -26,7 +31,7 @@ export default function Iniciativas({users}){
                 <div>
                   <button type="button" className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 " aria-expanded="false" data-dropdown-toggle="dropdown-user">
                     <span className="sr-only">Open user menu</span>
-                    <Image className="w-8 h-8 rounded-full" src={Logo} alt="user photo" />
+                    <img className="w-8 h-8 rounded-full" src="https://xsgames.co/randomusers/avatar.php?g=male" alt="user photo" />
                   </button>
                 </div>
                 <div className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow " id="dropdown-user">
@@ -37,7 +42,7 @@ export default function Iniciativas({users}){
                   </div>
                   <ul className="py-1" role="none">
                     <li>
-                      <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 " role="menuitem">Sign out</a>
+                      <button onClick={handleSignOut} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 " role="menuitem">Cerrar sesion</button>
                     </li>
                   </ul>
                 </div>
@@ -46,57 +51,118 @@ export default function Iniciativas({users}){
           </div>
         </div>
       </nav>
-            <aside id="logo-sidebar" className="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 " aria-label="Sidebar">
+      <aside
+        id="logo-sidebar"
+        className="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 "
+        aria-label="Sidebar"
+      >
         <div className="h-full px-3 pb-4 overflow-y-auto bg-white ">
           <ul className="space-y-2">
             <li>
-              <Link href="/dashboard" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 ">
-                <svg aria-hidden="true" className="w-6 h-6 text-gray-500 transition duration-75  group-hover:text-gray-900 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z" /><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z" /></svg>
+              <Link
+                href="/dashboard"
+                className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 "
+              >
+                <svg
+                  aria-hidden="true"
+                  className="w-6 h-6 text-gray-500 transition duration-75  group-hover:text-gray-900 "
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z" />
+                  <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z" />
+                </svg>
                 <span className="ml-3">Dashboard</span>
               </Link>
             </li>
             <li>
-              <a href="#" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100">
-                <svg aria-hidden="true" className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75  group-hover:text-gray-900 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M8.707 7.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l2-2a1 1 0 00-1.414-1.414L11 7.586V3a1 1 0 10-2 0v4.586l-.293-.293z" /><path d="M3 5a2 2 0 012-2h1a1 1 0 010 2H5v7h2l1 2h4l1-2h2V5h-1a1 1 0 110-2h1a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5z" /></svg>
+              <a
+                href="#"
+                className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100"
+              >
+                <svg
+                  aria-hidden="true"
+                  className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75  group-hover:text-gray-900 "
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M8.707 7.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l2-2a1 1 0 00-1.414-1.414L11 7.586V3a1 1 0 10-2 0v4.586l-.293-.293z" />
+                  <path d="M3 5a2 2 0 012-2h1a1 1 0 010 2H5v7h2l1 2h4l1-2h2V5h-1a1 1 0 110-2h1a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5z" />
+                </svg>
                 <span className="flex-1 ml-3 whitespace-nowrap">Inbox</span>
-                <span className="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-pink-400 bg-pink-100 rounded-full d">3</span>
+                <span className="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-pink-400 bg-pink-100 rounded-full d">
+                  3
+                </span>
               </a>
             </li>
             <li>
-              <Link href="/dashboard/iniciativas" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 ">
-                <svg aria-hidden="true" className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75  group-hover:text-gray-900 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
-                <span className="flex-1 ml-3 whitespace-nowrap">Iniciativas</span>
+              <Link
+                href="/dashboard/iniciativas"
+                className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 "
+              >
+                <svg
+                  aria-hidden="true"
+                  className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75  group-hover:text-gray-900 "
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                </svg>
+                <span className="flex-1 ml-3 whitespace-nowrap">
+                  Iniciativas
+                </span>
               </Link>
             </li>
             <li>
-              <a href="#" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 ">
-                <svg aria-hidden="true" className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75  group-hover:text-gray-900" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" /></svg>
+              <a
+                href="#"
+                className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 "
+              >
+                <svg
+                  aria-hidden="true"
+                  className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75  group-hover:text-gray-900"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                    clipRule="evenodd"
+                  />
+                </svg>
                 <span className="flex-1 ml-3 whitespace-nowrap">Usuarios</span>
               </a>
             </li>
           </ul>
         </div>
       </aside>
-            <UsuarioCard users={users}/>
-        </div>
-    )
+      <UsuarioCard users={users} />
+    </div>
+  );
 }
 
-export const getStaticProps = async () => {  
-    const company = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/company")
-      .then((res) => res.json())
-  
-    const ong = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/ong")
-      .then((res) => res.json())
-  
-    const users = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/allusers")
-      .then((res) => res.json())
-  
-    return {
-      props: {
-        company,
-        ong,
-        users
-      }
-    };
+export const getStaticProps = async () => {
+  const company = await fetch(
+    "https://pf-backend-mercadosolidario-production.up.railway.app/company"
+  ).then((res) => res.json());
+
+  const ong = await fetch(
+    "https://pf-backend-mercadosolidario-production.up.railway.app/ong"
+  ).then((res) => res.json());
+
+  const users = await fetch(
+    "https://pf-backend-mercadosolidario-production.up.railway.app/allusers"
+  ).then((res) => res.json());
+
+  return {
+    props: {
+      company,
+      ong,
+      users,
+    },
   };
+};
