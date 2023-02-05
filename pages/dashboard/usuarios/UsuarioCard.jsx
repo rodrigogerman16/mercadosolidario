@@ -16,7 +16,7 @@ export default function UsuarioCard({ users }) {
   const [searchTerm, setSearchTerm] = useState('');  
   const [sortBy, setSortBy] = useState('name');
 
-  const sortedData = users.data
+  const sortedData = users?.data
     .filter(user => user.name.toLowerCase().includes(searchTerm.toLowerCase()))
     .sort((a, b) => {
       if(sortBy === 'name'){
