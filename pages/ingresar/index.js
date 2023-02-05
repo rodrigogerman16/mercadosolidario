@@ -27,10 +27,6 @@ export default function Login() {
 
   const [errors, setErrors] = useState({});
 
- async function handleSignIn(){
-    signIn('google',{callbackUrl: "http://localhost:3000" });
-  };
-
   function handleChange(el) {
     setInput({
       ...input,
@@ -101,7 +97,12 @@ export default function Login() {
   }
 
   const user = useUser();
-  const { data: session } = useSession();
+  const { data: session} = useSession();
+
+  async function handleSignIn(){
+     signIn('google',{callbackUrl: "http://localhost:3000" });
+   };
+
   console.log(session);
   const { backendUser, isLoading } = useBackendUser();
 
@@ -114,18 +115,15 @@ export default function Login() {
         if (isLoading) {
           return;
         }
-
         // pregunto si tiene usuario para guardar la data de login
         if (backendUser) {
           localStorage.setItem("user", JSON.stringify(backendUser));
           return;
         }
-
         // si no tenemos informacion del usuario lo madamos a register
         Router.push("/registrarse");
         return;
       }
-
       return;
     }
 
@@ -175,7 +173,7 @@ export default function Login() {
       </p>
       <form
         onSubmit={(el) => handleSubmit(el)}
-        novalidate=""
+        noValidate=""
         action=""
         className="space-y-8 ng-untouched ng-pristine ng-valid my-8 w-full"
       >
