@@ -6,8 +6,16 @@ import LatestDonations from './LatestDonations'
 import UsersChart from './UsersChart'
 import RubroChart from './RubroChart'
 import Link from 'next/link'
+import { getSession, signOut, useSession } from 'next-auth/react'
+
 
 const index = ({ posts, users, company, ong }) => {
+
+  const {data: session} = useSession()
+  function handleSignOut(){
+    signOut()
+  }
+  
   return (
     <div>
       <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 ">
@@ -41,7 +49,7 @@ const index = ({ posts, users, company, ong }) => {
                   </div>
                   <ul className="py-1" role="none">
                     <li>
-                      <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 " role="menuitem">Sign out</a>
+                      <button onClick={handleSignOut} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 " role="menuitem">Cerrar sesion</button>
                     </li>
                   </ul>
                 </div>
@@ -119,8 +127,16 @@ const index = ({ posts, users, company, ong }) => {
 
 export default index
 
-export const getStaticProps = async () => {
-
+export async function getServerSideProps({req}){
+  const session = await getSession({req})
+  //if(!session){
+  //  return {
+  //    redirect:{
+  //      destination: "/",
+  //      permanent: false
+  //    }
+ //   }
+  //}
   const posts = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/posts")
     .then((res) => res.json())
 
@@ -130,15 +146,14 @@ export const getStaticProps = async () => {
   const ong = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/ong")
     .then((res) => res.json())
 
-  const users = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/user")
+  const users = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/allusers")
     .then((res) => res.json())
-
-  return {
+  return{
     props: {
+      session,
       posts,
       company,
       ong,
-      users
-    }
-  };
-};
+      users}
+  }
+}
