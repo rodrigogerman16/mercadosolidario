@@ -9,28 +9,10 @@ const nextConfig = {
     remotePatterns:[
       { 
         protocol: 'https',
-        hostname: 'lh3.googleusercontent.com',
+        hostname: '*',
         port: '',
         pathname: '*/**'
       },
-      { 
-        protocol: 'https',
-        hostname: 'th.bing.com',
-        port: '',
-        pathname: '*/**'
-      },
-      { 
-        protocol: 'https',
-        hostname: 'encrypted-tbn0.gstatic.com',
-        port: '',
-        pathname: '*/**'
-      },
-      { 
-        protocol: 'https',
-        hostname: 'res.cloudinary.com',
-        port: '',
-        pathname: '*/**'
-      }
     ]
   },
   async rewrites() {
