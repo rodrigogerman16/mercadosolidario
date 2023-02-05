@@ -14,45 +14,15 @@ export default function OngNavbar() {
     const user = useUser();
     const [isOpen, setIsOpen] = useState(false);
 
-    const handleLogOut = async() => {
-        if (session) {
-            await fetch("api/auth/signout", {
-              method: "GET",
-              credentials: "include",
-            })
-              .then((response) => {
-                if (response.status === 200) {
-                  signOut()
-                  localStorage.removeItem("user");
-                  Alert({
-                    title: "Cuenta",
-                    text: "Cerraste sesión satisfactoriamente",
-                    icon: "success",
-                  });
-                  Router.push("/");
-                  window.location.reload();
-                } else {
-                  Alert({
-                    title: "Cuenta",
-                    text: "Error signing out of Google",
-                    icon: "error",
-                  });
-                }
-              })
-              .catch((error) => {
-                Alert({
-                  title: "Cuenta",
-                  text: "Error signing out of Google" + error,
-                  icon: "error",
-                });
-              });
-          }
-        signOut();
-        localStorage.removeItem('user');
-        Alert({ title: 'Cuenta', text: 'Cerraste sesión satisfactoriamente.', icon: 'success' })
-        Router.push('/')
-        window.location.reload()
-    }
+    function handleSignOut(){
+        localStorage.removeItem("user");
+        Alert({
+          title: "Cuenta",
+          text: "Cerraste sesión satisfactoriamente",
+          icon: "success",
+        });
+        signOut()
+      }
 
     if (user) {
         return (
@@ -85,7 +55,7 @@ export default function OngNavbar() {
                                 </div>
                                 <div className="hidden gap-4 md:flex">
                                     <button
-                                        onClick={() => handleLogOut()}
+                                        onClick={() => handleSignOut()}
                                         className="font-semibold px-6 py-2 hover:text-pink-400 transition-colors rounded"
                                     >
                                         Cerrar sesion

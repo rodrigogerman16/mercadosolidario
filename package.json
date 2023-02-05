@@ -33,8 +33,10 @@
     "react-infinite-scroll-component": "^6.1.0",
     "react-rating": "^2.0.5",
     "react-router-dom": "^5.2.0",
+    "react-simple-chatbot": "^0.6.1",
     "recharts": "^2.3.2",
-    "sweetalert2": "^11.7.1",
+    "styled-components": "^5.3.3",
+    "sweetalert2": "^11.4.8",
     "sweetalert2-react-content": "^5.0.7"
   },
   "devDependencies": {

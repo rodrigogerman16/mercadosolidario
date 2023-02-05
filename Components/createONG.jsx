@@ -15,6 +15,9 @@ function Validate(input) {
   if (input.lastName.length < 3 || input.lastName.length > 15) {
     errors.lastName = "Al menos 3 Caracteres";
   }
+  if (!input.province){
+    errors.province = "Seleccione una provincia"
+  }
   if (input.cuit.length !== 11) {
     errors.cuit = "Ingrese su CUIT";
   }
@@ -25,6 +28,57 @@ function Validate(input) {
 }
 
 export default function Crearong(props) {
+
+  const provinces = [
+    { value: "BuenosAires", label: "Buenos Aires" },
+    { value: "Catamarca", label: "Catamarca" },
+    { value: "Chaco", label: "Chaco" },
+    { value: "Chubut", label: "Chubut" },
+    { value: "Cordoba", label: "Córdoba" },
+    { value: "Corrientes", label: "Corrientes" },
+    { value: "EntreRios", label: "Entre Ríos" },
+    { value: "Formosa", label: "Formosa" },
+    { value: "Jujuy", label: "Jujuy" },
+    { value: "LaPampa", label: "La Pampa" },
+    { value: "LaRioja", label: "La Rioja" },
+    { value: "Mendoza", label: "Mendoza" },
+    { value: "Misiones", label: "Misiones" },
+    { value: "Neuquen", label: "Neuquén" },
+    { value: "RioNegro", label: "Río Negro" },
+    { value: "Salta", label: "Salta" },
+    { value: "SanJuan", label: "San Juan" },
+    { value: "SanLuis", label: "San Luis" },
+    { value: "SantaCruz", label: "Santa Cruz" },
+    { value: "SantaFe", label: "Santa Fé" },
+    { value: "SantiagoDelEstero", label: "Santiago del Estero" },
+    { value: "TierraDelFuego", label: "Tierra del Fuego" },
+    { value: "Tucuman", label: "Tucuman" },
+];
+
+const rubros = [
+  { value: "Alimentacion", label: "Alimentacion" },
+  { value: "Asesoria Legal", label: "Asesoria Legal" },
+  { value: "Ayuda_a_refugiados", label: "Ayuda a refugiados" },
+  { value: "Ayuda_a_animales", label: "Ayuda a animales" },
+  { value: "Apoyo_a_comunidades_indigenas", label: "Apoyo a comunidades indigenas" },
+  { value: "Apoyo_a_lgbt", label: "Apoyo a lgbt"},
+  { value: "Apoyo_a_la_mujer", label: "Apoyo a la mujer" },
+  { value: "Construccion_obras", label: "Construccion obras" },
+  { value: "Cultura", label: "Cultura", },
+  { value: "Deportes", label: "Deportes", },
+  { value: "Derechos_humanos", label: "Derechos humanos" },
+  { value: "Discapacitados", label: "Discapacitados" },
+  { value: "Educacion", label: "Educacion" },
+  { value: "Medio_ambiente", label: "Medio ambiente" },
+  { value: "Entretenimiento", label: "Entretenimiento" },
+  { value: "Gobierno_no_lucro", label: "Gobierno no lucro" },
+  { value: "Materia_prima", label: "Materia prima" },
+  { value: "Medios_de_comunicacion", label: "Medios de comunicacion" },
+  { value: "Salud_medicina", label: "Salud medicina"},
+  { value: "Servicio_comunitario", label: "Servicio comunitario" },
+  { value: "Transporte", label: "Transporte"}
+]
+
   const {data: session} = useSession()
   const [imageSrc, setImageSrc] = useState(null);
 
@@ -33,9 +87,12 @@ export default function Crearong(props) {
   const [input, setInput] = useState({
     name: "",
     lastName: "",
+    province: "",
+    rubro: "",
     cuit: "",
     phone: "",
   });
+  console.log(input)
 
   const [errors, setErrors] = useState({});
 
@@ -61,6 +118,7 @@ export default function Crearong(props) {
       id: info.data.id,
       cuit: info.data.cuit,
       province: info.data.province,
+      rubro: info.data.rubro,
       rut: info.data.rut,
       address: info.data.address,
       phone: info.data.phone,
@@ -97,6 +155,8 @@ export default function Crearong(props) {
         Object.values(errors).length === 0 &&
         input.name !== "" &&
         input.lastName !== "" &&
+        input.province !== "" &&
+        input.rubro !== "" &&
         input.cuit !== "" &&
         input.phone !== ""
       ) {
@@ -127,6 +187,8 @@ export default function Crearong(props) {
         formData.append("phone", input.phone);
         formData.append("email", props.email);
         formData.append("password", props.password);
+        formData.append("province", input.province);
+        formData.append("rubro", input.rubro)
         formData.append("rut", data.secure_url);
         formData.append("cuit", input.cuit);
         formData.append("type_of_user", props.type_of_user);
@@ -136,6 +198,8 @@ export default function Crearong(props) {
         setInput({
           name: "",
           lastName: "",
+          province: "",
+          rubro: "",
           cuit: "",
           phone: "",
         });   
@@ -176,6 +240,32 @@ export default function Crearong(props) {
           placeholder=""
         />
         {errors.lastName ? <label>{errors.lastName}</label> : null}
+      </div>
+      <div className="">
+        <label className="text-sm">Provincia</label>
+        <select
+          className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
+          type="select"
+          value={input.province}
+          name="province"
+          onChange={(el) => handleChange(el)}
+        >
+          {provinces.map(item => <option value={item.value} key={item.value}>{item.label}</option>)}
+        </select>
+        {errors.province ? <label>{errors.province}</label> : null}
+      </div>
+      <div className="">
+        <label className="text-sm">Rubro</label>
+        <select
+          className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
+          type="select"
+          value={input.rubro}
+          name="rubro"
+          onChange={(el) => handleChange(el)}
+        >
+          {rubros.map(item => <option value={item.value} key={item.value}>{item.label}</option>)}
+        </select>
+        {errors.rubro ? <label>{errors.rubro}</label> : null}
       </div>
       <div className="">
         <label className="text-sm">Cuit de la ONG</label>

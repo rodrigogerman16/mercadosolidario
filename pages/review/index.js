@@ -82,7 +82,6 @@ export default function Review() {
           rating: "",
           review: "",
         });
-        //router.push('/')
       }
     } catch (error) {
       console.log(error);

@@ -1,15 +1,18 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    appDir: true,
+  },
 
-  reactStrictMode: true,
+  reactStrictMode: false,
   images: {
-    remotePatterns:[
-      { 
+    remotePatterns: [
+      {
         protocol: 'https',
-        hostname: 'lh3.googleusercontent.com',
+        hostname: '*',
         port: '',
         pathname: '*/**'
-      }
+      },
     ]
   },
   async rewrites() {
