@@ -1,10 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 
-  reactStrictMode: true,
+  reactStrictMode: false,
   images: {
-    remotePatterns:[
-      { 
+    remotePatterns: [
+      {
         protocol: 'https',
         hostname: 'lh3.googleusercontent.com',
         port: '',
