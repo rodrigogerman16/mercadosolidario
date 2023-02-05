@@ -8,13 +8,15 @@ const Card = ({
   province,
   user_linkedin,
   email,
+  image,
+  type_of_insignia
 }) => {
   return (
     <div>
       <div class="max-w-sm bg-white shadow-lg rounded-lg overflow-hidden my-4">
         <img
           class="w-full h-56 object-cover object-center"
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQetFW7Kcn1gWyvPupXwRKnvh4wfrJ9pis-Og&usqp=CAU"
+          src={image ? image : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQetFW7Kcn1gWyvPupXwRKnvh4wfrJ9pis-Og&usqp=CAU"}
           alt="avatar"
         />
         <div class="flex items-center px-6 py-3 bg-pink-400">
@@ -33,8 +35,7 @@ const Card = ({
             {`${name} ${lastName}`}
           </h1>
           <p class="py-2 text-lg text-gray-700">
-            Full Stack maker & UI / UX Designer , love hip hop music Author of
-            Building UI.
+            {profession}
           </p>
           <div class="flex items-center mt-4 text-gray-700">
             <svg class="h-6 w-6 fill-current" viewBox="0 0 512 512">
@@ -57,6 +58,12 @@ const Card = ({
             </svg>
             <h1 class="px-2 text-sm">{email}</h1>
           </div>
+          {user_linkedin ? <div class="flex items-center mt-4 text-gray-700">
+            <svg class="h-6 w-6 fill-current" viewBox="0 0 512 512">
+              <path d="M437.332 80H74.668C51.199 80 32 99.198 32 122.667v266.666C32 412.802 51.199 432 74.668 432h362.664C460.801 432 480 412.802 480 389.333V122.667C480 99.198 460.801 80 437.332 80zM432 170.667L256 288 80 170.667V128l176 117.333L432 128v42.667z" />
+            </svg>
+            <h1 class="px-2 text-sm">{user_linkedin}</h1>
+          </div> : <div></div>}
         </div>
       </div>
     </div>
