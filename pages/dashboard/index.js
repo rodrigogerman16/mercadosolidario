@@ -9,11 +9,11 @@ import Link from 'next/link'
 import { getSession, signOut } from 'next-auth/react'
 
 
-const index = ({ posts, users, company, ong }) => {
-  function handleSignOut(){
+const index = ({ posts, users, company, ong, inbox }) => {
+  function handleSignOut() {
     signOut()
   }
-  
+
   return (
     <div>
       <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 ">
@@ -42,7 +42,7 @@ const index = ({ posts, users, company, ong }) => {
                 <div className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow " id="dropdown-user">
                   <div className="px-4 py-3" role="none">
                     <p className="text-sm font-medium text-gray-900 truncate" role="none">
-                    contacto.mercadosolidario@gmail.com
+                      contacto.mercadosolidario@gmail.com
                     </p>
                   </div>
                   <ul className="py-1" role="none">
@@ -69,7 +69,7 @@ const index = ({ posts, users, company, ong }) => {
               <a href="#" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100">
                 <svg aria-hidden="true" className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75  group-hover:text-gray-900 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M8.707 7.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l2-2a1 1 0 00-1.414-1.414L11 7.586V3a1 1 0 10-2 0v4.586l-.293-.293z" /><path d="M3 5a2 2 0 012-2h1a1 1 0 010 2H5v7h2l1 2h4l1-2h2V5h-1a1 1 0 110-2h1a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5z" /></svg>
                 <span className="flex-1 ml-3 whitespace-nowrap">Inbox</span>
-                <span className="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-pink-400 bg-pink-100 rounded-full d">3</span>
+                <span className="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-pink-400 bg-pink-100 rounded-full d">{inbox.length}</span>
               </a>
             </li>
             <li>
@@ -125,17 +125,20 @@ const index = ({ posts, users, company, ong }) => {
 
 export default index
 
-export async function getServerSideProps({req}){
-  const session = await getSession({req})
+export async function getServerSideProps({ req }) {
+  const session = await getSession({ req })
   //if(!session){
   //  return {
   //    redirect:{
   //      destination: "/",
   //      permanent: false
   //    }
- //   }
+  //   }
   //}
   const posts = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/posts")
+    .then((res) => res.json())
+
+  const inbox = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/chat")
     .then((res) => res.json())
 
   const company = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/company")
@@ -146,12 +149,14 @@ export async function getServerSideProps({req}){
 
   const users = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/allusers")
     .then((res) => res.json())
-  return{
+  return {
     props: {
       session,
       posts,
       company,
       ong,
-      users}
+      users,
+      inbox
+    }
   }
 }
