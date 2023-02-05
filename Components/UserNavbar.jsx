@@ -3,9 +3,8 @@ import Image from "next/image";
 import logo from "../Assets/mercado-solidario-logo.jpg";
 import { useState } from "react";
 import { Transition } from "@headlessui/react";
-import { signOut, useSession } from "next-auth/react";
+import { getSession, signOut, useSession } from 'next-auth/react'
 import { useUser } from "../hooks/user.js";
-import Router from "next/router";
 import Alert from "./Alert";
 
 export default function UserNavbar() {
@@ -13,51 +12,18 @@ export default function UserNavbar() {
   const user = useUser();
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleSignOut = async () => {
-    if (session) {
-      await fetch("/auth/signout", {
-        method: "GET",
-        credentials: "include",
-      })
-        .then((response) => {
-          if (response.status === 200) {
-            signOut()
-            localStorage.removeItem("user");
-            Alert({
-              title: "Cuenta",
-              text: "Cerraste sesión satisfactoriamente",
-              icon: "success",
-            });
-            Router.push("/");
-            window.location.reload();
-          } else {
-            Alert({
-              title: "Cuenta",
-              text: "Error signing out of Google",
-              icon: "error",
-            });
-          }
-        })
-        .catch((error) => {
-          Alert({
-            title: "Cuenta",
-            text: "Error signing out of Google" + error,
-            icon: "error",
-          });
-        });
-    }
+  function handleSignOut(){
     localStorage.removeItem("user");
     Alert({
       title: "Cuenta",
       text: "Cerraste sesión satisfactoriamente",
       icon: "success",
     });
-    Router.push("/");
-    window.location.reload();
-  };
+    signOut()
+  }
+    
 
   if (user) {
-    console.log(user)
     return (
       <div>
         <nav className="bg-white py-4">
@@ -206,5 +172,20 @@ export default function UserNavbar() {
         </nav>
       </div>
     );
+  }
+}
+
+export async function getServerSideProps({req}){
+  const session = await getSession({req})
+  if(!session){
+    return {
+      redirect:{
+        destination: "/ingresar",
+        permanent: false
+      }
+    }
+  }
+  return{
+    props: {session}
   }
 }

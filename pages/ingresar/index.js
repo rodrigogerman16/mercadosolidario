@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, signOut, useSession, getSession } from "next-auth/react";
 import Router from "next/router";
 import { useBackendUser, useUser } from "../../hooks/user.js";
 import jwt_decode from "jwt-decode";
@@ -27,12 +27,6 @@ export default function Login() {
 
   const [errors, setErrors] = useState({});
 
-  const handleSignIn = async (e) => {
-    e.preventDefault();
-    await signIn({ provider: 'google' });
-  };
-
-
   function handleChange(el) {
     setInput({
       ...input,
@@ -46,7 +40,7 @@ export default function Login() {
     );
   }
 
-  // Ingreso local 
+  // Ingreso local
   async function handleSubmit(el) {
     try {
       el.preventDefault();
@@ -71,15 +65,11 @@ export default function Login() {
         const decoded = jwt_decode(info.data.token);
 
         window.localStorage.setItem("user", JSON.stringify(decoded));
-        
-        if(!user.isActive){
-          window.localStorage.removeItem("user");
-          window.localStorage.setItem("loginError", true)
-          window.location.href = '../';
-          return
-        }
-
-        Alert({ title: 'Cuenta', text: 'Iniciaste sesión satisfactoriamente!', icon: 'success' })
+        Alert({
+          title: "Cuenta",
+          text: "Iniciaste sesión satisfactoriamente!",
+          icon: "success",
+        });
         setInput({
           email: "",
           password: "",
@@ -87,20 +77,32 @@ export default function Login() {
         router.push("/");
         window.location.reload();
       } else {
-        Alert({ title: 'Cuenta', text: 'Hay datos incorrectos o sin completar', icon: 'error' })
+        Alert({
+          title: "Cuenta",
+          text: "Hay datos incorrectos o sin completar",
+          icon: "error",
+        });
       }
     } catch (error) {
       setInput({
         email: "",
         password: "",
       });
-      Alert({ title: 'Cuenta', text: 'Hubo un error al iniciar sesión, si el error persiste, vuelva a intentar mas tarde.', icon: 'error' })
+      Alert({
+        title: "Cuenta",
+        text: "Hubo un error al iniciar sesión, si el error persiste, vuelva a intentar mas tarde.",
+        icon: "error",
+      });
     }
   }
 
   const user = useUser();
   const { data: session } = useSession();
-  console.log(session)
+
+  async function handleSignIn() {
+    signIn("google");
+  }
+
   const { backendUser, isLoading } = useBackendUser();
 
   useEffect(() => {
@@ -112,18 +114,15 @@ export default function Login() {
         if (isLoading) {
           return;
         }
-
         // pregunto si tiene usuario para guardar la data de login
         if (backendUser) {
           localStorage.setItem("user", JSON.stringify(backendUser));
           return;
         }
-
         // si no tenemos informacion del usuario lo madamos a register
         Router.push("/registrarse");
         return;
       }
-
       return;
     }
 
@@ -132,20 +131,18 @@ export default function Login() {
       Router.push("/dashboard");
       return;
     }
-
-    
-
-    if(user){
-      if(session) signOut()
-      if(!user.isActive){
+    if (user) {
+      console.log(user)
+      //arreglar
+      if (user.isActive === "false") {
+        console.log(user.isActive);
         window.localStorage.removeItem("user");
-        signOut()
-        window.localStorage.setItem("loginError", true)
-        window.location.href = '../';
+        window.localStorage.setItem("loginError", true);
+        signOut();
+        window.location.href = "../";
       }
-      Router.push('/')
-    } 
-    
+      Router.push("/");
+    }
   }, [user]);
 
   return (
@@ -173,7 +170,7 @@ export default function Login() {
       </p>
       <form
         onSubmit={(el) => handleSubmit(el)}
-        novalidate=""
+        noValidate=""
         action=""
         className="space-y-8 ng-untouched ng-pristine ng-valid my-8 w-full"
       >
@@ -245,4 +242,20 @@ export default function Login() {
       </div>
     </div>
   );
+}
+
+export async function getServerSideProps({ req }) {
+  const session = await getSession(req);
+  if (session) {    
+      return {
+        redirect: {
+          destination: "/",
+          permanent: false,
+        },
+    }
+  }
+
+  return {
+    props: { session },
+  };
 }

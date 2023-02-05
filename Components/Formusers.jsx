@@ -24,6 +24,9 @@ function Validate(input) {
   if (input.phone.length < 8) {
     errors.phone = "Ingrese su Telefono";
   }
+  if (!input.profession){
+    errors.profession = "Seleccione una profesion"
+  }
   if (input.cuil.length !== 11) {
     errors.cuil = "Ingrese su CUIL";
   }
@@ -37,16 +40,73 @@ function Validate(input) {
 }
 
 export default function Formusers(props) {
-  //console.log(props)
+  const profesiones = [
+        { value: "Medico", label: "Medico", checked: false },
+        { value: "Ingeniero", label: "Ingeniero", checked: false },
+        {
+          value: "Profesor",
+          label: "Profesor",
+          checked: false,
+        },
+        {
+          value: "Abogado",
+          label: "Abogado",
+          checked: false,
+        },
+        {
+          value: "Contador",
+          label: "Contador",
+          checked: false,
+        },
+        { value: "Enfermero", label: "Enfermero", checked: false },
+        {
+          value: "Arquitecto",
+          label: "Arquitecto",
+          checked: false,
+        },
+        {
+          value: "Economista",
+          label: "Economista",
+          checked: false,
+        },
+        { value: "Dentista", label: "Dentista", checked: false },
+        { value: "Veterinario", label: "Veterinario", checked: false },
+        {
+          value: "Psicologo",
+          label: "Psicologo",
+          checked: false,
+        },
+        { value: "Farmaceutico", label: "Farmaceutico", checked: false },
+        { value: "Cirujano", label: "Cirujano", checked: false },
+        { value: "Optometrista", label: "Optometrista", checked: false },
+        { value: "Entretenimiento", label: "Entretenimiento", checked: false },
+        {
+          value: "Fisioterapeuta",
+          label: "Fisioterapeuta",
+          checked: false,
+        },
+        { value: "TerapeutaDelHabla", label: "TerapeutaDelHabla", checked: false },
+        {
+          value: "TrabajadorSocial",
+          label: "TrabajadorSocial",
+          checked: false,
+        },
+        { value: "Policia", label: "Policia", checked: false },
+        {
+          value: "Bombero",
+          label: "Bombero",
+          checked: false,
+        },
+        { value: "Militar", label: "Militar", checked: false },
+        { value: "Otros", label: "Otros", checked: false }
+    ];
+
   const { data: session } = useSession();
 
   const postUser = async (props) => {
     let info = await axios.post(
-      `https://pf-backend-mercadosolidario-production.up.railway.app/user/newuser`,
+      `http://localhost:3001/user/newuser`,
       props
-      // {headers: {
-      //   'Content-Type': 'application/json; charset=utf-8'
-      // }}
     );
 
     const aux = {
@@ -68,9 +128,11 @@ export default function Formusers(props) {
     name: "",
     lastName: "",
     phone: "",
+    profession: "",
     cuil: "",
     user_linkedin: "",
   });
+  console.log(input)
 
   //console.log(input.user_linkedin.includes("www.linkedin.com/in"))
 
@@ -103,6 +165,7 @@ export default function Formusers(props) {
         input.name !== "" &&
         input.lastName !== "" &&
         input.phone !== "" &&
+        input.profession !== "" &&
         input.cuil !== "" &&
         input.user_linkedin !== ""
       ) {
@@ -136,11 +199,12 @@ export default function Formusers(props) {
           email: props.email || session.user.email,
           password: props.password || "asdasdasd",
           type_of_user: props.type_of_user || "user",
+          profession: "Abogado",
           cuil: input.cuil,
           user_linkedin: input.user_linkedin,
           //image: data.secure_url || "https://t3.ftcdn.net/jpg/04/51/93/48/360_F_451934847_V7rc18Ibs9UNU5sSihQBY0MzSDgei4Cr.jpg"
         };
-
+        console.log(user)
         postUser(user).then(() => {
           axios.post('https://pf-backend-mercadosolidario-production.up.railway.app/mailer/email', { email: user.email })
           setInput({
@@ -160,7 +224,7 @@ export default function Formusers(props) {
         Alert({ title: 'Registro', text: 'Hay datos incorrectos o sin completar!', icon: 'error' })
       }
     } catch (error) {
-      console.log(error);
+      Alert({ title: 'Registro', text: error, icon: 'error' })
     }
   }
 
@@ -213,6 +277,19 @@ export default function Formusers(props) {
           />
           {errors.phone ? <label>{errors.phone}</label> : null}
         </div>
+      </div>
+      <div className="">
+        <label className="text-sm">Profesion</label>
+        <select
+          className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
+          type="select"
+          value={input.profession}
+          name="profession"
+          onChange={(el) => handleChange(el)}
+        >
+          {profesiones.map(item => <option value={item.value} key={item.label}>{item.label}</option>)}
+        </select>
+        {errors.profession ? <label>{errors.profession}</label> : null}
       </div>
       <div className="">
         <label className="text-sm">Cuil</label>
