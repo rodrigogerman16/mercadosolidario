@@ -11,7 +11,7 @@ export default function IniciativasCards({ posts }) {
 
   async function handleToggle(post) {
     console.log(post);
-    await axios.put(`http://localhost:3001/posts/${post.id}`, {
+    await axios.put(`https://pf-backend-mercadosolidario-production.up.railway.app/posts/${post.id}`, {
       isActive: post.isActive ? false : true,
     });
   }

@@ -6,7 +6,7 @@ export default function UsuarioCard({ users }) {
   {/*Borrado Logico*/}
   async function handleToggle(user) {
     console.log(user.isActive)
-    await axios.put(`http://localhost:3001/${user.type_of_user}/${user.id}`, {
+    await axios.put(`https://pf-backend-mercadosolidario-production.up.railway.app/${user.type_of_user}/${user.id}`, {
       isActive: user.isActive ? false : true,
     })
     console.log(user.isActive);
