@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, signOut, useSession, getSession } from "next-auth/react";
 import Router from "next/router";
 import { useBackendUser, useUser } from "../../hooks/user.js";
 import jwt_decode from "jwt-decode";
@@ -97,13 +97,12 @@ export default function Login() {
   }
 
   const user = useUser();
-  const { data: session} = useSession();
+  const { data: session } = useSession();
 
-  async function handleSignIn(){
-     signIn('google',{callbackUrl: "http://localhost:3000" });
-   };
+  async function handleSignIn() {
+    signIn("google");
+  }
 
-  console.log(session);
   const { backendUser, isLoading } = useBackendUser();
 
   useEffect(() => {
@@ -132,14 +131,12 @@ export default function Login() {
       Router.push("/dashboard");
       return;
     }
-
     if (user) {
-      if (session) signOut();
-      console.log(user.isActive)
-      //arreglar 
-      if (user.isActive === 'true') {
-        console.log(user.isActive)
-        window.localStorage.removeItem("user");        
+      console.log(user)
+      //arreglar
+      if (user.isActive === "false") {
+        console.log(user.isActive);
+        window.localStorage.removeItem("user");
         window.localStorage.setItem("loginError", true);
         signOut();
         window.location.href = "../";
@@ -245,4 +242,20 @@ export default function Login() {
       </div>
     </div>
   );
+}
+
+export async function getServerSideProps({ req }) {
+  const session = await getSession(req);
+  if (session) {    
+      return {
+        redirect: {
+          destination: "/",
+          permanent: false,
+        },
+    }
+  }
+
+  return {
+    props: { session },
+  };
 }
