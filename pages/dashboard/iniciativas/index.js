@@ -1,3 +1,4 @@
+'use client'
 import IniciativasCards from "./IniciativasCards";
 import Link from "next/link";
 import Logo from '../../../Assets/logo-mercado-solidario-sintexto.png'
@@ -92,21 +93,9 @@ export const getStaticProps = async () => {
     const posts = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/posts")
       .then((res) => res.json())
   
-    const company = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/company")
-      .then((res) => res.json())
-  
-    const ong = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/ong")
-      .then((res) => res.json())
-  
-    const users = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/user")
-      .then((res) => res.json())
-  
     return {
       props: {
         posts,
-        company,
-        ong,
-        users
       }
     };
   };
