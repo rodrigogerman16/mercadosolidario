@@ -1,10 +1,14 @@
+import { useUser } from "@/hooks/user"
 
 export default function Publicaciones(props){
-    
+    const userStringify = useUser()
+    const user = userStringify && JSON.parse(userStringify)
+    const userFinded = props.ong.filter(item => item.email === user.email)
+    console.log(userFinded)
     return(
         <div>
-            Ruta Publicaciones
-            {console.log(props.ong)}
+            <h2>Mis Iniciativas</h2>
+            {props.ong}
         </div>
     )
 }
