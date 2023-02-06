@@ -19,7 +19,7 @@ function Validate(input) {
   return errors;
 }
 
-const ongPerfil = (props) => {
+const Perfil = (props) => {
   const provinces = [
     { value: "BuenosAires", label: "Buenos Aires" },
     { value: "Catamarca", label: "Catamarca" },
@@ -95,7 +95,7 @@ const ongPerfil = (props) => {
     };
     
     window.localStorage.setItem("user", JSON.stringify(aux));
-    await axios.put(`http://localhost:3001/ong/update/${user.id}`, aux);
+    await axios.put(`https://pf-backend-mercadosolidario-production.up.railway.app/ong/update/${user.id}`, aux);
     return console.log(user);
   };
 
@@ -275,7 +275,7 @@ const ongPerfil = (props) => {
   );
 };
 
-export default ongPerfil;
+export default Perfil;
 
 
 export async function getServerSideProps({req}){
