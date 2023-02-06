@@ -40,36 +40,28 @@ function Products({ data }) {
       id: "Provincias",
       name: "Provincias",
       options: [
-        { value: "Buenos Aires", label: "Buenos Aires", checked: false },
+        { value: "BuenosAires", label: "Buenos Aires", checked: false },
         { value: "Catamarca", label: "Catamarca", checked: false },
         { value: "Chaco", label: "Chaco", checked: false },
         { value: "Chubut", label: "Chubut", checked: false },
         { value: "Cordoba", label: "Córdoba", checked: false },
         { value: "Corrientes", label: "Corrientes", checked: false },
-        { value: "Entre Rios", label: "Entre Ríos", checked: false },
+        { value: "EntreRios", label: "Entre Ríos", checked: false },
         { value: "Formosa", label: "Formosa", checked: false },
         { value: "Jujuy", label: "Jujuy", checked: false },
-        { value: "La Pampa", label: "La Pampa", checked: false },
-        { value: "La Rioja", label: "La Rioja", checked: false },
+        { value: "LaPampa", label: "La Pampa", checked: false },
+        { value: "LaRioja", label: "La Rioja", checked: false },
         { value: "Mendoza", label: "Mendoza", checked: false },
         { value: "Misiones", label: "Misiones", checked: false },
         { value: "Neuquen", label: "Neuquén", checked: false },
-        { value: "Rio Negro", label: "Río Negro", checked: false },
+        { value: "RioNegro", label: "Río Negro", checked: false },
         { value: "Salta", label: "Salta", checked: false },
-        { value: "San Juan", label: "San Juan", checked: false },
-        { value: "San Luis", label: "San Luis", checked: false },
-        { value: "Santa Cruz", label: "Santa Cruz", checked: false },
-        { value: "Santa Fe", label: "Santa Fé", checked: false },
-        {
-          value: "Santiago del Estero",
-          label: "Santiago del Estero",
-          checked: false,
-        },
-        {
-          value: "Tierra del Fuego",
-          label: "Tierra del Fuego",
-          checked: false,
-        },
+        { value: "SanJuan", label: "San Juan", checked: false },
+        { value: "SanLuis", label: "San Luis", checked: false },
+        { value: "SantaCruz", label: "Santa Cruz", checked: false },
+        { value: "SantaFe", label: "Santa Fé", checked: false },
+        { value: "SantiagoDelEstero", label: "Santiago del Estero", checked: false, },
+        { value: "TierraDelFuego", label: "Tierra del Fuego", checked: false, },
         { value: "Tucuman", label: "Tucuman", checked: false },
       ],
     },
@@ -169,7 +161,7 @@ function Products({ data }) {
   let filteredData = data.filter((item) => {
     //.. Filtramos "data".
     if (!provinceFilter.length) return true; //..  Si "!provinceFilter.length" ), devuelve "true" para todos los elementos en "data", y no se aplica ningún filtro adicional.
-    return provinceFilter.includes(item.location); //.. //.. SI no está vacío,  se devuelve "true" y evalua la condicion.
+    return provinceFilter.includes(item.province); //.. //.. SI no está vacío,  se devuelve "true" y evalua la condicion.
   });
   //.. Entonces, filteredData" contiene solo aquellos elementos de "data" cuya "location" coincide con alguno de los valores en "provinceFilter".
 
@@ -835,7 +827,7 @@ function Products({ data }) {
                         title={item.title}
                         image={item.image}
                         description={item.description}
-                        location={item.location}
+                        province={item.province}
                         isVolunteer={item.type_of_help}
                         expirationDate={item.expirationDate}
                       />}

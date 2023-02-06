@@ -14,7 +14,7 @@ const Detail = ({ data }) => {
           <span className="text-sm dark:text-gray-400">{moment().startOf(data.expirationDate).fromNow()}</span>
         </div>
         <h2 className="text-5xl font-bold">{data.title}</h2>
-        <span className='text-gray-400'>📍{data.location}</span>
+        <span className='text-gray-400'>📍{data.province}</span>
         <p className="mt-2">{data.description}</p>
         <Paypal postId={data.id}></Paypal>
       </div>
