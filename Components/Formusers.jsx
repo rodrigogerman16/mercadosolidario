@@ -4,9 +4,6 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import Alert from "./Alert";
 
-const { VERCEL_URL = "http://localhost:3000/api/railway-backend" } =
-  process.env;
-
 function Validate(input) {
   let errors = {};
   if (input.name.length < 3 || input.name.length > 15) {
@@ -105,7 +102,7 @@ export default function Formusers(props) {
 
   const postUser = async (props) => {
     let info = await axios.post(
-      `http://localhost:3001/user/newuser`,
+      `https://pf-backend-mercadosolidario-production.up.railway.app/user/newuser`,
       props
     );
 
