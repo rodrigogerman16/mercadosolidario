@@ -5,8 +5,6 @@ import axios from "axios";
 import Alert from "./Alert";
 import { signOut, useSession } from "next-auth/react";
 
-const { VERCEL_URL = 'http://localhost:3000/api/railway-backend' } = process.env
-
 function Validate(input) {
   let errors = {};
   if (input.name.length < 3 || input.name.length > 15) {
@@ -101,7 +99,7 @@ const rubros = [
   const postONG = async (props) => {
 
     let info = await axios.post(
-      `http://localhost:3001/ong/newong`,
+      `https://pf-backend-mercadosolidario-production.up.railway.app/ong/newong`,
       props,
       {
         headers: {
