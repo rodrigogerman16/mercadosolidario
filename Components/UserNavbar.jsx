@@ -54,6 +54,12 @@ export default function UserNavbar() {
                     >
                       Iniciativas
                     </Link>
+                    <Link
+                      href="/perfilusuario"
+                      className="font-semibold text-black hover:text-pink-400"
+                    >
+                      Perfil
+                    </Link>
 
                     <Link
                       href="/faq"

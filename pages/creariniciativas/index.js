@@ -4,8 +4,6 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import Alert from "@/Components/Alert";
 
-const { VERCEL_URL = 'http://localhost:3000/api/railway-backend' } = process.env
-
 function Validate(input) {
   let errors = {};
   if (input.title.length < 5 || input.title.length > 50) {
@@ -14,8 +12,8 @@ function Validate(input) {
   if (input.description.length < 5 || input.description.length > 500) {
     errors.description = "Al menos 5 Caracteres";
   }
-  if (input.location === "") {
-    errors.location = "Ingrese la ubicación";
+  if (input.province === "") {
+    errors.province = "Ingrese la ubicación";
   }
   if (input.type_of_help === "") {
     errors.type_of_help = "Ingrese el tipo de ayuda";
@@ -29,12 +27,12 @@ function Validate(input) {
   return errors;
 }
 
-export default function Creariniciativa() {
+export default function Creariniciativa(props) {
   const router = useRouter();
   const [input, setInput] = React.useState({
     title: "",
     description: "",
-    location: "",
+    province: "",
     expirationDate: "",
     type_of_help: "",
     cbu: "",
@@ -85,6 +83,10 @@ export default function Creariniciativa() {
   //   }
   // }
 
+  const ongstorage = JSON.parse(window.localStorage.getItem("user"))
+  console.log(ongstorage)
+  
+  
   async function handleSubmit(el) {
     try {
       el.preventDefault();
@@ -98,7 +100,7 @@ export default function Creariniciativa() {
         Object.values(errors).length === 0 &&
         input.title !== "" &&
         input.description !== "" &&
-        input.location !== "" &&
+        input.province !== "" &&
         input.expirationDate !== "" &&
         input.type_of_help !== ""
       ) {
@@ -126,20 +128,19 @@ export default function Creariniciativa() {
 
         setImageSrc(data.secure_url);
         //setUploadData(data);
-
         const formData2 = new FormData();
 
-        formData2.append("authorId", "63d31dbace5c61728e7e5bd0");
+        formData2.append("authorId", ongstorage.id);
         formData2.append("expirationDate", input.expirationDate);
         formData2.append("title", input.title);
         formData2.append("description", input.description);
-        formData2.append("location", input.location);
+        formData2.append("province", input.province);
         formData2.append("image", data.secure_url);
         formData2.append("resultsAchieved", "Buenos Resultados");
         formData2.append("type_of_help", input.type_of_help);
         //formData2.append("cbu", input.cbu);
         //formData2.append("items_accepted", input.items_accepted);
-
+        
         postIniciatives(formData2);
 
         router.push("/iniciativas");
@@ -148,7 +149,7 @@ export default function Creariniciativa() {
           expirationDate: "",
           title: "",
           description: "",
-          location: "",
+          province: "",
           type_of_help: "",
           cbu: "",
           items_accepted: "",
@@ -199,7 +200,7 @@ export default function Creariniciativa() {
         <label class="block text-sm">Elige una Ubicación</label>
         <select
           class="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
-          name="location"
+          name="province"
           onChange={(el) => handleChange(el)}
         >
           <option value="">Elige una Opcion</option>
@@ -227,7 +228,7 @@ export default function Creariniciativa() {
           <option value="Tierra del Fuego">Tierra del Fuego</option>
           <option value="Tucumán">Tucumán</option>
         </select>
-        {errors.location ? <label className="w-full text-red-600">{errors.location}</label> : null}
+        {errors.province ? <label className="w-full text-red-600">{errors.province}</label> : null}
         <label class="block text-sm">Fecha de Expiracion</label>
         <input
           class="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
@@ -313,3 +314,25 @@ export default function Creariniciativa() {
     </div>
   );
 }
+
+
+export async function getServerSideProps({req}){
+    const posts = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/posts")
+      .then((res) => res.json())
+  
+    const company = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/company")
+      .then((res) => res.json())
+  
+    const ong = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/ong")
+      .then((res) => res.json())
+  
+    const users = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/allusers")
+      .then((res) => res.json())
+    return{
+      props: {
+        posts,
+        company,
+        ong,
+        users}
+    }
+  }
