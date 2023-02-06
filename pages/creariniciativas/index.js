@@ -4,8 +4,6 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import Alert from "@/Components/Alert";
 
-const { VERCEL_URL = 'http://localhost:3000/api/railway-backend' } = process.env
-
 function Validate(input) {
   let errors = {};
   if (input.title.length < 5 || input.title.length > 50) {
