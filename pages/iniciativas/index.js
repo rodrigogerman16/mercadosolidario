@@ -830,7 +830,7 @@ function Products({ data }) {
                       key={item.id}
                       href={`/iniciativas/${item.id}`}
                     >
-                      <Card
+                      {item.isActive && <Card
                         key={item.id}
                         title={item.title}
                         image={item.image}
@@ -838,7 +838,7 @@ function Products({ data }) {
                         location={item.location}
                         isVolunteer={item.type_of_help}
                         expirationDate={item.expirationDate}
-                      />
+                      />}
                     </Link>
                   ))}
                 <div className="w-full flex sm:col-span-2 xl:col-span-3 m-auto my-8">
