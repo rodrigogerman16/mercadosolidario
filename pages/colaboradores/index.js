@@ -2,16 +2,13 @@ import React, {useState} from "react";
 import {BsArrowUpShort, BsArrowDownShort} from "react-icons/bs"
 import Link from "next/link";
 
-export default function UsuarioCard({ users }) {
-    users && console.log(users.data)
-
-  
+export default function UsuarioCard({ users }) {  
   const [sortOrder, setSortOrder] = useState('asc');
   const [searchTerm, setSearchTerm] = useState('');  
   const [sortBy, setSortBy] = useState('name');
 
   const filterUsers = users && users.data.filter(user => user.type_of_user === "user")
-console.log(filterUsers)
+
   const sortedData = filterUsers && filterUsers
   .filter(user => user.name.toLowerCase().includes(searchTerm.toLowerCase()))
   .sort((a, b) => {
