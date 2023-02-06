@@ -27,7 +27,7 @@ export const useBackendUser = () => {
 
     //Vincular session.user.email (session) con user.email (local)
     if(session){
-      const usuario = await axios.post('http://localhost:3001/login', {        
+      const usuario = await axios.post('https://pf-backend-mercadosolidario-production.up.railway.app/login', {        
         email: session.user.email,
         loginGoogle: true
       });

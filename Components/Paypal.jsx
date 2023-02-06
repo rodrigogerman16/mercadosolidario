@@ -22,7 +22,7 @@ export default function App({ postId }) {
           createOrder={async () => {
             try {
               const res = await axios({
-                url: "http://localhost:3000/api/payment",
+                url: "https://mercadosolidario.vercel.app/api/payment",
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
