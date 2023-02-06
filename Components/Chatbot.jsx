@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { ThemeProvider } from 'styled-components'
 import ChatBot from 'react-simple-chatbot'
-import { useUser } from '../hooks/user'
 import Link from 'next/link'
 import Alert from './Alert'
 
@@ -41,8 +40,6 @@ const Chatbot = () => {
     }
   }
 
-  const user = useUser()
-
   const theme = {
     background: '#f5f8fb',
     headerBgColor: '#f472b6',
@@ -57,8 +54,8 @@ const Chatbot = () => {
   const steps = [
     {
       id: 1,
-      message: user ? `Hola ${user.name}! Dime en que te puedo ayudar?` : 'Bienvenido al chatbot, para comenzar, dime tu nombre.',
-      trigger: user ? 4 : 2,
+      message: 'Bienvenido al chatbot, para comenzar, dime tu nombre.',
+      trigger: 2
     },
     {
       id: 2,
