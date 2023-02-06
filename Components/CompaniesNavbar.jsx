@@ -46,7 +46,7 @@ export default function CompaniesNavbar() {
                                         </Link>
 
                                         <Link
-                                            href="/colaboradores"
+                                            href="/usuarios"
                                             className="font-semibold text-black hover:text-pink-400"
                                         >
                                             Buscar Colaboradores

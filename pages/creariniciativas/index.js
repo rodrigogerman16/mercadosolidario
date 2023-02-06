@@ -35,13 +35,13 @@ export default function Creariniciativa(props) {
     province: "",
     expirationDate: "",
     type_of_help: "",
-    cbu: "",
-    items_accepted: "",
   });
 
   const [errors, setErrors] = React.useState({});
 
   const [imageSrc, setImageSrc] = useState(null);
+
+  const ongstorage = JSON.parse(window.localStorage.getItem("user"))
 
   const postIniciatives = async (props) => {
     let info = await axios.post(
@@ -53,6 +53,7 @@ export default function Creariniciativa(props) {
         },
       }
     );
+    console.log(info.data)
     return console.log(info.data);
   };
 
@@ -82,10 +83,6 @@ export default function Creariniciativa(props) {
   //     });
   //   }
   // }
-
-  const ongstorage = JSON.parse(window.localStorage.getItem("user"))
-  console.log(ongstorage)
-  
   
   async function handleSubmit(el) {
     try {
@@ -143,7 +140,7 @@ export default function Creariniciativa(props) {
         
         postIniciatives(formData2);
 
-        router.push("/iniciativas");
+        router.push("/ong/publicaciones");
 
         setInput({
           expirationDate: "",
@@ -160,6 +157,7 @@ export default function Creariniciativa(props) {
       }
     } catch (error) {
       console.log(error);
+      Alert({ title: 'Iniciativa', text: 'Lo sentimos, hubo un error al crear su iniciativa, intente nuevamente en unos segundos, gracias.', icon: 'error' })
     }
   }
 
@@ -204,29 +202,29 @@ export default function Creariniciativa(props) {
           onChange={(el) => handleChange(el)}
         >
           <option value="">Elige una Opcion</option>
-          <option value="Buenos Aires">Buenos Aires</option>
+          <option value="BuenosAires">Buenos Aires</option>
           <option value="Catamarca">Catamarca</option>
           <option value="Chaco">Chaco</option>
           <option value="Chubut">Chubut</option>
-          <option value="Córdoba">Córdoba</option>
+          <option value="Cordoba">Córdoba</option>
           <option value="Corrientes">Corrientes</option>
-          <option value="Entre Ríos">Entre Ríos</option>
+          <option value="EntreRios">Entre Ríos</option>
           <option value="Formosa">Formosa</option>
           <option value="Jujuy">Jujuy</option>
-          <option value="La Pampa">La Pampa</option>
-          <option value="La Rioja">La Rioja</option>
+          <option value="LaPampa">La Pampa</option>
+          <option value="LaRioja">La Rioja</option>
           <option value="Mendoza">Mendoza</option>
           <option value="Misiones">Misiones</option>
-          <option value="Neuquén">Neuquén</option>
-          <option value="Río Negro">Río Negro</option>
+          <option value="Neuquen">Neuquén</option>
+          <option value="RioNegro">Río Negro</option>
           <option value="Salta">Salta</option>
-          <option value="San Juan">San Juan</option>
-          <option value="San Luis">San Luis</option>
-          <option value="Santa Cruz">Santa Cruz</option>
-          <option value="Santa Fe">Santa Fe</option>
-          <option value="Santiago del Estero">Santiago del Estero</option>
-          <option value="Tierra del Fuego">Tierra del Fuego</option>
-          <option value="Tucumán">Tucumán</option>
+          <option value="SanJuan">San Juan</option>
+          <option value="SanLuis">San Luis</option>
+          <option value="SantaCruz">Santa Cruz</option>
+          <option value="SantaFe">Santa Fe</option>
+          <option value="SantiagoDelEstero">Santiago del Estero</option>
+          <option value="TierraDelFuego">Tierra del Fuego</option>
+          <option value="Tucuman">Tucumán</option>
         </select>
         {errors.province ? <label className="w-full text-red-600">{errors.province}</label> : null}
         <label class="block text-sm">Fecha de Expiracion</label>
