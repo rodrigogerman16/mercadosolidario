@@ -1,7 +1,5 @@
 import axios from "axios";
 
-const {VERCEL_URL = 'http://localhost:3000/api/railway-backend'} = process.env
-
 const emailPost = async (email) => {
   try {
     console.log(email);
