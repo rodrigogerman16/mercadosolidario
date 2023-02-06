@@ -13,6 +13,7 @@ export default function Publicaciones(props){
             <h2 className="font-bold text-2xl text-center">Mis Iniciativas</h2>
             <div className="grid w-full col-span-3 grid w-full sm:grid-cols-2 xl:grid-cols-2 gap-4 mt-24">
             {userFinded && userFinded[0].posts.map(post => (
+              post.isActive &&
               <Link
               className="w-full"
               key={post.id}
