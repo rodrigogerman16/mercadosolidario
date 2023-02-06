@@ -83,7 +83,6 @@ export default function Iniciativas({posts}){
           </ul>
         </div>
       </aside>
-          {posts && posts.length && <IniciativasCards posts={posts}/>}
         </div>
     )
 }
