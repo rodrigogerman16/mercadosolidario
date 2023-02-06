@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import logo from "../Assets/mercado-solidario-logo.jpg";
+import profile from "../Assets/profile.png"
 import { useState } from "react";
 import { Transition } from "@headlessui/react";
 import { getSession, signOut, useSession } from 'next-auth/react'
@@ -97,7 +98,7 @@ export default function UserNavbar() {
                   {!isOpen ? (
                     <Image
                       className="block rounded-3xl"
-                      src={user.image ? user.image : logo}
+                      src={user.image ? user.image : profile}
                       width={50}
                       height={50}
                       alt="profile"
