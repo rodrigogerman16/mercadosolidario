@@ -1,26 +1,34 @@
 import React from 'react'
+import dynamic from 'next/dynamic';
+
+const DynamicGetDonaciones = dynamic(() => import('./donaciones/getDonaciones'), {
+  ssr: false
+});
 
 const LatestDonations = () => {
   return (
-    <div className='grid grid-cols-3 gap-y-2'>
-      <div className='bg-zinc-50 p-2 rounded-md text-gray-700 font-medium'>Transacción</div>
-      <div className='bg-zinc-50 p-2 rounded-md text-gray-700 font-medium'>Date</div>
-      <div className='bg-zinc-50 p-2 rounded-md text-gray-700 font-medium'>Amount</div>
-      <div className='bg-zinc-50 p-2 rounded-md text-gray-500'>
-        <span>ejemplo@mail.com</span>
+    <div class="relative overflow-x-scroll max-w-full  ml-4 flex flex-col justify-center items-center">
+
+      <div className="w-2/3 text-left mb-4">
       </div>
-      <div className='bg-zinc-50 p-2 rounded-md text-gray-500'>02/02/2003</div>
-      <div className='bg-zinc-50 p-2 rounded-md text-gray-500'>$200</div>
-      <div className='bg-zinc-50 p-2 rounded-md text-gray-500'>
-        <span>ejemplo@mail.com</span>
-      </div>
-      <div className='bg-zinc-50 p-2 rounded-md text-gray-500'>02/02/2003</div>
-      <div className='bg-zinc-50 p-2 rounded-md text-gray-500'>$200</div>
-      <div className='bg-zinc-50 p-2 rounded-md text-gray-500'>
-        <span>ejemplo@mail.com</span>
-      </div>
-      <div className='bg-zinc-50 p-2 rounded-md text-gray-500'>02/02/2003</div>
-      <div className='bg-zinc-50 p-2 rounded-md text-gray-500'>$200</div>
+      <table class="w-2/3 text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase border-b">
+          <tr>
+            <th scope="col" class="px-6 py-3">
+              ID
+            </th>
+            <th scope="col" class="px-6 py-3">
+              DATE
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Cantidad
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <DynamicGetDonaciones latest={true} />
+        </tbody>
+      </table>
     </div>
   )
 }
