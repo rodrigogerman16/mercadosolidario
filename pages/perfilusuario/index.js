@@ -171,7 +171,6 @@ export default function Perfilusuario() {
       </button>
 
       {visible == true ? <HistorialPerfilUsuario /> : ""}
-      <RutaUser/>
     </div> 
   );
 }
