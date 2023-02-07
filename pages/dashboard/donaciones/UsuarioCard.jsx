@@ -1,13 +1,16 @@
-import React from 'react'
+'use client'
+import React, { useEffect, useState } from "react";
+import { BsArrowUpShort, BsArrowDownShort } from "react-icons/bs"
 import dynamic from 'next/dynamic';
 
-const DynamicGetDonaciones = dynamic(() => import('./donaciones/getDonaciones'), {
+const DynamicGetDonaciones = dynamic(() => import('./getDonaciones'), {
   ssr: false
 });
 
-const LatestDonations = () => {
+export default function UsuarioCard() {
+
   return (
-    <div class="relative overflow-x-scroll max-w-full  ml-4 flex flex-col justify-center items-center">
+    <div class="relative overflow-x-auto mt-20 ml-4 flex flex-col justify-center items-center">
 
       <div className="w-2/3 text-left mb-4">
       </div>
@@ -26,11 +29,9 @@ const LatestDonations = () => {
           </tr>
         </thead>
         <tbody>
-          <DynamicGetDonaciones latest={true} />
+          <DynamicGetDonaciones />
         </tbody>
       </table>
     </div>
-  )
+  );
 }
-
-export default LatestDonations
