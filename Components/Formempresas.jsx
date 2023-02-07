@@ -182,6 +182,8 @@ export default function Formempresas(props) {
     }
   }
 
+  console.log(input)
+
   return (
     <form
       className="grid gap-4 justify-center items-center"
