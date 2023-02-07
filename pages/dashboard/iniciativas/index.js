@@ -1,3 +1,4 @@
+'use client'
 import IniciativasCards from "./IniciativasCards";
 import Link from "next/link";
 import Logo from '../../../Assets/logo-mercado-solidario-sintexto.png'
@@ -82,7 +83,8 @@ const Iniciativas = (props) =>{
           </ul>
         </div>
       </aside>
-            <IniciativasCards posts={props.posts}/>
+          {props.posts.length && <IniciativasCards posts={props.posts}/>}
+
         </div>
     )
 }
