@@ -134,7 +134,7 @@ export default function Perfilusuario() {
       birthDate: mongoDbDate,
     };
 
-    console.log(obj);
+    //console.log(obj);
 
     const info = await axios.put(
       "https://pf-backend-mercadosolidario-production.up.railway.app/user/update/" +
