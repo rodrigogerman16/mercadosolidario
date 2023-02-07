@@ -37,9 +37,9 @@ const RutaUser = () => {
   console.log(results);
 
   return (
-    <div>
+    <div className="flex flex-wrap w-full flex-span-3 justify-center gap-4 mt-24">
       {results
-        ? results.map((e) => (
+        ? results.map((e) => (          
             <Card
               title={e.title}
               image={e.image}
