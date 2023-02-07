@@ -18,6 +18,9 @@ function Validate(input) {
   if (input.cuit.length !== 11) {
     errors.cuit = "Ingrese su CUIT";
   }
+  if (input.phone.length < 8) {
+    errors.phone = "Ingrese su Telefono";
+  }
   return errors;
 }
 
@@ -54,6 +57,7 @@ export default function Formempresas(props) {
     lastName: "",
     province: "",
     cuit: "",
+    phone: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -114,7 +118,8 @@ export default function Formempresas(props) {
         input.name !== "" &&
         input.lastName !== "" &&
         input.province !== "" &&
-        input.cuit !== ""
+        input.cuit !== "" &&
+        input.phone !== ""
       ) {
 
         const form = el.currentTarget;
@@ -147,6 +152,7 @@ export default function Formempresas(props) {
         formData.append("password", props.password);
         formData.append("type_of_user", props.type_of_user);
         formData.append("province", input.province);
+        formData.append("phone", input.phone);
 
         postCompany(formData);       
         
@@ -160,9 +166,10 @@ export default function Formempresas(props) {
           lastName: "",
           province: "",
           cuit: "",
+          phone: "",
         });
         window.location.href = '../';
-        signOut()
+        //signOut()
       } else {
         Alert({
           title: "Registro",
@@ -206,6 +213,20 @@ export default function Formempresas(props) {
         />
         {errors.lastName ? (
           <label className="text-sm text-red-600">{errors.lastName}</label>
+        ) : null}
+      </div>
+      <div className="">
+        <label className="text-sm">Telefono</label>
+        <input
+          className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
+          type="text"
+          value={input.phone}
+          name="phone"
+          onChange={(el) => handleChange(el)}
+          placeholder=""
+        />
+        {errors.phone ? (
+          <label className="text-sm text-red-600">{errors.phone}</label>
         ) : null}
       </div>
       <div className="">
