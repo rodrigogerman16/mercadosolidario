@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import RutaUser from "@/Components/RutaUser";
 import { useUser } from "../../hooks/user";
 import HistorialPerfilUsuario from "../../Components/HistorialPerfilUsuario";
 export default function Perfilusuario() {
@@ -170,6 +171,7 @@ export default function Perfilusuario() {
       </button>
 
       {visible == true ? <HistorialPerfilUsuario /> : ""}
-    </div>
+      <RutaUser/>
+    </div> 
   );
 }
