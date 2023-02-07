@@ -1,11 +1,12 @@
+'use client'
 import IniciativasCards from "./IniciativasCards";
 import Link from "next/link";
 import Logo from '../../../Assets/logo-mercado-solidario-sintexto.png'
+import profile from "../../../Assets/profile.png"
 import Image from "next/image";
-import { signOut, useSession } from 'next-auth/react'
+import { signOut } from 'next-auth/react'
 
-export default function Iniciativas({posts}){
-  const {data: session} = useSession()
+const Iniciativas = (props) =>{
   function handleSignOut(){
     signOut()
   }
@@ -31,7 +32,7 @@ export default function Iniciativas({posts}){
                 <div>
                   <button type="button" className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 " aria-expanded="false" data-dropdown-toggle="dropdown-user">
                     <span className="sr-only">Open user menu</span>
-                    <Image className="w-8 h-8 rounded-full" src={Logo} alt="user photo" />
+                    <Image className="w-8 h-8 rounded-full" src={profile} alt="user photo" />
                   </button>
                 </div>
                 <div className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow " id="dropdown-user">
@@ -82,31 +83,22 @@ export default function Iniciativas({posts}){
           </ul>
         </div>
       </aside>
-            <IniciativasCards posts={posts}/>
+          {props.posts.length && <IniciativasCards posts={props.posts}/>}
+
         </div>
     )
 }
+
+export default Iniciativas
 
 export const getStaticProps = async () => {
 
     const posts = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/posts")
       .then((res) => res.json())
   
-    const company = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/company")
-      .then((res) => res.json())
-  
-    const ong = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/ong")
-      .then((res) => res.json())
-  
-    const users = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/user")
-      .then((res) => res.json())
-  
     return {
       props: {
         posts,
-        company,
-        ong,
-        users
       }
     };
   };

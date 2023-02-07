@@ -4,8 +4,6 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import Alert from "@/Components/Alert";
 
-const { VERCEL_URL = 'http://localhost:3000/api/railway-backend' } = process.env
-
 function Validate(input) {
   let errors = {};
   if (input.title.length < 5 || input.title.length > 50) {
@@ -14,8 +12,8 @@ function Validate(input) {
   if (input.description.length < 5 || input.description.length > 500) {
     errors.description = "Al menos 5 Caracteres";
   }
-  if (input.location === "") {
-    errors.location = "Ingrese la ubicación";
+  if (input.province === "") {
+    errors.province = "Ingrese la ubicación";
   }
   if (input.type_of_help === "") {
     errors.type_of_help = "Ingrese el tipo de ayuda";
@@ -29,21 +27,21 @@ function Validate(input) {
   return errors;
 }
 
-export default function Creariniciativa() {
+export default function Creariniciativa(props) {
   const router = useRouter();
   const [input, setInput] = React.useState({
     title: "",
     description: "",
-    location: "",
+    province: "",
     expirationDate: "",
     type_of_help: "",
-    cbu: "",
-    items_accepted: "",
   });
 
   const [errors, setErrors] = React.useState({});
 
   const [imageSrc, setImageSrc] = useState(null);
+
+  const ongstorage = JSON.parse(window.localStorage.getItem("user"))
 
   const postIniciatives = async (props) => {
     let info = await axios.post(
@@ -55,6 +53,7 @@ export default function Creariniciativa() {
         },
       }
     );
+    console.log(info.data)
     return console.log(info.data);
   };
 
@@ -84,7 +83,7 @@ export default function Creariniciativa() {
   //     });
   //   }
   // }
-
+  
   async function handleSubmit(el) {
     try {
       el.preventDefault();
@@ -98,7 +97,7 @@ export default function Creariniciativa() {
         Object.values(errors).length === 0 &&
         input.title !== "" &&
         input.description !== "" &&
-        input.location !== "" &&
+        input.province !== "" &&
         input.expirationDate !== "" &&
         input.type_of_help !== ""
       ) {
@@ -126,29 +125,28 @@ export default function Creariniciativa() {
 
         setImageSrc(data.secure_url);
         //setUploadData(data);
-
         const formData2 = new FormData();
 
-        formData2.append("authorId", "63d31dbace5c61728e7e5bd0");
+        formData2.append("authorId", ongstorage.id);
         formData2.append("expirationDate", input.expirationDate);
         formData2.append("title", input.title);
         formData2.append("description", input.description);
-        formData2.append("location", input.location);
+        formData2.append("province", input.province);
         formData2.append("image", data.secure_url);
         formData2.append("resultsAchieved", "Buenos Resultados");
         formData2.append("type_of_help", input.type_of_help);
         //formData2.append("cbu", input.cbu);
         //formData2.append("items_accepted", input.items_accepted);
-
+        
         postIniciatives(formData2);
 
-        router.push("/iniciativas");
+        router.push("/ong/publicaciones");
 
         setInput({
           expirationDate: "",
           title: "",
           description: "",
-          location: "",
+          province: "",
           type_of_help: "",
           cbu: "",
           items_accepted: "",
@@ -159,6 +157,7 @@ export default function Creariniciativa() {
       }
     } catch (error) {
       console.log(error);
+      Alert({ title: 'Iniciativa', text: 'Lo sentimos, hubo un error al crear su iniciativa, intente nuevamente en unos segundos, gracias.', icon: 'error' })
     }
   }
 
@@ -199,35 +198,35 @@ export default function Creariniciativa() {
         <label class="block text-sm">Elige una Ubicación</label>
         <select
           class="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
-          name="location"
+          name="province"
           onChange={(el) => handleChange(el)}
         >
           <option value="">Elige una Opcion</option>
-          <option value="Buenos Aires">Buenos Aires</option>
+          <option value="BuenosAires">Buenos Aires</option>
           <option value="Catamarca">Catamarca</option>
           <option value="Chaco">Chaco</option>
           <option value="Chubut">Chubut</option>
-          <option value="Córdoba">Córdoba</option>
+          <option value="Cordoba">Córdoba</option>
           <option value="Corrientes">Corrientes</option>
-          <option value="Entre Ríos">Entre Ríos</option>
+          <option value="EntreRios">Entre Ríos</option>
           <option value="Formosa">Formosa</option>
           <option value="Jujuy">Jujuy</option>
-          <option value="La Pampa">La Pampa</option>
-          <option value="La Rioja">La Rioja</option>
+          <option value="LaPampa">La Pampa</option>
+          <option value="LaRioja">La Rioja</option>
           <option value="Mendoza">Mendoza</option>
           <option value="Misiones">Misiones</option>
-          <option value="Neuquén">Neuquén</option>
-          <option value="Río Negro">Río Negro</option>
+          <option value="Neuquen">Neuquén</option>
+          <option value="RioNegro">Río Negro</option>
           <option value="Salta">Salta</option>
-          <option value="San Juan">San Juan</option>
-          <option value="San Luis">San Luis</option>
-          <option value="Santa Cruz">Santa Cruz</option>
-          <option value="Santa Fe">Santa Fe</option>
-          <option value="Santiago del Estero">Santiago del Estero</option>
-          <option value="Tierra del Fuego">Tierra del Fuego</option>
-          <option value="Tucumán">Tucumán</option>
+          <option value="SanJuan">San Juan</option>
+          <option value="SanLuis">San Luis</option>
+          <option value="SantaCruz">Santa Cruz</option>
+          <option value="SantaFe">Santa Fe</option>
+          <option value="SantiagoDelEstero">Santiago del Estero</option>
+          <option value="TierraDelFuego">Tierra del Fuego</option>
+          <option value="Tucuman">Tucumán</option>
         </select>
-        {errors.location ? <label className="w-full text-red-600">{errors.location}</label> : null}
+        {errors.province ? <label className="w-full text-red-600">{errors.province}</label> : null}
         <label class="block text-sm">Fecha de Expiracion</label>
         <input
           class="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
@@ -313,3 +312,25 @@ export default function Creariniciativa() {
     </div>
   );
 }
+
+
+export async function getServerSideProps({req}){
+    const posts = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/posts")
+      .then((res) => res.json())
+  
+    const company = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/company")
+      .then((res) => res.json())
+  
+    const ong = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/ong")
+      .then((res) => res.json())
+  
+    const users = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/allusers")
+      .then((res) => res.json())
+    return{
+      props: {
+        posts,
+        company,
+        ong,
+        users}
+    }
+  }

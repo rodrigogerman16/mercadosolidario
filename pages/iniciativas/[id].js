@@ -5,8 +5,6 @@ import Image from 'next/image';
 import moment from 'moment/moment';
 
 const Detail = ({ data }) => {
-  console.log("Esto es data" + data);
-  console.log(data);
   return (
     <div className='grid gap-8 max-w-3xl w-full m-auto gap-8 my-8 p-8'>
       <img className='rounded m-auto w-full aspect-video object-cover' src={data.image} alt={data.title}></img>
@@ -16,9 +14,9 @@ const Detail = ({ data }) => {
           <span className="text-sm dark:text-gray-400">{moment().startOf(data.expirationDate).fromNow()}</span>
         </div>
         <h2 className="text-5xl font-bold">{data.title}</h2>
-        <span className='text-gray-400'>📍{data.location}</span>
+        <span className='text-gray-400'>📍{data.province}</span>
         <p className="mt-2">{data.description}</p>
-        <Paypal></Paypal>
+        <Paypal postId={data.id}></Paypal>
       </div>
     </div>
   )

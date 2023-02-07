@@ -4,7 +4,7 @@ const Card = ({
   title,
   image,
   description,
-  location,
+  province,
   isVolunteer,
   expirationDate,
 }) => {
@@ -35,7 +35,7 @@ const Card = ({
       <p className="text-gray-800 line-clamp-4">{description}</p>
 
       <div className="flex justify-between">
-        <p className="text-gray-500 line-clamp-1">{location}</p>
+        <p className="text-gray-500 line-clamp-1">{province}</p>
 
         <p className="text-gray-500 line-clamp-1">{`${day}/${month}`}</p>
       </div>

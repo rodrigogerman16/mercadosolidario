@@ -38,15 +38,24 @@ export default function IniciativasCards({ posts }) {
             value={searchTerm}
           ></input>          
         </div>
-        {filteredPosts?.map((post) => (
+        {filteredPosts && filteredPosts?.map((post) => (
             <div className="justify-center mt-8 max-w-sm w-full lg:max-w-full lg:flex" key={post.id}>
+              {post.image ? 
               <Image
                 className="border-b border-l border-gray-400 lg:border-t lg:border-gray-400 h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
-                src={post.image === "undefined" ? Logo : post.image}
+                src={post.image  === "undefined" ? Logo : post.image}
+                width={400}
+                height={400}
+                alt="Imagen de iniciativa"
+              /> : 
+              <Image
+                className="border-b border-l border-gray-400 lg:border-t lg:border-gray-400 h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
+                src={Logo}
                 width={400}
                 height={400}
                 alt="Imagen de iniciativa"
               />
+              }
               <div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal lg:w-3/4">
                 <div className="mb-4">
                   <div className="text-gray-900 font-bold text-xl mb-2">

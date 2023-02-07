@@ -4,10 +4,10 @@ const nextConfig = {
     appDir: true,
   },
 
-  reactStrictMode: true,
+  reactStrictMode: false,
   images: {
-    remotePatterns:[
-      { 
+    remotePatterns: [
+      {
         protocol: 'https',
         hostname: '*',
         port: '',

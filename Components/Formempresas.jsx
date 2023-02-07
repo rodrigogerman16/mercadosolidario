@@ -60,7 +60,7 @@ export default function Formempresas(props) {
 
   const postCompany = async (props) => {
     let info = await axios.post(
-      `http://localhost:3001/company/newcompany`,
+      `https://pf-backend-mercadosolidario-production.up.railway.app/company/newcompany`,
       props,
       {
         headers: {

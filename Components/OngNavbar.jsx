@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import logo from "../Assets/mercado-solidario-logo.jpg"
+import profile from "../Assets/profile.png"
 import { useState } from "react";
 import { Transition } from "@headlessui/react";
 import { useUser } from "../hooks/user.js";
@@ -51,6 +52,20 @@ export default function OngNavbar() {
                                         >
                                             Crear Iniciativas
                                         </Link>
+
+                                        <Link
+                                            href="/ong/perfil"
+                                            className="font-semibold text-black hover:text-pink-400"
+                                        >
+                                            Perfil
+                                        </Link>
+
+                                        <Link
+                                            href="/ong/publicaciones"
+                                            className="font-semibold text-black hover:text-pink-400"
+                                        >
+                                            Mis Publicaciones
+                                        </Link>
                                     </div>
                                 </div>
                                 <div className="hidden gap-4 md:flex">
@@ -61,7 +76,7 @@ export default function OngNavbar() {
                                         Cerrar sesion
                                     </button>
                                     <Image
-                                        src={user.image ? user.image : logo}
+                                        src={user.image ? user.image : profile}
                                         width={50}
                                         height={50}
                                         className='rounded-3xl cursor-pointer'
