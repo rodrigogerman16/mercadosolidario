@@ -83,7 +83,7 @@ const Iniciativas = (props) =>{
           </ul>
         </div>
       </aside>
-          {posts.length && <IniciativasCards posts={posts}/>}
+          {props.posts.length && <IniciativasCards posts={props.posts}/>}
 
         </div>
     )
