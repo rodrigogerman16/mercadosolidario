@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import Alert from "./Alert";
+import profile from "../Assets/profile.png"
 
 function Validate(input) {
   let errors = {};
@@ -115,7 +116,8 @@ export default function Formusers(props) {
       cuil: info.data.cuil,
       phone: info.data.phone,
       user_linkedin: info.data.user_linkedin,
-      //image: info.data.image
+      image: info.data.image,
+      profession: info.data.profession
     };
 
     window.localStorage.setItem("user", JSON.stringify(aux));
@@ -196,10 +198,10 @@ export default function Formusers(props) {
           email: props.email || session.user.email,
           password: props.password || "asdasdasd",
           type_of_user: props.type_of_user || "user",
-          profession: "Abogado",
+          profession: input.profession,
           cuil: input.cuil,
           user_linkedin: input.user_linkedin,
-          //image: data.secure_url || "https://t3.ftcdn.net/jpg/04/51/93/48/360_F_451934847_V7rc18Ibs9UNU5sSihQBY0MzSDgei4Cr.jpg"
+          image: data.secure_url
         };
         console.log(user)
         postUser(user).then(() => {
