@@ -10,11 +10,35 @@ export default function Perfilusuario() {
     name: "",
     lastName: "",
     phone: "",
-    cuil: "",
     user_linkedin: "",
     birthDate: "",
     profession: "",
   });
+  const [infoUsuario, setInfoUsuario] = useState()
+
+  useEffect(() => {
+    async function fetchData(){
+      const usuario = window.localStorage.getItem("user");
+      const usuarioJSON = usuario ? JSON.parse(usuario) : "";
+      const api = await axios(
+        "https://pf-backend-mercadosolidario-production.up.railway.app/user/" +
+          usuarioJSON.id
+      );
+
+      setInfoUsuario(api.data);
+      console.log('actualizando');
+      setFormUsuario({
+        name: api.data.name,
+        lastName: api.data.lastName,
+        phone: api.data.phone,
+        user_linkedin: api.data.user_linkedin,
+        birthDate: api.data.birthDate,
+        profession: api.data.profession,
+      });
+    }
+
+    fetchData()
+  }, [])
 
   const handlerVisible = () => {
     setVisible(visible ? false : true);
@@ -24,6 +48,7 @@ export default function Perfilusuario() {
   let user = "";
   usuario ? (user = JSON.parse(usuario)) : "";
   const formHandler = (e) => {
+    console.log(formUsuario);
     setFormUsuario({
       ...formUsuario,
       [e.target.name]: e.target.value,
@@ -47,21 +72,6 @@ export default function Perfilusuario() {
     if (!formUsuario.phone.includes(letras)) {
       errors.phone = "No puede tener letras";
     }
-    // if (formUsuario.cuil.length < 8) {
-    //   errors.cuil = "Cuil incorrecto";
-    // }
-
-    // if (!formUsuario.user_linkedin.includes("linkedin.com/in")) {
-    //   errors.user_linkedin = "No es un link de linkedin ";
-    // }
-
-    // if (formUsuario.birthDate.includes(letras)) {
-    //   errors.birthDate = "No puede tener letras";
-    // }
-
-    // if (formUsuario.profession.includes(numeros)) {
-    //   errors.profession = "no puede contener numeros";
-    // }
 
     return errors;
   };
@@ -77,7 +87,6 @@ export default function Perfilusuario() {
       name: "",
       lastName: "",
       phone: "",
-      cuil: "",
       user_linkedin: "",
       birthDate: "",
       profession: "",
@@ -103,7 +112,7 @@ export default function Perfilusuario() {
         onChange={formHandler}
         required
       />
-      {errorsForm.lastName ? <p>{errorsForm.lastName}</p> : ""}
+      {errorsForm.lastName ? <p>{errorsForm.lastName}</p> : ``}
       <br />
       <span>Telefono:</span>
       <input
@@ -114,16 +123,6 @@ export default function Perfilusuario() {
         required
       />
       {errorsForm.phone ? <p>{errorsForm.phone}</p> : ""}
-      <br />
-      <span>Cuil:</span>
-      <input
-        name="cuil"
-        type="number"
-        value={formUsuario.cuil}
-        onChange={formHandler}
-        required
-      />
-      {/* {errorsForm.cuil ? <p>{errorsForm.cuil}</p> : ""} */}
       <br />
       <span>Linkedin:</span>
       <input
