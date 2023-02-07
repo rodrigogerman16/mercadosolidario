@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useUser } from "../../hooks/user";
+import HistorialPerfilUsuario from "../../Components/HistorialPerfilUsuario";
 export default function Perfilusuario() {
+  const [visible, setVisible] = useState(false);
   const [errorsForm, setErrorsForm] = useState({});
   const [formUsuario, setFormUsuario] = useState({
     name: "",
@@ -12,13 +15,19 @@ export default function Perfilusuario() {
     profession: "",
   });
 
+  const handlerVisible = () => {
+    setVisible(visible ? false : true);
+  };
+
+  const usuario = useUser();
+  let user = "";
+  usuario ? (user = JSON.parse(usuario)) : "";
   const formHandler = (e) => {
     setFormUsuario({
       ...formUsuario,
       [e.target.name]: e.target.value,
     });
   };
-
   const validate = (formUsuario) => {
     const letras = "abcdefghijklmnopqrstuvwxyz";
     const numeros = "1,2,3,4,5,6,7,8,9,0";
@@ -58,7 +67,8 @@ export default function Perfilusuario() {
   const handlerSubmit = async () => {
     setErrorsForm(validate(formUsuario));
     const info = await axios.put(
-      "https://pf-backend-mercadosolidario-production.up.railway.app/user/update/63d66dc72a682c3359dc5c92",
+      "https://pf-backend-mercadosolidario-production.up.railway.app/user/update/" +
+        user.id,
       formUsuario
     );
     const data = info.data;
@@ -154,6 +164,12 @@ export default function Perfilusuario() {
       >
         Enviar
       </button>
+
+      <button name={visible} onClick={handlerVisible}>
+        Mostrar Historial
+      </button>
+
+      {visible == true ? <HistorialPerfilUsuario /> : ""}
     </div>
   );
 }
