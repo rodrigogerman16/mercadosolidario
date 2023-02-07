@@ -24,6 +24,9 @@ function Validate(input) {
   if (input.expirationDate.length < 10 || input.expirationDate.length > 10) {
     errors.expirationDate = "Respete el Formato AAAA/MM/DD";
   }
+  if (input.category === "") {
+    errors.category = "Ingrese el tipo de ayuda";
+  }
   return errors;
 }
 
@@ -35,13 +38,14 @@ export default function Creariniciativa(props) {
     province: "",
     expirationDate: "",
     type_of_help: "",
+    category: "",
   });
 
   const [errors, setErrors] = React.useState({});
 
   const [imageSrc, setImageSrc] = useState(null);
 
-  const ongstorage = JSON.parse(window.localStorage.getItem("user"))
+  const ongstorage = JSON.parse(window.localStorage.getItem("user"));
 
   const postIniciatives = async (props) => {
     let info = await axios.post(
@@ -53,7 +57,7 @@ export default function Creariniciativa(props) {
         },
       }
     );
-    console.log(info.data)
+    console.log(info.data);
     return console.log(info.data);
   };
 
@@ -70,20 +74,6 @@ export default function Creariniciativa(props) {
     );
   }
 
-  // function handleCheck(el) {
-  //   if (el.target.checked) {
-  //     setInput({
-  //       ...input,
-  //       [el.target.name]: el.target.id,
-  //     });
-  //   } else if (!el.target.checked) {
-  //     setInput({
-  //       ...input,
-  //       [el.target.name]: "",
-  //     });
-  //   }
-  // }
-  
   async function handleSubmit(el) {
     try {
       el.preventDefault();
@@ -99,7 +89,8 @@ export default function Creariniciativa(props) {
         input.description !== "" &&
         input.province !== "" &&
         input.expirationDate !== "" &&
-        input.type_of_help !== ""
+        input.type_of_help !== "" &&
+        input.category !== ""
       ) {
         const form = el.currentTarget;
         const fileInput = Array.from(form.elements).find(
@@ -119,7 +110,7 @@ export default function Creariniciativa(props) {
           "https://api.cloudinary.com/v1_1/dc9pehmoz/image/upload",
           {
             method: "POST",
-            body: formData,            
+            body: formData,
           }
         ).then((r) => r.json());
 
@@ -135,9 +126,8 @@ export default function Creariniciativa(props) {
         formData2.append("image", data.secure_url);
         formData2.append("resultsAchieved", "Buenos Resultados");
         formData2.append("type_of_help", input.type_of_help);
-        //formData2.append("cbu", input.cbu);
-        //formData2.append("items_accepted", input.items_accepted);
-        
+        formData2.append("rubro", input.category);
+
         postIniciatives(formData2);
 
         router.push("/ong/publicaciones");
@@ -148,16 +138,24 @@ export default function Creariniciativa(props) {
           description: "",
           province: "",
           type_of_help: "",
-          cbu: "",
-          items_accepted: "",
+          category: "",
         });
         setImageSrc(null);
       } else {
-        Alert({ title: 'Iniciativa', text: 'Hay datos incorrectos o sin completar', icon: 'error' })
+        Alert({
+          title: "Iniciativa",
+          text: "Hay datos incorrectos o sin completar",
+          icon: "error",
+        });
       }
     } catch (error) {
       console.log(error);
-      Alert({ title: 'Iniciativa', text: 'Lo sentimos, hubo un error al crear su iniciativa, intente nuevamente en unos segundos, gracias.', icon: 'error' })
+      Alert({
+        title: "Iniciativa",
+        text:
+          "Lo sentimos, hubo un error al crear su iniciativa, intente nuevamente en unos segundos, gracias.",
+        icon: "error",
+      });
     }
   }
 
@@ -165,7 +163,9 @@ export default function Creariniciativa(props) {
 
   return (
     <div className="w-full max-w-md p-4 rounded-md sm:p-8 m-auto min-h-[calc(100vh-100px)] flex flex-col justify-center items-center">
-      <span className="block mb-2 text-xs font-semibold tracking-widest text-center uppercase dark:text-pink-400">Iniciativas</span>
+      <span className="block mb-2 text-xs font-semibold tracking-widest text-center uppercase dark:text-pink-400">
+        Iniciativas
+      </span>
       <h2 className="text-5xl font-bold text-center">Crear una iniciativa</h2>
       <div className="text-center mb-10">
         <span className="inline-block w-1 h-1 rounded-full bg-pink-500 ml-1"></span>
@@ -174,7 +174,7 @@ export default function Creariniciativa(props) {
         <span className="inline-block w-3 h-1 rounded-full bg-pink-500 ml-1"></span>
         <span className="inline-block w-1 h-1 rounded-full bg-pink-500 ml-1"></span>
       </div>
-      <form onSubmit={(el) => handleSubmit(el)} className='grid gap-4 w-full'>
+      <form onSubmit={(el) => handleSubmit(el)} className="grid gap-4 w-full">
         <label class="block text-sm">Titulo</label>
         <input
           class="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
@@ -184,7 +184,9 @@ export default function Creariniciativa(props) {
           onChange={(el) => handleChange(el)}
           placeholder=""
         />
-        {errors.title ? <label className="w-full text-red-600">{errors.title}</label> : null}
+        {errors.title ? (
+          <label className="w-full text-red-600">{errors.title}</label>
+        ) : null}
         <label class="block text-sm">Descripción</label>
         <input
           class="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
@@ -194,7 +196,9 @@ export default function Creariniciativa(props) {
           onChange={(el) => handleChange(el)}
           placeholder=""
         />
-        {errors.description ? <label className="w-full text-red-600">{errors.description}</label> : null}
+        {errors.description ? (
+          <label className="w-full text-red-600">{errors.description}</label>
+        ) : null}
         <label class="block text-sm">Elige una Ubicación</label>
         <select
           class="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
@@ -226,7 +230,42 @@ export default function Creariniciativa(props) {
           <option value="TierraDelFuego">Tierra del Fuego</option>
           <option value="Tucuman">Tucumán</option>
         </select>
-        {errors.province ? <label className="w-full text-red-600">{errors.province}</label> : null}
+        {errors.province ? (
+          <label className="w-full text-red-600">{errors.province}</label>
+        ) : null}
+        <label class="block text-sm">Elige un Rubro</label>
+        <select
+          class="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
+          name="category"
+          onChange={(el) => handleChange(el)}
+        >
+          <option value="">Elige una Opcion</option>
+          <option value="Alimentacion">Alimentacion</option>
+          <option value="Ayuda_a_refugiados">Ayuda a Refugiados</option>
+          <option value="Ayuda_a_animales">Ayuda a Animales</option>
+          <option value="Apoyo_a_comunidades_indigenas">
+            Apoyo a Comunidades Indigenas
+          </option>
+          <option value="Apoyo_a_lgbt">Apoyo a LGBT</option>
+          <option value="Apoyo_a_la_mujer">Apoyo a la Mujer</option>
+          <option value="Construccion_obras">Construccion Obras</option>
+          <option value="Cultura">Cultura</option>
+          <option value="Deportes">Deportes</option>
+          <option value="Derechos_humanos">Derechos Humanos</option>
+          <option value="Discapacitados">Discapacitados</option>
+          <option value="Educacion">Educacion</option>
+          <option value="Medio_ambiente">Medio Ambiente</option>
+          <option value="Entretenimiento">Entretenimiento</option>
+          <option value="Gobierno_no_lucro">Gobierno no Lucro</option>
+          <option value="Materia_prima">Materia Prima</option>
+          <option value="Medios_de_comunicacion">Medios de Comunicacion</option>
+          <option value="Salud_medicina">Salud Medicina</option>
+          <option value="Servicio_comunitario">Servicio Comunitario</option>
+          <option value="Transporte">Transporte</option>
+        </select>
+        {errors.category ? (
+          <label className="w-full text-red-600">{errors.category}</label>
+        ) : null}
         <label class="block text-sm">Fecha de Expiracion</label>
         <input
           class="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
@@ -240,11 +279,7 @@ export default function Creariniciativa(props) {
           <label className="w-full text-red-600">{errors.expirationDate}</label>
         ) : null}
         <label class="block text-sm">Imagen</label>
-        <input
-          class="w-full "
-          type="file"
-          name="file"
-        />
+        <input class="w-full " type="file" name="file" />
         {/* {imageSrc === null ? <label>{'Ingrese el Archivo'}</label> : null} */}
         <label class="block text-sm">Tipo de Ayuda</label>
         <select
@@ -257,19 +292,31 @@ export default function Creariniciativa(props) {
           <option value="especie">En Especie</option>
           <option value="servicio">Voluntariados</option>
         </select>
-        {errors.type_of_help ? <label className="w-full text-red-600">{errors.type_of_help}</label> : null}
-        {input.type_of_help === "efectivo"? <div>
-          <label>CBU/Paypal/MP</label>
-          <input type="text" value={input.cbu}
-          name="cbu"
-          onChange={(el) => handleChange(el)}></input>
-          </div> : null}
-          {input.type_of_help === "especie"? <div>
-          <label>Items Aceptados(Ej: Ropa, utiles, Arroz, Madera)</label>
-          <input type="text" value={input.items_accepted}
-          name="items_accepted"
-          onChange={(el) => handleChange(el)}></input>
-          </div> : null}
+        {errors.type_of_help ? (
+          <label className="w-full text-red-600">{errors.type_of_help}</label>
+        ) : null}
+        {/* {input.type_of_help === "efectivo" ? (
+          <div>
+            <label>CBU/Paypal/MP</label>
+            <input
+              type="text"
+              value={input.cbu}
+              name="cbu"
+              onChange={(el) => handleChange(el)}
+            ></input>
+          </div>
+        ) : null}
+        {input.type_of_help === "especie" ? (
+          <div>
+            <label>Items Aceptados(Ej: Ropa, utiles, Arroz, Madera)</label>
+            <input
+              type="text"
+              value={input.items_accepted}
+              name="items_accepted"
+              onChange={(el) => handleChange(el)}
+            ></input>
+          </div>
+        ) : null} */}
         {/* <div class="mt-2 font-hind text-lg">
             <label>Tipo de Ayudas/Donaciones</label>
             <div class="mt-2 font-hind text-lg">
@@ -313,24 +360,28 @@ export default function Creariniciativa(props) {
   );
 }
 
+export async function getServerSideProps({ req }) {
+  const posts = await fetch(
+    "https://pf-backend-mercadosolidario-production.up.railway.app/posts"
+  ).then((res) => res.json());
 
-export async function getServerSideProps({req}){
-    const posts = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/posts")
-      .then((res) => res.json())
-  
-    const company = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/company")
-      .then((res) => res.json())
-  
-    const ong = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/ong")
-      .then((res) => res.json())
-  
-    const users = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/allusers")
-      .then((res) => res.json())
-    return{
-      props: {
-        posts,
-        company,
-        ong,
-        users}
-    }
-  }
+  const company = await fetch(
+    "https://pf-backend-mercadosolidario-production.up.railway.app/company"
+  ).then((res) => res.json());
+
+  const ong = await fetch(
+    "https://pf-backend-mercadosolidario-production.up.railway.app/ong"
+  ).then((res) => res.json());
+
+  const users = await fetch(
+    "https://pf-backend-mercadosolidario-production.up.railway.app/allusers"
+  ).then((res) => res.json());
+  return {
+    props: {
+      posts,
+      company,
+      ong,
+      users,
+    },
+  };
+}

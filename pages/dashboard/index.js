@@ -147,7 +147,7 @@ export async function getServerSideProps({ req }) {
   const ong = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/ong")
     .then((res) => res.json())
 
-  const users = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/allusers")
+  const users = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/user")
     .then((res) => res.json())
   return {
     props: {
