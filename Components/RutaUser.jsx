@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Card from "./Card";
 import axios from "axios";
-import QrCodeReader, { QRCode } from "react-qrcode-reader";
 const RutaUser = () => {
+
   const [results, setResults] = useState();
-  const [val, setVal] = React.useState("");
   useEffect(() => {
     const usuario = window.localStorage.getItem("user");
     const usuarioJSON = usuario ? JSON.parse(usuario) : "";
@@ -36,15 +35,11 @@ const RutaUser = () => {
     fetchData();
   }, []);
   console.log(results);
-  const value = (val) => {
-    console.log(val.chunks[0].text);
-    return "hola";
-  };
 
   return (
-    <div>
+    <div className="flex flex-wrap w-full flex-span-3 justify-center gap-4 mt-24">
       {results
-        ? results.map((e) => (
+        ? results.map((e) => (          
             <Card
               title={e.title}
               image={e.image}
@@ -55,14 +50,6 @@ const RutaUser = () => {
             />
           ))
         : "Loading"}
-      <QrCodeReader
-        delay={5000}
-        width={600}
-        height={500}
-        action={setVal}
-        onRead={value}
-      />
-      <p>{val} hola</p>
     </div>
   );
 };

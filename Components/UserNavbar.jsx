@@ -78,7 +78,7 @@ export default function UserNavbar() {
                     Cerrar sesion
                   </button>
                   <Image
-                    src={user.image ? user.image : logo}
+                    src={user.image ? user.image : profile}
                     width={50}
                     height={50}
                     className="rounded-3xl cursor-pointer object-contain"
