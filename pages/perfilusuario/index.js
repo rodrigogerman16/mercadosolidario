@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useUser } from "../../hooks/user";
 import SideBar from "@/Components/SideBar";
-import profile from '../../Assets/profile.png'
-import Image from 'next/image'
+import profile from "../../Assets/profile.png";
+import Image from "next/image";
+import Alert from "@/Components/Alert";
 export default function Perfilusuario() {
-
   //..Estados para Fomulario
 
   const [errorsForm, setErrorsForm] = useState({});
@@ -14,31 +14,49 @@ export default function Perfilusuario() {
     lastName: "",
     phone: "",
     user_linkedin: "",
-    image: '',
+    image: "",
     birthDate: "",
     profession: "",
   });
-  console.log(formUsuario)
+  console.log(formUsuario);
 
   useEffect(() => {
     async function fetchData() {
       const usuario = window.localStorage.getItem("user");
       const usuarioJSON = usuario && JSON.parse(usuario);
-      const api = usuarioJSON && await axios(
-        "https://pf-backend-mercadosolidario-production.up.railway.app/user/" +
-          usuarioJSON.id
-      );
+      const api =
+        usuarioJSON &&
+        (await axios(
+          "https://pf-backend-mercadosolidario-production.up.railway.app/user/" +
+            usuarioJSON.id
+        ));
 
       console.log("actualizando");
-      api && setFormUsuario({
+      api &&
+        setFormUsuario({
+          name: api.data.name,
+          lastName: api.data.lastName,
+          image: api.data.image,
+          phone: api.data.phone,
+          user_linkedin: api.data.user_linkedin,
+          birthDate: api.data.birthDate,
+          profession: api.data.profession,
+        });
+
+      const aux = {
+        ...usuarioJSON,
         name: api.data.name,
         lastName: api.data.lastName,
         image: api.data.image,
         phone: api.data.phone,
         user_linkedin: api.data.user_linkedin,
-        birthDate: api.data.birthDate,
         profession: api.data.profession,
-      });
+        birthDate: api.data.birthDate,
+      };
+
+      console.log(aux);
+
+      window.localStorage.setItem("user", JSON.stringify(aux));
     }
 
     fetchData();
@@ -52,11 +70,11 @@ export default function Perfilusuario() {
   let user = "";
   usuario ? (user = JSON.parse(usuario)) : "";
   const formHandler = (e) => {
-    console.log(formUsuario);
     setFormUsuario({
       ...formUsuario,
       [e.target.name]: e.target.value,
     });
+    console.log(formUsuario);
   };
   const validate = (formUsuario) => {
     const letras = "abcdefghijklmnopqrstuvwxyz";
@@ -79,14 +97,55 @@ export default function Perfilusuario() {
 
     return errors;
   };
-  const handlerSubmit = async () => {
+
+  async function handlerSubmit(el) {
+    el.preventDefault();
     setErrorsForm(validate(formUsuario));
+    const date = new Date(formUsuario.birthDate);
+    const mongoDbDate = date.toISOString();
+    const form = el.currentTarget;
+    const fileInput = Array.from(form.elements).find(
+      ({ name }) => name === "file"
+    );
+
+    const formData2 = new FormData();
+
+    for (const file of fileInput.files) {
+      formData2.append("file", file);
+    }
+
+    formData2.append("upload_preset", "my-uploads");
+
+    const aux = await fetch(
+      "https://api.cloudinary.com/v1_1/dc9pehmoz/image/upload",
+      {
+        method: "POST",
+        body: formData2,
+      }
+    ).then((r) => r.json());
+
+    const obj = {
+      name: formUsuario.name,
+      lastName: formUsuario.lastName,
+      phone: formUsuario.phone,
+      user_linkedin: formUsuario.user_linkedin,
+      profession: formUsuario.profession,
+      image: aux.secure_url,
+      birthDate: mongoDbDate,
+    };
+
+    console.log(obj);
+
     const info = await axios.put(
       "https://pf-backend-mercadosolidario-production.up.railway.app/user/update/" +
         user.id,
-      formUsuario
+      obj
     );
+
     const data = info.data;
+    console.log(info);
+    console.log(data);
+
     setFormUsuario({
       name: "",
       lastName: "",
@@ -95,9 +154,17 @@ export default function Perfilusuario() {
       birthDate: "",
       profession: "",
     });
-    console.log(info);
-    return data;
-  };
+
+    Alert({
+      title: "Datos Actualizados",
+      text: "Cambiado Satisfactoriamente",
+      icon: "success",
+    });
+
+    window.location.reload();
+  }
+
+  console.log(formUsuario);
 
   const profesiones = [
     { value: "Medico", label: "Medico", checked: false },
@@ -157,12 +224,12 @@ export default function Perfilusuario() {
       checked: false,
     },
     { value: "Militar", label: "Militar", checked: false },
-    { value: "Otros", label: "Otros", checked: false }
-];
+    { value: "Otros", label: "Otros", checked: false },
+  ];
 
   return (
     <div>
-      <SideBar/>
+      <SideBar />
       {/*Cambiar info */}
       <h2 className="text-center font-semibold text-2xl mt-10">
         Editar datos de Perfil
@@ -174,18 +241,15 @@ export default function Perfilusuario() {
         <div className="flex flex-col">
           {/*---------- APLICAR CLOUDINARY ---------------*/}
           <label className="text-sm">Imagen de perfil</label>
-          {
-            formUsuario.image ? 
-            <img src={formUsuario.image} alt='imagen de perfil'/> :
-            <Image src={profile} alt='default image'/> 
-          }
+          {formUsuario.image ? (
+            <img src={formUsuario.image} alt="imagen de perfil" />
+          ) : (
+            <Image src={profile} alt="default image" />
+          )}
           <input
             className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
             type="file"
-            value={formUsuario.image}
-            name={"image"}
-            onChange={formHandler}
-            required
+            name="file"
           />
         </div>
         <div className="flex flex-col">
@@ -214,7 +278,7 @@ export default function Perfilusuario() {
         <div className="flex flex-col">
           <label className="text-sm">Telefono</label>
           <input
-          className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
+            className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
             type="tel"
             value={formUsuario.phone}
             name="phone"
@@ -225,9 +289,9 @@ export default function Perfilusuario() {
         <div className="flex flex-col">
           <label className="text-sm">Linkedin</label>
           <input
-          className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
+            className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
             name="user_linkedin"
-            type="url"
+            type="text"
             value={formUsuario.user_linkedin}
             onChange={formHandler}
           />
@@ -236,7 +300,7 @@ export default function Perfilusuario() {
         <div className="flex flex-col">
           <label className="text-sm">Fecha de Nacimiento</label>
           <input
-          className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
+            className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
             type="date"
             value={formUsuario.birthDate}
             name="birthDate"
@@ -247,14 +311,18 @@ export default function Perfilusuario() {
         <div className="flex flex-col">
           <label className="text-sm">Profesion</label>
           <select
-          className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
-          type="select"
-          value={formUsuario.profession}
-          name="profession"
-          onChange={formHandler}
-        >
-          {profesiones.map(item => <option value={item.value} key={item.label}>{item.label}</option>)}
-        </select>
+            className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
+            type="select"
+            value={formUsuario.profession}
+            name="profession"
+            onChange={formHandler}
+          >
+            {profesiones.map((item) => (
+              <option value={item.value} key={item.label}>
+                {item.label}
+              </option>
+            ))}
+          </select>
           {/* {errorsForm.profession ? <p>{errorsForm.profession}</p> : ""} */}
         </div>
         <input
