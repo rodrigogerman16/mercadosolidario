@@ -1,21 +1,10 @@
 import { useEffect, useState } from "react";
-import { Html5QrcodeScanner } from "html5-qrcode";
-import Html5QrcodePlugin from "./Html5QrcodePlugin";
 import axios from "axios";
-import RutaUser from "@/Components/RutaUser";
 import { useUser } from "../../hooks/user";
-import HistorialPerfilUsuario from "../../Components/HistorialPerfilUsuario";
 import SideBar from "@/Components/SideBar";
+import profile from '../../Assets/profile.png'
+import Image from 'next/image'
 export default function Perfilusuario() {
-  //.. Estados para el lector de codigo QR
-
-  const [decodedText, setDecodedText] = useState(null);
-  const [decodedResult, setDecodedResult] = useState(null);
-
-  const onNewScanResult = (text, result) => {
-    setDecodedText(text);
-    setDecodedResult(result);
-  };
 
   //..Estados para Fomulario
 
@@ -25,11 +14,11 @@ export default function Perfilusuario() {
     lastName: "",
     phone: "",
     user_linkedin: "",
+    image: '',
     birthDate: "",
     profession: "",
   });
   console.log(formUsuario)
-  const [infoUsuario, setInfoUsuario] = useState();
 
   useEffect(() => {
     async function fetchData() {
@@ -40,11 +29,11 @@ export default function Perfilusuario() {
           usuarioJSON.id
       );
 
-      api && setInfoUsuario(api.data);
       console.log("actualizando");
       api && setFormUsuario({
         name: api.data.name,
         lastName: api.data.lastName,
+        image: api.data.image,
         phone: api.data.phone,
         user_linkedin: api.data.user_linkedin,
         birthDate: api.data.birthDate,
@@ -183,6 +172,23 @@ export default function Perfilusuario() {
         onSubmit={(el) => handlerSubmit(el)}
       >
         <div className="flex flex-col">
+          {/*---------- APLICAR CLOUDINARY ---------------*/}
+          <label className="text-sm">Imagen de perfil</label>
+          {
+            formUsuario.image ? 
+            <img src={formUsuario.image} alt='imagen de perfil'/> :
+            <Image src={profile} alt='default image'/> 
+          }
+          <input
+            className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
+            type="file"
+            value={formUsuario.image}
+            name={"image"}
+            onChange={formHandler}
+            required
+          />
+        </div>
+        <div className="flex flex-col">
           <label className="text-sm">Nombre del titular</label>
           <input
             className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
@@ -213,7 +219,6 @@ export default function Perfilusuario() {
             value={formUsuario.phone}
             name="phone"
             onChange={formHandler}
-            required
           />
           {errorsForm.phone ? <p>{errorsForm.phone}</p> : ""}
         </div>
@@ -225,7 +230,6 @@ export default function Perfilusuario() {
             type="url"
             value={formUsuario.user_linkedin}
             onChange={formHandler}
-            required
           />
           {errorsForm.phone ? <label>{errorsForm.phone}</label> : null}
         </div>
@@ -237,7 +241,6 @@ export default function Perfilusuario() {
             value={formUsuario.birthDate}
             name="birthDate"
             onChange={formHandler}
-            required
           />
           {/* {errorsForm.birthDate ? <p>{errorsForm.birthDate}</p> : ""} */}
         </div>
