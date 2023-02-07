@@ -98,7 +98,6 @@ export default function UserNavbar() {
                   <span className="sr-only">Open main menu</span>
                   {!isOpen ? (
                     <Image
-                      href="/perfilusuario"
                       className="block rounded-3xl"
                       src={user.image ? user.image : profile}
                       width={50}
