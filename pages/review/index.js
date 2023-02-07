@@ -55,11 +55,13 @@ export default function Review() {
 
   const sendReview = async (props) => {
     let info = await axios.post(
-      `https://pf-backend-mercadosolidario-production.up.railway.app/SENDREVIEW?`,
+      `https://pf-backend-mercadosolidario-production.up.railway.app/reviews/newreview`,
       props
     );
     return console.log(info.data);
   };
+
+  console.log(userObject)
 
   const handleSubmit = async (el) => {
     try {
@@ -72,16 +74,18 @@ export default function Review() {
       );
       if (Object.values(errors).length === 0) {
         let aux = {
-          //id: userObject.id,
-          rating: input.rating,
-          review: input.review,
+          id: userObject.id,
+          puntuacion: input.rating.toString(),
+          comment: input.review,
         }
-        //Funcion post al back sendReview(aux)
-        //alert('Gracias por dejar tu Reseña')
+        console.log(aux)
+        sendReview(aux)
+        alert('Gracias por dejar tu Reseña')
         setInput({
           rating: "",
           review: "",
         });
+        router.push('/')
       }
     } catch (error) {
       console.log(error);
