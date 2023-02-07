@@ -1,10 +1,23 @@
 import { useEffect, useState } from "react";
+import { Html5QrcodeScanner } from "html5-qrcode";
+import Html5QrcodePlugin from "./Html5QrcodePlugin";
 import axios from "axios";
 import RutaUser from "@/Components/RutaUser";
 import { useUser } from "../../hooks/user";
 import HistorialPerfilUsuario from "../../Components/HistorialPerfilUsuario";
 export default function Perfilusuario() {
-  const [visible, setVisible] = useState(false);
+  //.. Estados para el lector de codigo QR
+
+  const [decodedText, setDecodedText] = useState(null);
+  const [decodedResult, setDecodedResult] = useState(null);
+
+  const onNewScanResult = (text, result) => {
+    setDecodedText(text);
+    setDecodedResult(result);
+  };
+
+  //..Estados para Fomulario
+
   const [errorsForm, setErrorsForm] = useState({});
   const [formUsuario, setFormUsuario] = useState({
     name: "",
@@ -94,8 +107,12 @@ export default function Perfilusuario() {
     console.log(info);
     return data;
   };
+
   return (
-    <div>
+    <div className="w-full max-w-md p-4 rounded-md sm:p-8 m-auto min-h-[calc(100vh-100px)] flex flex-col justify-center items-center">
+      <span className="block mb-2 text-xs font-semibold tracking-widest text-center uppercase dark:text-pink-400">
+        Editar mi Perfil
+      </span>
       <span>Nombre:</span>
       <input
         name="name"
@@ -165,11 +182,16 @@ export default function Perfilusuario() {
         Enviar
       </button>
 
-      <button name={visible} onClick={handlerVisible}>
-        Mostrar Historial
-      </button>
-
-      {visible == true ? <HistorialPerfilUsuario /> : ""}
-    </div> 
+      {/* Codigo QR */}
+      <div>
+        <h1>Escanea aqui tu QR</h1>
+        <Html5QrcodePlugin
+          fps={10}
+          qrbox={250}
+          disableFlip={false}
+          qrCodeSuccessCallback={onNewScanResult}
+        />
+      </div>
+    </div>
   );
 }
