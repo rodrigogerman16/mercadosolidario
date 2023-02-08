@@ -4,7 +4,7 @@ import Logo from "../../../Assets/logo-mercado-solidario-sintexto.png";
 import Image from "next/image";
 import { signOut, useSession } from 'next-auth/react'
 
-export default function Iniciativas({ confirmed }) {
+export default function Iniciativas({ inbox }) {
   const { data: session } = useSession()
   function handleSignOut() {
     signOut()
@@ -93,7 +93,7 @@ export default function Iniciativas({ confirmed }) {
                 </svg>
                 <span className="flex-1 ml-3 whitespace-nowrap">Inbox</span>
                 <span className="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-pink-400 bg-pink-100 rounded-full d">
-                  3
+                  {inbox.length}
                 </span>
               </a>
             </li>
@@ -144,3 +144,15 @@ export default function Iniciativas({ confirmed }) {
     </div>
   );
 }
+
+export const getStaticProps = async () => {
+
+  const inbox = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/chat")
+    .then((res) => res.json())
+
+  return {
+    props: {
+      inbox
+    }
+  };
+};
