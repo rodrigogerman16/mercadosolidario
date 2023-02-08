@@ -4,11 +4,14 @@ import Logo from "../../../Assets/logo-mercado-solidario-sintexto.png";
 import Image from "next/image";
 import { signOut, useSession } from 'next-auth/react'
 import profile from "../../../Assets/profile.png"
+import { Router } from "react-router-dom";
 
 export default function Iniciativas({ users, inbox }) {
   const { data: session } = useSession()
   function handleSignOut() {
     signOut()
+    Router.push("/")
+    window.location.reload()
   }
   return (
     <div>

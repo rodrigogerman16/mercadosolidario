@@ -9,6 +9,8 @@ import { signOut } from 'next-auth/react'
 const Iniciativas = (props) => {
   function handleSignOut() {
     signOut()
+    Router.push("/")
+    window.location.reload()
   }
   return (
     <div>

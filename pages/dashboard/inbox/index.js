@@ -13,6 +13,8 @@ export default function Iniciativas({ inbox }) {
   const { data: session } = useSession()
   function handleSignOut() {
     signOut()
+    Router.push("/")
+    window.location.reload()
   }
   return (
     <div>
