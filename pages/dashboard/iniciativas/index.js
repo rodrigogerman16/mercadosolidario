@@ -95,7 +95,7 @@ const Iniciativas = (props) => {
 
 export default Iniciativas
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
 
   const posts = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/posts")
     .then((res) => res.json())

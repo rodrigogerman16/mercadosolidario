@@ -157,7 +157,7 @@ export default function Iniciativas({ inbox }) {
   );
 }
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
 
   const inbox = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/chat")
     .then((res) => res.json())
