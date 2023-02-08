@@ -78,7 +78,7 @@ export default function Iniciativas({ inbox }) {
             </li>
             <li>
               <a
-                href="#"
+                href="/dashboard/inbox"
                 className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100"
               >
                 <svg
@@ -93,7 +93,7 @@ export default function Iniciativas({ inbox }) {
                 </svg>
                 <span className="flex-1 ml-3 whitespace-nowrap">Inbox</span>
                 <span className="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-pink-400 bg-pink-100 rounded-full d">
-                  {inbox.length}
+                  {inbox.filter(m => m.answer == false).length}
                 </span>
               </a>
             </li>
