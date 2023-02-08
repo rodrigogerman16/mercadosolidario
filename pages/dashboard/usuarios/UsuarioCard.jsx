@@ -51,7 +51,7 @@ export default function UsuarioCard({ users }) {
             id="search"
             className={`rounded-full shadow border-gray-200 bg-gray-100 ml-4 text-black  text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200  
                     `}
-            placeholder="Buscar..."
+            placeholder="Buscar Email..."
             onChange={e => setSearchTerm(e.target.value)}
             value={searchTerm}
           ></input>          
@@ -63,7 +63,7 @@ export default function UsuarioCard({ users }) {
               <buton onClick={ function(){setSortBy("name"); setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}} className="flex items-center gap-2">Nombre {(sortOrder === 'asc' && sortBy === 'name')? <BsArrowUpShort/> : <BsArrowDownShort/>}</buton>
             </th>
             <th scope="col" class="px-6 py-3">
-            <buton onClick={function(event){setSortBy("type_of_user"); setSortOrder( sortOrder === 'asc' ? 'desc' : 'asc')}} className="flex items-center gap-2">Tipo {(sortOrder === 'asc' && sortBy === 'type_of_user') ? <BsArrowUpShort/> : <BsArrowDownShort/>}</buton>
+            <buton onClick={function(){setSortBy("type_of_user"); setSortOrder( sortOrder === 'asc' ? 'desc' : 'asc')}} className="flex items-center gap-2">Tipo {(sortOrder === 'asc' && sortBy === 'type_of_user') ? <BsArrowUpShort/> : <BsArrowDownShort/>}</buton>
             </th>
             <th scope="col" class="px-6 py-3">
               Email
