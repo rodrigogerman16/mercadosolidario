@@ -1,8 +1,12 @@
-import UsuarioCard from "./UsuarioCard";
 import Link from "next/link";
 import Logo from "../../../Assets/logo-mercado-solidario-sintexto.png";
 import Image from "next/image";
 import { signOut, useSession } from 'next-auth/react'
+import dynamic from 'next/dynamic';
+
+const DynamicGetInbox = dynamic(() => import('./getInbox'), {
+  ssr: false
+});
 
 export default function Iniciativas({ inbox }) {
   const { data: session } = useSession()
@@ -140,7 +144,10 @@ export default function Iniciativas({ inbox }) {
           </ul>
         </div>
       </aside>
-      <UsuarioCard />
+      <div className="grid items-stretch justify-center gap-8 grid-cols-1 p-8 py-24 bg-zinc-50 xl:grid-cols-2 md:ml-64 min-h-screen">
+        <DynamicGetInbox></DynamicGetInbox>
+      </div>
+
     </div>
   );
 }
