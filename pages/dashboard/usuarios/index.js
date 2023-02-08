@@ -150,7 +150,7 @@ export default function Iniciativas({ users, inbox }) {
   );
 }
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
   const company = await fetch(
     "https://pf-backend-mercadosolidario-production.up.railway.app/company"
   ).then((res) => res.json());
