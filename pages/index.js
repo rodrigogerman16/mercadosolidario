@@ -14,13 +14,13 @@ export default function Home() {
     section.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
-  useEffect(()=>{
-    const loginError = window.localStorage.getItem("loginError")    
-    if(loginError){                     
-      Alert({ title: 'Cuenta', text: 'Su cuenta esta siendo validada, intentelo mas tarde.', icon: 'error', timer: 4000 })  
+  useEffect(() => {
+    const loginError = window.localStorage.getItem("loginError")
+    if (loginError) {
+      Alert({ title: 'Cuenta', text: 'Su cuenta esta siendo validada, intentelo mas tarde.', icon: 'error', timer: 4000 })
       window.localStorage.removeItem("loginError")
     }
-  },[])
+  }, [])
   return (<div className='text-gray-800'>
 
     {/* Landing */}
@@ -113,15 +113,10 @@ export default function Home() {
 
       {/* About Us */}
       <div id='about'>
-        <div className="py-20 mx-auto max-w-7xl">
+        <div className="py-20 mx-auto max-w-7xl p-8 grid grid gap-8">
           <div className="max-w-3xl mx-auto text-center">
             <span className="block mb-2 text-xs font-semibold tracking-widest text-center uppercase dark:text-pink-400">Sobre nosotros</span>
             <h2 className="text-5xl font-bold text-center">¿Por qué Mercado Solidario?</h2>
-            {/*Video */}
-            <div className='flex justify-center my-12'>
-            <Video/>
-
-            </div>
             <div className="text-center mb-10">
               <span className="inline-block w-1 h-1 rounded-full bg-pink-500 ml-1"></span>
               <span className="inline-block w-3 h-1 rounded-full bg-pink-500 ml-1"></span>
@@ -130,80 +125,57 @@ export default function Home() {
               <span className="inline-block w-1 h-1 rounded-full bg-pink-500 ml-1"></span>
             </div>
           </div>
-          <dl className="mt-12 space-y-10 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-12 lg:grid-cols-4 lg:gap-x-8">
-            <div className="flex">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" className="flex-shrink-0 w-6 h-6 text-pink-400">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-              <div className="ml-3">
-                <dt className="text-lg font-medium">Conexión</dt>
-                <dd className="mt-2 dark:text-gray-400">Buscamos facilitar las conexiones entre ONG&apos;s, donantes y voluntarios.</dd>
-              </div>
+          <div className='grid grid-cols-1 gap-8 xl:grid-cols-2 items-center justify-center'>
+            <div className='m-auto w-full'>
+              <iframe
+                width="560"
+                height="315"
+                src="https://www.youtube.com/embed/iUXg_sxcCbc"
+                frameBorder="0"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className='w-full object-cover'
+              />
             </div>
-            <div className="flex">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" className="flex-shrink-0 w-6 h-6 text-pink-400">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-              <div className="ml-3">
-                <dt className="text-lg font-medium">Rápido</dt>
-                <dd className="mt-2 dark:text-gray-400">Ayudar en una causa nunca fue tan rápido y sencillo, simplemente busca la iniciativa que mas te guste y empieza a colaborar!</dd>
+            <dl className="space-y-10 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-12 lg:grid-cols-2 lg:gap-x-8">
+              <div className="flex">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" className="flex-shrink-0 w-6 h-6 text-pink-400">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <div className="ml-3">
+                  <dt className="text-lg font-medium">Seguro</dt>
+                  <dd className="mt-2 dark:text-gray-400">No te preocupes mas por los fraudes! Nos encargaremos de validar la veracidad de cada iniciativa.</dd>
+                </div>
               </div>
-            </div>
-            <div className="flex">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" className="flex-shrink-0 w-6 h-6 text-pink-400">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-              <div className="ml-3">
-                <dt className="text-lg font-medium">Seguro</dt>
-                <dd className="mt-2 dark:text-gray-400">No te preocupes mas por los fraudes! Nos encargaremos de validar la veracidad de cada iniciativa.</dd>
+              <div className="flex">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" className="flex-shrink-0 w-6 h-6 text-pink-400">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <div className="ml-3">
+                  <dt className="text-lg font-medium">Sube tu nivel</dt>
+                  <dd className="mt-2 dark:text-gray-400">A medida que vayas colaborando en iniciativas recibirás y/o mejoraras insignias</dd>
+                </div>
               </div>
-            </div>
-            <div className="flex">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" className="flex-shrink-0 w-6 h-6 text-pink-400">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-              <div className="ml-3">
-                <dt className="text-lg font-medium">Información</dt>
-                <dd className="mt-2 dark:text-gray-400">Mantente informado de todas las ultimas iniciativas sin importar el rubro</dd>
+              <div className="flex">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" className="flex-shrink-0 w-6 h-6 text-pink-400">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <div className="ml-3">
+                  <dt className="text-lg font-medium">Todos ganan</dt>
+                  <dd className="mt-2 dark:text-gray-400">Las ONG&apos;s recaudan, las personas se vuelven mas espirituales y las empresas encuentran talento profesional espiritual</dd>
+                </div>
               </div>
-            </div>
-            <div className="flex">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" className="flex-shrink-0 w-6 h-6 text-pink-400">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-              <div className="ml-3">
-                <dt className="text-lg font-medium">Sube tu nivel</dt>
-                <dd className="mt-2 dark:text-gray-400">A medida que vayas colaborando en iniciativas recibirás y/o mejoraras insignias</dd>
+              <div className="flex">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" className="flex-shrink-0 w-6 h-6 text-pink-400">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <div className="ml-3">
+                  <dt className="text-lg font-medium">Cambia el mundo</dt>
+                  <dd className="mt-2 dark:text-gray-400">Ahora es mas fácil que todos pongamos nuestro granito de arena, el cambio empieza por uno mismo</dd>
+                </div>
               </div>
-            </div>
-            <div className="flex">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" className="flex-shrink-0 w-6 h-6 text-pink-400">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-              <div className="ml-3">
-                <dt className="text-lg font-medium">Todos ganan</dt>
-                <dd className="mt-2 dark:text-gray-400">Las ONG&apos;s recaudan, las personas se vuelven mas espirituales y las empresas encuentran talento profesional espiritual</dd>
-              </div>
-            </div>
-            <div className="flex">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" className="flex-shrink-0 w-6 h-6 text-pink-400">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-              <div className="ml-3">
-                <dt className="text-lg font-medium">Cambia el mundo</dt>
-                <dd className="mt-2 dark:text-gray-400">Ahora es mas fácil que todos pongamos nuestro granito de arena, el cambio empieza por uno mismo</dd>
-              </div>
-            </div>
-            <div className="flex">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" className="flex-shrink-0 w-6 h-6 text-pink-400">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-              <div className="ml-3">
-                <dt className="text-lg font-medium">Sistema de suscripciones</dt>
-                <dd className="mt-2 dark:text-gray-400">Asegúrate de apoyar una causa todos los meses mediante una suscripción!</dd>
-              </div>
-            </div>
-          </dl>
+            </dl>
+          </div>
         </div>
       </div>
 
