@@ -12,12 +12,15 @@ export default function Qr(){
 
   const [val, setVal] = useState();
   const [idUser, setIdUser] = useState();
+  const [emailUser, setEmailUser] = useState();
 
   useEffect(() => {
     async function fetchData(){ 
       const usuario = window.localStorage.getItem("user");
         const usuarioJSON = usuario && JSON.parse(usuario);
+        console.log(usuarioJSON)
         setIdUser(usuarioJSON.id);
+        setEmailUser(usuarioJSON.email);
     }
 
     fetchData();
@@ -37,9 +40,15 @@ export default function Qr(){
         }
       })
       await axios.post('https://pf-backend-mercadosolidario-production.up.railway.app/confirmed/newconfirmed', {userIDs: idUser, postIDs: infoIniciativa.data.id, type_of_help: infoIniciativa.data.type_of_help, readQR: true})
-    console.log(infoIniciativa.data.type_of_help)
       
-      const info = await axios.put('https://pf-backend-mercadosolidario-production.up.railway.app/user/update/insignia/' + idUser, {type_of_insignia: infoIniciativa.data.type_of_help},
+      await axios.put('https://pf-backend-mercadosolidario-production.up.railway.app/user/update/insignia/' + idUser, {type_of_insignia: infoIniciativa.data.type_of_help},
+      {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        }
+      })
+
+      await axios.post('https://pf-backend-mercadosolidario-production.up.railway.app/mailer/confirmed', {email: emailUser, type_of_help: infoIniciativa.data.type_of_help},
       {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
