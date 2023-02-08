@@ -7,11 +7,16 @@ import UsersChart from './UsersChart'
 import RubroChart from './RubroChart'
 import Link from 'next/link'
 import { getSession, signOut } from 'next-auth/react'
+import profile from "../../../Assets/profile.png"
+import { Router } from "react-router-dom";
 
 
 const index = ({ posts, users, company, ong, inbox }) => {
   function handleSignOut() {
+    localStorage.removeItem("user");
     signOut()
+    Router.push("/")
+    window.location.reload()
   }
 
   return (
@@ -36,7 +41,7 @@ const index = ({ posts, users, company, ong, inbox }) => {
                 <div>
                   <button type="button" className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 " aria-expanded="false" data-dropdown-toggle="dropdown-user">
                     <span className="sr-only">Open user menu</span>
-                    <img className="w-8 h-8 rounded-full" src="https://xsgames.co/randomusers/avatar.php?g=male" alt="user photo" />
+                    <img className="w-8 h-8 rounded-full" src={profile} alt="user photo" />
                   </button>
                 </div>
                 <div className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow " id="dropdown-user">

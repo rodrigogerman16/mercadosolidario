@@ -9,6 +9,7 @@ import { Router } from "react-router-dom";
 export default function Iniciativas({ users, inbox }) {
   const { data: session } = useSession()
   function handleSignOut() {
+    localStorage.removeItem("user");
     signOut()
     Router.push("/")
     window.location.reload()
