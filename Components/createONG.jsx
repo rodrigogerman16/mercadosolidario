@@ -123,8 +123,6 @@ const rubros = [
     }
 
     window.localStorage.setItem("user", JSON.stringify(aux));
-
-    return console.log(info.data, aux);
   };
 
   function handleChange(el) {
@@ -201,12 +199,22 @@ const rubros = [
           cuit: "",
           phone: "",
         });   
-        window.location.href = '../';
         if(session){signOut()}        
+        window.location.href = '../';
       } else {
         Alert({ title: 'Registro', text: 'Hay datos incorrectos o sin completar', icon: 'error' })
       }
     } catch (error) {
+      const err = JSON.parse(error.response.data)
+      setInput({
+        email: "",
+        password: "",
+      });
+      Alert({
+        title: "Registro",
+        text: err.message,
+        icon: "error",
+      });
     }
   }
 
