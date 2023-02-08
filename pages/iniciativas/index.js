@@ -811,7 +811,9 @@ function Products({ data }) {
                 id="infiniteScroll"
               >
                 {/*------- Scroll infinito y mapeado de cards -------*/}
-                {filteredData
+                {filteredData.filter(e =>{
+                  return e.isActive
+                })
                   .slice(0, limit)
                   .sort((a, b) => {
                     if (order === "asc") return a.title.localeCompare(b.title);
