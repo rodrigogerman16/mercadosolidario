@@ -59,13 +59,6 @@ export default function OngNavbar() {
                                         >
                                             Perfil
                                         </Link>
-
-                                        <Link
-                                            href="/ong/publicaciones"
-                                            className="font-semibold text-black hover:text-pink-400"
-                                        >
-                                            Mis Publicaciones
-                                        </Link>
                                     </div>
                                 </div>
                                 <div className="hidden gap-4 md:flex">
