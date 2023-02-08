@@ -133,7 +133,7 @@ export default function Home() {
                 frameBorder="0"
                 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
-                className='w-full object-cover'
+                className='w-full object-cover rounded'
               />
             </div>
             <dl className="space-y-10 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-12 lg:grid-cols-2 lg:gap-x-8">

@@ -32,6 +32,18 @@ const Chatbot = () => {
           answer: false
         })
       })
+
+      fetch('https://pf-backend-mercadosolidario-production.up.railway.app/chatbot/email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: email,
+          subject: 'Se realizo una nueva consulta a traves del chatbot.',
+          text: value
+        })
+      })
     }
     else {
       setTimeout(() => {
