@@ -5,7 +5,6 @@ import { BiDonateHeart } from 'react-icons/bi'
 import { AiOutlineUser, AiOutlineGift } from 'react-icons/ai'
 import { useEffect } from 'react';
 import Alert from "@/Components/Alert.jsx";
-import Video from '@/Components/Video';
 
 export default function Home() {
   const scroll = (e) => {
