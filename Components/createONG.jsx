@@ -188,7 +188,7 @@ const rubros = [
         formData.append("rut", data.secure_url);
         formData.append("cuit", input.cuit);
         formData.append("type_of_user", props.type_of_user);
-        postONG(formData);
+        await postONG(formData);
 
         Alert({ title: 'Registro', text: 'ONG Registrada con éxito!', icon: 'success' })
         setInput({
@@ -205,7 +205,7 @@ const rubros = [
         Alert({ title: 'Registro', text: 'Hay datos incorrectos o sin completar', icon: 'error' })
       }
     } catch (error) {
-      const err = JSON.parse(error.response.data)
+      const err = error.response.data.message? error.response.data : JSON.parse(error.response.data);
       setInput({
         email: "",
         password: "",
