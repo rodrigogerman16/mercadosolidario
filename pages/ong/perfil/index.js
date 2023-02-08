@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Alert from "@/Components/Alert";
+import OngSideBar from "@/Components/OngSideBar"
 
 function Validate(input) {
   let errors = {};
@@ -184,7 +185,8 @@ const Perfil = (props) => {
   }
   
   return (
-    <div>      
+    <div>    
+      <OngSideBar/>  
       {/*Cambiar info */}
       <h2 className="text-center font-semibold text-2xl mt-10">Editar datos de Perfil</h2>
       <form
