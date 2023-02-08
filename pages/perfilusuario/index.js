@@ -240,12 +240,12 @@ export default function Perfilusuario() {
       >
         <div className="flex flex-col">
           {/*---------- APLICAR CLOUDINARY ---------------*/}
-          <label className="text-sm">Imagen de perfil</label>
           {formUsuario.image ? (
-            <img src={formUsuario.image} alt="imagen de perfil" />
+            <img src={formUsuario.image} alt="imagen de perfil" className="self-center w-56"/>
           ) : (
-            <Image src={profile} alt="default image" />
+            <Image src={profile} alt="default image" className="self-center w-56"/>
           )}
+          <label className="text-sm">Cambiar imagen de perfil</label>
           <input
             className="rounded w-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium focus:ring-0 focus:border-gray-200 focus:bg-gray200"
             type="file"
