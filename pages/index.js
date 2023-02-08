@@ -5,6 +5,7 @@ import { BiDonateHeart } from 'react-icons/bi'
 import { AiOutlineUser, AiOutlineGift } from 'react-icons/ai'
 import { useEffect } from 'react';
 import Alert from "@/Components/Alert.jsx";
+import Video from '@/Components/Video';
 
 export default function Home() {
   const scroll = (e) => {
@@ -116,6 +117,11 @@ export default function Home() {
           <div className="max-w-3xl mx-auto text-center">
             <span className="block mb-2 text-xs font-semibold tracking-widest text-center uppercase dark:text-pink-400">Sobre nosotros</span>
             <h2 className="text-5xl font-bold text-center">¿Por qué Mercado Solidario?</h2>
+            {/*Video */}
+            <div className='flex justify-center my-12'>
+            <Video/>
+
+            </div>
             <div className="text-center mb-10">
               <span className="inline-block w-1 h-1 rounded-full bg-pink-500 ml-1"></span>
               <span className="inline-block w-3 h-1 rounded-full bg-pink-500 ml-1"></span>
