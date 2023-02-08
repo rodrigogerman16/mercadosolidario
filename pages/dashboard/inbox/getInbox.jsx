@@ -15,7 +15,7 @@ const GetDonaciones = () => {
   }, [])
 
   const sendHandler = (email, id) => {
-    window.open(`https://mailto:${email}`, 'popup', 'width=600,height=600')
+    window.open(`mailto:${email}?Subject=Staff%20de%20Mercado%20Solidario&body=¡Hola! Soy NombreStaff, de Mercado Solidario. Te escribo para resolver la pregunta que nos hiciste.`)
     return fetch(`https://pf-backend-mercadosolidario-production.up.railway.app/chat/${id}`, {
       method: 'PUT',
     }).then(response => response.json())
