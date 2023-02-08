@@ -5,9 +5,11 @@ import Logo from '../../../Assets/logo-mercado-solidario-sintexto.png'
 import profile from "../../../Assets/profile.png"
 import Image from "next/image";
 import { signOut } from 'next-auth/react'
+import { Router } from "react-router-dom";
 
 const Iniciativas = (props) => {
   function handleSignOut() {
+    localStorage.removeItem("user");
     signOut()
     Router.push("/")
     window.location.reload()

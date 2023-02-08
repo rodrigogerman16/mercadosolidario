@@ -4,6 +4,7 @@ import Image from "next/image";
 import { signOut, useSession } from 'next-auth/react'
 import dynamic from 'next/dynamic';
 import profile from "../../../Assets/profile.png"
+import { Router } from "react-router-dom";
 
 const DynamicGetInbox = dynamic(() => import('./getInbox'), {
   ssr: false
@@ -12,6 +13,7 @@ const DynamicGetInbox = dynamic(() => import('./getInbox'), {
 export default function Iniciativas({ inbox }) {
   const { data: session } = useSession()
   function handleSignOut() {
+    localStorage.removeItem("user");
     signOut()
     Router.push("/")
     window.location.reload()
