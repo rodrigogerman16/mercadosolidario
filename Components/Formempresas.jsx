@@ -64,7 +64,7 @@ export default function Formempresas(props) {
 
   const postCompany = async (props) => {
     let info = await axios.post(
-      `http://localhost:3001/company/newcompany`,
+      `https://pf-backend-mercadosolidario-production.up.railway.app/company/newcompany`,
       props,
       {
         headers: {
@@ -166,8 +166,8 @@ export default function Formempresas(props) {
           cuit: "",
           phone: "",
         });
+        if(session){signOut()}    
         window.location.href = '../';
-        //signOut()
       } else {
         Alert({
           title: "Registro",

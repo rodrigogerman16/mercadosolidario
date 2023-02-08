@@ -99,7 +99,7 @@ const rubros = [
   const postONG = async (props) => {
 
     let info = await axios.post(
-      `http://localhost:3001/ong/newong`,
+      `https://pf-backend-mercadosolidario-production.up.railway.app/ong/newong`,
       props,
       {
         headers: {
@@ -200,7 +200,7 @@ const rubros = [
           phone: "",
         });   
         if(session){signOut()}        
-        // window.location.href = '../';
+        window.location.href = '../';
       } else {
         Alert({ title: 'Registro', text: 'Hay datos incorrectos o sin completar', icon: 'error' })
       }
