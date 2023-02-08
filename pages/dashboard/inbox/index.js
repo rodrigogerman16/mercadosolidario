@@ -3,6 +3,7 @@ import Logo from "../../../Assets/logo-mercado-solidario-sintexto.png";
 import Image from "next/image";
 import { signOut, useSession } from 'next-auth/react'
 import dynamic from 'next/dynamic';
+import profile from "../../../Assets/profile.png"
 
 const DynamicGetInbox = dynamic(() => import('./getInbox'), {
   ssr: false
@@ -12,6 +13,8 @@ export default function Iniciativas({ inbox }) {
   const { data: session } = useSession()
   function handleSignOut() {
     signOut()
+    Router.push("/")
+    window.location.reload()
   }
   return (
     <div>
@@ -35,7 +38,7 @@ export default function Iniciativas({ inbox }) {
                 <div>
                   <button type="button" className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 " aria-expanded="false" data-dropdown-toggle="dropdown-user">
                     <span className="sr-only">Open user menu</span>
-                    <img className="w-8 h-8 rounded-full" src="https://xsgames.co/randomusers/avatar.php?g=male" alt="user photo" />
+                    <img className="w-8 h-8 rounded-full" src={profile} alt="user photo" />
                   </button>
                 </div>
                 <div className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow " id="dropdown-user">
