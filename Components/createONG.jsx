@@ -202,8 +202,7 @@ const rubros = [
           phone: "",
         });   
         window.location.href = '../';
-        signOut()
-        console.log(session)   
+        if(session){signOut()}        
       } else {
         Alert({ title: 'Registro', text: 'Hay datos incorrectos o sin completar', icon: 'error' })
       }

@@ -20,7 +20,9 @@ export default function UserNavbar() {
       text: "Cerraste sesión satisfactoriamente",
       icon: "success",
     });
-    signOut();
+    if(session){
+    signOut()
+  }
   }
 
   if (user) {
