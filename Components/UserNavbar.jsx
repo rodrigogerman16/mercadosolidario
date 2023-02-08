@@ -1,10 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import logo from "../Assets/mercado-solidario-logo.jpg";
-import profile from "../Assets/profile.png"
+import profile from "../Assets/profile.png";
 import { useState } from "react";
 import { Transition } from "@headlessui/react";
-import { getSession, signOut, useSession } from 'next-auth/react'
+import { getSession, signOut, useSession } from "next-auth/react";
 import { useUser } from "../hooks/user.js";
 import Alert from "./Alert";
 
@@ -13,7 +13,7 @@ export default function UserNavbar() {
   const user = useUser();
   const [isOpen, setIsOpen] = useState(false);
 
-  function handleSignOut(){
+  function handleSignOut() {
     localStorage.removeItem("user");
     Alert({
       title: "Cuenta",
@@ -24,7 +24,6 @@ export default function UserNavbar() {
     signOut()
   }
   }
-    
 
   if (user) {
     return (
@@ -79,13 +78,15 @@ export default function UserNavbar() {
                   >
                     Cerrar sesion
                   </button>
-                  <Image
-                    src={user.image ? user.image : profile}
-                    width={50}
-                    height={50}
-                    className="rounded-3xl cursor-pointer object-contain"
-                    alt="profile"
-                  />
+                  <Link href="/perfilusuario">
+                    <Image
+                      src={user.image ? user.image : profile}
+                      width={50}
+                      height={50}
+                      className="rounded-3xl cursor-pointer object-contain"
+                      alt="profile"
+                    />
+                  </Link>
                 </div>
               </div>
               <div className="-mr-2 flex md:hidden">
@@ -184,17 +185,17 @@ export default function UserNavbar() {
   }
 }
 
-export async function getServerSideProps({req}){
-  const session = await getSession({req})
-  if(!session){
+export async function getServerSideProps({ req }) {
+  const session = await getSession({ req });
+  if (!session) {
     return {
-      redirect:{
+      redirect: {
         destination: "/ingresar",
-        permanent: false
-      }
-    }
+        permanent: false,
+      },
+    };
   }
-  return{
-    props: {session}
-  }
+  return {
+    props: { session },
+  };
 }
