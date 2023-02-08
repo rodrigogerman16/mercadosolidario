@@ -84,7 +84,7 @@ export default function Login() {
         });
       }
     } catch (error) {
-      const err = JSON.parse(error.response.data)
+      const err = error.response.data.message? error.response.data : JSON.parse(error.response.data);
       setInput({
         email: "",
         password: "",

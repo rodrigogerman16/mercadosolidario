@@ -47,7 +47,7 @@ const index = () => {
             </span>
           </summary>
           <p className="mt-4 leading-relaxed text-gray-700">
-            primero deberás entrar a la sección &quot;Iniciativas&quot; y seleccionando la causa que mas te guste, una vez dentro podrás donar mediante paypal.
+            Primero deberás entrar a la sección &quot;Iniciativas&quot; y seleccionando la causa que mas te guste, una vez dentro podrás donar mediante paypal.
           </p>
         </details>
 
