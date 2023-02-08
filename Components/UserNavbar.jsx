@@ -7,6 +7,7 @@ import { Transition } from "@headlessui/react";
 import { getSession, signOut, useSession } from "next-auth/react";
 import { useUser } from "../hooks/user.js";
 import Alert from "./Alert";
+import Router from "next/router";
 
 export default function UserNavbar() {
   const { data: session } = useSession();
@@ -23,6 +24,8 @@ export default function UserNavbar() {
     if(session){
     signOut()
   }
+  window.location.href = '/'
+
   }
 
   if (user) {

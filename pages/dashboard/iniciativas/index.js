@@ -6,13 +6,15 @@ import profile from "../../../Assets/profile.png"
 import Image from "next/image";
 import { signOut } from 'next-auth/react'
 
-const Iniciativas = (props) =>{
-  function handleSignOut(){
+const Iniciativas = (props) => {
+  function handleSignOut() {
     signOut()
+    Router.push("/")
+    window.location.reload()
   }
-    return(
-        <div>
-            <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 ">
+  return (
+    <div>
+      <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 ">
         <div className="px-3 py-3 lg:px-5 lg:pl-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center justify-start">
@@ -38,12 +40,12 @@ const Iniciativas = (props) =>{
                 <div className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow " id="dropdown-user">
                   <div className="px-4 py-3" role="none">
                     <p className="text-sm font-medium text-gray-900 truncate" role="none">
-                    contacto.mercadosolidario@gmail.com
+                      contacto.mercadosolidario@gmail.com
                     </p>
                   </div>
                   <ul className="py-1" role="none">
                     <li>
-                    <button onClick={handleSignOut} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 " role="menuitem">Cerrar sesion</button>
+                      <button onClick={handleSignOut} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 " role="menuitem">Cerrar sesion</button>
                     </li>
                   </ul>
                 </div>
@@ -52,7 +54,7 @@ const Iniciativas = (props) =>{
           </div>
         </div>
       </nav>
-            <aside id="logo-sidebar" className="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 " aria-label="Sidebar">
+      <aside id="logo-sidebar" className="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 " aria-label="Sidebar">
         <div className="h-full px-3 pb-4 overflow-y-auto bg-white ">
           <ul className="space-y-2">
             <li>
@@ -62,10 +64,10 @@ const Iniciativas = (props) =>{
               </Link>
             </li>
             <li>
-              <a href="#" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100">
+              <a href="/dashboard/inbox" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100">
                 <svg aria-hidden="true" className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75  group-hover:text-gray-900 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M8.707 7.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l2-2a1 1 0 00-1.414-1.414L11 7.586V3a1 1 0 10-2 0v4.586l-.293-.293z" /><path d="M3 5a2 2 0 012-2h1a1 1 0 010 2H5v7h2l1 2h4l1-2h2V5h-1a1 1 0 110-2h1a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5z" /></svg>
                 <span className="flex-1 ml-3 whitespace-nowrap">Inbox</span>
-                <span className="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-pink-400 bg-pink-100 rounded-full d">3</span>
+                <span className="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-pink-400 bg-pink-100 rounded-full d">{props.inbox.filter(m => m.answer == false).length}</span>
               </a>
             </li>
             <li>
@@ -83,22 +85,26 @@ const Iniciativas = (props) =>{
           </ul>
         </div>
       </aside>
-          {props.posts.length && <IniciativasCards posts={props.posts}/>}
+      {props.posts.length && <IniciativasCards posts={props.posts} />}
 
-        </div>
-    )
+    </div>
+  )
 }
 
 export default Iniciativas
 
 export const getStaticProps = async () => {
 
-    const posts = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/posts")
-      .then((res) => res.json())
-  
-    return {
-      props: {
-        posts,
-      }
-    };
+  const posts = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/posts")
+    .then((res) => res.json())
+
+  const inbox = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/chat")
+    .then((res) => res.json())
+
+  return {
+    props: {
+      posts,
+      inbox
+    }
   };
+};

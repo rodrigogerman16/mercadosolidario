@@ -1,12 +1,15 @@
-import UsuarioCard from "./UsuarioCard";
 import Link from "next/link";
 import Logo from "../../../Assets/logo-mercado-solidario-sintexto.png";
 import Image from "next/image";
 import { signOut, useSession } from 'next-auth/react'
+import dynamic from 'next/dynamic';
 import profile from "../../../Assets/profile.png"
-import { Router } from "react-router-dom";
 
-export default function Iniciativas({ users, inbox }) {
+const DynamicGetInbox = dynamic(() => import('./getInbox'), {
+  ssr: false
+});
+
+export default function Iniciativas({ inbox }) {
   const { data: session } = useSession()
   function handleSignOut() {
     signOut()
@@ -144,33 +147,22 @@ export default function Iniciativas({ users, inbox }) {
           </ul>
         </div>
       </aside>
-      <UsuarioCard users={users} />
+      <div className="grid items-stretch justify-center gap-8 grid-cols-1 p-8 py-24 bg-zinc-50 xl:grid-cols-2 md:ml-64 min-h-screen">
+        <DynamicGetInbox></DynamicGetInbox>
+      </div>
+
     </div>
   );
 }
 
 export const getStaticProps = async () => {
-  const company = await fetch(
-    "https://pf-backend-mercadosolidario-production.up.railway.app/company"
-  ).then((res) => res.json());
-
-  const ong = await fetch(
-    "https://pf-backend-mercadosolidario-production.up.railway.app/ong"
-  ).then((res) => res.json());
-
-  const users = await fetch(
-    "https://pf-backend-mercadosolidario-production.up.railway.app/allusers"
-  ).then((res) => res.json());
 
   const inbox = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/chat")
     .then((res) => res.json())
 
   return {
     props: {
-      company,
-      ong,
-      users,
       inbox
-    },
+    }
   };
 };

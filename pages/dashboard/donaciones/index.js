@@ -3,11 +3,14 @@ import Link from "next/link";
 import Logo from "../../../Assets/logo-mercado-solidario-sintexto.png";
 import Image from "next/image";
 import { signOut, useSession } from 'next-auth/react'
+import profile from "../../../Assets/profile.png"
 
-export default function Iniciativas({ confirmed }) {
+export default function Iniciativas({ inbox }) {
   const { data: session } = useSession()
   function handleSignOut() {
     signOut()
+    Router.push("/")
+    window.location.reload()
   }
   return (
     <div>
@@ -31,7 +34,7 @@ export default function Iniciativas({ confirmed }) {
                 <div>
                   <button type="button" className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 " aria-expanded="false" data-dropdown-toggle="dropdown-user">
                     <span className="sr-only">Open user menu</span>
-                    <img className="w-8 h-8 rounded-full" src="https://xsgames.co/randomusers/avatar.php?g=male" alt="user photo" />
+                    <img className="w-8 h-8 rounded-full" src={profile} alt="user photo" />
                   </button>
                 </div>
                 <div className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow " id="dropdown-user">
@@ -78,7 +81,7 @@ export default function Iniciativas({ confirmed }) {
             </li>
             <li>
               <a
-                href="#"
+                href="/dashboard/inbox"
                 className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100"
               >
                 <svg
@@ -93,7 +96,7 @@ export default function Iniciativas({ confirmed }) {
                 </svg>
                 <span className="flex-1 ml-3 whitespace-nowrap">Inbox</span>
                 <span className="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-pink-400 bg-pink-100 rounded-full d">
-                  3
+                  {inbox.filter(m => m.answer == false).length}
                 </span>
               </a>
             </li>
@@ -144,3 +147,15 @@ export default function Iniciativas({ confirmed }) {
     </div>
   );
 }
+
+export const getStaticProps = async () => {
+
+  const inbox = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/chat")
+    .then((res) => res.json())
+
+  return {
+    props: {
+      inbox
+    }
+  };
+};
