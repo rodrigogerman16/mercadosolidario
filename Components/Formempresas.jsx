@@ -64,7 +64,7 @@ export default function Formempresas(props) {
 
   const postCompany = async (props) => {
     let info = await axios.post(
-      `https://pf-backend-mercadosolidario-production.up.railway.app/company/newcompany`,
+      `http://localhost:3001/company/newcompany`,
       props,
       {
         headers: {
@@ -87,8 +87,6 @@ export default function Formempresas(props) {
     };
 
     window.localStorage.setItem("user", JSON.stringify(aux));
-
-    return console.log(info.data, aux);
   };
 
   function handleChange(el) {
@@ -178,7 +176,16 @@ export default function Formempresas(props) {
         });
       }
     } catch (error) {
-      console.log(error)
+      const err = JSON.parse(error.response.data)
+      setInput({
+        email: "",
+        password: "",
+      });
+      Alert({
+        title: "Registro",
+        text: err.message,
+        icon: "error",
+      });
     }
   }
 
