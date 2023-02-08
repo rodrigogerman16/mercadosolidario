@@ -7,7 +7,7 @@ import UsersChart from './UsersChart'
 import RubroChart from './RubroChart'
 import Link from 'next/link'
 import { getSession, signOut } from 'next-auth/react'
-import profile from "../../../Assets/profile.png"
+import profile from "../../Assets/profile.png"
 import { Router } from "react-router-dom";
 
 
