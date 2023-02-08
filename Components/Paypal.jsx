@@ -4,10 +4,11 @@ import axios from "axios";
 import Alert from "./Alert";
 import { useUser } from "../hooks/user";
 import { useEffect } from "react";
-
+import emailPostPaypal from "./emailPostPaypal";
 export default function App({ postId }) {
-  const userStringify = useUser()
-  const user = userStringify && JSON.parse(userStringify)
+  const userStringify = useUser();
+  const user = userStringify && JSON.parse(userStringify);
+  console.log(user);
   return (
     <div className={"grid"}>
       <PayPalScriptProvider
@@ -62,6 +63,7 @@ export default function App({ postId }) {
                 }),
               }
             );
+            emailPostPaypal(user.email, "efectivo");
           }}
           style={{ layout: "vertical", color: "black" }}
         />
