@@ -63,7 +63,7 @@ export default function App({ postId }) {
                 }),
               }
             );
-            emailPostPaypal(user.email, "efectivo");
+            emailPostPaypal(user.email);
           }}
           style={{ layout: "vertical", color: "black" }}
         />
