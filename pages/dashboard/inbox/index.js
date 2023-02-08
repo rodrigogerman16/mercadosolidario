@@ -144,7 +144,7 @@ export default function Iniciativas({ inbox }) {
           </ul>
         </div>
       </aside>
-      <div className="grid items-stretch justify-center gap-8 grid-cols-1 p-8 py-24 bg-zinc-50 xl:grid-cols-2 md:ml-64">
+      <div className="grid items-stretch justify-center gap-8 grid-cols-1 p-8 py-24 bg-zinc-50 xl:grid-cols-2 md:ml-64 min-h-screen">
         <DynamicGetInbox></DynamicGetInbox>
       </div>
 
