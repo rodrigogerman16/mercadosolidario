@@ -98,7 +98,7 @@ export default function Review({ data }) {
   };
 
   console.log(input);
-  console.log(data);
+  //console.log(data);
   //asd
   //asd1
 
