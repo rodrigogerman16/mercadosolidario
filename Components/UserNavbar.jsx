@@ -10,7 +10,6 @@ import Alert from "./Alert";
 import Router from "next/router";
 
 export default function UserNavbar() {
-  const { data: session } = useSession();
   const user = useUser();
   const [isOpen, setIsOpen] = useState(false);
 
