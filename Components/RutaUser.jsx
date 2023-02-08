@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Card from "./Card";
 import axios from "axios";
 const RutaUser = () => {
-
   const [results, setResults] = useState();
   useEffect(() => {
     const usuario = window.localStorage.getItem("user");
@@ -27,7 +26,6 @@ const RutaUser = () => {
         responses.forEach((response) => {
           data.push(response);
         });
-        console.log(data);
         setResults(data);
       });
     };
@@ -39,7 +37,7 @@ const RutaUser = () => {
   return (
     <div className="flex flex-wrap w-full flex-span-3 justify-center gap-4 mt-24">
       {results
-        ? results.map((e) => (          
+        ? results.map((e) => (
             <Card
               title={e.title}
               image={e.image}
@@ -49,7 +47,17 @@ const RutaUser = () => {
               expirationDate={e.expirationDate}
             />
           ))
-        : "Loading"}
+        : 
+        <div className="h-64 flex items-center">
+          <p className="font-semibold text-2xl">Loading</p>
+        </div>
+        }
+
+      {results && results.length === 0 && (
+        <div className="h-64 flex items-center">
+          <p className="font-semibold text-2xl">Actualmente no estas colaborando con ninguna Iniciativa</p>
+        </div>
+      )}
     </div>
   );
 };
