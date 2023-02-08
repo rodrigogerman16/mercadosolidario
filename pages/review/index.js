@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar as fullStar } from '@fortawesome/free-solid-svg-icons';
 import { faStar as emptyStar } from '@fortawesome/free-regular-svg-icons';
 import { useUser } from "@/hooks/user";
+import Alert from "@/Components/Alert";
 
 function Validate(input) {
   let errors = {};
@@ -55,7 +56,7 @@ export default function Review() {
 
   const sendReview = async (props) => {
     let info = await axios.post(
-      `https://pf-backend-mercadosolidario-production.up.railway.app/SENDREVIEW?`,
+      `https://pf-backend-mercadosolidario-production.up.railway.app/reviews/newreview`,
       props
     );
     return console.log(info.data);
@@ -72,16 +73,24 @@ export default function Review() {
       );
       if (Object.values(errors).length === 0) {
         let aux = {
-          //id: userObject.id,
-          rating: input.rating,
-          review: input.review,
+          type_of_user: userObject.type_of_user,
+          id: userObject.id,
+          puntuacion: input.rating.toString(),
+          comment: input.review,
         }
-        //Funcion post al back sendReview(aux)
-        //alert('Gracias por dejar tu Reseña')
+        console.log(aux)
+        sendReview(aux)
+        Alert({
+          title: "Reseña",
+          text:
+            "Gracias por dejar tu Reseña",
+          icon: "success",
+        });
         setInput({
           rating: "",
           review: "",
         });
+        router.push('/')
       }
     } catch (error) {
       console.log(error);
