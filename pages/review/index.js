@@ -99,6 +99,7 @@ export default function Review({ data }) {
 
   console.log(input);
   console.log(data);
+  //asd
 
   return (
     <div class="w-full">
