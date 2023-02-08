@@ -263,7 +263,7 @@ export default function Register() {
             >
               <div
                 onClick={() => accountTypeHandler("user")}
-                className={`max-w-sm p-6 bg-white border rounded shadow ${
+                className={`max-w-sm p-6 bg-white border rounded shadow cursor-pointer ${
                   accountType == "user" ? "border-pink-400" : "border-gray-200"
                 }`}
               >
@@ -279,7 +279,7 @@ export default function Register() {
 
               <div
                 onClick={() => accountTypeHandler("ong")}
-                className={`max-w-sm p-6 bg-white border rounded shadow ${
+                className={`max-w-sm p-6 bg-white border rounded shadow cursor-pointer ${
                   accountType == "ong" ? "border-pink-400" : "border-gray-200"
                 }`}
               >
@@ -294,7 +294,7 @@ export default function Register() {
 
               <div
                 onClick={() => accountTypeHandler("company")}
-                className={`max-w-sm p-6 bg-white border rounded shadow ${
+                className={`max-w-sm p-6 bg-white border rounded shadow cursor-pointer ${
                   accountType == "company" ? "border-pink-400" : "border-gray-200"
                 }`}
               >
