@@ -23,6 +23,7 @@ export default function UserNavbar() {
     if(session){
     signOut()
   }
+  window.location.href = '/'
   }
 
   if (user) {

@@ -60,7 +60,7 @@ export default function Login() {
           password: input.password,
         };
 
-        let info = await axios.post(`https://pf-backend-mercadosolidario-production.up.railway.app/login`, user);
+        let info = await axios.post(`http://localhost:3001/login`, user);
 
         const decoded = jwt_decode(info.data.token);
 
