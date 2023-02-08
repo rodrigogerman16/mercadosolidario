@@ -55,13 +55,15 @@ export default function Qr(){
         }
       })
 
+      /* ------- Mandar email ------- */
+
       Alert({
         title: `${infoIniciativa.data.type_of_help.charAt(0).toUpperCase() + infoIniciativa.data.type_of_help.slice(1)} confirmado!`,
         text: "Muchas gracias por ser parte y hacer de este mundo un lugar mejor, con personas como tu la humanidad crece, te saludamos y deseamos lo mejor para ti.",
         icon: "success",
       });
   
-      // window.location.href = '/perfilusuario/iniciativas'  
+      window.location.href = '/perfilusuario/iniciativas'  
     } catch (error) {
       console.log(error)
       Alert({
