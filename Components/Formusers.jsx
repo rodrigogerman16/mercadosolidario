@@ -3,7 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import Alert from "./Alert";
-import profile from "../Assets/profile.png"
+import profile from "../Assets/profile.png";
 
 function Validate(input) {
   let errors = {};
@@ -19,11 +19,14 @@ function Validate(input) {
   if (/[`!@#$%^&*()_+\-=[\]{};':"\\|,.<>\d/?~]/.test(input.lastName)) {
     errors.lastName = "No puede contener numeros o caracteres especiales";
   }
-  if (input.phone.length < 8) {
-    errors.phone = "Ingrese su Telefono";
+  if (!/^[0-9]*$/.test(input.phone)) {
+    errors.phone = "No puede tener letras";
   }
-  if (!input.profession){
-    errors.profession = "Seleccione una profesion"
+  if (input.phone.length < 8) {
+    errors.phone = "Ingrese un teléfono de 8 números";
+  }
+  if (!input.profession) {
+    errors.profession = "Seleccione una profesion";
   }
   if (input.cuil.length !== 11) {
     errors.cuil = "Ingrese su CUIL";
@@ -39,65 +42,65 @@ function Validate(input) {
 
 export default function Formusers(props) {
   const profesiones = [
-        { value: "Medico", label: "Medico", checked: false },
-        { value: "Ingeniero", label: "Ingeniero", checked: false },
-        {
-          value: "Profesor",
-          label: "Profesor",
-          checked: false,
-        },
-        {
-          value: "Abogado",
-          label: "Abogado",
-          checked: false,
-        },
-        {
-          value: "Contador",
-          label: "Contador",
-          checked: false,
-        },
-        { value: "Enfermero", label: "Enfermero", checked: false },
-        {
-          value: "Arquitecto",
-          label: "Arquitecto",
-          checked: false,
-        },
-        {
-          value: "Economista",
-          label: "Economista",
-          checked: false,
-        },
-        { value: "Dentista", label: "Dentista", checked: false },
-        { value: "Veterinario", label: "Veterinario", checked: false },
-        {
-          value: "Psicologo",
-          label: "Psicologo",
-          checked: false,
-        },
-        { value: "Farmaceutico", label: "Farmaceutico", checked: false },
-        { value: "Cirujano", label: "Cirujano", checked: false },
-        { value: "Optometrista", label: "Optometrista", checked: false },
-        { value: "Entretenimiento", label: "Entretenimiento", checked: false },
-        {
-          value: "Fisioterapeuta",
-          label: "Fisioterapeuta",
-          checked: false,
-        },
-        { value: "TerapeutaDelHabla", label: "TerapeutaDelHabla", checked: false },
-        {
-          value: "TrabajadorSocial",
-          label: "TrabajadorSocial",
-          checked: false,
-        },
-        { value: "Policia", label: "Policia", checked: false },
-        {
-          value: "Bombero",
-          label: "Bombero",
-          checked: false,
-        },
-        { value: "Militar", label: "Militar", checked: false },
-        { value: "Otros", label: "Otros", checked: false }
-    ];
+    { value: "Medico", label: "Medico", checked: false },
+    { value: "Ingeniero", label: "Ingeniero", checked: false },
+    {
+      value: "Profesor",
+      label: "Profesor",
+      checked: false,
+    },
+    {
+      value: "Abogado",
+      label: "Abogado",
+      checked: false,
+    },
+    {
+      value: "Contador",
+      label: "Contador",
+      checked: false,
+    },
+    { value: "Enfermero", label: "Enfermero", checked: false },
+    {
+      value: "Arquitecto",
+      label: "Arquitecto",
+      checked: false,
+    },
+    {
+      value: "Economista",
+      label: "Economista",
+      checked: false,
+    },
+    { value: "Dentista", label: "Dentista", checked: false },
+    { value: "Veterinario", label: "Veterinario", checked: false },
+    {
+      value: "Psicologo",
+      label: "Psicologo",
+      checked: false,
+    },
+    { value: "Farmaceutico", label: "Farmaceutico", checked: false },
+    { value: "Cirujano", label: "Cirujano", checked: false },
+    { value: "Optometrista", label: "Optometrista", checked: false },
+    { value: "Entretenimiento", label: "Entretenimiento", checked: false },
+    {
+      value: "Fisioterapeuta",
+      label: "Fisioterapeuta",
+      checked: false,
+    },
+    { value: "TerapeutaDelHabla", label: "TerapeutaDelHabla", checked: false },
+    {
+      value: "TrabajadorSocial",
+      label: "TrabajadorSocial",
+      checked: false,
+    },
+    { value: "Policia", label: "Policia", checked: false },
+    {
+      value: "Bombero",
+      label: "Bombero",
+      checked: false,
+    },
+    { value: "Militar", label: "Militar", checked: false },
+    { value: "Otros", label: "Otros", checked: false },
+  ];
 
   const { data: session } = useSession();
 
@@ -117,7 +120,7 @@ export default function Formusers(props) {
       phone: info.data.phone,
       user_linkedin: info.data.user_linkedin,
       image: info.data.image,
-      profession: info.data.profession
+      profession: info.data.profession,
     };
 
     window.localStorage.setItem("user", JSON.stringify(aux));
@@ -131,7 +134,7 @@ export default function Formusers(props) {
     cuil: "",
     user_linkedin: "",
   });
-  console.log(input)
+  console.log(input);
 
   //console.log(input.user_linkedin.includes("www.linkedin.com/in"))
 
@@ -189,7 +192,7 @@ export default function Formusers(props) {
           }
         ).then((r) => r.json());
 
-        console.log(data.secure_url)
+        console.log(data.secure_url);
 
         const user = {
           name: input.name,
@@ -201,43 +204,59 @@ export default function Formusers(props) {
           profession: input.profession,
           cuil: input.cuil,
           user_linkedin: input.user_linkedin,
-          image: data.secure_url
+          image: data.secure_url,
         };
-        console.log(user)
-        postUser(user).then(() => {
-          axios.post('https://pf-backend-mercadosolidario-production.up.railway.app/mailer/email', { email: user.email })
-          setInput({
-            name: "",
-            lastName: "",
-            phone: "",
-            cuil: "",
-            user_linkedin: "",
+        console.log(user);
+        postUser(user)
+          .then(() => {
+            axios.post(
+              "https://pf-backend-mercadosolidario-production.up.railway.app/mailer/email",
+              { email: user.email }
+            );
+            setInput({
+              name: "",
+              lastName: "",
+              phone: "",
+              cuil: "",
+              user_linkedin: "",
+            });
+            Alert({
+              title: "Registro",
+              text: "Usuario creado con éxito!",
+              icon: "success",
+            });
+            window.location.href = "../";
+          })
+          .catch((error) => {
+            Alert({
+              title: "Registro",
+              text:
+                "Hubo un error al crear el usuario, si el error persiste, vuelve a intentarlo mas tarde.",
+              icon: "error",
+            });
           });
-          Alert({ title: 'Registro', text: 'Usuario creado con éxito!', icon: 'success' })
-          window.location.href = '../';
-        }).catch(error => {
-          Alert({ title: 'Registro', text: 'Hubo un error al crear el usuario, si el error persiste, vuelve a intentarlo mas tarde.', icon: 'error' })
-        });
-
       } else {
-        Alert({ title: 'Registro', text: 'Hay datos incorrectos o sin completar!', icon: 'error' })
+        Alert({
+          title: "Registro",
+          text: "Hay datos incorrectos o sin completar!",
+          icon: "error",
+        });
       }
     } catch (error) {
-      Alert({ title: 'Registro', text: error, icon: 'error' })
+      Alert({ title: "Registro", text: error, icon: "error" });
     }
   }
 
   //console.log(input);
 
   return (
-    <form className="grid justify-center items-center gap-4" onSubmit={(el) => handleSubmit(el, input)}>
+    <form
+      className="grid justify-center items-center gap-4"
+      onSubmit={(el) => handleSubmit(el, input)}
+    >
       <div>
         <label>Imagen de Perfil (Opcional)</label>
-        <input
-          className="text-sm"
-          type="file"
-          name="file"
-        />
+        <input className="text-sm" type="file" name="file" />
       </div>
       <div className="">
         <label className="text-sm">Nombre</label>
@@ -286,7 +305,11 @@ export default function Formusers(props) {
           name="profession"
           onChange={(el) => handleChange(el)}
         >
-          {profesiones.map(item => <option value={item.value} key={item.label}>{item.label}</option>)}
+          {profesiones.map((item) => (
+            <option value={item.value} key={item.label}>
+              {item.label}
+            </option>
+          ))}
         </select>
         {errors.profession ? <label>{errors.profession}</label> : null}
       </div>
@@ -313,9 +336,7 @@ export default function Formusers(props) {
             onChange={(el) => handleChange(el)}
             placeholder="https://www.linkedin.com/in/ejemplo"
           />
-          {errors.user_linkedin ? (
-            <label>{errors.user_linkedin}</label>
-          ) : null}
+          {errors.user_linkedin ? <label>{errors.user_linkedin}</label> : null}
         </div>
       </div>
       <input
