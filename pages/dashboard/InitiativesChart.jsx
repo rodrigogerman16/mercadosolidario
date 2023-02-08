@@ -4,7 +4,6 @@ import { AreaChart, Area, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Re
 const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
 const date = new Date()
 const day = date.getDay()
-console.log(day)
 
 export default class Example extends PureComponent {
   render() {

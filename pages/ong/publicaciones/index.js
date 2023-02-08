@@ -1,6 +1,7 @@
 import { useUser } from "@/hooks/user"
 import Card from "@/Components/Card"
 import Link from "next/link"
+import OngSideBar from "@/Components/OngSideBar"
 
 export default function Publicaciones(props){
     const userStringify = useUser()
@@ -10,9 +11,12 @@ export default function Publicaciones(props){
     
     return(
         <div className="w-3/4 m-auto mt-10">
-            <h2 className="font-bold text-2xl text-center">Mis Iniciativas</h2>
+          <OngSideBar/>
+            <h2 className="font-bold text-2xl text-center">Mis Causas</h2>
             <div className="grid w-full col-span-3 grid w-full sm:grid-cols-2 xl:grid-cols-2 gap-4 mt-24">
+
             {userFinded && userFinded.length ? userFinded[0]?.posts?.map(post => (
+
               post.isActive &&
               <Link
               className="w-full"
@@ -29,12 +33,12 @@ export default function Publicaciones(props){
               expirationDate={post.expirationDate}
             />
               </Link>
-              
-            )):<div>
-            <h2>Aquí irán las iniciativas que publique.</h2>
-            <h2>Si usted creó una iniciativa debe esperar a que ésta sea aprobada, por favor sea paciente y le comunicaremos via email, muchas gracias!</h2>
-            </div>
-            }
+
+            ))
+          :
+          <div className="h-64 flex items-center">
+          <p className="font-semibold text-2xl">Actualmente no estas colaborando con ninguna Iniciativa</p>
+        </div>}
 
             </div>
         </div>

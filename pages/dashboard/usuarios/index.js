@@ -4,9 +4,9 @@ import Logo from "../../../Assets/logo-mercado-solidario-sintexto.png";
 import Image from "next/image";
 import { signOut, useSession } from 'next-auth/react'
 
-export default function Iniciativas({ users }) {
-  const {data: session} = useSession()
-  function handleSignOut(){
+export default function Iniciativas({ users, inbox }) {
+  const { data: session } = useSession()
+  function handleSignOut() {
     signOut()
   }
   return (
@@ -37,7 +37,7 @@ export default function Iniciativas({ users }) {
                 <div className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow " id="dropdown-user">
                   <div className="px-4 py-3" role="none">
                     <p className="text-sm font-medium text-gray-900 truncate" role="none">
-                    contacto.mercadosolidario@gmail.com
+                      contacto.mercadosolidario@gmail.com
                     </p>
                   </div>
                   <ul className="py-1" role="none">
@@ -78,7 +78,7 @@ export default function Iniciativas({ users }) {
             </li>
             <li>
               <a
-                href="#"
+                href="/dashboard/inbox"
                 className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100"
               >
                 <svg
@@ -93,7 +93,7 @@ export default function Iniciativas({ users }) {
                 </svg>
                 <span className="flex-1 ml-3 whitespace-nowrap">Inbox</span>
                 <span className="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-pink-400 bg-pink-100 rounded-full d">
-                  3
+                  {inbox.filter(m => m.answer == false).length}
                 </span>
               </a>
             </li>
@@ -158,11 +158,15 @@ export const getStaticProps = async () => {
     "https://pf-backend-mercadosolidario-production.up.railway.app/allusers"
   ).then((res) => res.json());
 
+  const inbox = await fetch("https://pf-backend-mercadosolidario-production.up.railway.app/chat")
+    .then((res) => res.json())
+
   return {
     props: {
       company,
       ong,
       users,
+      inbox
     },
   };
 };
