@@ -24,8 +24,8 @@ export default function UserNavbar() {
     if(session){
     signOut()
   }
-    Router.push("/")
-    window.location.reload()
+  window.location.href = '/'
+
   }
 
   if (user) {
