@@ -14,18 +14,15 @@ export default function UserNavbar() {
   const user = useUser();
   const [isOpen, setIsOpen] = useState(false);
 
-  function handleSignOut() {
+  async function handleSignOut() {
     localStorage.removeItem("user");
     Alert({
       title: "Cuenta",
       text: "Cerraste sesión satisfactoriamente",
       icon: "success",
     });
-    if(session){
-    signOut()
-  }
-  window.location.href = '/'
-
+    await signOut()
+    window.location.href = '/'
   }
 
   if (user) {

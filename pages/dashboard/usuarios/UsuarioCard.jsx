@@ -12,7 +12,7 @@ export default function UsuarioCard({ users }) {
       user.isActive = false;
     }
     console.log(user.isActive)
-    const inf = await axios.put(`http://localhost:3001/${user.type_of_user}/${user.id}`, {
+    const inf = await axios.put(`https://pf-backend-mercadosolidario-production.up.railway.app/${user.type_of_user}/${user.id}`, {
       isActive: user.isActive,
     })
     console.log(inf.data);
@@ -24,7 +24,7 @@ export default function UsuarioCard({ users }) {
   const [sortBy, setSortBy] = useState('name');
 
   const sortedData = users?.data
-    .filter(user => user.name.toLowerCase().includes(searchTerm.toLowerCase()))
+    .filter(user => user.email.toLowerCase().includes(searchTerm.toLowerCase()))
     .sort((a, b) => {
       if(sortBy === 'name'){
         if (sortOrder === 'asc') {
