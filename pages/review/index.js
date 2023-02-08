@@ -162,7 +162,9 @@ export default function Review({ data }) {
       <div>
         <div>Reviews de Nuestros Usuarios</div>
         {data.slice(-6).map((review) => (
-          <div>
+          <div
+          key={review.comment}
+          >
             <h1>{`${review.name} ${review.lastName}`}</h1>
             <Rating
               className="text-yellow-300"
