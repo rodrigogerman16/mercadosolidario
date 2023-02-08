@@ -66,19 +66,7 @@ export default function Perfilusuario() {
     setVisible(visible ? false : true);
   };
 
-  const usuario = useUser();
-  let user = "";
-  usuario ? (user = JSON.parse(usuario)) : "";
-  const formHandler = (e) => {
-    setFormUsuario({
-      ...formUsuario,
-      [e.target.name]: e.target.value,
-    });
-    console.log(formUsuario);
-  };
   const validate = (formUsuario) => {
-    const letras = "abcdefghijklmnopqrstuvwxyz";
-    const numeros = "1,2,3,4,5,6,7,8,9,0";
     let errors = {};
     if (!formUsuario.name) {
       errors.name = "falta name";
@@ -91,77 +79,115 @@ export default function Perfilusuario() {
       errors.lastName = "El apellido es muy corto";
     }
 
-    if (!formUsuario.phone.includes(letras)) {
+    if (!/^[0-9]*$/.test(formUsuario.phone)) {
       errors.phone = "No puede tener letras";
+    }
+    if (formUsuario.phone.length < 8) {
+      errors.phone = "Ingrese un teléfono";
     }
 
     return errors;
+  };
+  const usuario = useUser();
+  let user = "";
+  usuario ? (user = JSON.parse(usuario)) : "";
+
+  const formHandler = (e) => {
+    setFormUsuario({
+      ...formUsuario,
+      [e.target.name]: e.target.value,
+    });
+    console.log(formUsuario);
+    setErrorsForm(
+      validate({
+        ...formUsuario,
+        [e.target.name]: e.target.value,
+      })
+    );
   };
 
   async function handlerSubmit(el) {
     el.preventDefault();
     setErrorsForm(validate(formUsuario));
-    const date = new Date(formUsuario.birthDate);
-    const mongoDbDate = date.toISOString();
-    const form = el.currentTarget;
-    const fileInput = Array.from(form.elements).find(
-      ({ name }) => name === "file"
-    );
+    if (
+      Object.values(errorsForm).length === 0 &&
+      formUsuario.name !== "" &&
+      formUsuario.lastName !== "" &&
+      formUsuario.phone !== "" &&
+      formUsuario.user_linkedin !== "" &&
+      formUsuario.image !== "" &&
+      formUsuario.birthDate !== "" &&
+      formUsuario.profession !== ""
+    ) {
+      const date = new Date(formUsuario.birthDate);
+      const mongoDbDate = date.toISOString();
+      const form = el.currentTarget;
+      const fileInput = Array.from(form.elements).find(
+        ({ name }) => name === "file"
+      );
 
-    const formData2 = new FormData();
+      const formData2 = new FormData();
 
-    for (const file of fileInput.files) {
-      formData2.append("file", file);
-    }
-
-    formData2.append("upload_preset", "my-uploads");
-
-    const aux = await fetch(
-      "https://api.cloudinary.com/v1_1/dc9pehmoz/image/upload",
-      {
-        method: "POST",
-        body: formData2,
+      for (const file of fileInput.files) {
+        formData2.append("file", file);
       }
-    ).then((r) => r.json());
 
-    const obj = {
-      name: formUsuario.name,
-      lastName: formUsuario.lastName,
-      phone: formUsuario.phone,
-      user_linkedin: formUsuario.user_linkedin,
-      profession: formUsuario.profession,
-      image: aux.secure_url,
-      birthDate: mongoDbDate,
-    };
+      formData2.append("upload_preset", "my-uploads");
 
-    //console.log(obj);
+      const aux = await fetch(
+        "https://api.cloudinary.com/v1_1/dc9pehmoz/image/upload",
+        {
+          method: "POST",
+          body: formData2,
+        }
+      ).then((r) => r.json());
 
-    const info = await axios.put(
-      "https://pf-backend-mercadosolidario-production.up.railway.app/user/update/" +
-        user.id,
-      obj
-    );
+      const obj = {
+        name: formUsuario.name,
+        lastName: formUsuario.lastName,
+        phone: formUsuario.phone,
+        user_linkedin: formUsuario.user_linkedin,
+        profession: formUsuario.profession,
+        image: aux.secure_url,
+        birthDate: mongoDbDate,
+      };
 
-    const data = info.data;
-    console.log(info);
-    console.log(data);
+      //console.log(obj);
 
-    setFormUsuario({
-      name: "",
-      lastName: "",
-      phone: "",
-      user_linkedin: "",
-      birthDate: "",
-      profession: "",
-    });
+      const info = await axios.put(
+        "https://pf-backend-mercadosolidario-production.up.railway.app/user/update/" +
+          user.id,
+        obj
+      );
 
-    Alert({
-      title: "Datos Actualizados",
-      text: "Cambiado Satisfactoriamente",
-      icon: "success",
-    });
+      const data = info.data;
+      console.log(info);
+      console.log(data);
 
-    window.location.reload();
+      setFormUsuario({
+        name: "",
+        lastName: "",
+        phone: "",
+        user_linkedin: "",
+        birthDate: "",
+        profession: "",
+      });
+
+      Alert({
+        title: "Datos Actualizados",
+        text: "Cambiado Satisfactoriamente",
+        icon: "success",
+      });
+
+      window.location.reload();
+    } else {
+      Alert({
+        title: "Actualización fallida",
+        text: "Hay datos incorrectos o sin completar",
+        icon: "error",
+      });
+      window.location.reload();
+    }
   }
 
   console.log(formUsuario);
@@ -241,9 +267,17 @@ export default function Perfilusuario() {
         <div className="flex flex-col">
           {/*---------- APLICAR CLOUDINARY ---------------*/}
           {formUsuario.image ? (
-            <img src={formUsuario.image} alt="imagen de perfil" className="self-center w-56"/>
+            <img
+              src={formUsuario.image}
+              alt="imagen de perfil"
+              className="self-center w-56"
+            />
           ) : (
-            <Image src={profile} alt="default image" className="self-center w-56"/>
+            <Image
+              src={profile}
+              alt="default image"
+              className="self-center w-56"
+            />
           )}
           <label className="text-sm">Cambiar imagen de perfil</label>
           <input
@@ -295,7 +329,9 @@ export default function Perfilusuario() {
             value={formUsuario.user_linkedin}
             onChange={formHandler}
           />
-          {errorsForm.phone ? <label>{errorsForm.phone}</label> : null}
+          {errorsForm.user_linkedin ? (
+            <label>{errorsForm.user_linkedin}</label>
+          ) : null}
         </div>
         <div className="flex flex-col">
           <label className="text-sm">Fecha de Nacimiento</label>
