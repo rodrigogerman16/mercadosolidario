@@ -62,10 +62,10 @@ const Detail = ({ data }) => {
                         </div>
                         <div class="p-6 space-y-6">
                             <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                                Para poder ser voluntario en esta causa deberás registrarte, una vez estés registrado, deberas contactarte con la ONG la cual publicó esta causa, la cual te dará todos los detalles de adonde deberás dirigirte para ser voluntario.
+                                Para poder ser voluntario en esta causa deber&apos;as registrarte, una vez est&apos;es registrado, deberas contactarte con la ONG la cual public&apos;o esta causa, la cual te dar&apos;a todos los detalles de adonde deber&apos;as dirigirte para ser voluntario.
                             </p>
                             <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                                Una vez que sepas todos los datos para ser voluntario, deberás dirigirte al lugar de encuentro con el representante de la ONG, el cual te dirá que escanees un codigo QR, lo escanearas con el lector el cual se encuentra <a className='text-pink-400' rel="noreferrer" target = '_blank' href='https://mercadosolidario.vercel.app/perfil/qr'>en esta sección</a>. Cuando lo escanees y salgo todo correcto, se confirmará tu participación en esta causa y podrás verlo en la sección 'iniciativas'. Además se te otorgará una medalla al confirmar tu participación la cual verás en tu perfil y te llegará un Email informandote de tu actualizacion de perfil.  
+                                Una vez que sepas todos los datos para ser voluntario, deber&apos;as dirigirte al lugar de encuentro con el representante de la ONG, el cual te dir&apos;a que escanees un codigo QR, lo escanearas con el lector el cual se encuentra <a className='text-pink-400' rel="noreferrer" target = '_blank' href='https://mercadosolidario.vercel.app/perfil/qr'>en esta secci&apos;on</a>. Cuando lo escanees y salgo todo correcto, se confirmar&apos;a tu participaci&apos;on en esta causa y podr&apos;as verlo en la secci&apos;on 'iniciativas'. Adem&apos;as se te otorgar&apos;a una medalla al confirmar tu participaci&apos;on la cual ver&apos;as en tu perfil y te llegar&apos;a un Email informandote de tu actualizacion de perfil.  
                             </p>
                         </div>
                         <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
@@ -93,10 +93,10 @@ const Detail = ({ data }) => {
                       </div>
                       <div class="p-6 space-y-6">
                           <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                              Para poder ser donante en especie para esta causa deberás registrarte, una vez estés registrado, deberas contactarte con la ONG la cual publicó esta causa, la cual te dará todos los detalles de adonde deberás dirigir el paquete de donacion.
+                              Para poder ser donante en especie para esta causa deber&apos;as registrarte, una vez est&apos;es registrado, deberas contactarte con la ONG la cual public&apos;o esta causa, la cual te dar&apos;a todos los detalles de adonde deber&apos;as dirigir el paquete de donacion.
                           </p>
                           <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                              Una vez que sepas todos los datos, deberás dirigirte al lugar de encuentro con el representante de la ONG, el cual te dirá que escanees un codigo QR, lo escanearas con el lector el cual se encuentra <a className='text-pink-400' rel="noreferrer" target = '_blank' href='https://mercadosolidario.vercel.app/perfil/qr'>en esta sección</a>. Cuando lo escanees y salgo todo correcto, se confirmará tu participación en esta causa y podrás verlo en la sección 'iniciativas'. Además se te otorgará una medalla al confirmar tu participación la cual verás en tu perfil y te llegará un Email informandote de tu actualizacion de perfil.  
+                              Una vez que sepas todos los datos, deber&apos;as dirigirte al lugar de encuentro con el representante de la ONG, el cual te dir&apos;a que escanees un codigo QR, lo escanearas con el lector el cual se encuentra <a className='text-pink-400' rel="noreferrer" target = '_blank' href='https://mercadosolidario.vercel.app/perfil/qr'>en esta secci&apos;on</a>. Cuando lo escanees y salgo todo correcto, se confirmar&apos;a tu participaci&apos;on en esta causa y podr&apos;as verlo en la secci&apos;on 'iniciativas'. Adem&apos;as se te otorgar&apos;a una medalla al confirmar tu participaci&apos;on la cual ver&apos;as en tu perfil y te llegar&apos;a un Email informandote de tu actualizacion de perfil.  
                           </p>
                       </div>
                       <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
