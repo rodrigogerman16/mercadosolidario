@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useUser } from "../../hooks/user";
-import SideBar from "@/Components/SideBar";
 import profile from "../../Assets/profile.png";
 import Image from "next/image";
 import Alert from "@/Components/Alert";
@@ -152,7 +151,6 @@ export default function Perfilcompany() {
 
   return (
     <div>
-      <SideBar />
       {/*Cambiar info */}
       <h2 className="text-center font-semibold text-2xl mt-10">
         Editar datos de Perfil
