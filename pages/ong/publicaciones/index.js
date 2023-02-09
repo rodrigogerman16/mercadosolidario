@@ -34,7 +34,7 @@ export default function Publicaciones(props) {
           userFinded[0]?.posts?.map(
             (post) =>
               post.isActive && (
-                <div>
+                <div key={post.id}>
                   <Card
                     key={post.id}
                     title={post.title}
