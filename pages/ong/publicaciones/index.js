@@ -104,7 +104,7 @@ export default function Publicaciones(props) {
         ) : (
           <div className="h-64 flex items-center">
             <p className="font-semibold text-2xl">
-              Actualmente no estas colaborando con ninguna Iniciativa
+              Actualmente no creaste ninguna Iniciativa
             </p>
           </div>
         )}
