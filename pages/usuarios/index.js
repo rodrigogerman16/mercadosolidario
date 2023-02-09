@@ -285,11 +285,6 @@ function Products({ data }) {
       name: "Insignias",
       options: [
         {
-          value: "participacion",
-          label: "Participacion",
-          checked: insigniasFilter.includes("participacion"),
-        },
-        {
           value: "servicio",
           label: "Servicio",
           checked: insigniasFilter.includes("servicio"),
