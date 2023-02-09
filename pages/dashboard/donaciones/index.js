@@ -2,16 +2,14 @@ import UsuarioCard from "./UsuarioCard";
 import Link from "next/link";
 import Logo from "../../../Assets/logo-mercado-solidario-sintexto.png";
 import Image from "next/image";
-import { signOut, useSession } from 'next-auth/react'
+import { signOut } from 'next-auth/react'
 import profile from "../../../Assets/profile.png"
-import { Router } from "react-router-dom";
 
 export default function Iniciativas({ inbox }) {
-  const { data: session } = useSession()
   function handleSignOut() {
     localStorage.removeItem("user");
     signOut()
-    Router.push("/")
+    window.location.href = 'http://localhost:3000';
     window.location.reload()
   }
   return (
