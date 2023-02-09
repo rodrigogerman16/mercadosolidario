@@ -12,7 +12,7 @@ const Detail = ({ data }) => {
   useEffect(() => {
     async function fetchData() {
       console.log(data.authorId)
-      const ong = await axios('http://localhost:3001/ong/' + data.authorId)
+      const ong = await axios('https://pf-backend-mercadosolidario-production.up.railway.app/ong/' + data.authorId)
       console.log(ong)
       setInfo(ong.data)
     }

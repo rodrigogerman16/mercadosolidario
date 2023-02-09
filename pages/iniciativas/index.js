@@ -35,35 +35,126 @@ function Products({ data }) {
     // Returns null on first render, so the client and server match
     return null;
   }
-
   const provinces = [
     {
       id: "Provincias",
       name: "Provincias",
       options: [
-        { value: "BuenosAires", label: "Buenos Aires", checked: false },
-        { value: "Catamarca", label: "Catamarca", checked: false },
-        { value: "Chaco", label: "Chaco", checked: false },
-        { value: "Chubut", label: "Chubut", checked: false },
-        { value: "Cordoba", label: "Córdoba", checked: false },
-        { value: "Corrientes", label: "Corrientes", checked: false },
-        { value: "EntreRios", label: "Entre Ríos", checked: false },
-        { value: "Formosa", label: "Formosa", checked: false },
-        { value: "Jujuy", label: "Jujuy", checked: false },
-        { value: "LaPampa", label: "La Pampa", checked: false },
-        { value: "LaRioja", label: "La Rioja", checked: false },
-        { value: "Mendoza", label: "Mendoza", checked: false },
-        { value: "Misiones", label: "Misiones", checked: false },
-        { value: "Neuquen", label: "Neuquén", checked: false },
-        { value: "RioNegro", label: "Río Negro", checked: false },
-        { value: "Salta", label: "Salta", checked: false },
-        { value: "SanJuan", label: "San Juan", checked: false },
-        { value: "SanLuis", label: "San Luis", checked: false },
-        { value: "SantaCruz", label: "Santa Cruz", checked: false },
-        { value: "SantaFe", label: "Santa Fé", checked: false },
-        { value: "SantiagoDelEstero", label: "Santiago del Estero", checked: false, },
-        { value: "TierraDelFuego", label: "Tierra del Fuego", checked: false, },
-        { value: "Tucuman", label: "Tucuman", checked: false },
+        {
+          value: "BuenosAires",
+          label: "Buenos Aires",
+          checked: provinceFilter.includes("BuenosAires") ? true : false,
+        },
+        {
+          value: "Catamarca",
+          label: "Catamarca",
+          checked: provinceFilter.includes("Catamarca") ? true : false,
+        },
+        {
+          value: "Chaco",
+          label: "Chaco",
+          checked: provinceFilter.includes("Chaco") ? true : false,
+        },
+        {
+          value: "Chubut",
+          label: "Chubut",
+          checked: provinceFilter.includes("Chubut") ? true : false,
+        },
+        {
+          value: "Cordoba",
+          label: "Córdoba",
+          checked: provinceFilter.includes("Cordoba") ? true : false,
+        },
+        {
+          value: "Corrientes",
+          label: "Corrientes",
+          checked: provinceFilter.includes("Corrientes") ? true : false,
+        },
+        {
+          value: "EntreRios",
+          label: "Entre Ríos",
+          checked: provinceFilter.includes("EntreRios") ? true : false,
+        },
+        {
+          value: "Formosa",
+          label: "Formosa",
+          checked: provinceFilter.includes("Formosa") ? true : false,
+        },
+        {
+          value: "Jujuy",
+          label: "Jujuy",
+          checked: provinceFilter.includes("Jujuy") ? true : false,
+        },
+        {
+          value: "LaPampa",
+          label: "La Pampa",
+          checked: provinceFilter.includes("LaPampa") ? true : false,
+        },
+        {
+          value: "LaRioja",
+          label: "La Rioja",
+          checked: provinceFilter.includes("LaRioja") ? true : false,
+        },
+        {
+          value: "Mendoza",
+          label: "Mendoza",
+          checked: provinceFilter.includes("Mendoza") ? true : false,
+        },
+        {
+          value: "Misiones",
+          label: "Misiones",
+          checked: provinceFilter.includes("Misiones") ? true : false,
+        },
+        {
+          value: "Neuquen",
+          label: "Neuquén",
+          checked: provinceFilter.includes("Neuquen") ? true : false,
+        },
+        {
+          value: "RioNegro",
+          label: "Río Negro",
+          checked: provinceFilter.includes("RioNegro") ? true : false,
+        },
+        {
+          value: "Salta",
+          label: "Salta",
+          checked: provinceFilter.includes("Salta") ? true : false,
+        },
+        {
+          value: "SanJuan",
+          label: "San Juan",
+          checked: provinceFilter.includes("SanJuan") ? true : false,
+        },
+        {
+          value: "SanLuis",
+          label: "San Luis",
+          checked: provinceFilter.includes("SanLuis") ? true : false,
+        },
+        {
+          value: "SantaCruz",
+          label: "Santa Cruz",
+          checked: provinceFilter.includes("SantaCruz") ? true : false,
+        },
+        {
+          value: "SantaFe",
+          label: "Santa Fé",
+          checked: provinceFilter.includes("SantaFe") ? true : false,
+        },
+        {
+          value: "SantiagoDelEstero",
+          label: "Santiago del Estero",
+          checked: provinceFilter.includes("SantiagoDelEstero") ? true : false,
+        },
+        {
+          value: "TierraDelFuego",
+          label: "Tierra del Fuego",
+          checked: provinceFilter.includes("TierraDelFuego") ? true : false,
+        },
+        {
+          value: "Tucuman",
+          label: "Tucuman",
+          checked: provinceFilter.includes("Tucuman") ? true : false,
+        },
       ],
     },
   ];
@@ -73,63 +164,117 @@ function Products({ data }) {
       id: "Categorias",
       name: "Categorias",
       options: [
-        { value: "Alimentacion", label: "Alimentacion", checked: false },
-        { value: "Asesoria Legal", label: "Asesoria Legal", checked: false },
+        {
+          value: "Alimentacion",
+          label: "Alimentacion",
+          checked: categoryFilter.includes("Alimentacion") ? true : false,
+        },
+        {
+          value: "Asesoria Legal",
+          label: "Asesoria Legal",
+          checked: categoryFilter.includes("Asesoria Legal") ? true : false,
+        },
         {
           value: "Ayuda_a_refugiados",
           label: "Ayuda_a_refugiados",
-          checked: false,
+          checked: categoryFilter.includes("Ayuda_a_refugiados") ? true : false,
         },
         {
           value: "Ayuda_a_animales",
           label: "Ayuda_a_animales",
-          checked: false,
+          checked: categoryFilter.includes("Ayuda_a_animales") ? true : false,
         },
         {
           value: "Apoyo_a_comunidades_indigenas",
           label: "Apoyo_a_comunidades_indigenas",
-          checked: false,
+          checked: categoryFilter.includes("Apoyo_a_comunidades_indigenas")
+            ? true
+            : false,
         },
-        { value: "Apoyo_a_lgbt", label: "Apoyo_a_lgbt", checked: false },
+        {
+          value: "Apoyo_a_lgbt",
+          label: "Apoyo_a_lgbt",
+          checked: categoryFilter.includes("Apoyo_a_lgbt") ? true : false,
+        },
         {
           value: "Apoyo_a_la_mujer",
           label: "Apoyo_a_la_mujer",
-          checked: false,
+          checked: categoryFilter.includes("Apoyo_a_la_mujer") ? true : false,
         },
         {
           value: "Construccion_obras",
           label: "Construccion_obras",
-          checked: false,
+          checked: categoryFilter.includes("Construccion_obras") ? true : false,
         },
-        { value: "Cultura", label: "Cultura", checked: false },
-        { value: "Deportes", label: "Deportes", checked: false },
+        {
+          value: "Cultura",
+          label: "Cultura",
+          checked: categoryFilter.includes("Cultura") ? true : false,
+        },
+        {
+          value: "Deportes",
+          label: "Deportes",
+          checked: categoryFilter.includes("Deportes") ? true : false,
+        },
         {
           value: "Derechos_humanos",
           label: "Derechos_humanos",
-          checked: false,
+          checked: categoryFilter.includes("Derechos_humanos") ? true : false,
         },
-        { value: "Discapacitados", label: "Discapacitados", checked: false },
-        { value: "Educacion", label: "Educacion", checked: false },
-        { value: "Medio_ambiente", label: "Medio_ambiente", checked: false },
-        { value: "Entretenimiento", label: "Entretenimiento", checked: false },
+        {
+          value: "Discapacitados",
+          label: "Discapacitados",
+          checked: categoryFilter.includes("Discapacitados") ? true : false,
+        },
+        {
+          value: "Educacion",
+          label: "Educacion",
+          checked: categoryFilter.includes("Educacion") ? true : false,
+        },
+        {
+          value: "Medio_ambiente",
+          label: "Medio_ambiente",
+          checked: categoryFilter.includes("Medio_ambiente") ? true : false,
+        },
+        {
+          value: "Entretenimiento",
+          label: "Entretenimiento",
+          checked: categoryFilter.includes("Entretenimiento") ? true : false,
+        },
         {
           value: "Gobierno_no_lucro",
           label: "Gobierno_no_lucro",
-          checked: false,
+          checked: categoryFilter.includes("Gobierno_no_lucro") ? true : false,
         },
-        { value: "Materia_prima", label: "Materia_prima", checked: false },
+        {
+          value: "Materia_prima",
+          label: "Materia_prima",
+          checked: categoryFilter.includes("Materia_prima") ? true : false,
+        },
         {
           value: "Medios_de_comunicacion",
           label: "Medios_de_comunicacion",
-          checked: false,
+          checked: categoryFilter.includes("Medios_de_comunicacion")
+            ? true
+            : false,
         },
-        { value: "Salud_medicina", label: "Salud_medicina", checked: false },
+        {
+          value: "Salud_medicina",
+          label: "Salud_medicina",
+          checked: categoryFilter.includes("Salud_medicina") ? true : false,
+        },
         {
           value: "Servicio_comunitario",
           label: "Servicio_comunitario",
-          checked: false,
+          checked: categoryFilter.includes("Servicio_comunitario")
+            ? true
+            : false,
         },
-        { value: "Transporte", label: "Transporte", checked: false },
+        {
+          value: "Transporte",
+          label: "Transporte",
+          checked: categoryFilter.includes("Transporte") ? true : false,
+        },
       ],
     },
   ];
@@ -142,17 +287,17 @@ function Products({ data }) {
         {
           value: "efectivo",
           label: "Efectivo",
-          checked: false,
+          checked: donationsFilter.includes("efectivo"),
         },
         {
           value: "especie",
           label: "Especie",
-          checked: false,
+          checked: donationsFilter.includes("especie"),
         },
         {
           value: "servicio",
           label: "Voluntario",
-          checked: false,
+          checked: donationsFilter.includes("servicio"),
         },
       ],
     },
@@ -537,16 +682,17 @@ function Products({ data }) {
                         ? "Ordenar descendentemente"
                         : "Ordenar ascendentemente"}
                     </button>
-                    {
-                      order === "asc" ? <BsChevronDown
+                    {order === "asc" ? (
+                      <BsChevronDown
                         className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                         aria-hidden="true"
-                      /> :
-                        <BsChevronUp
-                          className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
-                          aria-hidden="true"
-                        />
-                    }
+                      />
+                    ) : (
+                      <BsChevronUp
+                        className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                        aria-hidden="true"
+                      />
+                    )}
                   </Menu.Button>
                 </div>
               </Menu>
@@ -558,12 +704,13 @@ function Products({ data }) {
                     type="text"
                     placeholder="Buscar iniciativa"
                     onChange={handleSearch}
-                    className='rounded'
+                    className="rounded"
                   />
                   <BsSearch
                     id="icon"
-                    className={`text-gray-400 hover:text-gray-500 h-5 w-5 cursor-pointer absolute top top-1/2 right-6 transform -translate-y-1/2 ${search ? "visible" : "hidden"
-                      }`}
+                    className={`text-gray-400 hover:text-gray-500 h-5 w-5 cursor-pointer absolute top top-1/2 right-6 transform -translate-y-1/2 ${
+                      search ? "visible" : "hidden"
+                    }`}
                   ></BsSearch>
                 </div>
               </div>
@@ -811,9 +958,10 @@ function Products({ data }) {
                 id="infiniteScroll"
               >
                 {/*------- Scroll infinito y mapeado de cards -------*/}
-                {filteredData.filter(e =>{
-                  return e.isActive
-                })
+                {filteredData
+                  .filter((e) => {
+                    return e.isActive;
+                  })
                   .slice(0, limit)
                   .sort((a, b) => {
                     if (order === "asc") return a.title.localeCompare(b.title);
@@ -825,15 +973,17 @@ function Products({ data }) {
                       key={item.id}
                       href={`/iniciativas/${item.id}`}
                     >
-                      {item.isActive && <Card
-                        key={item.id}
-                        title={item.title}
-                        image={item.image}
-                        description={item.description}
-                        province={item.province}
-                        isVolunteer={item.type_of_help}
-                        expirationDate={item.expirationDate}
-                      />}
+                      {item.isActive && (
+                        <Card
+                          key={item.id}
+                          title={item.title}
+                          image={item.image}
+                          description={item.description}
+                          province={item.province}
+                          isVolunteer={item.type_of_help}
+                          expirationDate={item.expirationDate}
+                        />
+                      )}
                     </Link>
                   ))}
                 <div className="w-full flex sm:col-span-2 xl:col-span-3 m-auto my-8">
