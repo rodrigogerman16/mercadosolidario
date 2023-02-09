@@ -312,7 +312,7 @@ export default function Home() {
       {/* Reviws */}
       <div>
         <div className="w-full bg-white  px-5 py-16 md:py-24">
-          <div className="w-full max-w-6xl mx-auto">
+          <div className="w-full max-w-6xl mx-auto flex flex-col">
             <div className="text-center max-w-xl mx-auto">
               <span className="block mb-2 text-xs font-semibold tracking-widest text-center uppercase dark:text-pink-400">Reseñas</span>
               <h2 className="text-5xl font-bold text-center">¿Que opinan los usuarios?</h2>
@@ -446,7 +446,9 @@ export default function Home() {
                 </div>
               </div>
             </div>
+            <Link rel="noopener noreferrer" href="/iniciativas" className="px-8 py-3 text-lg font-semibold shadow bg-pink-400 text-white hover:bg-pink-300 transition-colors rounded m-auto justify-self-center">Ver más reviews</Link>
           </div>
+
         </div>
       </div>
 
