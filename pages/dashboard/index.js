@@ -8,15 +8,13 @@ import RubroChart from './RubroChart'
 import Link from 'next/link'
 import { getSession, signOut } from 'next-auth/react'
 import profile from "../../Assets/profile.png"
-import { Router } from "react-router-dom";
 
 
 const index = ({ posts, users, company, ong, inbox }) => {
   function handleSignOut() {
     localStorage.removeItem("user");
     signOut()
-    Router.push("/")
-    window.location.reload()
+    window.location.href = 'http://localhost:3000';
   }
 
   return (
