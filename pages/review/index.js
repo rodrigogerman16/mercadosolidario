@@ -212,7 +212,7 @@ export default function Review({ data }) {
           ))}
         </div>
         <div className="grid m-auto md:mt-24">
-          {data.slice((data.length / 3) * 2, -1).map((review) => (
+          {data.slice((data.length / 3) * 2, data.length).map((review) => (
             <div className="w-full" key={review.id}>
               <div className="w-full mx-auto rounded-lg bg-white border border-gray-200 p-5 text-gray-800 font-light mb-6">
                 <div className="w-full grid mb-4">
