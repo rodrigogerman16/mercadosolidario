@@ -1010,7 +1010,7 @@ function Products({ data }) {
 }
 
 export default Products;
-export function getStaticProps() {
+export const getServerSideProps = async () => {
   return fetch(
     "https://pf-backend-mercadosolidario-production.up.railway.app/posts"
   )
