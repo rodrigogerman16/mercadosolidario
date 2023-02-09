@@ -8,6 +8,7 @@ import { faStar as emptyStar } from "@fortawesome/free-regular-svg-icons";
 import { useUser } from "@/hooks/user";
 import Alert from "@/Components/Alert";
 import { useEffect } from "react";
+import SideBar from "@/Components/SideBar";
 
 function Validate(input) {
   let errors = {};
@@ -104,6 +105,7 @@ export default function Review({ data }) {
 
   return (
     <div class="w-full">
+      <SideBar/>
       <div class="mt-4">
         <span class="block mb-2 text-md font-semibold tracking-widest text-center uppercase dark:text-pink-400">
           Review
