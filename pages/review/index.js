@@ -184,7 +184,7 @@ export default function Review({ data }) {
   );
 }
 
-export async function getStaticProps() {
+export const getServerSideProps = async () => {
   return await fetch(
     "https://pf-backend-mercadosolidario-production.up.railway.app/reviews"
   )
