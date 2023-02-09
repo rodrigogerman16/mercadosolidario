@@ -26,6 +26,7 @@ export default function OngNavbar() {
       }
 
     if (user) {
+        const findImage = user && JSON.parse(user)
         return (
             <div>
                 <nav className="bg-white py-4">
@@ -69,7 +70,7 @@ export default function OngNavbar() {
                                         Cerrar sesion
                                     </button>
                                     <Image
-                                        src={user.image ? user.image : profile}
+                                        src={findImage.image ? findImage.image : profile}
                                         width={50}
                                         height={50}
                                         className='rounded-3xl cursor-pointer'
@@ -90,7 +91,7 @@ export default function OngNavbar() {
 
                                         <Image
                                             className="block rounded-3xl"
-                                            src={user.image ? user.image : logo}
+                                            src={findImage.image ? findImage.image : profile}
                                             width={50}
                                             height={50}
                                         />

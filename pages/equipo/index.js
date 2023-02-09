@@ -4,7 +4,8 @@ import gusti from "../../Assets/gusti.jpg";
 import rodri from "../../Assets/rodri.png";
 import fabi from "../../Assets/Fabi.png";
 import frank from "../../Assets/frank.png";
-import facu from "../../Assets/facu.jpg"
+import facu from "../../Assets/facu.jpg";
+import JoseH from "../../Assets/JoseH.jpg";
 
 export default function Equipo() {
   return (
@@ -50,9 +51,9 @@ export default function Equipo() {
 
           <EquipoCard
             name="Jose Hernandez"
-            img={bauti}
-            github="https://www.linkedin.com/in/delwin-hernandez-b926182b"
-            linkedin="https://www.linkedin.com/in/bautista-pietraroia/"
+            img={JoseH}
+            github="https://github.com/Delwin183"
+            linkedin="https://www.linkedin.com/in/delwin-hernandez-b926182b"
           />
 
           <EquipoCard
@@ -74,7 +75,6 @@ export default function Equipo() {
             img={frank}
             github="https://github.com/f10frank"
             linkedin="https://www.linkedin.com/in/frank-gustavo-camarena-5b5a1a127/"
-            
           />
 
           <EquipoCard
