@@ -30,7 +30,7 @@ const Detail = ({ data }) => {
     }
   } 
    return (
-    <div className='grid max-w-3xl w-full m-auto gap-8 my-8 p-8'>
+    <div className='grid gap-8 max-w-3xl w-full m-auto gap-8 my-8 p-8'>
       <img className='rounded m-auto w-full aspect-video object-cover' src={data.image} alt={data.title}></img>
       <div className='flex flex-col gap-4'>
         <div className='flex items-center justify-between'>
@@ -48,7 +48,7 @@ const Detail = ({ data }) => {
             <button data-modal-target="defaultModal" data-modal-toggle="defaultModal" class="block text-white bg-pink-400 hover:bg-pink-500 focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="button" onClick={() => toggle()}>
               Paso a paso
             </button>
-            <div id="defaultModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 hidden z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 md:h-full h-screen justify-center items-center">
+            <div id="defaultModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 hidden z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full absolute h-screen flex justify-center items-center">
                 <div class="relative w-full h-full max-w-2xl md:h-auto">
                     <div class="relative bg-white rounded-lg shadow disabled:bg-gray-700">
                         <div class="flex items-start justify-between p-4 border-b rounded-t disabled:border-gray-600">
@@ -77,7 +77,7 @@ const Detail = ({ data }) => {
           </div>
           
           :
-
+          
           <div>
           <button data-modal-target="defaultModal" data-modal-toggle="defaultModal" class="block text-white bg-pink-400 hover:bg-pink-500 focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="button" onClick={() => toggle()}>
             Paso a paso
