@@ -160,7 +160,7 @@ export default function Review({ data }) {
           </div>
         </div>
       </form>
-      <div className="grid grid-cols-3 max-w-7xl p-8 m-auto gap-6">
+      <div className="grid md:grid-cols-3 max-w-7xl p-8 m-auto gap-6">
         <div className="grid m-auto mt-24">
           {data.slice(0, data.length / 3).map((review) => (
             <div className="w-full" key={review.id}>
