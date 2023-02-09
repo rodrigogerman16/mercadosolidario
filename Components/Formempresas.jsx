@@ -152,7 +152,7 @@ export default function Formempresas(props) {
         formData.append("province", input.province);
         formData.append("phone", input.phone);
 
-        postCompany(formData);       
+        await postCompany(formData);       
         
         Alert({
           title: "Registro",
@@ -165,9 +165,11 @@ export default function Formempresas(props) {
           province: "",
           cuit: "",
           phone: "",
-        });
-        if(session){signOut()}    
+        });   
+
+        window.localStorage.removeItem("user")
         window.location.href = '../';
+        
       } else {
         Alert({
           title: "Registro",
@@ -176,7 +178,8 @@ export default function Formempresas(props) {
         });
       }
     } catch (error) {
-      const err = JSON.parse(error.response.data)
+      console.log(error)
+      const err = error.response.data.message? error.response.data : JSON.parse(error.response.data);
       setInput({
         email: "",
         password: "",
