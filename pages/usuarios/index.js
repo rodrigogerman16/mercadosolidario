@@ -145,11 +145,6 @@ function Products({ data }) {
       name: "Insignias",
       options: [
         {
-          value: "participacion",
-          label: "Participacion",
-          checked: false,
-        },
-        {
           value: "servicio",
           label: "Servicio",
           checked: false,
