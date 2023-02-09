@@ -56,6 +56,15 @@ export default function Qr(){
       })
 
       /* ------- Mandar email ------- */
+      await axios.post(
+        "https://pf-backend-mercadosolidario-production.up.railway.app/mailer/confirmed",
+        { email: emailUser, type_of_help: infoIniciativa.data.type_of_help },
+        {
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+          }
+        }
+      );
 
       Alert({
         title: `${infoIniciativa.data.type_of_help.charAt(0).toUpperCase() + infoIniciativa.data.type_of_help.slice(1)} confirmado!`,
