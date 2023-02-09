@@ -199,7 +199,8 @@ const rubros = [
           cuit: "",
           phone: "",
         });   
-        if(session){signOut()}        
+        if(session){signOut()}    
+        window.localStorage.removeItem("user")    
         window.location.href = '../';
       } else {
         Alert({ title: 'Registro', text: 'Hay datos incorrectos o sin completar', icon: 'error' })
