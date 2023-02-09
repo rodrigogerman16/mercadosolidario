@@ -6,7 +6,7 @@ import fabi from "../../Assets/Fabi.png";
 import frank from "../../Assets/frank.png";
 import facu from "../../Assets/facu.jpg";
 import JoseH from "../../Assets/JoseH.jpg";
-
+import juli from "../../Assets/juli.png";
 export default function Equipo() {
   return (
     <div>
@@ -58,7 +58,7 @@ export default function Equipo() {
 
           <EquipoCard
             name="Julián López Padua"
-            img={bauti}
+            img={juli}
             github="https://github.com/juliilp"
             linkedin="https://www.linkedin.com/in/julian-lopez-7b9746234/"
           />
