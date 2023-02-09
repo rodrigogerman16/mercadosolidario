@@ -62,6 +62,7 @@ export default function Login() {
         let info = await axios.post(`https://pf-backend-mercadosolidario-production.up.railway.app/login`, user);
         const decoded = jwt_decode(info.data.token);
         window.localStorage.setItem("user", JSON.stringify(decoded));
+        await axios.post("https://pf-backend-mercadosolidario-production.up.railway.app/mailer/email", decoded.email)
         Alert({
           title: "Cuenta",
           text: "Iniciaste sesión satisfactoriamente!",
