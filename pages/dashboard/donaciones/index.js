@@ -9,7 +9,7 @@ export default function Iniciativas({ inbox }) {
   function handleSignOut() {
     localStorage.removeItem("user");
     signOut()
-    window.location.href = 'http://localhost:3000';
+    window.location.href = 'https://mercadosolidario.vercel.app/';
     window.location.reload()
   }
   return (
