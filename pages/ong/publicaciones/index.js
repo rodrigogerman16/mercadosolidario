@@ -61,9 +61,9 @@ export default function Publicaciones(props) {
                         class="fixed top-0 left-0 right-0 hidden z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full absolute h-screen flex justify-center items-center"
                       >
                         <div class="relative w-full h-full max-w-2xl md:h-auto">
-                          <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                            <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
-                              <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                          <div class="bg-gray-100 rounded-lg shadow flex flex-col">
+                            <div class="flex items-start justify-between p-4 border-b rounded-t">
+                              <h3 class="text-xl font-semibold">
                                 QR de Tu Iniciativa
                               </h3>
                               <button
@@ -87,10 +87,10 @@ export default function Publicaciones(props) {
                                 </svg>
                                 <span class="sr-only"></span>
                               </button>
-                            </div>
-                            <div class="p-6 space-y-6">
-                              <img className="w-2/4 h-2/4" src={qrCode} />
-                            </div>
+                            </div>                              
+                              <div class="p-6 space-y-6 flex justify-center">
+                                <img className="w-2/4 h-2/4" src={qrCode} />
+                              </div>
                           </div>
                         </div>
                       </div>
