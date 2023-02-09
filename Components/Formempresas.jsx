@@ -87,8 +87,6 @@ export default function Formempresas(props) {
     };
 
     window.localStorage.setItem("user", JSON.stringify(aux));
-
-    return console.log(info.data, aux);
   };
 
   function handleChange(el) {
@@ -168,8 +166,8 @@ export default function Formempresas(props) {
           cuit: "",
           phone: "",
         });
+        if(session){signOut()}    
         window.location.href = '../';
-        //signOut()
       } else {
         Alert({
           title: "Registro",
@@ -178,13 +176,13 @@ export default function Formempresas(props) {
         });
       }
     } catch (error) {
-      const err = error.response.data.message ? error.response.data : JSON.parse(error.response.data)
+      const err = JSON.parse(error.response.data)
       setInput({
         email: "",
         password: "",
       });
       Alert({
-        title: "Cuenta",
+        title: "Registro",
         text: err.message,
         icon: "error",
       });

@@ -14,6 +14,7 @@ export default function IniciativasCards({ posts }) {
     await axios.put(`https://pf-backend-mercadosolidario-production.up.railway.app/posts/${post.id}`, {
       isActive: post.isActive ? false : true,
     });
+    window.location.reload()
   }
 
   const handleSearch = (event) => {

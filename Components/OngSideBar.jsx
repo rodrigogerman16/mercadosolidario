@@ -39,7 +39,7 @@ export default function OngSideBar() {
         </Link>
         
         {/*Link a Lector de QR*/}
-        <Link
+        {/* <Link
           href="/perfilusuario/qr"
           className="flex aspect-square min-h-[32px] w-16 flex-col items-center justify-center gap-1 rounded-md p-1.5 hover:bg-gray-200 text-black-600"
         >          
@@ -47,7 +47,7 @@ export default function OngSideBar() {
           <small className="text-center text-xs font-medium">Escanear QR</small>
         </Link>
 
-        <hr className="dark:border-gray-700/60" />
+        <hr className="dark:border-gray-700/60" /> */}
       </nav>
     </div>
   );
