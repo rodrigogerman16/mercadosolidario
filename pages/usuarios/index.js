@@ -36,37 +36,121 @@ function Products({ data }) {
       id: "Provincias",
       name: "Provincias",
       options: [
-        { value: "BuenosAires", label: "Buenos Aires", checked: false },
-        { value: "Catamarca", label: "Catamarca", checked: false },
-        { value: "Chaco", label: "Chaco", checked: false },
-        { value: "Chubut", label: "Chubut", checked: false },
-        { value: "Cordoba", label: "Córdoba", checked: false },
-        { value: "Corrientes", label: "Corrientes", checked: false },
-        { value: "EntreRios", label: "Entre Ríos", checked: false },
-        { value: "Formosa", label: "Formosa", checked: false },
-        { value: "Jujuy", label: "Jujuy", checked: false },
-        { value: "LaPampa", label: "La Pampa", checked: false },
-        { value: "LaRioja", label: "La Rioja", checked: false },
-        { value: "Mendoza", label: "Mendoza", checked: false },
-        { value: "Misiones", label: "Misiones", checked: false },
-        { value: "Neuquen", label: "Neuquén", checked: false },
-        { value: "RioNegro", label: "Río Negro", checked: false },
-        { value: "Salta", label: "Salta", checked: false },
-        { value: "SanJuan", label: "San Juan", checked: false },
-        { value: "SanLuis", label: "San Luis", checked: false },
-        { value: "SantaCruz", label: "Santa Cruz", checked: false },
-        { value: "SantaFe", label: "Santa Fé", checked: false },
+        {
+          value: "BuenosAires",
+          label: "Buenos Aires",
+          checked: provinceFilter.includes("BuenosAires") ? true : false,
+        },
+        {
+          value: "Catamarca",
+          label: "Catamarca",
+          checked: provinceFilter.includes("Catamarca") ? true : false,
+        },
+        {
+          value: "Chaco",
+          label: "Chaco",
+          checked: provinceFilter.includes("Chaco") ? true : false,
+        },
+        {
+          value: "Chubut",
+          label: "Chubut",
+          checked: provinceFilter.includes("Chubut") ? true : false,
+        },
+        {
+          value: "Cordoba",
+          label: "Córdoba",
+          checked: provinceFilter.includes("Cordoba") ? true : false,
+        },
+        {
+          value: "Corrientes",
+          label: "Corrientes",
+          checked: provinceFilter.includes("Corrientes") ? true : false,
+        },
+        {
+          value: "EntreRios",
+          label: "Entre Ríos",
+          checked: provinceFilter.includes("EntreRios") ? true : false,
+        },
+        {
+          value: "Formosa",
+          label: "Formosa",
+          checked: provinceFilter.includes("Formosa") ? true : false,
+        },
+        {
+          value: "Jujuy",
+          label: "Jujuy",
+          checked: provinceFilter.includes("Jujuy") ? true : false,
+        },
+        {
+          value: "LaPampa",
+          label: "La Pampa",
+          checked: provinceFilter.includes("LaPampa") ? true : false,
+        },
+        {
+          value: "LaRioja",
+          label: "La Rioja",
+          checked: provinceFilter.includes("LaRioja") ? true : false,
+        },
+        {
+          value: "Mendoza",
+          label: "Mendoza",
+          checked: provinceFilter.includes("Mendoza") ? true : false,
+        },
+        {
+          value: "Misiones",
+          label: "Misiones",
+          checked: provinceFilter.includes("Misiones") ? true : false,
+        },
+        {
+          value: "Neuquen",
+          label: "Neuquén",
+          checked: provinceFilter.includes("Neuquen") ? true : false,
+        },
+        {
+          value: "RioNegro",
+          label: "Río Negro",
+          checked: provinceFilter.includes("RioNegro") ? true : false,
+        },
+        {
+          value: "Salta",
+          label: "Salta",
+          checked: provinceFilter.includes("Salta") ? true : false,
+        },
+        {
+          value: "SanJuan",
+          label: "San Juan",
+          checked: provinceFilter.includes("SanJuan") ? true : false,
+        },
+        {
+          value: "SanLuis",
+          label: "San Luis",
+          checked: provinceFilter.includes("SanLuis") ? true : false,
+        },
+        {
+          value: "SantaCruz",
+          label: "Santa Cruz",
+          checked: provinceFilter.includes("SantaCruz") ? true : false,
+        },
+        {
+          value: "SantaFe",
+          label: "Santa Fé",
+          checked: provinceFilter.includes("SantaFe") ? true : false,
+        },
         {
           value: "SantiagoDelEstero",
           label: "Santiago del Estero",
-          checked: false,
+          checked: provinceFilter.includes("SantiagoDelEstero") ? true : false,
         },
         {
           value: "TierraDelFuego",
           label: "Tierra del Fuego",
-          checked: false,
+          checked: provinceFilter.includes("TierraDelFuego") ? true : false,
         },
-        { value: "Tucuman", label: "Tucuman", checked: false },
+        {
+          value: "Tucuman",
+          label: "Tucuman",
+          checked: provinceFilter.includes("Tucuman") ? true : false,
+        },
       ],
     },
   ];
@@ -76,65 +160,121 @@ function Products({ data }) {
       id: "Profesiones",
       name: "Profesiones",
       options: [
-        { value: "Medico", label: "Medico", checked: false },
-        { value: "Ingeniero", label: "Ingeniero", checked: false },
+        {
+          value: "Medico",
+          label: "Medico",
+          checked: profesionFilter.includes("Medico"),
+        },
+        {
+          value: "Ingeniero",
+          label: "Ingeniero",
+          checked: profesionFilter.includes(""),
+        },
         {
           value: "Profesor",
           label: "Profesor",
-          checked: false,
+          checked: profesionFilter.includes("Profesor"),
         },
         {
           value: "Abogado",
           label: "Abogado",
-          checked: false,
+          checked: profesionFilter.includes("Abogado"),
         },
         {
           value: "Contador",
           label: "Contador",
-          checked: false,
+          checked: profesionFilter.includes("Contador"),
         },
-        { value: "Enfermero", label: "Enfermero", checked: false },
+        {
+          value: "Enfermero",
+          label: "Enfermero",
+          checked: profesionFilter.includes("Enfermero"),
+        },
         {
           value: "Arquitecto",
           label: "Arquitecto",
-          checked: false,
+          checked: profesionFilter.includes("Arquitecto"),
         },
         {
           value: "Economista",
           label: "Economista",
-          checked: false,
+          checked: profesionFilter.includes("Economista"),
         },
-        { value: "Dentista", label: "Dentista", checked: false },
-        { value: "Veterinario", label: "Veterinario", checked: false },
+        {
+          value: "Dentista",
+          label: "Dentista",
+          checked: profesionFilter.includes("Dentista"),
+        },
+        {
+          value: "Veterinario",
+          label: "Veterinario",
+          checked: profesionFilter.includes("Veterinario"),
+        },
         {
           value: "Psicologo",
           label: "Psicologo",
-          checked: false,
+          checked: profesionFilter.includes("Psicologo"),
         },
-        { value: "Farmaceutico", label: "Farmaceutico", checked: false },
-        { value: "Cirujano", label: "Cirujano", checked: false },
-        { value: "Optometrista", label: "Optometrista", checked: false },
-        { value: "Entretenimiento", label: "Entretenimiento", checked: false },
+        {
+          value: "Farmaceutico",
+          label: "Farmaceutico",
+          checked: profesionFilter.includes("Farmaceutico"),
+        },
+        {
+          value: "Cirujano",
+          label: "Cirujano",
+          checked: profesionFilter.includes("Cirujano"),
+        },
+        {
+          value: "Optometrista",
+          label: "Optometrista",
+          checked: profesionFilter.includes("Optometrista"),
+        },
+        {
+          value: "Entretenimiento",
+          label: "Entretenimiento",
+          checked: profesionFilter.includes("Entretenimiento"),
+        },
         {
           value: "Fisioterapeuta",
           label: "Fisioterapeuta",
-          checked: false,
+          checked: profesionFilter.includes("Fisioterapeuta"),
         },
-        { value: "TerapeutaDelHabla", label: "TerapeutaDelHabla", checked: false },
+        {
+          value: "TerapeutaDelHabla",
+          label: "TerapeutaDelHabla",
+          checked: profesionFilter.includes("TerapeutaDelHabla"),
+        },
         {
           value: "TrabajadorSocial",
           label: "TrabajadorSocial",
-          checked: false,
+          checked: profesionFilter.includes("TrabajadorSocial"),
         },
-        { value: "Policia", label: "Policia", checked: false },
+        {
+          value: "Policia",
+          label: "Policia",
+          checked: profesionFilter.includes("Policia"),
+        },
         {
           value: "Bombero",
           label: "Bombero",
-          checked: false,
+          checked: profesionFilter.includes("Bombero"),
         },
-        { value: "Bombero", label: "Bombero", checked: false },
-        { value: "Militar", label: "Militar", checked: false },
-        { value: "Otros", label: "Otros", checked: false }
+        {
+          value: "Bombero",
+          label: "Bombero",
+          checked: profesionFilter.includes("Bombero"),
+        },
+        {
+          value: "Militar",
+          label: "Militar",
+          checked: profesionFilter.includes("Militar"),
+        },
+        {
+          value: "Otros",
+          label: "Otros",
+          checked: profesionFilter.includes("Otros"),
+        },
       ],
     },
   ];
@@ -147,22 +287,22 @@ function Products({ data }) {
         {
           value: "participacion",
           label: "Participacion",
-          checked: false,
+          checked: insigniasFilter.includes("participacion"),
         },
         {
           value: "servicio",
           label: "Servicio",
-          checked: false,
+          checked: insigniasFilter.includes("servicio"),
         },
         {
           value: "especie",
           label: "Especie",
-          checked: false,
+          checked: insigniasFilter.includes("especie"),
         },
         {
           value: "dinero",
           label: "Dinero",
-          checked: false,
+          checked: insigniasFilter.includes("dinero"),
         },
       ],
     },
@@ -547,16 +687,17 @@ function Products({ data }) {
                         ? "Ordenar descendentemente"
                         : "Ordenar ascendentemente"}
                     </button>
-                    {
-                      order === "asc" ? <BsChevronDown
+                    {order === "asc" ? (
+                      <BsChevronDown
                         className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                         aria-hidden="true"
-                      /> :
-                        <BsChevronUp
-                          className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
-                          aria-hidden="true"
-                        />
-                    }
+                      />
+                    ) : (
+                      <BsChevronUp
+                        className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                        aria-hidden="true"
+                      />
+                    )}
                   </Menu.Button>
                 </div>
               </Menu>
@@ -568,12 +709,13 @@ function Products({ data }) {
                     type="text"
                     placeholder="Buscar iniciativa"
                     onChange={handleSearch}
-                    className='rounded'
+                    className="rounded"
                   />
                   <BsSearch
                     id="icon"
-                    className={`text-gray-400 hover:text-gray-500 h-5 w-5 cursor-pointer absolute top top-1/2 right-6 transform -translate-y-1/2 ${search ? "visible" : "hidden"
-                      }`}
+                    className={`text-gray-400 hover:text-gray-500 h-5 w-5 cursor-pointer absolute top top-1/2 right-6 transform -translate-y-1/2 ${
+                      search ? "visible" : "hidden"
+                    }`}
                   ></BsSearch>
                 </div>
               </div>
