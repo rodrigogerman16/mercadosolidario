@@ -8,6 +8,7 @@ import { faStar as emptyStar } from "@fortawesome/free-regular-svg-icons";
 import { useUser } from "@/hooks/user";
 import Alert from "@/Components/Alert";
 import { useEffect } from "react";
+import SideBar from "@/Components/SideBar";
 
 function Validate(input) {
   let errors = {};
@@ -104,6 +105,7 @@ export default function Review({ data }) {
 
   return (
     <div class="w-full">
+      <SideBar/>
       <div class="mt-4">
         <span class="block mb-2 text-md font-semibold tracking-widest text-center uppercase dark:text-pink-400">
           Review
@@ -160,31 +162,85 @@ export default function Review({ data }) {
           </div>
         </div>
       </form>
-      <div>
-        <div>Reviews de Nuestros Usuarios</div>
-        {data.slice(-6).map((review) => (
-          <div
-          key={review.comment}
-          >
-            <h1>{`${review.name} ${review.lastName}`}</h1>
-            <Rating
-              className="text-yellow-300"
-              emptySymbol={<FontAwesomeIcon icon={emptyStar} />}
-              fullSymbol={<FontAwesomeIcon icon={fullStar} />}
-              initialRating={review.puntuacion}
-              readonly={true}
-            />
-            <br></br>
-            <a>{review.comment}</a>
-            <br></br>
-          </div>
-        ))}
+      <div className="grid md:grid-cols-3 max-w-7xl p-8 m-auto md:gap-6">
+        <div className="grid m-auto mt-24">
+          {data.slice(0, data.length / 3).map((review) => (
+            <div className="w-full" key={review.id}>
+              <div className="w-full mx-auto rounded-lg bg-white border border-gray-200 p-5 text-gray-800 font-light mb-6">
+                <div className="w-full grid mb-4">
+                  <span>{review.name + ' ' + review.lastName}</span>
+                  <div className="flex-grow">
+                    <Rating
+                      className="text-yellow-300"
+                      emptySymbol={<FontAwesomeIcon icon={emptyStar} />}
+                      fullSymbol={<FontAwesomeIcon icon={fullStar} />}
+                      initialRating={review.puntuacion}
+                      readonly={true}
+                    />
+                  </div>
+                </div>
+                <div className="w-full">
+                  <p className="text-sm leading-tight"><span className="text-lg leading-none italic font-bold text-gray-400 mr-1">``</span>{review.comment}<span className="text-lg leading-none italic font-bold text-gray-400 ml-1">´´</span></p>
+                </div>
+              </div>
+            </div>
+
+          ))}
+        </div>
+        <div className="grid  m-auto md:mt-24">
+          {data.slice(data.length / 3, (data.length / 3) * 2).map((review) => (
+            <div className="w-full" key={review.id}>
+              <div className="w-full mx-auto rounded-lg bg-white border border-gray-200 p-5 text-gray-800 font-light mb-6">
+                <div className="w-full grid mb-4">
+                  <span>{review.name + ' ' + review.lastName}</span>
+                  <div className="flex-grow">
+                    <Rating
+                      className="text-yellow-300"
+                      emptySymbol={<FontAwesomeIcon icon={emptyStar} />}
+                      fullSymbol={<FontAwesomeIcon icon={fullStar} />}
+                      initialRating={review.puntuacion}
+                      readonly={true}
+                    />
+                  </div>
+                </div>
+                <div className="w-full">
+                  <p className="text-sm leading-tight"><span className="text-lg leading-none italic font-bold text-gray-400 mr-1">``</span>{review.comment}<span className="text-lg leading-none italic font-bold text-gray-400 ml-1">´´</span></p>
+                </div>
+              </div>
+            </div>
+
+          ))}
+        </div>
+        <div className="grid m-auto md:mt-24">
+          {data.slice((data.length / 3) * 2, -1).map((review) => (
+            <div className="w-full" key={review.id}>
+              <div className="w-full mx-auto rounded-lg bg-white border border-gray-200 p-5 text-gray-800 font-light mb-6">
+                <div className="w-full grid mb-4">
+                  <span>{review.name + ' ' + review.lastName}</span>
+                  <div className="flex-grow">
+                    <Rating
+                      className="text-yellow-300"
+                      emptySymbol={<FontAwesomeIcon icon={emptyStar} />}
+                      fullSymbol={<FontAwesomeIcon icon={fullStar} />}
+                      initialRating={review.puntuacion}
+                      readonly={true}
+                    />
+                  </div>
+                </div>
+                <div className="w-full">
+                  <p className="text-sm leading-tight"><span className="text-lg leading-none italic font-bold text-gray-400 mr-1">``</span>{review.comment}<span className="text-lg leading-none italic font-bold text-gray-400 ml-1">´´</span></p>
+                </div>
+              </div>
+            </div>
+
+          ))}
+        </div>
       </div>
     </div>
   );
 }
 
-export async function getStaticProps() {
+export const getServerSideProps = async () => {
   return await fetch(
     "https://pf-backend-mercadosolidario-production.up.railway.app/reviews"
   )

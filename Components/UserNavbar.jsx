@@ -25,8 +25,9 @@ export default function UserNavbar() {
   }
 
   if (user) {
+    const findImage = user && JSON.parse(user)
     return (
-      <div>
+      <div>        
         <nav className="bg-white py-4">
           <div className="max-w-7xl mx-auto px-8">
             <div className="flex items-center justify-between h-16">
@@ -79,7 +80,7 @@ export default function UserNavbar() {
                   </button>
                   <Link href="/perfilusuario">
                     <Image
-                      src={user.image ? user.image : profile}
+                      src={findImage.image ? findImage.image : profile}
                       width={50}
                       height={50}
                       className="rounded-3xl cursor-pointer object-contain"
@@ -100,7 +101,7 @@ export default function UserNavbar() {
                   {!isOpen ? (
                     <Image
                       className="block rounded-3xl"
-                      src={user.image ? user.image : profile}
+                      src={findImage.image ? findImage.image : profile}
                       width={50}
                       height={50}
                       alt="profile"
@@ -180,6 +181,7 @@ export default function UserNavbar() {
           </Transition>
         </nav>
       </div>
+      
     );
   }
 }
