@@ -178,7 +178,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Pricing */}
+      {/* Pricing 
       <section className="py-20">
         <div className="container px-4 mx-auto">
           <div className="max-w-2xl mx-auto mb-16 text-center">
@@ -307,7 +307,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </section>*/}
 
       {/* Reviws */}
       <div>
