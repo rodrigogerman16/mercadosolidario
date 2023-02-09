@@ -229,7 +229,7 @@ export default function Login() {
           onClick={handleSignIn}
           aria-label="Login with Google"
           type="button"
-          className="flex items-center justify-center w-full p-4 space-x-4 border shadow focus:ring-0 w-full rounded"
+          className="flex items-center justify-center p-4 space-x-4 border shadow focus:ring-0 w-full rounded"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
