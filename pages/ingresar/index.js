@@ -71,6 +71,12 @@ export default function Login() {
           email: "",
           password: "",
         });
+
+        // es admin (contacto.mercadosolidario@gmail.com   henryms123)
+        if (decoded.type_of_user === "admin") {
+          window.location.href = "/dashboard";
+          return;
+        }
         router.push("/");
         window.location.reload();
       } else {
@@ -124,16 +130,9 @@ export default function Login() {
       return;
     }
 
-    // es admin (contacto.mercadosolidario@gmail.com   henryms123)
-    if (user.type_of_user === "admin") {
-      Router.push("/dashboard");
-      return;
-    }
     if (user) {
-      console.log(user)
       //arreglar
       if (user.isActive === "false") {
-        console.log(user.isActive);
         window.localStorage.removeItem("user");
         window.localStorage.setItem("loginError", true);
         signOut();
