@@ -1,5 +1,5 @@
 import Link from "next/link";
-import {BiQrScan, BiDonateHeart} from "react-icons/bi"
+import {BiQrScan, BiDonateHeart, BiCommentAdd} from "react-icons/bi"
 
 export default function SideBar() {
   return (
@@ -45,6 +45,15 @@ export default function SideBar() {
         >          
           <BiQrScan className="w-6 h-6 shrink-0"/>
           <small className="text-center text-xs font-medium">Escanear QR</small>
+        </Link>
+
+        {/*Link a Reviews*/}
+        <Link
+          href="/review"
+          className="flex aspect-square min-h-[32px] w-16 flex-col items-center justify-center gap-1 rounded-md p-1.5 hover:bg-gray-200 text-black-600"
+        >          
+          <BiCommentAdd className="w-6 h-6 shrink-0"/>
+          <small className="text-center text-xs font-medium">Agregar Review</small>
         </Link>
 
         <hr className="dark:border-gray-700/60" />
