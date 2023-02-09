@@ -207,6 +207,16 @@ const rubros = [
         Alert({ title: 'Registro', text: 'Hay datos incorrectos o sin completar', icon: 'error' })
       }
     } catch (error) {
+      const err = error.response.data.message ? error.response.data : JSON.parse(error.response.data)
+      setInput({
+        email: "",
+        password: "",
+      });
+      Alert({
+        title: "Cuenta",
+        text: err.message,
+        icon: "error",
+      });
     }
   }
 

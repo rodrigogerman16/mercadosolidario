@@ -51,6 +51,13 @@ export default function CompaniesNavbar() {
                                         >
                                             Buscar Colaboradores
                                         </Link>
+
+                                        <Link
+                                            href="/perfilcompany"
+                                            className="font-semibold text-black hover:text-pink-400"
+                                        >
+                                            Perfil
+                                        </Link>
                                     </div>
                                 </div>
                                 <div className="hidden gap-4 md:flex">

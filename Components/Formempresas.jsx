@@ -178,7 +178,16 @@ export default function Formempresas(props) {
         });
       }
     } catch (error) {
-      console.log(error)
+      const err = error.response.data.message ? error.response.data : JSON.parse(error.response.data)
+      setInput({
+        email: "",
+        password: "",
+      });
+      Alert({
+        title: "Cuenta",
+        text: err.message,
+        icon: "error",
+      });
     }
   }
 
