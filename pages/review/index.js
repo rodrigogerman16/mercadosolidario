@@ -160,7 +160,7 @@ export default function Review({ data }) {
           </div>
         </div>
       </form>
-      <div className="grid md:grid-cols-3 max-w-7xl p-8 m-auto gap-6">
+      <div className="grid md:grid-cols-3 max-w-7xl p-8 m-auto md:gap-6">
         <div className="grid m-auto mt-24">
           {data.slice(0, data.length / 3).map((review) => (
             <div className="w-full" key={review.id}>
@@ -185,7 +185,7 @@ export default function Review({ data }) {
 
           ))}
         </div>
-        <div className="grid  m-auto mt-24">
+        <div className="grid  m-auto md:mt-24">
           {data.slice(data.length / 3, (data.length / 3) * 2).map((review) => (
             <div className="w-full" key={review.id}>
               <div className="w-full mx-auto rounded-lg bg-white border border-gray-200 p-5 text-gray-800 font-light mb-6">
@@ -209,7 +209,7 @@ export default function Review({ data }) {
 
           ))}
         </div>
-        <div className="grid m-auto mt-24">
+        <div className="grid m-auto md:mt-24">
           {data.slice((data.length / 3) * 2, -1).map((review) => (
             <div className="w-full" key={review.id}>
               <div className="w-full mx-auto rounded-lg bg-white border border-gray-200 p-5 text-gray-800 font-light mb-6">
