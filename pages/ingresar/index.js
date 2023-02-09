@@ -59,11 +59,8 @@ export default function Login() {
           email: input.email,
           password: input.password,
         };
-
         let info = await axios.post(`https://pf-backend-mercadosolidario-production.up.railway.app/login`, user);
-
         const decoded = jwt_decode(info.data.token);
-
         window.localStorage.setItem("user", JSON.stringify(decoded));
         Alert({
           title: "Cuenta",

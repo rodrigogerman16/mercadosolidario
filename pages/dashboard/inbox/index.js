@@ -4,19 +4,16 @@ import Image from "next/image";
 import { signOut, useSession } from 'next-auth/react'
 import dynamic from 'next/dynamic';
 import profile from "../../../Assets/profile.png"
-import { Router } from "react-router-dom";
 
 const DynamicGetInbox = dynamic(() => import('./getInbox'), {
   ssr: false
 });
 
 export default function Iniciativas({ inbox }) {
-  const { data: session } = useSession()
   function handleSignOut() {
     localStorage.removeItem("user");
     signOut()
-    Router.push("/")
-    window.location.reload()
+    window.location.href = 'http://localhost:3000';
   }
   return (
     <div>
