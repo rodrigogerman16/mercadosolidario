@@ -69,7 +69,7 @@ const Detail = ({ data }) => {
                             </p>
                         </div>
                         <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b disabled:border-gray-600">
-                            <a data-modal-hide="defaultModal" href={`https://wa.me/${info ? info.phone : '3865559022'}/Hola%20me%20contacto%20contigo%20porque%20vi%20la%20publicacion%20en%20Mercado%20Solidario%20.Quiero%20saber%20que%20debo%20hacer%20para%20ser%20voluntario%20en%20la%20causa%20$${data.title}%20de%20la%20ONG%20${info ? info.ongName : ''}`} rel="noreferrer" target = '_blank' type="button" class="cursor-pointer text-white bg-pink-400 transition-colors hover:bg-pink-500 focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Contactar con ONG</a>
+                            <a data-modal-hide="defaultModal" href={`https://wa.me/54${info ? info.phone : '3865559022'}?Hola%20me%20contacto%20contigo%20porque%20vi%20la%20publicacion%20en%20Mercado%20Solidario%20.Quiero%20saber%20que%20debo%20hacer%20para%20ser%20voluntario%20en%20la%20causa%20$${data.title}%20de%20la%20ONG%20${info ? info.ongName : ''}`} rel="noreferrer" target = '_blank' type="button" class="cursor-pointer text-white bg-pink-400 transition-colors hover:bg-pink-500 focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Contactar con ONG</a>
                         </div>
                     </div>
                 </div>
