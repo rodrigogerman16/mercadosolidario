@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
 import {
   BsChevronDown,
+  BsChevronUp,
   BsFunnelFill,
   BsSearch,
   BsX,
@@ -30,7 +31,7 @@ function Products({ data }) {
     return null;
   }
 
-    const provinces = [
+  const provinces = [
     {
       id: "Provincias",
       name: "Provincias",
@@ -68,9 +69,9 @@ function Products({ data }) {
         { value: "Tucuman", label: "Tucuman", checked: false },
       ],
     },
-    ];
+  ];
 
-    const profesiones = [
+  const profesiones = [
     {
       id: "Profesiones",
       name: "Profesiones",
@@ -136,36 +137,36 @@ function Products({ data }) {
         { value: "Otros", label: "Otros", checked: false }
       ],
     },
-    ];
+  ];
 
-    const insignias = [
+  const insignias = [
+    {
+      id: "Insignias",
+      name: "Insignias",
+      options: [
         {
-        id: "Insignias",
-        name: "Insignias",
-        options: [
-            {
-            value: "participacion",
-            label: "Participacion",
-            checked: false,
-            },
-            {
-            value: "servicio",
-            label: "Servicio",
-            checked: false,
-            },
-            {
-            value: "especie",
-            label: "Especie",
-            checked: false,
-            },
-            {
-            value: "dinero",
-            label: "Dinero",
-            checked: false,
-            },
-        ],
+          value: "participacion",
+          label: "Participacion",
+          checked: false,
         },
-    ];
+        {
+          value: "servicio",
+          label: "Servicio",
+          checked: false,
+        },
+        {
+          value: "especie",
+          label: "Especie",
+          checked: false,
+        },
+        {
+          value: "dinero",
+          label: "Dinero",
+          checked: false,
+        },
+      ],
+    },
+  ];
 
   //.. Filtrar data Provincias..//
   let filteredData = data.filter((item) => {
@@ -535,7 +536,7 @@ function Products({ data }) {
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex border-b border-gray-200 pt-12 pb-6 justify-end">
             {/* -----------Todo DOM - Nada de logica-----------*/}
-            <div className="flex items-center">
+            <div className="flex items-center flex-wrap justify-center gap-4">
               {/*------------ Menu de ordenamientos ---------*/}
               <Menu as="div" className="relative inline-block text-left">
                 <div>
@@ -546,40 +547,40 @@ function Products({ data }) {
                         ? "Ordenar descendentemente"
                         : "Ordenar ascendentemente"}
                     </button>
-                    <BsChevronDown
-                      className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
-                      aria-hidden="true"
-                    />
+                    {
+                      order === "asc" ? <BsChevronDown
+                        className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                        aria-hidden="true"
+                      /> :
+                        <BsChevronUp
+                          className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                          aria-hidden="true"
+                        />
+                    }
                   </Menu.Button>
                 </div>
               </Menu>
 
               {/* ---------------SearchBar-------------- */}
-              <div
-                className={`h-[100%] w-full z-30 bg-black backdrop-blur-sm bg-opacity-60  top-0 left-0 ${
-                  search ? "fixed" : "none"
-                }`}
-                onClick={offSearch}
-              ></div>
-              <div className=" text-gray-400 hover:text-gray-500 ">
+              <div className=" text-gray-400 hover:text-gray-500">
                 <div className="w-full">
                   <input
                     type="text"
-                    placeholder="Buscar producto"
+                    placeholder="Buscar iniciativa"
                     onChange={handleSearch}
+                    className='rounded'
                   />
                   <BsSearch
                     id="icon"
-                    className={`text-gray-400 hover:text-gray-500 h-5 w-5 cursor-pointer absolute top top-1/2 right-6 transform -translate-y-1/2 ${
-                      search ? "visible" : "hidden"
-                    }`}
+                    className={`text-gray-400 hover:text-gray-500 h-5 w-5 cursor-pointer absolute top top-1/2 right-6 transform -translate-y-1/2 ${search ? "visible" : "hidden"
+                      }`}
                   ></BsSearch>
                 </div>
               </div>
               {/* --------------Filtros Mobile-------------- */}
               <button
                 type="button"
-                className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
+                className=" text-gray-400 hover:text-gray-500 lg:hidden"
                 onClick={() => setMobileFiltersOpen(true)}
               >
                 <span className="sr-only">Filtrar por:</span>
@@ -672,7 +673,7 @@ function Products({ data }) {
                     )}
                   </Disclosure>
                 ))}
-                              {profesiones.map((section) => (
+                {profesiones.map((section) => (
                   <Disclosure
                     as="div"
                     onChange={handleProfesionFilter}
@@ -870,12 +871,12 @@ export function getStaticProps() {
   return fetch(
     "https://pf-backend-mercadosolidario-production.up.railway.app/user"
   )
-  .then((res) => res.json())
-  .then((data) => {
-    return {
-      props: {
-        data,
-      },
-    };
-  });
+    .then((res) => res.json())
+    .then((data) => {
+      return {
+        props: {
+          data,
+        },
+      };
+    });
 }

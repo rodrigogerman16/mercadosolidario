@@ -123,8 +123,6 @@ const rubros = [
     }
 
     window.localStorage.setItem("user", JSON.stringify(aux));
-
-    return console.log(info.data, aux);
   };
 
   function handleChange(el) {
@@ -190,7 +188,7 @@ const rubros = [
         formData.append("rut", data.secure_url);
         formData.append("cuit", input.cuit);
         formData.append("type_of_user", props.type_of_user);
-        postONG(formData);
+        await postONG(formData);
 
         Alert({ title: 'Registro', text: 'ONG Registrada con éxito!', icon: 'success' })
         setInput({
@@ -201,19 +199,23 @@ const rubros = [
           cuit: "",
           phone: "",
         });   
-        window.location.href = '../';
         if(session){signOut()}        
+        window.location.href = '../';
       } else {
         Alert({ title: 'Registro', text: 'Hay datos incorrectos o sin completar', icon: 'error' })
       }
     } catch (error) {
+
       const err = error.response.data.message ? error.response.data : JSON.parse(error.response.data)
+
       setInput({
         email: "",
         password: "",
       });
       Alert({
+
         title: "Cuenta",
+
         text: err.message,
         icon: "error",
       });

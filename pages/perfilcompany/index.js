@@ -121,9 +121,9 @@ export default function Perfilcompany() {
     };
 
     //console.log(obj);
-    //CAMBIAR POR EL PUT DE COMPANY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  
     const info = await axios.put(
-      "https://pf-backend-mercadosolidario-production.up.railway.app/user/update/" +
+      "https://pf-backend-mercadosolidario-production.up.railway.app/company/update/" +
         user.id,
       obj
     );
