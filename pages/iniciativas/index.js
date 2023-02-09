@@ -12,8 +12,6 @@ import {
 } from "react-icons/bs";
 import Link from "next/link";
 import Card from "../../Components/Card";
-import InfiniteScroll from "react-infinite-scroll-component";
-import { useRouter } from "next/router";
 
 function Products({ data }) {
   //..Estados Globales...//
