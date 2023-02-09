@@ -446,7 +446,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <Link rel="noopener noreferrer" href="/iniciativas" className="px-8 py-3 text-lg font-semibold shadow bg-pink-400 text-white hover:bg-pink-300 transition-colors rounded m-auto justify-self-center">Ver más reviews</Link>
+            <Link rel="noopener noreferrer" href="/review" className="px-8 py-3 text-lg font-semibold shadow bg-pink-400 text-white hover:bg-pink-300 transition-colors rounded m-auto justify-self-center">Ver más reviews</Link>
           </div>
 
         </div>
