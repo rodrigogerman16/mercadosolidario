@@ -7,7 +7,7 @@ export default function EquipoCard(props) {
     <section>
       <div className="flex flex-col items-center p-4 border sm:p-6 rounded-xl dark:border-gray-700">
         <Image
-          className="object-cover w-full rounded-xl aspect-square"
+          className="object-cover w-full rounded-full aspect-square"
           src={props.img}
           alt=""
         />
@@ -27,6 +27,7 @@ export default function EquipoCard(props) {
             aria-label="Github"
             target="_blank"
             title="Github"
+            rel="noreferrer"
           >
             <BsGithub className="w-6 h-6 fill-current" />
           </a>
@@ -38,6 +39,7 @@ export default function EquipoCard(props) {
             aria-label="LinkedIn"
             target="_blank"
             title="LinkedIn"
+            rel="noreferrer"
           >
             <BsLinkedin className="w-6 h-6 fill-current" />
           </a>
@@ -50,6 +52,7 @@ export default function EquipoCard(props) {
               aria-label="LinkedIn"
               target="_blank"
               title="Portfolio"
+              rel="noreferrer"
             >
               <TfiWorld className="w-6 h-6 fill-current" />
             </a>
